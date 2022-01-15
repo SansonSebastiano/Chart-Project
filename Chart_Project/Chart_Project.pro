@@ -9,11 +9,19 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    album.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    music.cpp \
+    release.cpp \
+    song.cpp
 
 HEADERS += \
-    mainwindow.h
+    album.h \
+    mainwindow.h \
+    music.h \
+    release.h \
+    song.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
