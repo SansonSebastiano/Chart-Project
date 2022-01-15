@@ -5,8 +5,8 @@
 
 class Album : virtual public Music{
 private:
-    string album_name;
-    string album_artist;
+    string name;
+    string artist;
 public:
     Album() = default;
     Album(string _genre, string _name, string _artist);
@@ -15,12 +15,12 @@ public:
      * @brief   restituisce il nome di una album
      * @return  string
      */
-     string getName() const override;
+     string getAlbumName() const;
     /*
      * @brief   restituisce l'artista di una album
      * @return  string
      */
-     string getArtist() const override;
+     string getAlbumArtist() const;
 };
 
 #endif // ALBUM_H

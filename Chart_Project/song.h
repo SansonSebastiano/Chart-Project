@@ -5,8 +5,8 @@
 
 class Song : virtual public Music{
 private:
-    string song_name;
-    string song_artist;
+    string name;
+    string artist;
 public:
     Song() = default;
     Song(string _genre, string _name, string _artist);
@@ -15,12 +15,12 @@ public:
      * @brief   restituisce il nome di una canzone
      * @return  string
      */
-     string getName() const override;
+     string getSongName() const;
     /*
      * @brief   restituisce l'artista di una canzone
      * @return  string
      */
-     string getArtist() const override;
+     string getSongArtist() const;
 };
 
 #endif // SONG_H

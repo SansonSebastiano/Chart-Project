@@ -9,8 +9,9 @@ private:
     string release_date;
     double profit;
 public:
-    Release(string _genre, string _rd, double _profit, string _sn, string _sa);
-    Release(string _an, string _aa, string _genre, string _rd, double _profit);
+    // sistemare questione guadagno
+    Release(string _genre, string _rd, string _sn, string _sa);     // per Song
+    Release(string _an, string _aa, string _genre, string _rd);     // per Album
 
     virtual ~Release() = default;
     /*
@@ -28,9 +29,6 @@ public:
      * @return  string
      */
     string getReleaseDate() const;
-    // unique final override
-    string getName() const;
-    string getArtist() const;
 };
 
 #endif // RELEASE_H

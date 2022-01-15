@@ -15,11 +15,3 @@ Release::Release(string _an, string _aa, string _genre, string _rd, double _prof
 string Release::getReleaseDate() const {
     return release_date;
 }
-
-string Release::getName() const {
-    // problema : come ritornare polimorfamente Song::getName() o Album::getName() ?
-}
-
-string Release::getArtist() const{
-    // problema : come ritornare polimorfamente Song::getArtist() o Album::getArtist() ?
-}

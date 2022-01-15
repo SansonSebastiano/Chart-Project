@@ -10,22 +10,14 @@ private:
 public:
     Music() = default;
     Music(string _genre);
-    virtual ~Music() = default;
+    virtual ~Music() = 0;
     /*
      * @brief   restituisce un genere musicale
      * @return  string
      */
     string getGenre() const;
-    /*
-     * @brief   restituira' il nome di una canzone/album
-     * @return  string
-     */
-    virtual string getName() const = 0;
-    /*
-     * @brief   restituira' l'artista di una canzone/album
-     * @return  string
-     */
-    virtual string getArtist() const = 0;
+
+    // EVENTUALE OVERLOADING DELL'OPERATORE DI OUTPUT
 };
 
 #endif // MUSIC_H

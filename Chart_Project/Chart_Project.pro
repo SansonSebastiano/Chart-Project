@@ -13,6 +13,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     music.cpp \
+    phisycalmedium.cpp \
     release.cpp \
     song.cpp
 
@@ -20,6 +21,7 @@ HEADERS += \
     album.h \
     mainwindow.h \
     music.h \
+    phisycalmedium.h \
     release.h \
     song.h
 

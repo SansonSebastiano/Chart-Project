@@ -1,11 +1,11 @@
 #include "album.h"
 
-Album::Album(string _genre, string _name, string _artist) : Music(_genre), album_name(_name), album_artist(_artist) { }
+Album::Album(string _genre, string _name, string _artist) : Music(_genre), name(_name), artist(_artist) { }
 
-string Album::getName() const {
-    return album_name;
+string Album::getAlbumName() const {
+    return name;
 }
 
-string Album::getArtist() const {
-    return album_artist;
+string Album::getAlbumArtist() const {
+    return artist;
 }
