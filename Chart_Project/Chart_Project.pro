@@ -10,6 +10,7 @@ CONFIG += c++11
 
 SOURCES += \
     album.cpp \
+    date.cpp \
     main.cpp \
     mainwindow.cpp \
     music.cpp \
@@ -19,6 +20,7 @@ SOURCES += \
 
 HEADERS += \
     album.h \
+    date.h \
     mainwindow.h \
     music.h \
     phisycalmedium.h \

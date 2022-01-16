@@ -3,12 +3,13 @@
 
 #include "music.h"
 
-class Song : virtual public Music{
+//  ???
+
+class Song : public Music{
 private:
     string name;
     string artist;
 public:
-    Song() = default;
     Song(string _genre, string _name, string _artist);
     ~Song() = default;
     /*
