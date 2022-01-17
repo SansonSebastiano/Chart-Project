@@ -7,15 +7,15 @@ class PhisycalMedium : public Release{
 private:
     // tipo di supporto fisico
     string type;
-    // numero di copie vendute
+    // numero di copie vendute all'anno
     uint num_sales;
     // costo per copia in €
-    static double price;
+    static const double price;
     /*
-     * @brief   imposta il guadagno di una album
+     * @brief   imposta il guadagno di una album: prodotto tra #copie vendute e il prezzo per copia
      * @return  void
      */
-    virtual void setProfit();
+     void setProfit();
 public:
     PhisycalMedium(string _genre,
                    string _album_name,
@@ -24,11 +24,6 @@ public:
                    string _type,
                    uint _ns);
     virtual ~PhisycalMedium() = default;
-    /*
-     * @brief   restituisce il guadagno di una album
-     * @return  double
-     */
-    virtual double getProfit() const;
     /*
      * @brief   restituisce il numero di copie vendute
      * @return  unsigned int

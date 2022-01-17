@@ -11,21 +11,21 @@ CONFIG += c++11
 SOURCES += \
     album.cpp \
     date.cpp \
+    digitalmedium.cpp \
     main.cpp \
     mainwindow.cpp \
     music.cpp \
     phisycalmedium.cpp \
-    release.cpp \
-    song.cpp
+    release.cpp
 
 HEADERS += \
     album.h \
     date.h \
+    digitalmedium.h \
     mainwindow.h \
     music.h \
     phisycalmedium.h \
-    release.h \
-    song.h
+    release.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

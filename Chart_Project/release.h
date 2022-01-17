@@ -1,7 +1,6 @@
 #ifndef RELEASE_H
 #define RELEASE_H
 
-#include "song.h"
 #include "album.h"
 #include "date.h"
 
@@ -22,7 +21,7 @@ public:
      * @brief   restituisce il guadagno di una album
      * @return  double
      */
-    virtual double getProfit() const = 0;
+    virtual double getProfit() const;
     /*
      * @brief   restituisce la data di uscita di una album
      * @return  string

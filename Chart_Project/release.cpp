@@ -7,3 +7,7 @@ Release::Release(string _genre, string _album_name, string _artist_name, Date _r
 Date Release::getReleaseDate() const {
     return release_date;
 }
+
+double Release::getProfit() const{
+    return profit;
+}
