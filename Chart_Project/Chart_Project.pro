@@ -16,6 +16,7 @@ SOURCES += \
     mainwindow.cpp \
     music.cpp \
     phisycalmedium.cpp \
+    recordlabel.cpp \
     release.cpp
 
 HEADERS += \
@@ -25,6 +26,7 @@ HEADERS += \
     mainwindow.h \
     music.h \
     phisycalmedium.h \
+    recordlabel.h \
     release.h
 
 # Default rules for deployment.

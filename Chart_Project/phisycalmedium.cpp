@@ -12,11 +12,7 @@ PhisycalMedium::PhisycalMedium(string _genre,
     type(_type),
     num_sales(_ns)
 {
-    // messaggio di warning:
-    // Call to virtual method 'PhisycalMedium::setProfit' during construction bypasses virtual dispatch
-    // cercando su stackoverflow : https://stackoverflow.com/questions/16719460/calling-a-virtual-function-from-the-constructor
-
-    setProfit();
+    PhisycalMedium::setProfit();
 }
 
 void PhisycalMedium::setProfit() {

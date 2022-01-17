@@ -17,6 +17,7 @@ private:
     */
     void setProfit();
 public:
+    DigitalMedium() = default;
     DigitalMedium(string _genre,
                   string _album_name,
                   string _album_artist,
