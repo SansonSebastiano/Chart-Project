@@ -11,3 +11,8 @@ Date Release::getReleaseDate() const {
 double Release::getProfit() const{
     return profit;
 }
+
+string Release::getInfo() const {
+    return Album::getInfo() + "\n" +
+           "Pubblicato il : " + release_date.getDate();
+}

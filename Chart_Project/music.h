@@ -16,6 +16,11 @@ public:
      * @return  string
      */
     string getGenre() const;
+    /*
+     * @brief   restituisce informazioni riguardante il prodotto musicale
+     * @return  void
+     */
+    virtual string getInfo() const;
 
     // EVENTUALE OVERLOADING DELL'OPERATORE DI OUTPUT
 };

@@ -9,3 +9,9 @@ string Album::getAlbumName() const {
 string Album::getAlbumArtist() const {
     return artist;
 }
+
+string Album::getInfo() const {
+    return "Album: " + name + "\n" +
+           "Artista: " + artist + "\n" +
+           Music::getInfo();
+}

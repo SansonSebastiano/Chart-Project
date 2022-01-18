@@ -1,6 +1,9 @@
 #ifndef PHISYCALMEDIUM_H
 #define PHISYCALMEDIUM_H
 
+#include<sstream>
+#include<iomanip>
+
 #include "release.h"
 
 class PhisycalMedium : public Release{
@@ -15,7 +18,7 @@ private:
      * @brief   imposta il guadagno di una album: prodotto tra #copie vendute e il prezzo per copia
      * @return  void
      */
-     void setProfit();
+     void setProfit() override;
 public:
     PhisycalMedium(string _genre,
                    string _album_name,
@@ -34,6 +37,11 @@ public:
      * @return  string
      */
     string getType() const;
+    /*
+     * @brief   restituisce informazioni riguardante il prodotto musicale
+     * @return  void
+     */
+    virtual string getInfo() const override;
 };
 
 #endif // PHISYCALMEDIUM_H

@@ -17,7 +17,8 @@ SOURCES += \
     music.cpp \
     phisycalmedium.cpp \
     recordlabel.cpp \
-    release.cpp
+    release.cpp \
+    test.cpp
 
 HEADERS += \
     album.h \

@@ -21,6 +21,11 @@ public:
      * @return  string
      */
      string getAlbumArtist() const;
+     /*
+      * @brief   restituisce informazioni riguardante il prodotto musicale
+      * @return  void
+      */
+     virtual string getInfo() const override;
 };
 
 #endif // ALBUM_H

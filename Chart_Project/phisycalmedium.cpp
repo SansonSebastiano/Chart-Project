@@ -26,3 +26,13 @@ uint PhisycalMedium::getNumSales() const{
 string PhisycalMedium::getType() const{
     return type;;
 }
+
+string PhisycalMedium::getInfo() const {
+    std::stringstream ss;
+    ss << std::fixed << std::setprecision(2) << getProfit();
+
+    return Release::getInfo() + "\n" +
+           "Supporto Fisico: " + type + "\n" +
+           "Vendite Annue: " + std::to_string(num_sales) + "\n" +
+           "Profitto Annuo: " + ss.str() + " €";
+}

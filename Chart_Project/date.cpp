@@ -16,3 +16,9 @@ Date::Date(uint _day, uint _month, uint _year) {
     }
     else cout << "Illegal date!" << endl;   // da gestire con le eccezioni?
 }
+
+string Date::getDate() const {
+    return std::to_string(day) + "/" +
+           std::to_string(month) + "/" +
+           std::to_string(year);
+}

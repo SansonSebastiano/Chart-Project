@@ -21,3 +21,13 @@ string DigitalMedium::getServiceName() const{
 uint DigitalMedium::getListeners() const{
     return listeners;
 }
+
+string DigitalMedium::getInfo() const {
+    std::stringstream ss;
+    ss << std::fixed << std::setprecision(2) << getProfit();
+
+    return Release::getInfo() + "\n" +
+           "Piattaforma: " + service_name + "\n" +
+           "Ascoltatori Annui: " + std::to_string(listeners) + "\n" +
+           "Profitto Annuo: " + ss.str() + " €";
+}

@@ -1,6 +1,9 @@
 #ifndef DIGITALMEDIUM_H
 #define DIGITALMEDIUM_H
 
+#include<sstream>
+#include<iomanip>
+
 #include "release.h"
 
 class DigitalMedium : public Release{
@@ -15,7 +18,7 @@ private:
     * @brief   imposta il guadagno di una album: prodotto tra #copie vendute e il prezzo per copia
     * @return  void
     */
-    void setProfit();
+    void setProfit() override;
 public:
     DigitalMedium() = default;
     DigitalMedium(string _genre,
@@ -35,6 +38,11 @@ public:
      * @return  unsigned int
      */
     uint getListeners() const;
+    /*
+     * @brief   restituisce informazioni riguardante il prodotto musicale
+     * @return  void
+     */
+    virtual string getInfo() const override;
 };
 
 #endif // DIGITALMEDIUM_H
