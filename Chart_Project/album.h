@@ -8,7 +8,6 @@ private:
     string name;
     string artist;
 public:
-    Album() = default;
     Album(string _genre, string _name, string _artist);
     ~Album() = default;
     /*

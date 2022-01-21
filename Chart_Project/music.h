@@ -8,7 +8,6 @@ class Music{
 private:
     string genre;
 public:
-    Music() = default;
     Music(string _genre);
     virtual ~Music() = 0;
     /*

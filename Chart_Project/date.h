@@ -24,6 +24,17 @@ public:
       * @return  string
       */
      string getDate() const;
+     /*
+      * @brief      overloading operatori per il confronto tra date
+      * @param d    data da confrontare
+      * @return     bool
+      */
+     bool operator > (const Date& d) const;
+     bool operator >= (const Date& d) const;
+     bool operator < (const Date& d) const;
+     bool operator <= (const Date& d) const;
+     bool operator == (const Date& d) const;
+     bool operator != (const Date& d) const;
 };
 
 #endif // DATE_H

@@ -15,7 +15,6 @@ protected:
      */
     virtual void setProfit() = 0;
 public:
-    Release () = default;
     Release(string _genre, string _album_name, string _artist_name, Date _rd);
     virtual ~Release() = default;
     /*

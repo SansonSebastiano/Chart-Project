@@ -24,6 +24,7 @@ HEADERS += \
     album.h \
     date.h \
     digitalmedium.h \
+    exceptions.h \
     mainwindow.h \
     music.h \
     phisycalmedium.h \

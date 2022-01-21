@@ -22,3 +22,42 @@ string Date::getDate() const {
            std::to_string(month) + "/" +
            std::to_string(year);
 }
+
+// Overloading operatori di confronto tra date
+
+bool Date::operator>(const Date &d) const {
+    if (year > d.year) return true;
+    else if (year == d.year) {
+        if (month > d.month) return true;
+        else if (month == d.month)
+            if (day > d.day) return true;
+    }
+    return false;
+}
+
+bool Date::operator<(const Date &d) const {
+    if ((!(*this > d) && !(*this == d))) return true;
+    return false;
+}
+
+bool Date::operator==(const Date &d) const {
+    if(year == d.year &&
+       month == d.month &&
+       day == d.day) return true;
+    return false;
+}
+
+bool Date::operator!=(const Date &d) const {
+    if (!(*this == d)) return true;
+    return false;
+}
+
+bool Date::operator>=(const Date &d) const{
+    if ((*this == d) || (*this > d)) return true;
+    return false;
+}
+
+bool Date::operator<=(const Date &d) const {
+    if ((*this == d) || (*this < d)) return true;
+    return false;
+}
