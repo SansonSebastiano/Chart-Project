@@ -6,10 +6,13 @@
 
 #include "release.h"
 
+// tipologie di supporto fisico
+enum Support {CD, Vinile, Cassetta};
+
 class PhisycalMedium : public Release{
 private:
-    // tipo di supporto fisico
-    string type;
+    // tipo di supporto fisico utilizzato per la vendita dell'album
+    Support support;
     // numero di copie vendute all'anno
     uint num_sales;
     // costo per copia in €
@@ -19,13 +22,10 @@ private:
      * @return  void
      */
      void setProfit() override;
+     // @brief  converte enum to string
+     static const char *support_str[];
 public:
-    PhisycalMedium(string _genre,
-                   string _album_name,
-                   string _album_artist,
-                   Date _rd,
-                   string _type,
-                   uint _ns);
+    PhisycalMedium(string _genre, string _album_name, string _album_artist, Date _rd, Support _support, uint _ns);
     virtual ~PhisycalMedium() = default;
     /*
      * @brief   restituisce il numero di copie vendute
@@ -36,7 +36,7 @@ public:
      * @brief   restituisce la tipologia del supporto fisico = {CD, Vinile, Cassetta}
      * @return  string
      */
-    string getType() const;
+    string getSupport() const;
     /*
      * @brief   restituisce informazioni riguardante il prodotto musicale
      * @return  void

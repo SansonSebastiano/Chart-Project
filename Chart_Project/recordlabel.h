@@ -15,9 +15,10 @@ using std::vector;
 class RecordLabel{
 private:
     // tipologie di supporto fisico
-    enum pm_type {CD, Vinile, Cassetta};
+    //enum pm_type {CD, Vinile, Cassetta};
     // tipologie di supporto digitale
-    enum dm_name {Spotify, AppleMusic, Tidal, AmazonMusic, Deezer, YouTubeMusic};
+    //enum dm_name {Spotify, AppleMusic, Tidal, AmazonMusic, Deezer, YouTubeMusic};
+
     // raccolta di tutta la musica prodotta appartenente all'etichetta discografica:
     //  - pubblicata
     //  NB: un album pubblicato, lo e' via supporto fisico che digitale !

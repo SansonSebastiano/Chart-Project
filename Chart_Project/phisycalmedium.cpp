@@ -1,15 +1,11 @@
 #include "phisycalmedium.h"
 
 const double PhisycalMedium::price = 12.00;
+const char* PhisycalMedium::support_str [] = {"CD", "Vinile", "Cassetta"};
 
-PhisycalMedium::PhisycalMedium(string _genre,
-                               string _album_name,
-                               string _album_artist,
-                               Date _rd,
-                               string _type,
-                               uint _ns) :
+PhisycalMedium::PhisycalMedium(string _genre, string _album_name, string _album_artist, Date _rd, Support _support, uint _ns) :
     Release(_genre, _album_name, _album_artist, _rd),
-    type(_type),
+    support(_support),
     num_sales(_ns)
 {
     PhisycalMedium::setProfit();
@@ -23,8 +19,8 @@ uint PhisycalMedium::getNumSales() const{
     return num_sales;
 }
 
-string PhisycalMedium::getType() const{
-    return type;;
+string PhisycalMedium::getSupport() const{
+    return support_str[support];
 }
 
 string PhisycalMedium::getInfo() const {
@@ -32,7 +28,7 @@ string PhisycalMedium::getInfo() const {
     ss << std::fixed << std::setprecision(2) << getProfit();
 
     return Release::getInfo() + "\n" +
-           "Supporto Fisico: " + type + "\n" +
+           "Supporto Fisico: " + support_str[support] + "\n" +
            "Vendite Annue: " + std::to_string(num_sales) + "\n" +
            "Profitto Annuo: " + ss.str() + " €";
 }

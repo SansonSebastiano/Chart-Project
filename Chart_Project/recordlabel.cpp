@@ -13,6 +13,6 @@ double RecordLabel::getTotProfit(const Music* m) const {
     if (ptr_pm && ptr_dm)
         return ptr_pm->getProfit() + ptr_dm->getProfit();
     else
-        throw (notBothReleased)
-
+        //throw (notBothReleased)
+        return 0.0;
 }
