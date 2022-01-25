@@ -14,14 +14,10 @@ using std::vector;
 
 class RecordLabel{
 private:
-    // tipologie di supporto fisico
-    //enum pm_type {CD, Vinile, Cassetta};
-    // tipologie di supporto digitale
-    //enum dm_name {Spotify, AppleMusic, Tidal, AmazonMusic, Deezer, YouTubeMusic};
-
-    // raccolta di tutta la musica prodotta appartenente all'etichetta discografica:
+    // raccolta di tutta la musica prodotta, appartenente all'etichetta discografica:
     //  - pubblicata
-    //  NB: un album pubblicato, lo e' via supporto fisico che digitale !
+    //  NB: un album pubblicato, lo e' sia su supporto fisico che digitale !
+    //  NB: un album puo' essere in vendita/pubblicato su piu' supporti fisici/digitali
     vector<const Music*> released;
     // - non ancora pubblicata
     vector<const Music*> not_released;
@@ -35,18 +31,25 @@ public:
      *          - PER GLI ALBUM ANCORA NON PUBBLICATI (ovvero che andranno nel vettore 'not_released'
      *              -
      * @param   Album
-     * @ ECCEZIONI
+     * @ ECCEZIONI  da fare
      * @return  void
      */
     void insert(const Music*);
     /*
      * @brief   calcola e ritorna l'incasso totale di un album dato in input
-     * @pre     l'album passato per parametro deve essere pubblicato sia su supporto fisico che digitale
-     * @param   Release
-     * @ ECCEZIONI  nel caso album non sia pubblicato su supporto o fisico o digitale
+     * @pre     il nome dell'album passato per parametro deve essere pubblicato sia su supporto fisico che digitale
+     * @param   album_name
+     * @ ECCEZIONI ?? nel caso album non sia pubblicato su supporto o fisico o digitale
      * @return  double
      */
-    double getTotProfit(const Music*) const;
+    double getTotProfit(string album_name) const;
+    /*
+     * @brief   scansiona 'released' ed "estrae" tutte le pubblicazioni dell'album il cui nome e' dato in input
+     * @param   album_name
+     * @ ECCEZIONI
+     * @return  vector<const Album*>
+     */
+    vector<const Release*> getFromReleased(string album_name) const;
 };
 
 #endif // RECORDLABEL_H
