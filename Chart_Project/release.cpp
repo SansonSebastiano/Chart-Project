@@ -17,9 +17,9 @@ string Release::getInfo() const {
            "Pubblicato il : " + release_date.getDate();
 }
 
-string Release::profit_to_string(double input) {
+string Release::profit_to_string(double profit) {
     std::stringstream ss;
-    ss << std::fixed << std::setprecision(2) << input;
+    ss << std::fixed << std::setprecision(2) << profit;
 
     return ss.str() + " €";
 }

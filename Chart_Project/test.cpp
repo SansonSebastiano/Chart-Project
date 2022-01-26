@@ -3,7 +3,8 @@
 class test{
 public:
     void testing(){
-        Date d = Date(12, 01, 2000);
+
+        Date d = Date(12, 9, 2000);
         PhisycalMedium  *pm = new PhisycalMedium("Rap", "Flop", "Salmo", d, CD, 1450);
         DigitalMedium *dm = new DigitalMedium("Rap", "Flop", "Salmo", d, Spotify, 1450450);
 
@@ -14,16 +15,16 @@ public:
         rl.insert(dm);
         rl.insert(a);
 
-
+        // FUNZIONA
         auto x = rl.getFromReleased("Flop");
         for (auto it = x.begin(); it != x.end(); ++it)
             cout << (*it)->getInfo() << endl << endl;
-
-        // DA Sistemare
-        /*
-        std::stringstream ss;
-        ss << std::fixed << std::setprecision(2) << rl.getTotProfit("Flop");
-        cout << "Tot profit: " << ss.str() + " €";
+/*
+        // problema
+        cout << "debug 1" << endl;
+        double y = rl.getTotProfit("Flop");
+        cout << "debug 2";      // non viene stampato
+        cout << Release::profit_to_string(y);
         */
     }
 };

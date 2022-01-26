@@ -1,11 +1,11 @@
 #include "recordlabel.h"
 
-void RecordLabel::insert(const Music* m) {
-    if (dynamic_cast<const Release*>(m))    // se m e' un album che e' stato pubblicato
-        released.push_back(m);
-    else not_released.push_back(m);
+void RecordLabel::insert(const Album* input) {
+    if (dynamic_cast<const Release*>(input))    // se m e' un album che e' stato pubblicato
+        released.push_back(input);
+    else not_released.push_back(input);
 }
-// DA TESTARE
+// FUNZIONA, pero' quando uso il risultato da problemi (vedi test.cpp: da riga 23)
 double RecordLabel::getTotProfit(string album_name) const {
     // estrarre un album, ovvero raccogliere tutte le pubblicazioni di quell'album, che possono essere su piu' supporti fisici/digitali
     // => dunque da 'released'
@@ -14,6 +14,8 @@ double RecordLabel::getTotProfit(string album_name) const {
     double tot_profit = 0.0;
     for(auto it = allReleases.begin(); it != allReleases.end(); ++it)
         tot_profit += (*it)->getProfit();
+    // FUNZIONA
+    //cout << Release::profit_to_string(tot_profit) << endl;
     return tot_profit;
 }
 

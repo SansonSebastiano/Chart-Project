@@ -33,22 +33,22 @@ public:
      *              -
      *          - PER GLI ALBUM ANCORA NON PUBBLICATI (ovvero che andranno nel vettore 'not_released'
      *              -
-     * @param   Album
+     * @param   const Album*
      * @ ECCEZIONI  da fare
      * @return  void
      */
-    void insert(const Music*);
+    void insert(const Album* input);
     /*
      * @brief   calcola e ritorna l'incasso totale di un album dato in input
      * @pre     il nome dell'album passato per parametro deve essere pubblicato sia su supporto fisico che digitale
-     * @param   album_name
+     * @param   string album_name
      * @ ECCEZIONI ?? nel caso album non sia pubblicato su supporto o fisico o digitale
      * @return  double
      */
     double getTotProfit(string album_name) const;
     /*
      * @brief   scansiona 'released' ed "estrae" tutte le pubblicazioni dell'album il cui nome e' dato in input
-     * @param   album_name
+     * @param   string album_name
      * @ ECCEZIONI  nel caso il nome dell'album sia errato o non sia stato pubblicato
      * @return  vector<const Album*>
      */
