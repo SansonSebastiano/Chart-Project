@@ -24,11 +24,9 @@ uint DigitalMedium::getListeners() const{
 }
 
 string DigitalMedium::getInfo() const {
-    std::stringstream ss;
-    ss << std::fixed << std::setprecision(2) << getProfit();
 
     return Release::getInfo() + "\n" +
            "Piattaforma: " + platform_str[platform] + "\n" +
            "Ascoltatori Annui: " + std::to_string(listeners) + "\n" +
-           "Profitto Annuo: " + ss.str() + " €";
+           "Profitto Annuo: " + profit_to_string(getProfit());
 }

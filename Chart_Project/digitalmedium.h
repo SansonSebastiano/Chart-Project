@@ -1,9 +1,6 @@
 #ifndef DIGITALMEDIUM_H
 #define DIGITALMEDIUM_H
 
-#include<sstream>
-#include<iomanip>
-
 #include "release.h"
 
 // nome del servizio di streaming musicale

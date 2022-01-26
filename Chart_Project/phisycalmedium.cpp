@@ -24,11 +24,8 @@ string PhisycalMedium::getSupport() const{
 }
 
 string PhisycalMedium::getInfo() const {
-    std::stringstream ss;
-    ss << std::fixed << std::setprecision(2) << getProfit();
-
     return Release::getInfo() + "\n" +
            "Supporto Fisico: " + support_str[support] + "\n" +
            "Vendite Annue: " + std::to_string(num_sales) + "\n" +
-           "Profitto Annuo: " + ss.str() + " €";
+           "Profitto Annuo: " + profit_to_string(getProfit());
 }

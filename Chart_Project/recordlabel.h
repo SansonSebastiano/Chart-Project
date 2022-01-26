@@ -23,6 +23,9 @@ private:
     vector<const Music*> not_released;
 public:
     RecordLabel() = default;
+
+    // DISTRUTTORE
+
     /*
      * @brief   pensa a come fare la insert:
      *          - PER GLI ALBUM PUBBLICATI (ovvero che andranno nel vettore 'released'
@@ -46,7 +49,7 @@ public:
     /*
      * @brief   scansiona 'released' ed "estrae" tutte le pubblicazioni dell'album il cui nome e' dato in input
      * @param   album_name
-     * @ ECCEZIONI
+     * @ ECCEZIONI  nel caso il nome dell'album sia errato o non sia stato pubblicato
      * @return  vector<const Album*>
      */
     vector<const Release*> getFromReleased(string album_name) const;

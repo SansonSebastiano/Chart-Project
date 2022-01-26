@@ -1,14 +1,29 @@
-#include "phisycalmedium.h"
-#include "digitalmedium.h"
+#include "recordlabel.h"
 
 class test{
 public:
     void testing(){
         Date d = Date(12, 01, 2000);
-        PhisycalMedium pm = PhisycalMedium("Rap", "Flop", "Salmo", d, CD, 1450);
-        DigitalMedium dm = DigitalMedium("Rap", "Flop", "Salmo", d, Spotify, 1450450);
+        PhisycalMedium  *pm = new PhisycalMedium("Rap", "Flop", "Salmo", d, CD, 1450);
+        DigitalMedium *dm = new DigitalMedium("Rap", "Flop", "Salmo", d, Spotify, 1450450);
 
-        //dynamic_cast<Album*>(pm)
-        cout << pm.getInfo() << endl << endl << dm.getInfo() << endl;
+        Album *a = new Album("Rap", "Nessuno", "Articolo 31");
+
+        RecordLabel rl;
+        rl.insert(pm);
+        rl.insert(dm);
+        rl.insert(a);
+
+
+        auto x = rl.getFromReleased("Flop");
+        for (auto it = x.begin(); it != x.end(); ++it)
+            cout << (*it)->getInfo() << endl << endl;
+
+        // DA Sistemare
+        /*
+        std::stringstream ss;
+        ss << std::fixed << std::setprecision(2) << rl.getTotProfit("Flop");
+        cout << "Tot profit: " << ss.str() + " €";
+        */
     }
 };

@@ -1,9 +1,6 @@
 #ifndef PHISYCALMEDIUM_H
 #define PHISYCALMEDIUM_H
 
-#include<sstream>
-#include<iomanip>
-
 #include "release.h"
 
 // tipologie di supporto fisico

@@ -1,5 +1,5 @@
 #include "recordlabel.h"
-// DA TESTARE
+
 void RecordLabel::insert(const Music* m) {
     if (dynamic_cast<const Release*>(m))    // se m e' un album che e' stato pubblicato
         released.push_back(m);
@@ -16,7 +16,7 @@ double RecordLabel::getTotProfit(string album_name) const {
         tot_profit += (*it)->getProfit();
     return tot_profit;
 }
-// DA TESTARE
+
 vector<const Release*> RecordLabel::getFromReleased(string album_name) const{
     vector<const Release*> result;
     const Release* pa = nullptr;

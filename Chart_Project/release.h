@@ -1,6 +1,9 @@
 #ifndef RELEASE_H
 #define RELEASE_H
 
+#include<sstream>
+#include<iomanip>
+
 #include "album.h"
 #include "date.h"
 
@@ -32,6 +35,12 @@ public:
      * @return  void
      */
     virtual string getInfo() const override;
+    /*
+     * @brief   converte un double in un stringa e lo "formatta in euro"
+     * @param   double
+     * @return  string
+     */
+    static string profit_to_string(double input);
 };
 
 #endif // RELEASE_H

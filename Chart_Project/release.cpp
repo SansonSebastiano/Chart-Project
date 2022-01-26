@@ -16,3 +16,10 @@ string Release::getInfo() const {
     return Album::getInfo() + "\n" +
            "Pubblicato il : " + release_date.getDate();
 }
+
+string Release::profit_to_string(double input) {
+    std::stringstream ss;
+    ss << std::fixed << std::setprecision(2) << input;
+
+    return ss.str() + " €";
+}
