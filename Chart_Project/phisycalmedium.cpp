@@ -3,7 +3,7 @@
 const double PhisycalMedium::price = 12.00;
 const char* PhisycalMedium::support_str [] = {"CD", "Vinile", "Cassetta"};
 
-PhisycalMedium::PhisycalMedium(string _genre, string _album_name, string _album_artist, Date _rd, Support _support, uint _ns) :
+PhisycalMedium::PhisycalMedium(string _genre, string _album_name, string _album_artist, const Date& _rd, Support _support, uint _ns) :
     Release(_genre, _album_name, _album_artist, _rd),
     support(_support),
     num_sales(_ns)

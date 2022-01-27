@@ -29,3 +29,39 @@ vector<const Release*> RecordLabel::getFromReleased(string album_name) const{
     }
     return result;
 }
+
+// DA TESTARE
+void RecordLabel::release(const Album *album, const Date& date, Support support, uint num_sales){
+    bool found = false;
+   for (auto it = not_released.begin(); it != not_released.end() && !found; ++it) {
+       if(dynamic_cast<const Album*>(*it)->getAlbumName() == album->getAlbumName()) {
+           // CONTROLLARE SE NON E' GIA' STATO ELIMINATO, ALTRIMENTI ERRORE
+           not_released.erase(it);
+           found = true;
+       }
+   }
+   const PM newPMRelease (album->getGenre(), album->getAlbumName(), album->getAlbumArtist(), date, support, num_sales);
+   insert(&newPMRelease);
+}
+
+// DA TESTARE
+void RecordLabel::release(const Album *album, const Date &date, Platform platform, uint listeners) {
+    bool found = false;
+    for(auto it = not_released.begin(); it != not_released.end() && !found; ++it){
+        if(dynamic_cast<const Album*>(*it)->getAlbumName() == album->getAlbumName()){
+            // CONTROLLARE SE NON E' GIA' STATO ELIMINATO, ALTRIMENTI ERRORE
+            not_released.erase(it);
+            found = true;
+        }
+    }
+    const DM newDMRelease (album->getGenre(), album->getAlbumName(), album->getAlbumArtist(), date, platform, listeners);
+    insert(&newDMRelease);
+}
+
+vector<const Music*> RecordLabel::getReleased() const{
+    return released;
+}
+
+vector<const Music*> RecordLabel::getNotReleased() const{
+    return not_released;
+}

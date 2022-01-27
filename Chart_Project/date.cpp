@@ -18,13 +18,13 @@ Date::Date(uint _day, uint _month, uint _year) {
 }
 
 string Date::getDate() const {
-    if (month > 0 && month < 10)
-        return std::to_string(day) + "/" +
-               "0" + std::to_string(month) + "/" +
-               std::to_string(year);
     return std::to_string(day) + "/" +
            std::to_string(month) + "/" +
            std::to_string(year);
+}
+
+uint Date::getYear() const {
+    return year;
 }
 
 // Overloading operatori di confronto tra date

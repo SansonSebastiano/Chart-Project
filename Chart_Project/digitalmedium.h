@@ -10,7 +10,7 @@ class DigitalMedium : public Release{
 private:
     // nome della piattaforma
    Platform platform;
-   // ascoltatori annui
+   // ascoltatori annui, relativo all'anno di pubblicazione
    uint listeners;
    // costo per ascolto in €
    static const double price;
@@ -22,7 +22,7 @@ private:
     // @brief  converte enum to string
     static const char* platform_str[];
 public:
-    DigitalMedium(string _genre, string _album_name, string _album_artist, Date _rd, Platform _platform, uint _listeners);
+    DigitalMedium(string _genre, string _album_name, string _album_artist, const Date& _rd, Platform _platform, uint _listeners);
     virtual ~DigitalMedium() = default;
     /*
      * @brief   restituisce il nome del servizio digitale

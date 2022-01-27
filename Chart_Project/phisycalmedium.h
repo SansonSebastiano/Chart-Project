@@ -10,7 +10,7 @@ class PhisycalMedium : public Release{
 private:
     // tipo di supporto fisico utilizzato per la vendita dell'album
     Support support;
-    // numero di copie vendute all'anno
+    // numero di copie vendute all'anno, relativo all'anno di pubblicazione
     uint num_sales;
     // costo per copia in €
     static const double price;
@@ -22,7 +22,7 @@ private:
      // @brief  converte enum to string
      static const char *support_str[];
 public:
-    PhisycalMedium(string _genre, string _album_name, string _album_artist, Date _rd, Support _support, uint _ns);
+    PhisycalMedium(string _genre, string _album_name, string _album_artist, const Date& _rd, Support _support, uint _ns);
     virtual ~PhisycalMedium() = default;
     /*
      * @brief   restituisce il numero di copie vendute

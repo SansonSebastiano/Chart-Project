@@ -53,6 +53,18 @@ public:
      * @return  vector<const Album*>
      */
     vector<const Release*> getFromReleased(string album_name) const;
+    /*
+     * @brief   pubblica un album su un supporto fisico/digitale
+     * @param   const Album*, Date, Support/Platform, num_sales/listeners
+     * @ ECCEZIONI  ??
+     * @return  void
+     */
+    void release(const Album* album, const Date& date, Support support, uint num_sales);
+    void release(const Album* album, const Date& date, Platform platform, uint listeners);
+
+    //TEST
+    vector<const Music*> getReleased() const;
+    vector<const Music*> getNotReleased() const;
 };
 
 #endif // RECORDLABEL_H

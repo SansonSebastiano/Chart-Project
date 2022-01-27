@@ -25,6 +25,11 @@ public:
       */
      string getDate() const;
      /*
+      * @brief   restituisce l'anno
+      * @return  unsigned int
+      */
+     uint getYear() const;
+     /*
       * @brief      overloading operatori per il confronto tra date
       * @param d    data da confrontare
       * @return     bool

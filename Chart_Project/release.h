@@ -11,7 +11,7 @@ class Release : public Album{
 private:
     Date release_date;
 protected:
-    double profit;  // in €
+    double profit;  // annuo in €: relativo all'anno della data di pubblicazione
     /*
      * @brief   imposta il guadagno di una album
      * @return  void

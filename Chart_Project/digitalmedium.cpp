@@ -3,7 +3,7 @@
 const double DigitalMedium::price = 0.35;
 const char* DigitalMedium::platform_str[] = {"Spotify", "AppleMusic", "Tidal", "AmazonMusic", "Deezer", "YouTubeMusic"};
 
-DigitalMedium::DigitalMedium( string _genre, string _album_name, string _album_artist, Date _rd, Platform _platform, uint _listeners) :
+DigitalMedium::DigitalMedium( string _genre, string _album_name, string _album_artist, const Date& _rd, Platform _platform, uint _listeners) :
     Release(_genre, _album_name, _album_artist, _rd),
     platform(_platform),
     listeners(_listeners)

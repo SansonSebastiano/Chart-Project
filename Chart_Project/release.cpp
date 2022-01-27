@@ -23,3 +23,4 @@ string Release::profit_to_string(double profit) {
 
     return ss.str() + " €";
 }
+
