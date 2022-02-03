@@ -8,7 +8,7 @@ void RecordLabel::insert(const Album* input) {
 
 double RecordLabel::getTotProfit(string album_name) const {
     // estrarre un album, ovvero raccogliere tutte le pubblicazioni di quell'album, che possono essere su piu' supporti fisici/digitali
-    // => dunque da 'released'
+    // => estrarre dunque da 'released'
     vector<const Release*> allReleases = getReleasedByName(album_name);
     // sommatoria dei vari profitti per ottenere il guadagno complessivo
     double tot_profit = 0.0;
@@ -29,31 +29,45 @@ vector<const Release*> RecordLabel::getReleasedByName(string album_name) const{
     return result;
 }
 
-// DA TESTARE
-void RecordLabel::release(const Album *album, const Date& date, Support support, uint num_sales){
-    bool found = false;
-   for (auto it = not_released.begin(); it != not_released.end() && !found; ++it) {
-       if(dynamic_cast<const Album*>(*it)->getAlbumName() == album->getAlbumName()) {
-           insert(new PM(album->getGenre(), album->getAlbumName(), album->getAlbumArtist(), date, support, num_sales));
-           // CONTROLLARE SE NON E' GIA' STATO ELIMINATO, ALTRIMENTI ERRORE
-           // FARE CORRETTAMENTE L'ELIMINAZIONE (GUARDA APPELLO 1 2018-2019)
-           //not_released.erase(it);
-           found = true;
-       }
-   }
+vector<const Release*> RecordLabel::getReleasedByGenre(string genre) const{
+    vector<const Release*> result;
+    const Release* pa = nullptr;
+    for(auto it = released.begin(); it != released.end(); ++it){
+        pa = dynamic_cast<const Release*>(*it);
+        if (pa && pa->getGenre() == genre)
+            result.push_back(pa);
+    }
+    return result;
 }
 
 // DA TESTARE
+vector<const Release*> RecordLabel::getBetweenYears(vector<const Release*> v, Date from, Date to) const{
+    vector<const Release*> result;
+    const Release* pa = nullptr;
+    for(auto it = v.begin(); it != v.end(); ++it){
+        pa = dynamic_cast<const Release*>(*it);
+        if(pa && (pa->getReleaseDate() >= from || pa->getReleaseDate() <= to))
+            result.push_back(pa);
+    }
+    return result;
+}
+
+void RecordLabel::release(const Album *album, const Date& date, Support support, uint num_sales){
+    bool found = false;
+   for (auto it = not_released.begin(); it != not_released.end() && !found; ++it)
+       if(dynamic_cast<const Album*>(*it)->getAlbumName() == album->getAlbumName()) {
+           insert(new PM(album->getGenre(), album->getAlbumName(), album->getAlbumArtist(), date, support, num_sales));
+           found = true;
+       }
+}
+
 void RecordLabel::release(const Album *album, const Date &date, Platform platform, uint listeners) {
     bool found = false;
-    for(auto it = not_released.begin(); it != not_released.end() && !found; ++it){
+    for(auto it = not_released.begin(); it != not_released.end() && !found; ++it)
         if(dynamic_cast<const Album*>(*it)->getAlbumName() == album->getAlbumName()){
             insert(new DM(album->getGenre(), album->getAlbumName(), album->getAlbumArtist(), date, platform, listeners));
-            // CONTROLLARE SE NON E' GIA' STATO ELIMINATO, ALTRIMENTI ERRORE
-            //not_released.erase(it);
             found = true;
         }
-    }
 }
 
 vector<const Music*> RecordLabel::getReleased() const{

@@ -54,6 +54,20 @@ public:
      */
     vector<const Release*> getReleasedByName(string album_name) const;
     /*
+     * @brief   scansiona 'released' ed "estrae" tutti gli album dello stesso genere dato in input
+     * @param   string genre
+     * @ ECCEZIONI  ??
+     * @return  vector<const Album*>
+     */
+    vector<const Release*> getReleasedByGenre(string genre) const;
+    /*
+     * @brief   scansiona 'released' ed "estrae" tutti gli album pubblicati in un intervallo di anni
+     * @param   vector<const Release*> v, Date from, Date to
+     * @ ECCEZIONI  ??
+     * @return  vector<const Album*>
+     */
+    vector<const Release*> getBetweenYears(vector<const Release*> v, Date from, Date to) const;
+    /*
      * @brief   restituisce gli album pubblicati
      * @return  vector<const Music*>
      */
