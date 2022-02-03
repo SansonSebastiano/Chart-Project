@@ -8,7 +8,7 @@ Date Release::getReleaseDate() const {
     return release_date;
 }
 
-double Release::getProfit() const{
+double Release::getProfit() const {
     return profit;
 }
 

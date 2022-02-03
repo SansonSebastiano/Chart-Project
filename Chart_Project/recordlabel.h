@@ -52,19 +52,33 @@ public:
      * @ ECCEZIONI  nel caso il nome dell'album sia errato o non sia stato pubblicato
      * @return  vector<const Album*>
      */
-    vector<const Release*> getFromReleased(string album_name) const;
+    vector<const Release*> getReleasedByName(string album_name) const;
+    /*
+     * @brief   restituisce gli album pubblicati
+     * @return  vector<const Music*>
+     */
+    vector<const Music*> getReleased() const;
+    /*
+     * @brief   restituisce gli album non pubblicati
+     * @return  vector<const Music*>
+     */
+    vector<const Music*> getNotReleased() const;
     /*
      * @brief   pubblica un album su un supporto fisico/digitale
      * @param   const Album*, Date, Support/Platform, num_sales/listeners
      * @ ECCEZIONI  ??
      * @return  void
+     * PROBLEMA ELIMINAZIONE
      */
     void release(const Album* album, const Date& date, Support support, uint num_sales);
     void release(const Album* album, const Date& date, Platform platform, uint listeners);
-
-    //TEST
-    vector<const Music*> getReleased() const;
-    vector<const Music*> getNotReleased() const;
+    /*
+     * @brief   rimuove un album da not_release
+     * @param   const Album*
+     * @ ECCEZIONI  ??
+     * @return  void
+     */
+    void removeFromNotReleased(const Album* album);
 };
 
 #endif // RECORDLABEL_H

@@ -17,19 +17,19 @@ public:
 
         /*
         // FUNZIONA
-        auto x = rl.getFromReleased("Flop");
+        auto x = rl.getReleasedByName("Flop");
         for (auto it = x.begin(); it != x.end(); ++it)
             cout << (*it)->getInfo() << endl << endl;
-        */
 
-        /*
-        // problema
-        cout << "debug 1" << endl;
+
+        // FUNZIONA
         double y = rl.getTotProfit("Flop");
-        cout << "debug 2";      // non viene stampato
-        cout << Release::profit_to_string(y);
+        cout << "Profitto totale: " + Release::profit_to_string(y) << endl;
         */
 
+
+        // FUNZIONA
+        /*
         auto r = rl.getReleased();
         auto nr = rl.getNotReleased();
 
@@ -39,11 +39,23 @@ public:
         for (auto it = nr.begin(); it != nr.end(); ++it)
             cout << (*it)->getInfo() << endl << endl;
 
+        cout << "----------------------------" << endl;
+
         const Date dt(9, 9, 1998);
 
         rl.release(a, dt, Vinile, 60023);
         rl.release(a, dt, AppleMusic, 99999);
 
+        rl.removeFromNotReleased(a);
 
+        auto r1 = rl.getReleased();
+        auto nr1 = rl.getNotReleased();
+
+        for (auto it = r1.begin(); it != r1.end(); ++it)
+            cout << (*it)->getInfo() << endl << endl;
+
+        for (auto it = nr1.begin(); it != nr1.end(); ++it)
+            cout << (*it)->getInfo() << endl << endl;
+        */
     }
 };
