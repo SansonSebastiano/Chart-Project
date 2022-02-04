@@ -46,7 +46,7 @@ vector<const Release*> RecordLabel::getBetweenYears(vector<const Release*> v, Da
     const Release* pa = nullptr;
     for(auto it = v.begin(); it != v.end(); ++it){
         pa = dynamic_cast<const Release*>(*it);
-        if(pa && (pa->getReleaseDate() >= from || pa->getReleaseDate() <= to))
+        if(pa && (pa->getReleaseDate() >= from && pa->getReleaseDate() <= to))
             result.push_back(pa);
     }
     return result;
