@@ -12,8 +12,12 @@ private:
     Support support;
     // numero di copie vendute all'anno, relativo all'anno di pubblicazione
     uint num_sales;
-    // costo per copia in €
-    static const double price;
+    // costo per copia CD in € di default
+    static const double cd_price;
+    // costo per copia Vinile in € di default
+    static const double vnl_price;
+    // costo per copia Cassetta in € di default
+    static const double cst_price;
     /*
      * @brief   imposta il guadagno di una album: prodotto tra #copie vendute e il prezzo per copia
      * @return  void

@@ -1,6 +1,9 @@
 #include "phisycalmedium.h"
 
-const double PhisycalMedium::price = 12.00;
+const double PhisycalMedium::cd_price = 15.00;
+const double PhisycalMedium::vnl_price = 25.00;
+const double PhisycalMedium::cst_price = 15.00;
+
 const char* PhisycalMedium::support_str [] = {"CD", "Vinile", "Cassetta"};
 
 PhisycalMedium::PhisycalMedium(string _genre, string _album_name, string _album_artist, const Date& _rd, Support _support, uint _ns) :
@@ -9,7 +12,12 @@ PhisycalMedium::PhisycalMedium(string _genre, string _album_name, string _album_
     num_sales(_ns) { PhisycalMedium::setProfit(); }
 
 void PhisycalMedium::setProfit() {
-    profit = price * num_sales;
+    if (support == CD)
+        profit = cd_price * num_sales;
+    else if (support == Vinile)
+        profit = vnl_price * num_sales;
+    else
+        profit = cst_price * num_sales;
 }
 
 uint PhisycalMedium::getNumSales() const{

@@ -1,9 +1,18 @@
 #include "recordlabel.h"
 
-void RecordLabel::insert(const Album* input) {
-    if (dynamic_cast<const Release*>(input))    // se m e' un album che e' stato pubblicato
-        released.push_back(input);
-    else not_released.push_back(input);
+RecordLabel::RecordLabel(string _name) : RL_name(_name) {}
+
+RecordLabel::~RecordLabel() {
+    for(auto r : released) delete r;
+    for(auto nr : not_released) delete nr;
+}
+
+string RecordLabel::getRLName() const { return RL_name; }
+
+void RecordLabel::insert(const Album* album) {
+    if (dynamic_cast<const Release*>(album))    // se '*album' e' un album che e' stato pubblicato
+        released.push_back(album);
+    else not_released.push_back(album);
 }
 
 vector<const Release*> RecordLabel::getReleasedByName(string album_name) const{
@@ -34,6 +43,18 @@ vector<const Release*> RecordLabel::getReleasedByArtist(string artist) const{
     for(auto it = released.begin(); it != released.end(); ++it){
         pr = dynamic_cast<const Release*>(*it);
         if(pr && pr->getAlbumArtist() == artist)
+            result.push_back(pr);
+    }
+    return result;
+}
+
+// DA TESTARE
+vector<const Release*> RecordLabel::getReleasedByYear(Date date) const{
+    vector<const Release*> result;
+    const Release* pr = nullptr;
+    for(auto it = released.begin(); it != released.end(); ++it){
+        pr = dynamic_cast<const Release*>(*it);
+        if(pr && pr->getReleaseDate().getYear() == date.getYear())
             result.push_back(pr);
     }
     return result;
@@ -77,6 +98,24 @@ double RecordLabel::getTotProfit(vector<const Release*> r) const {
     for(auto it = r.begin(); it != r.end(); ++it)
         tot_profit += (*it)->getProfit();
     return tot_profit;
+}
+
+// DA TESTARE
+uint RecordLabel::getTotSales(vector<const Release *> r) const{
+    uint tot_sales = 0;
+    for(auto it = r.begin(); it != r.end(); ++it)
+        if(dynamic_cast<const PM*>(*it))
+            tot_sales += dynamic_cast<const PM*>(*it)->getNumSales();
+    return tot_sales;
+}
+
+// DA TESTARE
+uint RecordLabel::getTotListeners(vector<const Release *> r) const{
+    uint tot_listeners = 0;
+    for(auto it = r.begin(); it != r.end(); ++it)
+        if(dynamic_cast<const DM*>(*it))
+            tot_listeners += dynamic_cast<const DM*>(*it)->getListeners();
+    return tot_listeners;
 }
 
 void RecordLabel::release(const Album *album, const Date& date, Support support, uint num_sales){

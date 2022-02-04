@@ -1,4 +1,5 @@
 QT       += core gui
+QT       += xml
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -10,10 +11,12 @@ CONFIG += c++11
 
 SOURCES += \
     album.cpp \
+    controller.cpp \
     date.cpp \
     digitalmedium.cpp \
     main.cpp \
     mainwindow.cpp \
+    model.cpp \
     music.cpp \
     phisycalmedium.cpp \
     recordlabel.cpp \
@@ -22,10 +25,12 @@ SOURCES += \
 
 HEADERS += \
     album.h \
+    controller.h \
     date.h \
     digitalmedium.h \
     exceptions.h \
     mainwindow.h \
+    model.h \
     music.h \
     phisycalmedium.h \
     recordlabel.h \
