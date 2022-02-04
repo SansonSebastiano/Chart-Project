@@ -12,8 +12,8 @@ void DigitalMedium::setProfit(){
     profit = price * listeners;
 }
 
-string DigitalMedium::getPlatform() const{
-    return platform_str[platform];
+Platform DigitalMedium::getPlatform() const{
+    return platform;
 }
 
 uint DigitalMedium::getListeners() const{

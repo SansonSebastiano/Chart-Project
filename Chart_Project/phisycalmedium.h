@@ -30,10 +30,10 @@ public:
      */
     uint getNumSales() const;
     /*
-     * @brief   restituisce la tipologia del supporto fisico = {CD, Vinile, Cassetta}
-     * @return  string
+     * @brief   restituisce la tipologia del supporto fisico
+     * @return  Support
      */
-    string getSupport() const;
+    Support getSupport() const;
     /*
      * @brief   restituisce informazioni riguardante il prodotto musicale
      * @return  void

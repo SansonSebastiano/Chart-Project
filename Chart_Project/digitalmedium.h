@@ -26,9 +26,9 @@ public:
     virtual ~DigitalMedium() = default;
     /*
      * @brief   restituisce il nome del servizio digitale
-     * @return  string
+     * @return  Platform
      */
-    string getPlatform() const;
+    Platform getPlatform() const;
     /*
      * @brief   restituisce il numero di ascoltatori di un album
      * @return  unsigned int

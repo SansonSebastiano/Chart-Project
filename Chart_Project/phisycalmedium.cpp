@@ -16,8 +16,8 @@ uint PhisycalMedium::getNumSales() const{
     return num_sales;
 }
 
-string PhisycalMedium::getSupport() const{
-    return support_str[support];
+Support PhisycalMedium::getSupport() const{
+    return support;
 }
 
 string PhisycalMedium::getInfo() const {
