@@ -1,28 +1,99 @@
 #include <QtXml>
 #include <QtDebug>
+#include <QTextStream>
 
 #include "recordlabel.h"
 
 class test{
 public:
-    void retrieveData(QDomElement root, QString tag, QString att){
-        QDomNodeList nodes = root.elementsByTagName(tag);
-        qDebug() << "# nodes = " << nodes.count() << endl;
-
-        for(int i = 0; i < nodes.count(); i++){
-            QDomNode node = nodes.at(i);
-            if(node.isElement()){
-                QDomElement elem = node.toElement();
-                qDebug() << elem.attribute(att);
-            }
+    void writeXMLFile(QString path){
+        QFile file(path + "sample_1.xml");
+        if(!file.open(QFile::WriteOnly | QFile::Text)){
+            qDebug() << "already opened or there is another issue" << endl;
+            file.close();
         }
+        QTextStream content(&file);
+
+        QDomDocument document;
+
+        QDomElement root = document.createElement("catalog");
+        document.appendChild(root);
+
+        QDomElement album = document.createElement("album");
+        album.setAttribute("name", "Flop");
+        album.setAttribute("artist", "Salmo");
+        album.setAttribute("genre", "Rap");
+        root.appendChild(album);
+
+        album = document.createElement("album");
+        album.setAttribute("name", "Nevermind");
+        album.setAttribute("artist", "Nirvana");
+        album.setAttribute("genre", "Rock");
+        root.appendChild(album);
+
+        QDomElement date = document.createElement("release");
+        date.setAttribute("day", "10");
+        date.setAttribute("month", "9");
+        date.setAttribute("year", "2013");
+        QDomElement pm = document.createElement("PM");
+        pm.setAttribute("name", "Midnite");
+        pm.setAttribute("artist", "Salmo");
+        pm.setAttribute("genre", "Rap");
+        pm.setAttribute("release", "10/9/2013");
+        pm.setAttribute("num_sales", "340243");
+        pm.setAttribute("support", "Vinile");
+        //pm.setAttribute("profit", "0");       // DA DEFINIRE
+        pm.appendChild(date);
+        root.appendChild(pm);
+
+        // per DM analogo a PM
+
+        content << document.toString();
+    }
+
+    void loadXMLFile(QString path){
+        QDomDocument document;
+        QFile file(path + "sample_1.xml");
+        if(!file.open(QIODevice::ReadOnly))
+            qDebug() << "Error while loading file" << endl;
+        document.setContent(&file);
+        file.close();
+
+        QDomElement root = document.documentElement();
+        QDomElement node = root.firstChild().toElement();
+
+        QString data = "";
+
+        while (!node.isNull()) {
+            //qDebug() << node.tagName();
+            if(node.tagName() == "album"){
+                while (!node.isNull()) {
+                    QString name = node.attribute("name", "name");
+                    QString artist = node.attribute("artist", "artist");
+                    QString genre = node.attribute("genre", "genre");
+
+                    data.append(name).append(" - ").append(artist).append(" - ").append(genre).append("\n");
+                    node = node.nextSibling().toElement();
+                }
+            }
+            node = node.nextSibling().toElement();
+        }
+        cout << data.toStdString() << endl;
     }
 
     void testing(){
-        QDir dir("../Chart_Project/RecordLabel");
-         qDebug() << dir << endl;
+        QDir dir(PROJECT_PATH);
+        QString dataSetPath(dir.absolutePath() + "/RecordLabel/");
+        //qDebug() << dataSetPath << endl;
+
+        writeXMLFile(dataSetPath);
+
+        //loadXMLFile(dataSetPath);
+
     }
 };
+
+
 
 /*
 const Date d (12, 9, 2000);

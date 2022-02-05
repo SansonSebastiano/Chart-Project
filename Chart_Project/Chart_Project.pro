@@ -1,3 +1,6 @@
+
+DEFINES += PROJECT_PATH=\"\\\"$${_PRO_FILE_PWD_}/\\\"\"
+
 QT       += core gui
 QT       += xml
 

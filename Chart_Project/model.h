@@ -7,14 +7,19 @@ class Model{
 private:
     RecordLabel *rl;
 public:
-    Model(string rl_name);
-    ~Model();
+    Model() = default;
+    ~Model();   // ??
+
+    // DA COMMENTARE
+    // DA DEFINIRE SE CONST
 
     void newRL(string rl_name);
 
-    void insertAlbum(RecordLabel _rl);
+    void insertAlbum(const Album* album);
 
-    void releaseAlbum(RecordLabel _rl);
+    void releaseAlbum(const Album* album);
+
+    void getInfo(/*parametri da definire*/);
 };
 
 #endif // MODEL_H
