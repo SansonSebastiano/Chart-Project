@@ -2,7 +2,7 @@
 #include <QtDebug>
 #include <QTextStream>
 
-#include "recordlabel.h"
+#include "controller.h"
 
 class test{
 public:
@@ -39,7 +39,6 @@ public:
         pm.setAttribute("name", "Midnite");
         pm.setAttribute("artist", "Salmo");
         pm.setAttribute("genre", "Rap");
-        pm.setAttribute("release", "10/9/2013");
         pm.setAttribute("num_sales", "340243");
         pm.setAttribute("support", "Vinile");
         //pm.setAttribute("profit", "0");       // DA DEFINIRE
@@ -52,6 +51,8 @@ public:
     }
 
     void loadXMLFile(QString path){
+        RecordLabel rl;
+
         QDomDocument document;
         QFile file(path + "sample_1.xml");
         if(!file.open(QIODevice::ReadOnly))
@@ -62,8 +63,6 @@ public:
         QDomElement root = document.documentElement();
         QDomElement node = root.firstChild().toElement();
 
-        QString data = "";
-
         while (!node.isNull()) {
             //qDebug() << node.tagName();
             if(node.tagName() == "album"){
@@ -72,16 +71,20 @@ public:
                     QString artist = node.attribute("artist", "artist");
                     QString genre = node.attribute("genre", "genre");
 
-                    data.append(name).append(" - ").append(artist).append(" - ").append(genre).append("\n");
+                    rl.insert(new Album(genre.toStdString(), name.toStdString(), artist.toStdString()));
+
                     node = node.nextSibling().toElement();
                 }
             }
             node = node.nextSibling().toElement();
         }
-        cout << data.toStdString() << endl;
+        auto v = rl.getNotReleased();
+        for(auto it = v.begin(); it != v.end(); ++it)
+            cout << (*it)->getInfo() << endl << endl;
     }
 
     void testing(){
+
         QDir dir(PROJECT_PATH);
         QString dataSetPath(dir.absolutePath() + "/RecordLabel/");
         //qDebug() << dataSetPath << endl;
@@ -89,6 +92,10 @@ public:
         writeXMLFile(dataSetPath);
 
         //loadXMLFile(dataSetPath);
+
+
+        //Controller ctrl;
+        //ctrl.loadDataFrom("sample_1");
 
     }
 };

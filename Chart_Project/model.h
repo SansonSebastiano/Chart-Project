@@ -5,10 +5,10 @@
 
 class Model{
 private:
-    RecordLabel *rl;
+    RecordLabel rl;
 public:
     Model() = default;
-    ~Model();   // ??
+    ~Model() = default;   // ??
 
     // DA COMMENTARE
     // DA DEFINIRE SE CONST
@@ -19,7 +19,7 @@ public:
 
     void releaseAlbum(const Album* album);
 
-    void getInfo(/*parametri da definire*/);
+    void getAllInfo() const;
 };
 
 #endif // MODEL_H

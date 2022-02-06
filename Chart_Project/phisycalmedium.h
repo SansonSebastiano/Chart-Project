@@ -3,8 +3,16 @@
 
 #include "release.h"
 
-// tipologie di supporto fisico
-enum Support {CD, Vinile, Cassetta};
+#define FOREACH_SUPPORTS(S) \
+    S(CD)           \
+    S(Vinile)       \
+    S(Cassetta)     \
+
+#define GENERATE_ENUM(ENUM) ENUM,
+#define GENERATE_STRING(STRING) #STRING,
+
+enum Support { FOREACH_SUPPORTS(GENERATE_ENUM) };
+static const char *SUPPORT_STRING[] = { FOREACH_SUPPORTS(GENERATE_STRING) };
 
 class PhisycalMedium : public Release{
 private:
@@ -24,7 +32,7 @@ private:
      */
      void setProfit() override;
      // @brief  converte enum to string
-     static const char *support_str[];
+    static const char *support_str[];
 public:
     PhisycalMedium(string _genre, string _album_name, string _album_artist, const Date& _rd, Support _support, uint _ns);
     virtual ~PhisycalMedium() = default;
@@ -43,6 +51,7 @@ public:
      * @return  void
      */
     virtual string getInfo() const override;
+
 };
 
 #endif // PHISYCALMEDIUM_H

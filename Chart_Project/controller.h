@@ -13,7 +13,7 @@ class Controller : public QObject{
     Q_OBJECT
 private:
     //Viewer *view;
-    Model *model;
+    Model model;
 
     static const QDir project_path;
     static const QString dataSetDir;

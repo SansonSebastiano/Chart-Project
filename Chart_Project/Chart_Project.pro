@@ -27,6 +27,7 @@ SOURCES += \
     test.cpp
 
 HEADERS += \
+    EnumResolver.h \
     album.h \
     controller.h \
     date.h \
