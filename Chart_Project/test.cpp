@@ -3,20 +3,22 @@
 #include <QTextStream>
 
 #include "controller.h"
+#include "EnumResolver.h"
 
 class test{
 public:
     void writeXMLFile(QString path){
+        QDomDocument document;
         QFile file(path + "sample_1.xml");
+
+
         if(!file.open(QFile::WriteOnly | QFile::Text)){
             qDebug() << "already opened or there is another issue" << endl;
             file.close();
         }
         QTextStream content(&file);
 
-        QDomDocument document;
-
-        QDomElement root = document.createElement("catalog");
+        QDomElement root = document.documentElement();
         document.appendChild(root);
 
         QDomElement album = document.createElement("album");
@@ -48,6 +50,7 @@ public:
         // per DM analogo a PM
 
         content << document.toString();
+        file.close();
     }
 
     void loadXMLFile(QString path){
@@ -84,6 +87,7 @@ public:
     }
 
     void testing(){
+
 
         QDir dir(PROJECT_PATH);
         QString dataSetPath(dir.absolutePath() + "/RecordLabel/");

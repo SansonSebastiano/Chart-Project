@@ -23,7 +23,7 @@ private:
     // - non ancora pubblicata
     vector<const Music*> not_released;
 public:
-    RecordLabel(string _name = "");
+    RecordLabel(string _name = ""); // TOGLIERE IL PARAMETRO DI DEFAULT ??
     ~RecordLabel();
     /*
      * @brief   ritorna il nome dell'etichetta discografica

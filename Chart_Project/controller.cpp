@@ -25,26 +25,24 @@ const Date Controller::readDate(QDomElement childNode){
 }
 
 const Album* Controller::readPM(QDomElement node){
-    EnumParser<Support> ep;
     return new PM(node.attribute("genre", "genre").toStdString(),        // genere musicale
                   node.attribute("name", "name").toStdString(),          // nome album
                   node.attribute("artist", "artist").toStdString(),      // artista
                   readDate(node.firstChildElement().toElement()),        // data pubblicazione
                   // supporto fisico
-                  ep.string_to_enum(node.attribute("support", "support").toStdString()),
+                  enum_to_string<Support>(node.attribute("support", "support").toStdString(), support_names, MAX_PVALUES),
                   // numero vendite
                   str_to_uint(node.attribute("num_sales", "num_sales").toStdString())
                  );
 }
 
 const Album* Controller::readDM(QDomElement node){
-    EnumParser<Platform> ep;
     return new DM(node.attribute("genre", "genre").toStdString(),        // genere musicale
                   node.attribute("name", "name").toStdString(),          // nome album
                   node.attribute("artist", "artist").toStdString(),      // artista
                   readDate(node.firstChildElement().toElement()),        // data pubblicazione
                   // piattaforma digitale
-                  ep.string_to_enum(node.attribute("platform", "platform").toStdString()),
+                  enum_to_string<Platform>(node.attribute("platform", "platform").toStdString(), platform_names, MAX_SVALUES),
                   // numero vendite
                   str_to_uint(node.attribute("listeners", "listeners").toStdString())
                 );
@@ -85,6 +83,19 @@ void Controller::loadDataFrom(QString label){
         node = node.nextSiblingElement().toElement();
     }
     // ALTRIMENTI IL FILE E' VUOTO?
+}
+
+void Controller::saveDataTo(QString label){
+    QFile file(project_path.absolutePath() + dataSetDir + label + ".xml");
+    qDebug() << project_path.absolutePath() + dataSetDir + label + ".xml" << endl;
+    if(!file.open(QFile::WriteOnly | QFile::Text))
+        qDebug() << "Already opened or there is another issue" << endl;
+
+    QTextStream content(&file);
+
+    QDomDocument document;
+    QDomElement root = document.createElement("catalog");
+
 }
 
 uint Controller::str_to_uint(string input){

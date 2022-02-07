@@ -4,8 +4,6 @@ const double PhisycalMedium::cd_price = 15.00;
 const double PhisycalMedium::vnl_price = 25.00;
 const double PhisycalMedium::cst_price = 15.00;
 
-const char* PhisycalMedium::support_str [] = {"CD", "Vinile", "Cassetta"};
-
 PhisycalMedium::PhisycalMedium(string _genre, string _album_name, string _album_artist, const Date& _rd, Support _support, uint _ns) :
     Release(_genre, _album_name, _album_artist, _rd),
     support(_support),
@@ -30,7 +28,7 @@ Support PhisycalMedium::getSupport() const{
 
 string PhisycalMedium::getInfo() const {
     return Release::getInfo() + "\n" +
-           "Supporto Fisico: " + support_str[support] + "\n" +
+           "Supporto Fisico: " + support_names[support] + "\n" +
            "Vendite Annue: " + std::to_string(num_sales) + "\n" +
            "Profitto Annuo: " + profit_to_string(getProfit());
 }

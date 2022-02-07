@@ -30,6 +30,9 @@ public:
     // DA DEFINIRE SE CONST
 
     void loadDataFrom(QString label);
+    void saveDataTo(QString label);
+    void newSave(QString newLabel);
+
     uint str_to_uint(string input);
 };
 

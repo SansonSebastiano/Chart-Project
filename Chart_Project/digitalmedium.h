@@ -3,8 +3,23 @@
 
 #include "release.h"
 
+#define FOREACH_PLATFORMS(P) \
+    P(Spotify)               \
+    P(AppleMusic)            \
+    P(Tidal)                 \
+    P(Deezer)                \
+    P(YoutubeMusic)          \
+    P(AmazonMusic)           \
+    P(None_Platform)         \
+
+#define GENERATE_ENUM(ENUM) ENUM,
+#define GENERATE_STRING(STRING) #STRING,
+
 // nome del servizio di streaming musicale
-enum Platform {Spotify, AppleMusic, Tidal, AmazonMusic, Deezer, YouTubeMusic};
+enum Platform { FOREACH_PLATFORMS(GENERATE_ENUM) };
+// @brief  converte enum to string
+static const string platform_names[]  = { FOREACH_PLATFORMS(GENERATE_STRING) };
+static const int MAX_SVALUES = None_Platform + 1;
 
 class DigitalMedium : public Release{
 private:
@@ -19,8 +34,6 @@ private:
     * @return  void
     */
     void setProfit() override;
-    // @brief  converte enum to string
-    static const char* platform_str[];
 public:
     DigitalMedium(string _genre, string _album_name, string _album_artist, const Date& _rd, Platform _platform, uint _listeners);
     virtual ~DigitalMedium() = default;

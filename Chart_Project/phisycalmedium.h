@@ -4,15 +4,20 @@
 #include "release.h"
 
 #define FOREACH_SUPPORTS(S) \
-    S(CD)           \
-    S(Vinile)       \
-    S(Cassetta)     \
+    S(CD)                   \
+    S(Vinile)               \
+    S(Cassetta)             \
+    S(None_Support)         \
 
 #define GENERATE_ENUM(ENUM) ENUM,
 #define GENERATE_STRING(STRING) #STRING,
 
+// nome del supporto fisico
 enum Support { FOREACH_SUPPORTS(GENERATE_ENUM) };
-static const char *SUPPORT_STRING[] = { FOREACH_SUPPORTS(GENERATE_STRING) };
+// @brief  converte enum to string
+static const string support_names[] = { FOREACH_SUPPORTS(GENERATE_STRING) };
+static const int MAX_PVALUES = None_Support + 1;
+
 
 class PhisycalMedium : public Release{
 private:
@@ -31,8 +36,6 @@ private:
      * @return  void
      */
      void setProfit() override;
-     // @brief  converte enum to string
-    static const char *support_str[];
 public:
     PhisycalMedium(string _genre, string _album_name, string _album_artist, const Date& _rd, Support _support, uint _ns);
     virtual ~PhisycalMedium() = default;

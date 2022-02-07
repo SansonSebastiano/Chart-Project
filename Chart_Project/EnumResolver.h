@@ -1,31 +1,15 @@
 #ifndef ENUMRESOLVER_H
 #define ENUMRESOLVER_H
 
-#include<string>
-#include <map>
+#include<iostream>
 
 template<class T>
-class EnumParser{
-private:
-    std::map<std::string, T> enumMap;
-public:
-    EnumParser() = default;
-    // DA RIVEDERE
-    ~EnumParser() = default;
+T enum_to_string(std::string input, const std::string names[], const int size){
+    for (int i = 0; i < size; i++)
+        if (input == names[i])
+            return static_cast<T>(i);
+    return static_cast<T>(size-1);
 
-    // DA COMMENTARE
-    T string_to_enum(const std::string& value){
-        auto it = enumMap.find(value);
-        if(it != enumMap.end())
-            return it->second;
-        else
-            throw std::runtime_error("string to enum failed");
-
-    }
-
-
-
-    //std::string enum_to_string(const T& value) { }
-};
+}
 
 #endif // ENUMRESOLVER_H
