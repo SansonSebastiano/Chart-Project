@@ -25,6 +25,16 @@ public:
       */
      string getDate() const;
      /*
+      * @brief   restituisce il giorno
+      * @return  unsigned int
+      */
+     uint getDay() const;
+     /*
+      * @brief   restituisce il mese
+      * @return  unsigned int
+      */
+     uint getMonth() const;
+     /*
       * @brief   restituisce l'anno
       * @return  unsigned int
       */

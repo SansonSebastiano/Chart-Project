@@ -52,6 +52,11 @@ public:
      * @return  void
      */
     virtual string getInfo() const override;
+    /*
+     * @brief   PLatform -> std::string
+     * @return  string
+     */
+    string platform_to_string(int value) const;
 };
 
 #endif // DIGITALMEDIUM_H

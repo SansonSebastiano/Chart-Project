@@ -26,3 +26,5 @@ string DigitalMedium::getInfo() const {
            "Ascoltatori Annui: " + std::to_string(listeners) + "\n" +
            "Profitto Annuo: " + profit_to_string(getProfit());
 }
+
+string DigitalMedium::platform_to_string(int value) const { return platform_names[value]; }

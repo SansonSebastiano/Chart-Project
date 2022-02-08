@@ -32,3 +32,5 @@ string PhisycalMedium::getInfo() const {
            "Vendite Annue: " + std::to_string(num_sales) + "\n" +
            "Profitto Annuo: " + profit_to_string(getProfit());
 }
+
+string PhisycalMedium::support_to_string(int value) const { return support_names[value]; }

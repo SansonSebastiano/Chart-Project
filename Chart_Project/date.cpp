@@ -23,9 +23,11 @@ string Date::getDate() const {
            std::to_string(year);
 }
 
-uint Date::getYear() const {
-    return year;
-}
+uint Date::getDay() const { return day; }
+
+uint Date::getMonth() const { return month; }
+
+uint Date::getYear() const { return year; }
 
 // Overloading operatori di confronto tra date
 

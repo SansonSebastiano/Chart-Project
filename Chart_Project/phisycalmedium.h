@@ -54,7 +54,11 @@ public:
      * @return  void
      */
     virtual string getInfo() const override;
-
+    /*
+     * @brief   Support -> std::string
+     * @return  string
+     */
+    string support_to_string(int value) const;
 };
 
 #endif // PHISYCALMEDIUM_H

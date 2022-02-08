@@ -8,49 +8,34 @@
 class test{
 public:
     void writeXMLFile(QString path){
-        QDomDocument document;
-        QFile file(path + "sample_1.xml");
+        QFile file(path + "sample.xml");
 
+        //qDebug() << path + "sample_1.xml" << endl;
+
+        if(!file.open(QFile::ReadOnly | QIODevice::Text))
+            qDebug() << "Errore while loading file" << endl;
+
+        QDomDocument document;
+        if(!document.setContent(&file))
+            qDebug() << "Loaded input file failed" << endl;
+        file.close();
+
+        QDomElement catalog = document.documentElement();
+
+        QDomElement album = document.createElement("album");
+        album.setAttribute("name", "2001");
+        album.setAttribute("artist", "Dr. Dre");
+        album.setAttribute("genre", "Rap");
+        document.firstChild().toElement().appendChild(album);
 
         if(!file.open(QFile::WriteOnly | QFile::Text)){
             qDebug() << "already opened or there is another issue" << endl;
             file.close();
         }
         QTextStream content(&file);
-
-        QDomElement root = document.documentElement();
-        document.appendChild(root);
-
-        QDomElement album = document.createElement("album");
-        album.setAttribute("name", "Flop");
-        album.setAttribute("artist", "Salmo");
-        album.setAttribute("genre", "Rap");
-        root.appendChild(album);
-
-        album = document.createElement("album");
-        album.setAttribute("name", "Nevermind");
-        album.setAttribute("artist", "Nirvana");
-        album.setAttribute("genre", "Rock");
-        root.appendChild(album);
-
-        QDomElement date = document.createElement("release");
-        date.setAttribute("day", "10");
-        date.setAttribute("month", "9");
-        date.setAttribute("year", "2013");
-        QDomElement pm = document.createElement("PM");
-        pm.setAttribute("name", "Midnite");
-        pm.setAttribute("artist", "Salmo");
-        pm.setAttribute("genre", "Rap");
-        pm.setAttribute("num_sales", "340243");
-        pm.setAttribute("support", "Vinile");
-        //pm.setAttribute("profit", "0");       // DA DEFINIRE
-        pm.appendChild(date);
-        root.appendChild(pm);
-
-        // per DM analogo a PM
-
         content << document.toString();
         file.close();
+
     }
 
     void loadXMLFile(QString path){
@@ -89,22 +74,22 @@ public:
     void testing(){
 
 
-        QDir dir(PROJECT_PATH);
-        QString dataSetPath(dir.absolutePath() + "/RecordLabel/");
+        //QDir dir(PROJECT_PATH);
+        //QString dataSetPath(dir.absolutePath() + "/RecordLabel/");
         //qDebug() << dataSetPath << endl;
 
-        writeXMLFile(dataSetPath);
+       // writeXMLFile(dataSetPath);
 
         //loadXMLFile(dataSetPath);
 
+        const Date d (12, 9, 2000);
+        DigitalMedium *dmFlop = new DigitalMedium("Jazz", "Standard & Ballads", "Wynton Marsalis", d, Spotify, 1450450);
 
-        //Controller ctrl;
-        //ctrl.loadDataFrom("sample_1");
-
+        Controller ctrl;
+        ctrl.loadDataFrom("sample_1");
+        //ctrl.isExists("sample_1", dmFlop);
     }
 };
-
-
 
 /*
 const Date d (12, 9, 2000);
