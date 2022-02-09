@@ -86,24 +86,22 @@ void Controller::loadDataFrom(QString label){
     //double profit;
 
     while (!node.isNull()) {
-        // se e' un album non pubblicato
         qDebug() << node.tagName();
+        // se e' un album non pubblicato
         if(node.tagName() == _album)
                 model.insertAlbum(readAlbum(node));
 
         // se un album e' pubblicato su un supporto fisico
-        qDebug() << node.tagName();
         if(node.tagName() == _pm)
                 model.insertAlbum(readPM(node));
 
         // se un album e' pubblicato su una piattaforma digitale
-        qDebug() << node.tagName();
         if(node.tagName() == _dm)
                 model.insertAlbum(readDM(node));
 
-        model.getAllInfo();   // test
         node = node.nextSiblingElement().toElement();
     }
+    model.getAllInfo();   // test
     // ALTRIMENTI IL FILE E' VUOTO?
 }
 
@@ -129,12 +127,13 @@ void Controller::newSave(QFile& file, const Album *album){
     document.appendChild(root);
 
     // create node : album, PM or DM
+    if(album && !dynamic_cast<const PM*>(album) && !dynamic_cast<const DM*>(album))
+        root.appendChild(writeAlbum(document, album));
     if(dynamic_cast<const PM*>(album))
         root.appendChild(writePM(document, dynamic_cast<const PM*>(album)));
-    if(dynamic_cast<const DM*>(album))
+    if (dynamic_cast<const DM*>(album))
         root.appendChild(writeDM(document, dynamic_cast<const DM*>(album)));
-    if(album)
-        root.appendChild(writeAlbum(document, album));
+
 
     content << document.toString();
     file.close();
@@ -152,12 +151,12 @@ void Controller::appendTo(QFile &file, const Album *album){
     QDomElement root = document.documentElement();
 
     // create node : album, PM or DM
+    if(album && !dynamic_cast<const PM*>(album) && !dynamic_cast<const DM*>(album))
+        document.firstChild().toElement().appendChild(writeAlbum(document, album));
     if(dynamic_cast<const PM*>(album))
         document.firstChild().toElement().appendChild(writePM(document, dynamic_cast<const PM*>(album)));
     if(dynamic_cast<const DM*>(album))
         document.firstChild().toElement().appendChild(writeDM(document, dynamic_cast<const DM*>(album)));
-    if(album)
-        document.firstChild().toElement().appendChild(writeAlbum(document, album));
 
     if(!file.open(QFile::WriteOnly | QFile::Text)){
         qDebug() << "Already opened or there is another issue" << endl;
@@ -199,7 +198,7 @@ QDomElement Controller::writePM(QDomDocument &document, const PM *album){
 }
 
 QDomElement Controller::writeDM(QDomDocument &document, const DM *album) {
-    QDomElement pm_node = document.createElement(_pm);
+    QDomElement pm_node = document.createElement(_dm);
     pm_node.setAttribute(album_name, QString::fromStdString(album->getAlbumName()));
     pm_node.setAttribute(album_artist, QString::fromStdString(album->getAlbumArtist()));
     pm_node.setAttribute(genre, QString::fromStdString(album->getGenre()));

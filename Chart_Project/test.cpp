@@ -82,12 +82,12 @@ public:
 
         //loadXMLFile(dataSetPath);
 
-        const Date d (12, 9, 2000);
-        DigitalMedium *dmFlop = new DigitalMedium("Jazz", "Standard & Ballads", "Wynton Marsalis", d, Spotify, 1450450);
+        //const Date d (12, 9, 2000);
+        //DigitalMedium *dmFlop = new DigitalMedium("Jazz", "Standard & Ballads", "Wynton Marsalis", d, Spotify, 1450450);
 
-        Controller ctrl;
-        ctrl.loadDataFrom("sample_1");
-        //ctrl.isExists("sample_1", dmFlop);
+        //Controller ctrl;
+        //ctrl.loadDataFrom("sample");
+        //ctrl.isExists("sample", dmFlop);
     }
 };
 
