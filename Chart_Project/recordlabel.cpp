@@ -118,22 +118,13 @@ uint RecordLabel::getTotListeners(vector<const Release *> r) const{
     return tot_listeners;
 }
 
-void RecordLabel::release(const Album *album, const Date& date, Support support, uint num_sales){
+void RecordLabel::release(const Release *album){
     bool found = false;
    for (auto it = not_released.begin(); it != not_released.end() && !found; ++it)
        if(dynamic_cast<const Album*>(*it)->getAlbumName() == album->getAlbumName()) {
-           insert(new PM(album->getGenre(), album->getAlbumName(), album->getAlbumArtist(), date, support, num_sales));
+           insert(album);
            found = true;
        }
-}
-
-void RecordLabel::release(const Album *album, const Date &date, Platform platform, uint listeners) {
-    bool found = false;
-    for(auto it = not_released.begin(); it != not_released.end() && !found; ++it)
-        if(dynamic_cast<const Album*>(*it)->getAlbumName() == album->getAlbumName()){
-            insert(new DM(album->getGenre(), album->getAlbumName(), album->getAlbumArtist(), date, platform, listeners));
-            found = true;
-        }
 }
 
 vector<const Music*> RecordLabel::getReleased() const{ return released; }

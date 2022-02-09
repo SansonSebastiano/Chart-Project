@@ -25,10 +25,10 @@ const QString Controller::listeners("listeners");
 const QString Controller::platform("platform");
 
 const Album* Controller::readAlbum(QDomElement node){
-        return new Album(node.attribute(genre, genre).toStdString(),        // genere musicale
-                         node.attribute(album_name, album_name).toStdString(),          // nome album
-                         node.attribute(album_artist, album_artist).toStdString()       // artista
-                        );
+    return new Album(node.attribute(genre, genre).toStdString(),                    // genere musicale
+                     node.attribute(album_name, album_name).toStdString(),          // nome album
+                     node.attribute(album_artist, album_artist).toStdString()       // artista
+                    );
 }
 
 const Date Controller::readDate(QDomElement childNode){
@@ -45,10 +45,10 @@ const Date Controller::readDate(QDomElement childNode){
 }
 
 const Album* Controller::readPM(QDomElement node){
-    return new PM(node.attribute(genre, genre).toStdString(),        // genere musicale
+    return new PM(node.attribute(genre, genre).toStdString(),                    // genere musicale
                   node.attribute(album_name, album_name).toStdString(),          // nome album
                   node.attribute(album_artist, album_artist).toStdString(),      // artista
-                  readDate(node.firstChildElement().toElement()),        // data pubblicazione
+                  readDate(node.firstChildElement().toElement()),                // data pubblicazione
                   // supporto fisico
                   enum_to_string<Support>(node.attribute(support, support).toStdString(), support_names, MAX_PVALUES),
                   // vendite
@@ -57,15 +57,15 @@ const Album* Controller::readPM(QDomElement node){
 }
 
 const Album* Controller::readDM(QDomElement node){
-    return new DM(node.attribute(genre, genre).toStdString(),        // genere musicale
+    return new DM(node.attribute(genre, genre).toStdString(),                    // genere musicale
                   node.attribute(album_name, album_name).toStdString(),          // nome album
                   node.attribute(album_artist, album_artist).toStdString(),      // artista
-                  readDate(node.firstChildElement().toElement()),        // data pubblicazione
+                  readDate(node.firstChildElement().toElement()),                // data pubblicazione
                   // piattaforma digitale
                   enum_to_string<Platform>(node.attribute(platform, platform).toStdString(), platform_names, MAX_SVALUES),
                   // ascolti
                   str_to_uint(node.attribute(listeners, listeners).toStdString())
-                );
+                 );
 }
 
 void Controller::loadDataFrom(QString label){
@@ -78,11 +78,10 @@ void Controller::loadDataFrom(QString label){
     document.setContent(&file);
     file.close();
 
-    QDomElement catalog = document.documentElement();                  // get root node : <catalog> </catalog>
-    QDomElement node = catalog.firstChildElement().toElement();        // get node inside root : <album ... />  : album non pubblicati
-                                                                       //                        <PM> ... </PM> : album pubblicati su supporto fisico
-                                                                       //                        <DM> ... </DM> : album pubblicati su supporto digitale
-
+    QDomElement root = document.documentElement();                  // get root node : <catalog> </catalog>
+    QDomElement node = root.firstChildElement().toElement();        // get node inside root : <album ... />  : album non pubblicati
+                                                                    //                        <PM> ... </PM> : album pubblicati su supporto fisico
+                                                                    //                        <DM> ... </DM> : album pubblicati su supporto digitale
     //double profit;
 
     while (!node.isNull()) {
@@ -101,7 +100,7 @@ void Controller::loadDataFrom(QString label){
 
         node = node.nextSiblingElement().toElement();
     }
-    model.getAllInfo();   // test
+    //model.getAllInfo();   // FOR TESTING
     // ALTRIMENTI IL FILE E' VUOTO?
 }
 
@@ -173,6 +172,7 @@ QDomElement Controller::writeAlbum(QDomDocument &document, const Album* album) {
     album_node.setAttribute(album_name, QString::fromStdString(album->getAlbumName()));
     album_node.setAttribute(album_artist, QString::fromStdString(album->getAlbumArtist()));
     album_node.setAttribute(genre, QString::fromStdString(album->getGenre()));
+
     return album_node;
 }
 
@@ -207,6 +207,23 @@ QDomElement Controller::writeDM(QDomDocument &document, const DM *album) {
 
     pm_node.appendChild(writeDate(document, album));
     return pm_node;
+}
+
+
+// NB: E SE CI SONO PIU' PUBBLICAZIONI SU PIU' SUPPORTI DELLO STESSO ALBUM?
+// @TODO : RIMOZIONE DA FILE DELL'ALBUM (IN VERSIONE NON ANCORA PUBBLICA)
+        // AGGIUNGERE INVECE TUTTE LE PUBBLICAZIONI IN CODA NEL FILE
+        // HANNO SENSO I VECTOR 'release' E 'not_release'?
+        // HA SENSO AVERE DEGLI ALBUM DA PUBBLICARE E IMPOSTARE SUBITO GLI ASCOLTI/VENDITE?
+void Controller::releaseAlbumToFile(const Album *album, const Date &date, uint sales, Support support) {
+    model.releaseAlbum(new PM(album->getGenre(),
+                              album->getAlbumName(),
+                              album->getAlbumArtist(),
+                              date,
+                              support,
+                              sales
+                              )
+                       );
 }
 
 uint Controller::str_to_uint(string input){ return std::stoul(input, nullptr, 0); }

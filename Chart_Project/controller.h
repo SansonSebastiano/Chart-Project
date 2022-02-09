@@ -9,6 +9,9 @@
 //#include "viewer.h"
 #include "model.h"
 
+// CONTROLLARE IL POLIMORFISMO:
+    // - Model *model
+
 class Controller : public QObject{
     Q_OBJECT
 private:
@@ -39,6 +42,8 @@ private:
     static const QString listeners;
     static const QString platform;
 
+    // USARE I TEMPLATE?
+
     const Album* readAlbum(QDomElement node);
     const Date readDate(QDomElement node);
     const Album* readPM(QDomElement node);
@@ -59,6 +64,11 @@ public:
     void isExists(QString label, const Album* album);
     void newSave(QFile& file, const Album* album);
     void appendTo(QFile& file, const Album* album);
+    void releaseAlbumToFile(const Album* album, const Date& date, uint sales, Support support);
+    void releaseAlbumToFile(const Album* album, const Date& date, uint listeners, Platform platform);
+    void removeAlbumToFile(const Album* album);
+
+    // MANCANO LE MODIFICHE QUANDO AVVIENE UNA PUBBLICAZIONE E DI CONSEGUENZA LA RIMOZIONE
 
     uint str_to_uint(string input);
 };

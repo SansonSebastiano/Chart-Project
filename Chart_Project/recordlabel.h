@@ -124,10 +124,8 @@ public:
      * @param   const Album*, Date, Support/Platform, num_sales/listeners
      * @ ECCEZIONI  ??
      * @return  void
-     * PROBLEMA ELIMINAZIONE
      */
-    void release(const Album* album, const Date& date, Support support, uint num_sales);
-    void release(const Album* album, const Date& date, Platform platform, uint listeners);
+    void release(const Release* album);
     /*
      * @brief   rimuove un album da not_release
      * @param   const Album*

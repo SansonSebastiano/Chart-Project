@@ -3,6 +3,9 @@
 
 #include "recordlabel.h"
 
+// CONTROLLARE IL POLIMORFISMO:
+    // - RecordLabel *rl
+
 class Model{
 private:
     RecordLabel rl;
@@ -17,7 +20,7 @@ public:
 
     void insertAlbum(const Album* album);
 
-    void releaseAlbum(const Album* album);
+    void releaseAlbum(const Release* album);
 
     void getAllInfo() const;
 };
