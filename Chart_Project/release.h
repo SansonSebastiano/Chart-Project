@@ -11,17 +11,17 @@ class Release : public Album{
 private:
     Date release_date;
 protected:
-    double profit;  // annuo in €: relativo all'anno della data di pubblicazione
+    double profit;  // in €
     /*
      * @brief   imposta il guadagno di una album
      * @return  void
      */
     virtual void setProfit() = 0;
 public:
-    Release(string _genre, string _album_name, string _artist_name, Date _rd);
+    Release(const string& _genre, const string& _album_name, const string& _artist_name, const Date& _rd);
     virtual ~Release() = default;
     /*
-     * @brief   restituisce il guadagno di una album
+     * @brief   restituisce il guadagno di un album
      * @return  double
      */
     double getProfit() const;
@@ -30,6 +30,11 @@ public:
      * @return  Date
      */
     Date getReleaseDate() const;
+    /*
+     * @brief   restituisce il numero di anni passati dalla pubblicazione di un album
+     * @return  unsigned int
+     */
+    uint getElapsedYears() const;
     /*
      * @brief   restituisce informazioni riguardante il prodotto musicale
      * @return  void

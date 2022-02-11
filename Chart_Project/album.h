@@ -8,8 +8,8 @@ private:
     string name;
     string artist;
 public:
-    Album(string _genre, string _name, string _artist);
-    ~Album() = default;
+    Album(const string& _genre, const string& _name, const string& _artist);
+    virtual ~Album() = default;
     /*
      * @brief   restituisce il nome di una album
      * @return  string

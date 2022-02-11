@@ -4,18 +4,21 @@ const double PhisycalMedium::cd_price = 15.00;
 const double PhisycalMedium::vnl_price = 25.00;
 const double PhisycalMedium::cst_price = 15.00;
 
-PhisycalMedium::PhisycalMedium(string _genre, string _album_name, string _album_artist, const Date& _rd, Support _support, uint _ns) :
+const string PhisycalMedium::support_names[] = { FOREACH_SUPPORTS(GENERATE_STRING) };
+const uint PhisycalMedium::MAX_PVALUES  = None_Support + 1;
+
+PhisycalMedium::PhisycalMedium(const string& _genre, const string& _album_name, const string& _album_artist, const Date& _rd, Support _support, uint _ns) :
     Release(_genre, _album_name, _album_artist, _rd),
     support(_support),
     num_sales(_ns) { PhisycalMedium::setProfit(); }
 
 void PhisycalMedium::setProfit() {
     if (support == CD)
-        profit = cd_price * num_sales;
+        profit = cd_price * getElapsedYears();
     else if (support == Vinile)
-        profit = vnl_price * num_sales;
+        profit = vnl_price * num_sales * getElapsedYears();
     else
-        profit = cst_price * num_sales;
+        profit = cst_price * num_sales * getElapsedYears();
 }
 
 uint PhisycalMedium::getNumSales() const{

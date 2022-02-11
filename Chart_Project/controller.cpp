@@ -27,8 +27,7 @@ const QString Controller::platform("platform");
 const Album* Controller::readAlbum(QDomElement node){
     return new Album(node.attribute(genre, genre).toStdString(),                    // genere musicale
                      node.attribute(album_name, album_name).toStdString(),          // nome album
-                     node.attribute(album_artist, album_artist).toStdString()       // artista
-                    );
+                     node.attribute(album_artist, album_artist).toStdString());     // artista
 }
 
 const Date Controller::readDate(QDomElement childNode){
@@ -50,7 +49,7 @@ const Album* Controller::readPM(QDomElement node){
                   node.attribute(album_artist, album_artist).toStdString(),      // artista
                   readDate(node.firstChildElement().toElement()),                // data pubblicazione
                   // supporto fisico
-                  enum_to_string<Support>(node.attribute(support, support).toStdString(), support_names, MAX_PVALUES),
+                  enum_to_string<Support>(node.attribute(support, support).toStdString(), PhisycalMedium::support_names,PhisycalMedium:: MAX_PVALUES),
                   // vendite
                   str_to_uint(node.attribute(sales, sales).toStdString())
                  );
@@ -62,7 +61,7 @@ const Album* Controller::readDM(QDomElement node){
                   node.attribute(album_artist, album_artist).toStdString(),      // artista
                   readDate(node.firstChildElement().toElement()),                // data pubblicazione
                   // piattaforma digitale
-                  enum_to_string<Platform>(node.attribute(platform, platform).toStdString(), platform_names, MAX_SVALUES),
+                  enum_to_string<Platform>(node.attribute(platform, platform).toStdString(), DigitalMedium::platform_names, DigitalMedium::MAX_SVALUES),
                   // ascolti
                   str_to_uint(node.attribute(listeners, listeners).toStdString())
                  );
@@ -213,17 +212,13 @@ QDomElement Controller::writeDM(QDomDocument &document, const DM *album) {
 // NB: E SE CI SONO PIU' PUBBLICAZIONI SU PIU' SUPPORTI DELLO STESSO ALBUM?
 // @TODO : RIMOZIONE DA FILE DELL'ALBUM (IN VERSIONE NON ANCORA PUBBLICA)
         // AGGIUNGERE INVECE TUTTE LE PUBBLICAZIONI IN CODA NEL FILE
-        // HANNO SENSO I VECTOR 'release' E 'not_release'?
-        // HA SENSO AVERE DEGLI ALBUM DA PUBBLICARE E IMPOSTARE SUBITO GLI ASCOLTI/VENDITE?
 void Controller::releaseAlbumToFile(const Album *album, const Date &date, uint sales, Support support) {
     model.releaseAlbum(new PM(album->getGenre(),
                               album->getAlbumName(),
                               album->getAlbumArtist(),
                               date,
                               support,
-                              sales
-                              )
-                       );
+                              sales));
 }
 
 uint Controller::str_to_uint(string input){ return std::stoul(input, nullptr, 0); }

@@ -1,6 +1,6 @@
 #include "recordlabel.h"
 
-RecordLabel::RecordLabel(string _name) : RL_name(_name) {}
+RecordLabel::RecordLabel(const string& _name) : RL_name(_name) {}
 
 RecordLabel::~RecordLabel() {
     for(auto r : released) delete r;
@@ -10,12 +10,14 @@ RecordLabel::~RecordLabel() {
 string RecordLabel::getRLName() const { return RL_name; }
 
 void RecordLabel::insert(const Album* album) {
-    if (dynamic_cast<const Release*>(album))    // se '*album' e' un album che e' stato pubblicato
-        released.push_back(album);
-    else not_released.push_back(album);
+    if(!album) throw string("NoInsert");        // DEFINIRE UNA CLASSE DI ECCEZIONI
+
+    if (dynamic_cast<const Release*>(album))     // se e' un album che e' stato pubblicato
+        released.push_back(static_cast<const Release*>(album));
+    else not_released.push_back(album);         // altrimenti
 }
 
-vector<const Release*> RecordLabel::getReleasedByName(string album_name) const{
+vector<const Release*> RecordLabel::getReleasedByName(const string& album_name) const{
     vector<const Release*> result;
     const Release* pr = nullptr;
     for(auto it = released.begin(); it != released.end(); ++it){
@@ -23,10 +25,11 @@ vector<const Release*> RecordLabel::getReleasedByName(string album_name) const{
         if (pr && pr->getAlbumName() == album_name)
             result.push_back(pr);
     }
+    //if(result.empty()) throw string("NameNotFound");  // DEFINIRE UNA CLASSE DI ECCEZIONI
     return result;
 }
 
-vector<const Release*> RecordLabel::getReleasedByGenre(string genre) const{
+vector<const Release*> RecordLabel::getReleasedByGenre(const string& genre) const{
     vector<const Release*> result;
     const Release* pr = nullptr;
     for(auto it = released.begin(); it != released.end(); ++it){
@@ -34,10 +37,11 @@ vector<const Release*> RecordLabel::getReleasedByGenre(string genre) const{
         if (pr && pr->getGenre() == genre)
             result.push_back(pr);
     }
+    //if(result.empty()) throw string("GenreNotFound"); // DEFINIRE UNA CLASSE DI ECCEZIONI
     return result;
 }
 
-vector<const Release*> RecordLabel::getReleasedByArtist(string artist) const{
+vector<const Release*> RecordLabel::getReleasedByArtist(const string& artist) const{
     vector<const Release*> result;
     const Release* pr = nullptr;
     for(auto it = released.begin(); it != released.end(); ++it){
@@ -45,11 +49,12 @@ vector<const Release*> RecordLabel::getReleasedByArtist(string artist) const{
         if(pr && pr->getAlbumArtist() == artist)
             result.push_back(pr);
     }
+    //if(result.empty()) throw string("ArtistNotFound");    // DEFINIRE UNA CLASSE DI ECCEZIONI
     return result;
 }
 
 // DA TESTARE
-vector<const Release*> RecordLabel::getReleasedByYear(Date date) const{
+vector<const Release*> RecordLabel::getReleasedByYear(const Date& date) const{
     vector<const Release*> result;
     const Release* pr = nullptr;
     for(auto it = released.begin(); it != released.end(); ++it){
@@ -57,6 +62,7 @@ vector<const Release*> RecordLabel::getReleasedByYear(Date date) const{
         if(pr && pr->getReleaseDate().getYear() == date.getYear())
             result.push_back(pr);
     }
+    //if(result.empty()) throw string("YearNotFound");  // DEFINIRE UNA CLASSE DI ECCEZIONI
     return result;
 }
 
@@ -68,6 +74,7 @@ vector<const DigitalMedium*> RecordLabel::getReleasedByPlatform(Platform platfor
         if(pdm && pdm->getPlatform() == platform)
             result.push_back(pdm);
     }
+    //if(result.empty()) throw string("PlatformNotFound");  // DEFINIRE UNA CLASSE DI ECCEZIONI
     return result;
 }
 
@@ -79,10 +86,11 @@ vector<const PhisycalMedium*> RecordLabel::getReleasedBySupport(Support support)
         if(ppm && ppm->getSupport() == support)
             result.push_back(ppm);
     }
+    //if(result.empty()) throw string("SupportNotFound");  // DEFINIRE UNA CLASSE DI ECCEZIONI
     return result;
 }
 
-vector<const Release*> RecordLabel::getBetweenYears(vector<const Release*> v, Date from, Date to) const{
+vector<const Release*> RecordLabel::getBetweenYears(vector<const Release*> v, const Date& from, const Date& to) const{
     vector<const Release*> result;
     const Release* pr = nullptr;
     for(auto it = v.begin(); it != v.end(); ++it){
@@ -90,6 +98,7 @@ vector<const Release*> RecordLabel::getBetweenYears(vector<const Release*> v, Da
         if(pr && (pr->getReleaseDate() >= from && pr->getReleaseDate() <= to))
             result.push_back(pr);
     }
+    //if(result.empty()) throw string("RangeOfYearsNotFound");  // DEFINIRE UNA CLASSE DI ECCEZIONI
     return result;
 }
 
@@ -110,7 +119,7 @@ uint RecordLabel::getTotSales(vector<const Release *> r) const{
 }
 
 // DA TESTARE
-uint RecordLabel::getTotListeners(vector<const Release *> r) const{
+uint RecordLabel::getTotListeners(vector<const Release*> r) const{
     uint tot_listeners = 0;
     for(auto it = r.begin(); it != r.end(); ++it)
         if(dynamic_cast<const DM*>(*it))
@@ -121,13 +130,21 @@ uint RecordLabel::getTotListeners(vector<const Release *> r) const{
 void RecordLabel::release(const Release *album){
     bool found = false;
    for (auto it = not_released.begin(); it != not_released.end() && !found; ++it)
-       if(dynamic_cast<const Album*>(*it)->getAlbumName() == album->getAlbumName()) {
+       if(dynamic_cast<const Album*>(*it)->getAlbumName() == album->getAlbumName() && isElapsed1Year(album)) {
            insert(album);
            found = true;
        }
+   // DA TESTARE
+   if(!isElapsed1Year(album)) throw string("NotOneYearElapsed"); // DEFINIRE UNA CLASSE DI ECCEZIONI
+   if(!found) throw string("NameNotFound");  // DEFINIRE UNA CLASSE DI ECCEZIONI
 }
 
-vector<const Music*> RecordLabel::getReleased() const{ return released; }
+bool RecordLabel::isElapsed1Year(const Release *album) const{
+    if(album->getElapsedYears() >= 1) return true;
+    else return false;
+}
+
+vector<const Release*> RecordLabel::getReleased() const{ return released; }
 
 vector<const Music*> RecordLabel::getNotReleased() const{ return not_released; }
 
@@ -140,4 +157,6 @@ void RecordLabel::removeFromNotReleased(const Album *album) {
             it--;
             found = true;
         }
+    // DA TESTARE
+    if(!found) throw string("NameNotFound");  // DEFINIRE UNA CLASSE DI ECCEZIONI
 }

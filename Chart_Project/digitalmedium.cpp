@@ -2,13 +2,16 @@
 
 const double DigitalMedium::price = 0.25;
 
-DigitalMedium::DigitalMedium( string _genre, string _album_name, string _album_artist, const Date& _rd, Platform _platform, uint _listeners) :
+const string DigitalMedium::platform_names[]  = { FOREACH_PLATFORMS(GENERATE_STRING) };
+const uint DigitalMedium::MAX_SVALUES  = None_Platform + 1;
+
+DigitalMedium::DigitalMedium(const string& _genre, const string& _album_name, const string& _album_artist, const Date& _rd, Platform _platform, uint _listeners) :
     Release(_genre, _album_name, _album_artist, _rd),
     platform(_platform),
     listeners(_listeners) { DigitalMedium::setProfit(); }
 
 void DigitalMedium::setProfit(){
-    profit = price * listeners;
+    profit = price * listeners * getElapsedYears();
 }
 
 Platform DigitalMedium::getPlatform() const{

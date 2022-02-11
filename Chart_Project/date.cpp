@@ -17,6 +17,17 @@ Date::Date(uint _day, uint _month, uint _year) {
     else cout << "Illegal date!" << endl;   // da gestire con le eccezioni?
 }
 
+Date Date::getNow() {
+    std::time_t now = std::time(nullptr);
+    std::tm *ptm = std::localtime(&now);
+    /*
+    cout << "Year: " << 1900 + ptm->tm_year << endl;
+    cout << "Month: " << 1 + ptm->tm_mon << endl;
+    cout << "Day:  " << ptm->tm_mday << endl;
+    */
+    return Date(ptm->tm_mday, 1 + ptm->tm_mon, 1900 + ptm->tm_year);
+}
+
 string Date::getDate() const {
     return std::to_string(day) + "/" +
            std::to_string(month) + "/" +
@@ -28,6 +39,28 @@ uint Date::getDay() const { return day; }
 uint Date::getMonth() const { return month; }
 
 uint Date::getYear() const { return year; }
+
+uint Date::operator-(const Date &d) {
+    if(*this < d){
+        int count = 0;
+        Date res(*this);
+        while (1) {
+            res += 1;
+            count++;
+            if(res == d) return count;
+        }
+    }
+    else if (*this > d) {
+        int count = 0;
+        Date ret(d);
+        while (1) {
+            ret += 1;
+            count++;
+            if(ret == *this) return count;
+        }
+    }
+    return 0;
+}
 
 // Overloading operatori di confronto tra date
 
@@ -66,4 +99,17 @@ bool Date::operator>=(const Date &d) const{
 bool Date::operator<=(const Date &d) const {
     if ((*this == d) || (*this < d)) return true;
     return false;
+}
+
+Date& Date::operator+=(int _day) {
+    day += _day;
+    while (day > getMonthDay(year, month)) {
+        day -= getMonthDay(year, month);
+        month++;
+        if(month == 13){
+            year++;
+            month = 1;
+        }
+    }
+    return *this;
 }

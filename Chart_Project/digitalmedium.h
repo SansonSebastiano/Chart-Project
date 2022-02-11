@@ -17,15 +17,12 @@
 
 // nome del servizio di streaming musicale
 enum Platform { FOREACH_PLATFORMS(GENERATE_ENUM) };
-// @brief  converte enum to string
-static const string platform_names[]  = { FOREACH_PLATFORMS(GENERATE_STRING) };
-static const int MAX_SVALUES = None_Platform + 1;
 
 class DigitalMedium : public Release{
 private:
     // nome della piattaforma
    Platform platform;
-   // ascoltatori annui, relativo all'anno di pubblicazione
+   // ascoltatori annui in media
    uint listeners;
    // costo per ascolto in €
    static const double price;
@@ -34,8 +31,12 @@ private:
     * @return  void
     */
     void setProfit() override;
+    // contiene in nomi delle piattaforme di streaming
+    static const string platform_names[];
 public:
-    DigitalMedium(string _genre, string _album_name, string _album_artist, const Date& _rd, Platform _platform, uint _listeners);
+    static const uint MAX_SVALUES;
+
+    DigitalMedium(const string& _genre, const string& _album_name, const string& _album_artist, const Date& _rd, Platform _platform, uint _listeners);
     virtual ~DigitalMedium() = default;
     /*
      * @brief   restituisce il nome del servizio digitale

@@ -1,16 +1,14 @@
 #include "release.h"
 
-Release::Release(string _genre, string _album_name, string _artist_name, Date _rd) :
+Release::Release(const string& _genre, const string& _album_name, const string& _artist_name, const Date& _rd) :
     Album(_genre, _album_name, _artist_name),
-    release_date(_rd) {}
+    release_date(_rd) { }
 
-Date Release::getReleaseDate() const {
-    return release_date;
-}
+Date Release::getReleaseDate() const { return release_date; }
 
-double Release::getProfit() const {
-    return profit;
-}
+double Release::getProfit() const { return profit; }
+
+uint Release::getElapsedYears() const { return ((Date::getNow() - release_date) / 365); }
 
 string Release::getInfo() const {
     return Album::getInfo() + "\n" +

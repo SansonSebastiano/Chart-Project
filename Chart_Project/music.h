@@ -8,7 +8,7 @@ class Music{
 private:
     string genre;
 public:
-    Music(string _genre);
+    Music(const string& _genre);
     virtual ~Music() = 0;
     /*
      * @brief   restituisce un genere musicale
@@ -20,8 +20,6 @@ public:
      * @return  void
      */
     virtual string getInfo() const;
-
-    // EVENTUALE OVERLOADING DELL'OPERATORE DI OUTPUT
 };
 
 #endif // MUSIC_H

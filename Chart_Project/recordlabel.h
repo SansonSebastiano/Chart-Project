@@ -19,11 +19,11 @@ private:
     //  - pubblicata
     //  NB: un album pubblicato, lo e' sia su supporto fisico che digitale !
     //  NB: un album puo' essere in vendita/pubblicato su piu' supporti fisici/digitali
-    vector<const Music*> released;
+    vector<const Release*> released;
     // - non ancora pubblicata
     vector<const Music*> not_released;
 public:
-    RecordLabel(string _name = ""); // TOGLIERE IL PARAMETRO DI DEFAULT ??
+    RecordLabel(const string& _name = ""); // TOGLIERE IL PARAMETRO DI DEFAULT ??
     ~RecordLabel();
     /*
      * @brief   ritorna il nome dell'etichetta discografica
@@ -44,32 +44,33 @@ public:
     void insert(const Album* album);
     /*
      * @brief   scansiona 'released' ed "estrae" tutte le pubblicazioni dell'album il cui nome e' dato in input
+     * @pre     per gli album pubblicati: deve essere trascorso almeno un anno dalla sua pubblicazione per essere inserito
      * @param   string album_name
      * @ ECCEZIONI  nel caso il nome dell'album sia errato o non sia stato pubblicato
      * @return  vector<const Release*>
      */
-    vector<const Release*> getReleasedByName(string album_name) const;
+    vector<const Release*> getReleasedByName(const string& album_name) const;
     /*
      * @brief   scansiona 'released' ed "estrae" tutti gli album pubblicati dello stesso genere dato in input
      * @param   string genre
      * @ ECCEZIONI  ??
      * @return  vector<const Release*>
      */
-    vector<const Release*> getReleasedByGenre(string genre) const;
+    vector<const Release*> getReleasedByGenre(const string& genre) const;
     /*
      * @brief   scansiona 'released' ed "estrae" tutti gli album pubblicati dello stesso artista dato in input
      * @param   string artist
      * @ ECCEZIONI  ??
      * @return  vector<const Release*>
      */
-    vector<const Release*> getReleasedByArtist(string artist) const;
+    vector<const Release*> getReleasedByArtist(const string& artist) const;
     /*
      * @brief   scansiona 'released' ed "estrae" tutti gli album pubblicati nella stesso anno dato in input
      * @param   Date date
      * @ ECCEZIONI  ??
      * @return  vector<const Release*>
      */
-    vector<const Release*> getReleasedByYear(Date date) const;
+    vector<const Release*> getReleasedByYear(const Date& date) const;
     /*
      * @brief   scansiona 'released' ed "estrae" tutti gli album pubblicati nella stessa piattaforma data in input
      * @param   Platform platform
@@ -90,7 +91,7 @@ public:
      * @ ECCEZIONI  ??
      * @return  vector<const Release*>
      */
-    vector<const Release*> getBetweenYears(vector<const Release*> v, Date from, Date to) const;
+    vector<const Release*> getBetweenYears(vector<const Release*> v, const Date& from, const Date& to) const;
     /*
      * @brief   somma e ritorna l'incasso totale di alcuni album pubblicati
      * @param   vector<const Release*> r
@@ -113,19 +114,24 @@ public:
      * @brief   restituisce gli album pubblicati
      * @return  vector<const Music*>
      */
-    vector<const Music*> getReleased() const;
+    vector<const Release*> getReleased() const;
     /*
      * @brief   restituisce gli album non pubblicati
      * @return  vector<const Music*>
      */
     vector<const Music*> getNotReleased() const;
     /*
-     * @brief   pubblica un album su un supporto fisico/digitale
+     * @brief   pubblica un album su un supporto fisico/digitale se e' passato almeno un anno dalla sua pubblicazione
      * @param   const Album*, Date, Support/Platform, num_sales/listeners
      * @ ECCEZIONI  ??
      * @return  void
      */
     void release(const Release* album);
+    /*
+     * @brief   restituisce true se e' trascorso almeno un anno dalla sua pubblicazione
+     * @return  bool
+     */
+    bool isElapsed1Year(const Release* album) const;
     /*
      * @brief   rimuove un album da not_release
      * @param   const Album*
@@ -133,6 +139,8 @@ public:
      * @return  void
      */
     void removeFromNotReleased(const Album* album);
+
+    // POSSIBILITA DI TOGLIERE UN ALBUM DA 'released' ?
 };
 
 #endif // RECORDLABEL_H
