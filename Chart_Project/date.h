@@ -47,7 +47,7 @@ public:
      uint getYear() const;
      /*
       * @brief      overloading operatori per il confronto tra date
-      * @param      const Date &d    data da confrontare
+      * @param      const Date &d
       * @return     bool
       */
      bool operator > (const Date& d) const;

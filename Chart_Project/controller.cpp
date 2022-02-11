@@ -1,71 +1,7 @@
 #include "controller.h"
-#include "EnumResolver.h"
 
 const QDir Controller::project_path(PROJECT_PATH);
 const QString Controller::dataSetDir("/RecordLabel/");
-
-const QString Controller::catalog("catalog");
-const QString Controller::release("release");
-const QString Controller::_album("album");
-const QString Controller::_pm("PM");
-const QString Controller::_dm("DM");
-
-const QString Controller::album_name("name");
-const QString Controller::album_artist("artist");
-const QString Controller::genre("genre");
-
-const QString Controller::day("day");
-const QString Controller::month("month");
-const QString Controller::year("year");
-
-const QString Controller::sales("num_sales");
-const QString Controller::support("support");
-
-const QString Controller::listeners("listeners");
-const QString Controller::platform("platform");
-
-const Album* Controller::readAlbum(QDomElement node){
-    return new Album(node.attribute(genre, genre).toStdString(),                    // genere musicale
-                     node.attribute(album_name, album_name).toStdString(),          // nome album
-                     node.attribute(album_artist, album_artist).toStdString());     // artista
-}
-
-const Date Controller::readDate(QDomElement childNode){
-    qDebug() << childNode.tagName();
-    if(childNode.tagName() == release)
-        return Date (str_to_uint(childNode.attribute(day, day).toStdString()),       // giorno
-                     str_to_uint(childNode.attribute(month, month).toStdString()),   // mese
-                     str_to_uint(childNode.attribute(year, year).toStdString())      // anno
-                    );
-    else{
-        qDebug() << "Read date failed" << endl;
-        return {};
-    }
-}
-
-const Album* Controller::readPM(QDomElement node){
-    return new PM(node.attribute(genre, genre).toStdString(),                    // genere musicale
-                  node.attribute(album_name, album_name).toStdString(),          // nome album
-                  node.attribute(album_artist, album_artist).toStdString(),      // artista
-                  readDate(node.firstChildElement().toElement()),                // data pubblicazione
-                  // supporto fisico
-                  enum_to_string<Support>(node.attribute(support, support).toStdString(), PhisycalMedium::support_names,PhisycalMedium:: MAX_PVALUES),
-                  // vendite
-                  str_to_uint(node.attribute(sales, sales).toStdString())
-                 );
-}
-
-const Album* Controller::readDM(QDomElement node){
-    return new DM(node.attribute(genre, genre).toStdString(),                    // genere musicale
-                  node.attribute(album_name, album_name).toStdString(),          // nome album
-                  node.attribute(album_artist, album_artist).toStdString(),      // artista
-                  readDate(node.firstChildElement().toElement()),                // data pubblicazione
-                  // piattaforma digitale
-                  enum_to_string<Platform>(node.attribute(platform, platform).toStdString(), DigitalMedium::platform_names, DigitalMedium::MAX_SVALUES),
-                  // ascolti
-                  str_to_uint(node.attribute(listeners, listeners).toStdString())
-                 );
-}
 
 void Controller::loadDataFrom(QString label){
     QDomDocument document;
@@ -86,16 +22,16 @@ void Controller::loadDataFrom(QString label){
     while (!node.isNull()) {
         qDebug() << node.tagName();
         // se e' un album non pubblicato
-        if(node.tagName() == _album)
-                model.insertAlbum(readAlbum(node));
+        if(node.tagName() == xml_IO::_album)
+                model.insertAlbum(xmlio.readAlbum(node));
 
         // se un album e' pubblicato su un supporto fisico
-        if(node.tagName() == _pm)
-                model.insertAlbum(readPM(node));
+        if(node.tagName() == xml_IO::_pm)
+                model.insertAlbum(xmlio.readPM(node));
 
         // se un album e' pubblicato su una piattaforma digitale
-        if(node.tagName() == _dm)
-                model.insertAlbum(readDM(node));
+        if(node.tagName() == xml_IO::_dm)
+                model.insertAlbum(xmlio.readDM(node));
 
         node = node.nextSiblingElement().toElement();
     }
@@ -121,16 +57,16 @@ void Controller::newSave(QFile& file, const Album *album){
     QTextStream content(&file);
 
     QDomDocument document;
-    QDomElement root = document.createElement(catalog);
+    QDomElement root = document.createElement(xml_IO::catalog);
     document.appendChild(root);
 
     // create node : album, PM or DM
     if(album && !dynamic_cast<const PM*>(album) && !dynamic_cast<const DM*>(album))
-        root.appendChild(writeAlbum(document, album));
+        root.appendChild(xmlio.writeAlbum(document, album));
     if(dynamic_cast<const PM*>(album))
-        root.appendChild(writePM(document, dynamic_cast<const PM*>(album)));
+        root.appendChild(xmlio.writePM(document, dynamic_cast<const PM*>(album)));
     if (dynamic_cast<const DM*>(album))
-        root.appendChild(writeDM(document, dynamic_cast<const DM*>(album)));
+        root.appendChild(xmlio.writeDM(document, dynamic_cast<const DM*>(album)));
 
 
     content << document.toString();
@@ -148,13 +84,12 @@ void Controller::appendTo(QFile &file, const Album *album){
 
     QDomElement root = document.documentElement();
 
-    // create node : album, PM or DM
     if(album && !dynamic_cast<const PM*>(album) && !dynamic_cast<const DM*>(album))
-        document.firstChild().toElement().appendChild(writeAlbum(document, album));
+        document.firstChild().toElement().appendChild(xmlio.writeAlbum(document, album));
     if(dynamic_cast<const PM*>(album))
-        document.firstChild().toElement().appendChild(writePM(document, dynamic_cast<const PM*>(album)));
+        document.firstChild().toElement().appendChild(xmlio.writePM(document, dynamic_cast<const PM*>(album)));
     if(dynamic_cast<const DM*>(album))
-        document.firstChild().toElement().appendChild(writeDM(document, dynamic_cast<const DM*>(album)));
+        document.firstChild().toElement().appendChild(xmlio.writeDM(document, dynamic_cast<const DM*>(album)));
 
     if(!file.open(QFile::WriteOnly | QFile::Text)){
         qDebug() << "Already opened or there is another issue" << endl;
@@ -165,60 +100,3 @@ void Controller::appendTo(QFile &file, const Album *album){
     content << document.toString();
     file.close();
 }
-
-QDomElement Controller::writeAlbum(QDomDocument &document, const Album* album) {
-    QDomElement album_node = document.createElement(_album);
-    album_node.setAttribute(album_name, QString::fromStdString(album->getAlbumName()));
-    album_node.setAttribute(album_artist, QString::fromStdString(album->getAlbumArtist()));
-    album_node.setAttribute(genre, QString::fromStdString(album->getGenre()));
-
-    return album_node;
-}
-
-QDomElement Controller::writeDate(QDomDocument &document, const Release *album) {
-    QDomElement date_node = document.createElement(release);
-    date_node.setAttribute(day, QString::fromStdString(std::to_string(album->getReleaseDate().getDay())));
-    date_node.setAttribute(month, QString::fromStdString(std::to_string(album->getReleaseDate().getMonth())));
-    date_node.setAttribute(year, QString::fromStdString(std::to_string(album->getReleaseDate().getYear())));
-
-    return date_node;
-}
-
-QDomElement Controller::writePM(QDomDocument &document, const PM *album){
-    QDomElement pm_node = document.createElement(_pm);
-    pm_node.setAttribute(album_name, QString::fromStdString(album->getAlbumName()));
-    pm_node.setAttribute(album_artist, QString::fromStdString(album->getAlbumArtist()));
-    pm_node.setAttribute(genre, QString::fromStdString(album->getGenre()));
-    pm_node.setAttribute(sales, QString::fromStdString(std::to_string(album->getNumSales())));
-    pm_node.setAttribute(support, QString::fromStdString(album->support_to_string(album->getSupport())));
-
-    pm_node.appendChild(writeDate(document, album));
-    return pm_node;
-}
-
-QDomElement Controller::writeDM(QDomDocument &document, const DM *album) {
-    QDomElement pm_node = document.createElement(_dm);
-    pm_node.setAttribute(album_name, QString::fromStdString(album->getAlbumName()));
-    pm_node.setAttribute(album_artist, QString::fromStdString(album->getAlbumArtist()));
-    pm_node.setAttribute(genre, QString::fromStdString(album->getGenre()));
-    pm_node.setAttribute(listeners, QString::fromStdString(std::to_string(album->getListeners())));
-    pm_node.setAttribute(platform, QString::fromStdString(album->platform_to_string(album->getPlatform())));
-
-    pm_node.appendChild(writeDate(document, album));
-    return pm_node;
-}
-
-
-// NB: E SE CI SONO PIU' PUBBLICAZIONI SU PIU' SUPPORTI DELLO STESSO ALBUM?
-// @TODO : RIMOZIONE DA FILE DELL'ALBUM (IN VERSIONE NON ANCORA PUBBLICA)
-        // AGGIUNGERE INVECE TUTTE LE PUBBLICAZIONI IN CODA NEL FILE
-void Controller::releaseAlbumToFile(const Album *album, const Date &date, uint sales, Support support) {
-    model.releaseAlbum(new PM(album->getGenre(),
-                              album->getAlbumName(),
-                              album->getAlbumArtist(),
-                              date,
-                              support,
-                              sales));
-}
-
-uint Controller::str_to_uint(string input){ return std::stoul(input, nullptr, 0); }

@@ -34,9 +34,9 @@ private:
      * @return  void
      */
      void setProfit() override;
-     // contiene i nomi (di tipo string) dei supporti fisici
-     static const string support_names[];
 public:
+    // contiene i nomi (di tipo string) dei supporti fisici
+    static const string support_names[];
     static const uint MAX_PVALUES;
 
     PhisycalMedium(const string& _genre, const string& _album_name, const string& _album_artist, const Date& _rd, Support _support, uint _ns);
@@ -45,7 +45,7 @@ public:
      * @brief   restituisce il numero di copie vendute
      * @return  unsigned int
      */
-    uint getNumSales() const;
+    virtual uint getNumbers() const override;
     /*
      * @brief   restituisce la tipologia del supporto fisico
      * @return  Support
@@ -56,11 +56,6 @@ public:
      * @return  void
      */
     virtual string getInfo() const override;
-    /*
-     * @brief   Support -> std::string
-     * @return  string
-     */
-    string support_to_string(int value) const;
 };
 
 #endif // PHISYCALMEDIUM_H

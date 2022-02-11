@@ -17,6 +17,7 @@ SOURCES += \
     controller.cpp \
     date.cpp \
     digitalmedium.cpp \
+    io_handler.cpp \
     main.cpp \
     mainwindow.cpp \
     model.cpp \
@@ -27,12 +28,13 @@ SOURCES += \
     test.cpp
 
 HEADERS += \
-    EnumResolver.h \
     album.h \
+    cast_helper.h \
     controller.h \
     date.h \
     digitalmedium.h \
     exceptions.h \
+    io_handler.h \
     mainwindow.h \
     model.h \
     music.h \

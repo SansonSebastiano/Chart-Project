@@ -3,12 +3,40 @@
 #include <QTextStream>
 
 #include "controller.h"
-#include "EnumResolver.h"
 
 class test{
 public:
     void testing(){
+        const Date d (12, 9, 2000);
+        const Date d1(15, 10, 1981);
+        const Date d2(21, 3, 1980);
+        const Date d3(21, 3, 2001);
+        PhisycalMedium  *pmFlop = new PhisycalMedium("Rap", "Flop", "Salmo", d, CD, 1450);
+        DigitalMedium *dmFlop = new DigitalMedium("Rap", "Flop", "Salmo", d, Spotify, 1450450);
+        DigitalMedium *dmNevermind = new DigitalMedium ("Rock", "Nevermind", "Nirvana", d1, AppleMusic, 390);
 
+        Album *pmEvening = new Album ("R&B", "An Evening With Silk Sonic", "Silk Sonic");
+        Album *dmTheWater = new Album ("Jazz", "The Water", "Mick Jenkins");
+        Album *a = new Album("Rap", "Nessuno", "Articolo 31");
+
+        RecordLabel rl("Machete");
+        rl.insert(pmFlop);
+        rl.insert(dmFlop);
+        rl.insert(a);
+        rl.insert(dmNevermind);
+        rl.insert(pmEvening);
+        rl.insert(dmTheWater);
+
+        auto r = rl.getReleased();
+        auto nr = rl.getNotReleased();
+
+        for (auto it = r.begin(); it != r.end(); ++it){
+            cout << (*it)->getInfo() << endl;
+            cout << (*it)->getElapsedYears() << endl << endl;
+        }
+
+        for (auto it = nr.begin(); it != nr.end(); ++it)
+            cout << (*it)->getInfo() << endl << endl;
     }
 };
 

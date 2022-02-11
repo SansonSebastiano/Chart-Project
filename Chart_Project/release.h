@@ -46,6 +46,11 @@ public:
      * @return  string
      */
     static string profit_to_string(double profit);
+    /*
+     * @brief   restituisce il numero riguardante ascolti/vendite ...
+     * @return  unsigned int
+     */
+    virtual uint getNumbers() const = 0;
 };
 
 #endif // RELEASE_H

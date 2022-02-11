@@ -6,6 +6,8 @@
 #include <QtDebug>
 #include <QTextStream>
 
+#include "io_handler.h"
+
 //#include "viewer.h"
 #include "model.h"
 
@@ -18,41 +20,10 @@ private:
     //Viewer *view;
     Model model;
 
+    xml_IO xmlio;
+
     static const QDir project_path;
     static const QString dataSetDir;
-
-    static const QString catalog;
-    static const QString release;
-    static const QString _album;
-    static const QString _pm;
-    static const QString _dm;
-
-    static const QString album_name;
-    static const QString album_artist;
-    static const QString genre;
-
-    static const QString day;
-    static const QString month;
-    static const QString year;
-    //static const QString profit;
-
-    static const QString sales;
-    static const QString support;
-
-    static const QString listeners;
-    static const QString platform;
-
-    // USARE I TEMPLATE?
-
-    const Album* readAlbum(QDomElement node);
-    const Date readDate(QDomElement node);
-    const Album* readPM(QDomElement node);
-    const Album* readDM(QDomElement node);
-
-    QDomElement writeAlbum(QDomDocument& document, const Album* album);
-    QDomElement writeDate(QDomDocument& document, const Release* album);
-    QDomElement writePM(QDomDocument& document, const PM* album);
-    QDomElement writeDM(QDomDocument& document, const DM* album);
 public:
     Controller() = default;
     ~Controller() = default; // ??
@@ -69,8 +40,6 @@ public:
     void removeAlbumToFile(const Album* album);
 
     // MANCANO LE MODIFICHE QUANDO AVVIENE UNA PUBBLICAZIONE E DI CONSEGUENZA LA RIMOZIONE
-
-    uint str_to_uint(string input);
 };
 
 #endif // CONTROLLER_H

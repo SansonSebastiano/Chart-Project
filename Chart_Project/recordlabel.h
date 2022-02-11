@@ -41,7 +41,21 @@ public:
      * @ ECCEZIONI  da fare
      * @return  void
      */
-    void insert(const Album* album);
+    void insert(const Music* music);
+    /*
+     * @brief   scansiona il vettore in input ed "estrae" tutti gli album (e le relative pubblicazioni, se pubblicato) il cui nome e' dato in input
+     * @pre     per gli album pubblicati: deve essere trascorso almeno un anno dalla sua pubblicazione per essere inserito
+     * @param   string album_name, vector<const Music*> v
+     * @ ECCEZIONI  nel caso il nome dell'album sia errato
+     * @return  vector<const Music*>
+     */
+    vector<const Music*> getByName(vector<const Music*> v, const string& album_name) const;
+    vector<const Music*> getByGenre(vector<const Music*> v, const string& genre) const;
+    vector<const Music*> getByArtist(vector<const Music*> v, const string& artist) const;
+
+    vector<const Release*> getByYear(vector<const Release*> v, const Date& date) const;
+    template<class T>
+    vector<const Release*> getByMedium(vector<const Release*> v, T medium) const;
     /*
      * @brief   scansiona 'released' ed "estrae" tutte le pubblicazioni dell'album il cui nome e' dato in input
      * @pre     per gli album pubblicati: deve essere trascorso almeno un anno dalla sua pubblicazione per essere inserito
@@ -99,17 +113,11 @@ public:
      */
     double getTotProfit(vector<const Release*> r) const;
     /*
-     * @brief   somma e ritorna le vendite totale di alcuni album pubblicati
+     * @brief   somma e ritorna il numero totale di vendite/ascolti di alcuni album pubblicati
      * @param   vector<const Release*> r
      * @return  unsigned int
      */
-    uint getTotSales(vector<const Release*> r) const;
-    /*
-     * @brief   soma e ritorna gli ascolti totali di alcuni album pubblicati
-     * @param   vector<const Release*> r
-     * @return  unsigned int
-     */
-    uint getTotListeners(vector<const Release*> r) const;
+    uint getTotNumbers(vector<const Release*> r) const;
     /*
      * @brief   restituisce gli album pubblicati
      * @return  vector<const Music*>
@@ -138,7 +146,7 @@ public:
      * @ ECCEZIONI  ??
      * @return  void
      */
-    void removeFromNotReleased(const Album* album);
+    void removeFromNotReleased(const Music* music);
 
     // POSSIBILITA DI TOGLIERE UN ALBUM DA 'released' ?
 };

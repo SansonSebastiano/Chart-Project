@@ -31,9 +31,9 @@ private:
     * @return  void
     */
     void setProfit() override;
+public:
     // contiene in nomi delle piattaforme di streaming
     static const string platform_names[];
-public:
     static const uint MAX_SVALUES;
 
     DigitalMedium(const string& _genre, const string& _album_name, const string& _album_artist, const Date& _rd, Platform _platform, uint _listeners);
@@ -47,17 +47,12 @@ public:
      * @brief   restituisce il numero di ascoltatori di un album
      * @return  unsigned int
      */
-    uint getListeners() const;
+    virtual uint getNumbers() const override;
     /*
      * @brief   restituisce informazioni riguardante il prodotto musicale
      * @return  void
      */
     virtual string getInfo() const override;
-    /*
-     * @brief   PLatform -> std::string
-     * @return  string
-     */
-    string platform_to_string(int value) const;
 };
 
 #endif // DIGITALMEDIUM_H

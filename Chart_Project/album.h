@@ -14,12 +14,12 @@ public:
      * @brief   restituisce il nome di una album
      * @return  string
      */
-     string getAlbumName() const;
+     string getName() const override;
     /*
      * @brief   restituisce l'artista di una album
      * @return  string
      */
-     string getAlbumArtist() const;
+     string getArtist() const override;
      /*
       * @brief   restituisce informazioni riguardante il prodotto musicale
       * @return  void
