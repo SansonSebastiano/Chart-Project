@@ -41,16 +41,16 @@ public:
      */
     virtual string getInfo() const override;
     /*
-     * @brief   converte un double in un stringa e lo "formatta in euro"
-     * @param   double profit
-     * @return  string
-     */
-    static string profit_to_string(double profit);
-    /*
      * @brief   restituisce il numero riguardante ascolti/vendite ...
      * @return  unsigned int
      */
     virtual uint getNumbers() const = 0;
+    /*
+     * @brief   converte un double in un stringa
+     * @param   double profit
+     * @return  string
+     */
+    std::string double_to_string(double value) const;
 };
 
 #endif // RELEASE_H

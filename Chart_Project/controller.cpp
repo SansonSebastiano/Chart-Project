@@ -3,6 +3,9 @@
 const QDir Controller::project_path(PROJECT_PATH);
 const QString Controller::dataSetDir("/RecordLabel/");
 
+// WARNING : al nome della record label
+Controller::Controller() : model(new Model()) {}
+
 void Controller::loadDataFrom(QString label){
     QDomDocument document;
     QFile file(project_path.absolutePath() + dataSetDir + label + ".xml");
@@ -23,15 +26,15 @@ void Controller::loadDataFrom(QString label){
         qDebug() << node.tagName();
         // se e' un album non pubblicato
         if(node.tagName() == xml_IO::_album)
-                model.insertAlbum(xmlio.readAlbum(node));
+                model->insertMusic(xmlio.readAlbum(node));
 
         // se un album e' pubblicato su un supporto fisico
         if(node.tagName() == xml_IO::_pm)
-                model.insertAlbum(xmlio.readPM(node));
+                model->insertMusic(xmlio.readPM(node));
 
         // se un album e' pubblicato su una piattaforma digitale
         if(node.tagName() == xml_IO::_dm)
-                model.insertAlbum(xmlio.readDM(node));
+                model->insertMusic(xmlio.readDM(node));
 
         node = node.nextSiblingElement().toElement();
     }

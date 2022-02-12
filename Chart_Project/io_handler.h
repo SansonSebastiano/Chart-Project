@@ -33,8 +33,8 @@ public:
     static const QString _album;
     static const QString _pm;
     static const QString _dm;
-    // USARE I TEMPLATE?
 
+    // USARE I TEMPLATE?
     // Lettura
     const Album* readAlbum(QDomElement node);
     const Date readDate(QDomElement node);

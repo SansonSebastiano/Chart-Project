@@ -29,5 +29,5 @@ string PhisycalMedium::getInfo() const {
     return Release::getInfo() + "\n" +
            "Supporto Fisico: " + support_names[support] + "\n" +
            "Vendite Annue: " + std::to_string(num_sales) + "\n" +
-           "Profitto Annuo: " + profit_to_string(getProfit());
+           "Profitto Annuo: " + double_to_string(getProfit()) + " €";
 }

@@ -8,19 +8,19 @@
 
 class Model{
 private:
-    RecordLabel rl;
+    RecordLabel *rl;
 public:
-    Model() = default;
+    Model(const string& label = "");
     ~Model() = default;   // ??
 
     // DA COMMENTARE
     // DA DEFINIRE SE CONST
 
-    void newRL(string rl_name);
+    //void newRL(string rl_name);
 
-    void insertAlbum(const Album* album);
+    void insertMusic(const Music* album);
 
-    void releaseAlbum(const Release* album);
+    void releaseMusic(const Release* album);
 
     void getAllInfo() const;
 };

@@ -27,5 +27,5 @@ string DigitalMedium::getInfo() const {
     return Release::getInfo() + "\n" +
            "Piattaforma: " + platform_names[platform] + "\n" +
            "Ascoltatori Annui: " + std::to_string(listeners) + "\n" +
-           "Profitto Annuo: " + profit_to_string(getProfit());
+           "Profitto Annuo: " + double_to_string(getProfit()) + " €";
 }

@@ -32,9 +32,9 @@ const Album* xml_IO::readAlbum(QDomElement node){
 const Date xml_IO::readDate(QDomElement childNode){
     qDebug() << childNode.tagName();
     if(childNode.tagName() == release)
-        return Date (str_to_uint(childNode.attribute(day, day).toStdString()),       // giorno
-                     str_to_uint(childNode.attribute(month, month).toStdString()),   // mese
-                     str_to_uint(childNode.attribute(year, year).toStdString())      // anno
+        return Date (converter::str_to_uint(childNode.attribute(day, day).toStdString()),       // giorno
+                     converter::str_to_uint(childNode.attribute(month, month).toStdString()),   // mese
+                     converter::str_to_uint(childNode.attribute(year, year).toStdString())      // anno
                     );
     else{
         qDebug() << "Read date failed" << endl;
@@ -48,9 +48,9 @@ const PM* xml_IO::readPM(QDomElement node){
                   node.attribute(album_artist, album_artist).toStdString(),      // artista
                   readDate(node.firstChildElement().toElement()),                // data pubblicazione
                   // supporto fisico
-                  string_to_enum<Support>(node.attribute(support, support).toStdString(), PhisycalMedium::support_names, PhisycalMedium:: MAX_PVALUES),
+                  converter::string_to_enum<Support>(node.attribute(support, support).toStdString(), PhisycalMedium::support_names, PhisycalMedium:: MAX_PVALUES),
                   // vendite
-                  str_to_uint(node.attribute(sales, sales).toStdString())
+                  converter::str_to_uint(node.attribute(sales, sales).toStdString())
                  );
 }
 
@@ -60,9 +60,9 @@ const DM* xml_IO::readDM(QDomElement node){
                   node.attribute(album_artist, album_artist).toStdString(),      // artista
                   readDate(node.firstChildElement().toElement()),                // data pubblicazione
                   // piattaforma digitale
-                  string_to_enum<Platform>(node.attribute(platform, platform).toStdString(), DigitalMedium::platform_names, DigitalMedium::MAX_SVALUES),
+                  converter::string_to_enum<Platform>(node.attribute(platform, platform).toStdString(), DigitalMedium::platform_names, DigitalMedium::MAX_SVALUES),
                   // ascolti
-                  str_to_uint(node.attribute(listeners, listeners).toStdString())
+                  converter::str_to_uint(node.attribute(listeners, listeners).toStdString())
                  );
 }
 
@@ -92,7 +92,7 @@ QDomElement xml_IO::writePM(QDomDocument &document, const PM *album){
     pm_node.setAttribute(album_artist, QString::fromStdString(album->getArtist()));
     pm_node.setAttribute(genre, QString::fromStdString(album->getGenre()));
     pm_node.setAttribute(sales, QString::fromStdString(std::to_string(album->getNumbers())));
-    pm_node.setAttribute(support, QString::fromStdString(enum_to_string(PM::support_names, album->getSupport())));
+    pm_node.setAttribute(support, QString::fromStdString(converter::enum_to_string(PM::support_names, album->getSupport())));
 
     //album->enum_to_string(album->getSupport()))
 
@@ -106,7 +106,7 @@ QDomElement xml_IO::writeDM(QDomDocument &document, const DM *album) {
     pm_node.setAttribute(album_artist, QString::fromStdString(album->getArtist()));
     pm_node.setAttribute(genre, QString::fromStdString(album->getGenre()));
     pm_node.setAttribute(listeners, QString::fromStdString(std::to_string(album->getNumbers())));
-    pm_node.setAttribute(platform, QString::fromStdString(enum_to_string(DM::platform_names, album->getPlatform())));
+    pm_node.setAttribute(platform, QString::fromStdString(converter::enum_to_string(DM::platform_names, album->getPlatform())));
 
     //album->enum_to_string(album->getPlatform())
 
