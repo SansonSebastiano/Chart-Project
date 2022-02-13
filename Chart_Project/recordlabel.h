@@ -51,28 +51,28 @@ public:
     vector<const Music*> getByGenre(vector<const Music*> v, const string& genre) const;
     vector<const Music*> getByArtist(vector<const Music*> v, const string& artist) const;
 
-    vector<const Music*> getByYear(vector<const Music*> v, uint year) const;
-    /*
-     * @brief   scansiona 'released' ed "estrae" tutti gli album pubblicati nella stessa piattaforma data in input
-     * @param   Platform platform
-     * @ ECCEZIONI  ??
-     * @return  vector<const Release*>
-     */
-    vector<const Release*> getByPlatform(Platform platform) const;
-    /*
-     * @brief   scansiona 'released' ed "estrae" tutti gli album pubblicati nello stesso supporto fisico dato in input
-     * @param   Support support
-     * @ ECCEZIONI  ??
-     * @return  vector<const Release*>
-     */
-    vector<const Release*> getBySupport(Support support) const;
+    vector<const Release*> getByYear(vector<const Music*> v, uint year) const;
     /*
      * @brief   scansiona 'released' ed "estrae" tutti gli album pubblicati in un intervallo di anni
      * @param   vector<const Release*> v, Date from, Date to
      * @ ECCEZIONI  ??
      * @return  vector<const Release*>
      */
-    vector<const Release*> getBetweenYears(vector<const Release*> v, const Date& from, const Date& to) const;
+    vector<const Release*> getBetweenYears(vector<const Music*> v, const Date& from, const Date& to) const;
+    /*
+     * @brief   scansiona 'released' ed "estrae" tutti gli album pubblicati nella stessa piattaforma data in input
+     * @param   Platform platform
+     * @ ECCEZIONI  ??
+     * @return  vector<const Release*>
+     */
+    vector<const Release*> getByPlatform(vector<const Release*> v, Platform platform) const;
+    /*
+     * @brief   scansiona 'released' ed "estrae" tutti gli album pubblicati nello stesso supporto fisico dato in input
+     * @param   Support support
+     * @ ECCEZIONI  ??
+     * @return  vector<const Release*>
+     */
+    vector<const Release*> getBySupport(vector<const Release*> v, Support support) const;
     /*
      * @brief   somma e ritorna l'incasso totale di alcuni album pubblicati
      * @param   vector<const Release*> r

@@ -7,14 +7,7 @@
 class test{
 public:
     void testing(){
-        //Album* a = new Album("Rap", "2001", "Dr. Dre");
-        Date d (12, 9, 2000);
-        Album* x = new Album("Rock", "Meteora", "Linkin Park");
-        Controller ctrl;
-        //ctrl.releasePMToFile("sample_1", x, d, 1000, Cassetta);
-        ctrl.removeFromFile("sample_1", x);
-        //ctrl.isExists("sample_1", x);
-        ctrl.loadDataFrom("sample_1");
+
     }
 };
 

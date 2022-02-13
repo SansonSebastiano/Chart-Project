@@ -28,7 +28,8 @@ public:
     Controller();
     ~Controller() = default; // ??
 
-    // pensare alle funzioni di parsing: dati in input e convertirli (in Date, uint, Support e Platform
+    // pensare alle funzioni di parsing: dati in input e convertirli (in Date, uint, Support e Platform)
+        // GENERE, ARTISTA, NOME ALBUM: scegliere convenzione
 
     // DA COMMENTARE
     // DA DEFINIRE SE CONST

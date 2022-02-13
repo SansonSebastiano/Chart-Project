@@ -51,8 +51,8 @@ vector<const Music*> RecordLabel::getByArtist(vector<const Music *> v, const str
     return result;
 }
 
-vector<const Music*> RecordLabel::getByYear(vector<const Music *> v, uint year) const {
-    vector<const Music*> result;
+vector<const Release*> RecordLabel::getByYear(vector<const Music *> v, uint year) const {
+    vector<const Release*> result;
     for(auto it = v.begin(); it != v.end(); ++it)
         if(dynamic_cast<const Release*>(*it)->getReleaseDate().getYear() == year)
             result.push_back(static_cast<const Release*>(*it));
@@ -61,11 +61,11 @@ vector<const Music*> RecordLabel::getByYear(vector<const Music *> v, uint year) 
     return result;
 }
 
-vector<const Release*> RecordLabel::getByPlatform(Platform platform) const{
+vector<const Release*> RecordLabel::getByPlatform(vector<const Release*> v, Platform platform) const{
     vector<const Release*> result;
     const DM* pdm = nullptr;
 
-    for(auto it = released.begin(); it != released.end(); ++it){
+    for(auto it = v.begin(); it != v.end(); ++it){
         pdm = dynamic_cast<const DM*>(*it);
         if(pdm && pdm->getPlatform() == platform)
             result.push_back(pdm);
@@ -74,11 +74,11 @@ vector<const Release*> RecordLabel::getByPlatform(Platform platform) const{
     return result;
 }
 
-vector<const Release*> RecordLabel::getBySupport(Support support) const{
+vector<const Release*> RecordLabel::getBySupport(vector<const Release*> v, Support support) const{
     vector<const Release*> result;
     const PM *ppm = nullptr;
 
-    for(auto it = released.begin(); it != released.end(); ++it){
+    for(auto it = v.begin(); it != v.end(); ++it){
         ppm = dynamic_cast<const PM*>(*it);
         if(ppm && ppm->getSupport() == support)
             result.push_back(ppm);
@@ -87,7 +87,7 @@ vector<const Release*> RecordLabel::getBySupport(Support support) const{
     return result;
 }
 
-vector<const Release*> RecordLabel::getBetweenYears(vector<const Release*> v, const Date& from, const Date& to) const{
+vector<const Release*> RecordLabel::getBetweenYears(vector<const Music*> v, const Date& from, const Date& to) const{
     vector<const Release*> result;
     const Release* pr = nullptr;
     for(auto it = v.begin(); it != v.end(); ++it){
@@ -108,10 +108,10 @@ double RecordLabel::getTotProfit(vector<const Release*> r) const {
 
 // DA TESTARE
 uint RecordLabel::getTotNumbers(vector<const Release *> r) const{
-    uint tot_sales = 0;
+    uint tot_numbers = 0;
     for(auto it = r.begin(); it != r.end(); ++it)
-        tot_sales += (*it)->getNumbers();
-    return tot_sales;
+        tot_numbers += (*it)->getNumbers();
+    return tot_numbers;
 }
 
 void RecordLabel::release(const Release *album){

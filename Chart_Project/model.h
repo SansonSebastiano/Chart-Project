@@ -3,9 +3,6 @@
 
 #include "recordlabel.h"
 
-// CONTROLLARE IL POLIMORFISMO:
-    // - RecordLabel *rl
-
 class Model{
 private:
     RecordLabel *rl;
