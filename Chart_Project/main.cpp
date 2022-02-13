@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+#include "viewer.h"
 
 #include <QApplication>
 
@@ -6,11 +6,11 @@
 
 int main(int argc, char *argv[]){
     // TESTING
-    test t;
-    t.testing();
+    //test t;
+    //t.testing();
 
     QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
+    Viewer v;
+    v.show();
     return a.exec();
 }

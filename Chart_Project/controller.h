@@ -8,13 +8,13 @@
 
 #include "io_handler.h"
 
-//#include "viewer.h"
+#include "viewer.h"
 #include "model.h"
 
 class Controller : public QObject{
     Q_OBJECT
 private:
-    //Viewer *view;
+    Viewer *view;   // da inizializzare
     Model *model;
 
     xml_IO xmlio;

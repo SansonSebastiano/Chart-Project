@@ -19,13 +19,13 @@ SOURCES += \
     digitalmedium.cpp \
     io_handler.cpp \
     main.cpp \
-    mainwindow.cpp \
     model.cpp \
     music.cpp \
     phisycalmedium.cpp \
     recordlabel.cpp \
     release.cpp \
-    test.cpp
+    test.cpp \
+    viewer.cpp
 
 HEADERS += \
     album.h \
@@ -35,12 +35,12 @@ HEADERS += \
     digitalmedium.h \
     exceptions.h \
     io_handler.h \
-    mainwindow.h \
     model.h \
     music.h \
     phisycalmedium.h \
     recordlabel.h \
-    release.h
+    release.h \
+    viewer.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
