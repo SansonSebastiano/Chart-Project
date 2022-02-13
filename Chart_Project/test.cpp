@@ -7,37 +7,14 @@
 class test{
 public:
     void testing(){
+        //Album* a = new Album("Rap", "2001", "Dr. Dre");
         Date d (12, 9, 2000);
-        Date d1(15, 10, 1981);
-        Date d2(21, 3, 1999);
-        Date d3(21, 3, 2001);
-
-        Album  *pmFlop = new PhisycalMedium("Rap", "Flop", "Salmo", d, CD, 1450);
-        Album *dmFlop = new DigitalMedium("Rap", "Flop", "Salmo", d, Spotify, 1450450);
-        Album *dmNevermind = new DigitalMedium ("Rock", "Nevermind", "Nirvana", d1, AppleMusic, 390);
-        Album  *pm2001 = new PhisycalMedium("Rap", "2001", "Dr. Dre", d2, Vinile, 300);
-
-        Album *aEvening = new Album ("R&B", "An Evening With Silk Sonic", "Silk Sonic");
-        Album *aTheWater = new Album ("Jazz", "The Water", "Mick Jenkins");
-        Album *aNessuno = new Album("Rap", "Nessuno", "Articolo 31");
-
-        RecordLabel *rl = new RecordLabel("Machete");
-        cout << "Nome Label: " << rl->getRLName() << endl << endl;
-
-        rl->insert(pmFlop);
-        rl->insert(dmFlop);
-        rl->insert(dmNevermind);
-        rl->insert(pm2001);
-
-        rl->insert(aEvening);
-        rl->insert(aTheWater);
-        rl->insert(aNessuno);
-
-        auto v = rl->getReleased();
-        auto out = rl->getByYear(rl->getByGenre(v, "Rap"), 1999);
-
-        for(auto it = out.begin(); it != out.end(); ++it)
-            cout << (*it)->getInfo() << endl << endl;
+        Album* x = new Album("Rock", "Meteora", "Linkin Park");
+        Controller ctrl;
+        //ctrl.releasePMToFile("sample_1", x, d, 1000, Cassetta);
+        ctrl.removeFromFile("sample_1", x);
+        //ctrl.isExists("sample_1", x);
+        ctrl.loadDataFrom("sample_1");
     }
 };
 
@@ -120,3 +97,38 @@ auto n = rl->getReleasedBySupport(CD);
 for (auto it = n.begin(); it != n.end(); ++it)
     cout << (*it)->getInfo() << endl << endl;
     */
+
+
+/*
+ * Date d (12, 9, 2000);
+        Date d1(15, 10, 1981);
+        Date d2(21, 3, 1999);
+        Date d3(21, 3, 2001);
+
+        Album  *pmFlop = new PhisycalMedium("Rap", "Flop", "Salmo", d, CD, 1450);
+        Album *dmFlop = new DigitalMedium("Rap", "Flop", "Salmo", d, Spotify, 1450450);
+        Album *dmNevermind = new DigitalMedium ("Rock", "Nevermind", "Nirvana", d1, AppleMusic, 390);
+        Album  *pm2001 = new PhisycalMedium("Rap", "2001", "Dr. Dre", d2, Vinile, 300);
+
+        Album *aEvening = new Album ("R&B", "An Evening With Silk Sonic", "Silk Sonic");
+        Album *aTheWater = new Album ("Jazz", "The Water", "Mick Jenkins");
+        Album *aNessuno = new Album("Rap", "Nessuno", "Articolo 31");
+
+        RecordLabel *rl = new RecordLabel("Machete");
+        cout << "Nome Label: " << rl->getRLName() << endl << endl;
+
+        rl->insert(pmFlop);
+        rl->insert(dmFlop);
+        rl->insert(dmNevermind);
+        rl->insert(pm2001);
+
+        rl->insert(aEvening);
+        rl->insert(aTheWater);
+        rl->insert(aNessuno);
+
+        auto v = rl->getReleased();
+        auto out = rl->getByYear(rl->getByGenre(v, "Rap"), 1999);
+
+        for(auto it = out.begin(); it != out.end(); ++it)
+            cout << (*it)->getInfo() << endl << endl;
+            */

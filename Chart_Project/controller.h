@@ -21,20 +21,28 @@ private:
 
     static const QDir project_path;
     static const QString dataSetDir;
+
+    void writeOnFile(const QString& label, const QDomDocument& document);
+    void readFromFile(const QString& label, QDomDocument& document);
 public:
     Controller();
     ~Controller() = default; // ??
 
+    // pensare alle funzioni di parsing: dati in input e convertirli (in Date, uint, Support e Platform
+
     // DA COMMENTARE
     // DA DEFINIRE SE CONST
 
-    void loadDataFrom(QString label);   // MARCARE CONST ??
-    void isExists(QString label, const Album* album);
-    void newSave(QFile& file, const Album* album);
-    void appendTo(QFile& file, const Album* album);
-    //void releaseAlbumToFile(const Album* album, const Date& date, uint sales, Support support);
-    //void releaseAlbumToFile(const Album* album, const Date& date, uint listeners, Platform platform);
-    void removeAlbumToFile(const Album* album);
+    void loadDataFrom(const QString& label);   // MARCARE CONST ??
+
+    void isExists(const QString& label, const Music* music);
+    void newSave(const QString& label, const Music* music);
+    void appendTo(const QString& label, const Music* music);
+
+    void releasePMToFile(const QString& label, const Album* album, const Date& date, uint num, Support support);
+    void releaseDMToFile(const QString& label, const Album* album, const Date& date, uint num, Platform platform);
+
+    void removeFromFile(const QString& label, const Music* music);
 
     // MANCANO LE MODIFICHE QUANDO AVVIENE UNA PUBBLICAZIONE E DI CONSEGUENZA LA RIMOZIONE
 };

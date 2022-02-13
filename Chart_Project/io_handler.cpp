@@ -36,7 +36,7 @@ const Date xml_IO::readDate(QDomElement childNode){
                      converter::str_to_uint(childNode.attribute(month, month).toStdString()),   // mese
                      converter::str_to_uint(childNode.attribute(year, year).toStdString())      // anno
                     );
-    else{
+    else{//ECCEZIONI??
         qDebug() << "Read date failed" << endl;
         return {};
     }
@@ -48,7 +48,8 @@ const PM* xml_IO::readPM(QDomElement node){
                   node.attribute(album_artist, album_artist).toStdString(),      // artista
                   readDate(node.firstChildElement().toElement()),                // data pubblicazione
                   // supporto fisico
-                  converter::string_to_enum<Support>(node.attribute(support, support).toStdString(), PhisycalMedium::support_names, PhisycalMedium:: MAX_PVALUES),
+                  converter::uint_to_enum<Support>(converter::str_to_uint(node.attribute(support, support).toStdString())),
+                  //converter::string_to_enum<Support>(node.attribute(support, support).toStdString(), PhisycalMedium::support_names, PhisycalMedium:: MAX_PVALUES),
                   // vendite
                   converter::str_to_uint(node.attribute(sales, sales).toStdString())
                  );
@@ -60,7 +61,8 @@ const DM* xml_IO::readDM(QDomElement node){
                   node.attribute(album_artist, album_artist).toStdString(),      // artista
                   readDate(node.firstChildElement().toElement()),                // data pubblicazione
                   // piattaforma digitale
-                  converter::string_to_enum<Platform>(node.attribute(platform, platform).toStdString(), DigitalMedium::platform_names, DigitalMedium::MAX_SVALUES),
+                  converter::uint_to_enum<Platform>(converter::str_to_uint(node.attribute(platform, platform).toStdString())),
+                  //converter::string_to_enum<Platform>(node.attribute(platform, platform).toStdString(), DigitalMedium::platform_names, DigitalMedium::MAX_SVALUES),
                   // ascolti
                   converter::str_to_uint(node.attribute(listeners, listeners).toStdString())
                  );
@@ -68,48 +70,119 @@ const DM* xml_IO::readDM(QDomElement node){
 
 // Scrittura
 
-QDomElement xml_IO::writeAlbum(QDomDocument &document, const Album* album) {
-    QDomElement album_node = document.createElement(_album);
-    album_node.setAttribute(album_name, QString::fromStdString(album->getName()));
-    album_node.setAttribute(album_artist, QString::fromStdString(album->getArtist()));
-    album_node.setAttribute(genre, QString::fromStdString(album->getGenre()));
+QDomElement xml_IO::writeAlbum(QDomElement node, const Album* album) {
+    node.setAttribute(album_name, QString::fromStdString(album->getName()));
+    node.setAttribute(album_artist, QString::fromStdString(album->getArtist()));
+    node.setAttribute(genre, QString::fromStdString(album->getGenre()));
 
-    return album_node;
+    return node;
 }
 
-QDomElement xml_IO::writeDate(QDomDocument &document, const Release *album) {
+QDomElement xml_IO::writeDate(QDomDocument &document, const Date& date) {
     QDomElement date_node = document.createElement(release);
-    date_node.setAttribute(day, QString::fromStdString(std::to_string(album->getReleaseDate().getDay())));
-    date_node.setAttribute(month, QString::fromStdString(std::to_string(album->getReleaseDate().getMonth())));
-    date_node.setAttribute(year, QString::fromStdString(std::to_string(album->getReleaseDate().getYear())));
+    date_node.setAttribute(day, QString::fromStdString(std::to_string(date.getDay())));
+    date_node.setAttribute(month, QString::fromStdString(std::to_string(date.getMonth())));
+    date_node.setAttribute(year, QString::fromStdString(std::to_string(date.getYear())));
 
     return date_node;
 }
 
 QDomElement xml_IO::writePM(QDomDocument &document, const PM *album){
     QDomElement pm_node = document.createElement(_pm);
+    writeAlbum(pm_node, album);
+    /*
     pm_node.setAttribute(album_name, QString::fromStdString(album->getName()));
     pm_node.setAttribute(album_artist, QString::fromStdString(album->getArtist()));
     pm_node.setAttribute(genre, QString::fromStdString(album->getGenre()));
+    */
     pm_node.setAttribute(sales, QString::fromStdString(std::to_string(album->getNumbers())));
-    pm_node.setAttribute(support, QString::fromStdString(converter::enum_to_string(PM::support_names, album->getSupport())));
+    pm_node.setAttribute(support, album->getSupport());
+   // pm_node.setAttribute(support, QString::fromStdString(converter::enum_to_string(PM::support_names, album->getSupport())));
 
-    //album->enum_to_string(album->getSupport()))
-
-    pm_node.appendChild(writeDate(document, album));
+    pm_node.appendChild(writeDate(document, album->getReleaseDate()));
     return pm_node;
 }
 
 QDomElement xml_IO::writeDM(QDomDocument &document, const DM *album) {
-    QDomElement pm_node = document.createElement(_dm);
-    pm_node.setAttribute(album_name, QString::fromStdString(album->getName()));
-    pm_node.setAttribute(album_artist, QString::fromStdString(album->getArtist()));
-    pm_node.setAttribute(genre, QString::fromStdString(album->getGenre()));
-    pm_node.setAttribute(listeners, QString::fromStdString(std::to_string(album->getNumbers())));
-    pm_node.setAttribute(platform, QString::fromStdString(converter::enum_to_string(DM::platform_names, album->getPlatform())));
+    QDomElement dm_node = document.createElement(_dm);
+    writeAlbum(dm_node, album);
+    /*
+    dm_node.setAttribute(album_name, QString::fromStdString(album->getName()));
+    dm_node.setAttribute(album_artist, QString::fromStdString(album->getArtist()));
+    dm_node.setAttribute(genre, QString::fromStdString(album->getGenre()));
+    */
+    dm_node.setAttribute(listeners, QString::fromStdString(std::to_string(album->getNumbers())));
+    dm_node.setAttribute(platform, album->getPlatform());
+    //dm_node.setAttribute(platform, QString::fromStdString(converter::enum_to_string(DM::platform_names, album->getPlatform())));
 
-    //album->enum_to_string(album->getPlatform())
-
-    pm_node.appendChild(writeDate(document, album));
-    return pm_node;
+    dm_node.appendChild(writeDate(document, album->getReleaseDate()));
+    return dm_node;
 }
+
+QDomElement xml_IO::searchByName(QDomNodeList list, const string &name) const {
+    qDebug() << "elements: " << list.count() << endl;
+    qDebug() << "to find: " << QString::fromStdString(name) << endl;
+
+    QDomNode node;
+    QDomElement element;
+
+    if(!list.isEmpty()){
+        for(int i = 0; i < list.count(); i++){
+            node = list.at(i);
+            element = node.toElement();
+            //qDebug() << "Tag Name: " << element.tagName() << endl;
+
+            if(element.attribute(album_name, album_name).toStdString() == name){
+                qDebug() << "found: " << element.attribute(album_name, album_name) << endl;
+                return element;
+            }
+        }
+    }
+
+    // ATTENZIONE: gestire con le eccezioni?
+    return QDomElement();
+}
+
+void xml_IO::removeByName(QDomNodeList list, const string &name) {
+    qDebug() << "elements: " << list.count() << endl;
+    qDebug() << "to find: " << QString::fromStdString(name) << endl;
+
+    QDomNode node;
+    QDomElement element;
+
+    if(!list.isEmpty()){
+        for(int i = 0; i < list.count(); i++){
+            node = list.at(i);
+            element = node.toElement();
+
+            if(element.attribute(album_name, album_name).toStdString() == name){
+                element.parentNode().removeChild(element);
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

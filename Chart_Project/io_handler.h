@@ -42,10 +42,19 @@ public:
     const DM* readDM(QDomElement node);
 
     // Scrittura
-    QDomElement writeAlbum(QDomDocument& document, const Album* album);
-    QDomElement writeDate(QDomDocument& document, const Release* album);
-    QDomElement writePM(QDomDocument& document, const PM* album);
-    QDomElement writeDM(QDomDocument& document, const DM* album);
+    QDomElement writeAlbum(QDomElement node, const Album* album);
+    QDomElement writeDate(QDomDocument& document, const Date& date);
+    QDomElement writePM(QDomDocument& document, const PM* pm);
+    QDomElement writeDM(QDomDocument& document, const DM* dm);
+
+    // Ricerca
+    /*
+     * @brief   ricerca un album, non pubblicato
+     * @param   QDomElement, const string&
+     * @return  QDomElement
+     */
+    QDomElement searchByName(QDomNodeList list, const string& name) const;
+    void removeByName(QDomNodeList list, const string& name);
 };
 
 #endif // IO_HANDLER_H
