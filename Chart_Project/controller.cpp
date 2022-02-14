@@ -4,7 +4,11 @@ const QDir Controller::project_path(PROJECT_PATH);
 const QString Controller::dataSetDir("/RecordLabel/");
 
 // WARNING : al nome della record label
-Controller::Controller() : model(new Model()) {}
+Controller::Controller(QObject *parent) : QObject(parent) {}
+
+void Controller::setModel(Model *m) { model = m; }
+
+void Controller::setViewer(Viewer *v) { view = v ; }
 
 void Controller::readFromFile(const QString& label, QDomDocument& document){
     QFile file(project_path.absolutePath() + dataSetDir + label + ".xml");
@@ -41,7 +45,7 @@ void Controller::loadDataFrom(const QString& label){
                                                                     //                         <PM> ... </PM> : album pubblicati su supporto fisico
                                                                     //                         <DM> ... </DM> : album pubblicati su supporto digitale
     while (!node.isNull()) {
-        qDebug() << node.tagName();
+        //qDebug() << node.tagName();
         // se e' un album non pubblicato
         if(node.tagName() == xml_IO::_album)
                 model->insertMusic(xmlio.readAlbum(node));
@@ -56,7 +60,7 @@ void Controller::loadDataFrom(const QString& label){
 
         node = node.nextSiblingElement().toElement();
     }
-    model->getAllInfo();   // just TESTING
+    //model->getAllInfo();   // just TESTING
     // ALTRIMENTI IL FILE E' VUOTO?
 }
 
@@ -153,4 +157,23 @@ void Controller::removeFromFile(const QString& label, const Music* music) {
     xmlio.removeByName(list, music->getName());
 
     writeOnFile(label, document);
+}
+
+// SLOTS
+
+
+void Controller::prova() {
+    loadDataFrom("sample_1");
+    //model->getAllInfo();
+
+    auto data = model->getData();
+
+    QList<const Music*> myList;
+    myList.reserve(data.size());
+    std::copy(data.begin(), data.end(), std::back_inserter(myList));
+
+    view->setList(myList);
+    view->showCatalog();
+
+    qDebug() << "slot attivato" << endl;
 }

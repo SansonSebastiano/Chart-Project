@@ -25,3 +25,9 @@ void Model::getAllInfo() const{
         cout << (*it)->getInfo() << endl << endl;
 }
 
+vector<const Music*> Model::getData() const {
+    vector<const Music*> catalog(rl->getReleased());
+    catalog.insert(catalog.end(), rl->getNotReleased().begin(), rl->getNotReleased().end());
+
+    return catalog;
+}

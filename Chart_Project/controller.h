@@ -25,14 +25,18 @@ private:
     void writeOnFile(const QString& label, const QDomDocument& document);
     void readFromFile(const QString& label, QDomDocument& document);
 public:
-    Controller();
+    explicit Controller(QObject *parent = nullptr);
     ~Controller() = default; // ??
+
+    void setModel(Model* m);
+    void setViewer(Viewer *v);
 
     // pensare alle funzioni di parsing: dati in input e convertirli (in Date, uint, Support e Platform)
         // GENERE, ARTISTA, NOME ALBUM: scegliere convenzione
 
     // DA COMMENTARE
     // DA DEFINIRE SE CONST
+    // da mettere private?
 
     void loadDataFrom(const QString& label);   // MARCARE CONST ??
 
@@ -46,6 +50,9 @@ public:
     void removeFromFile(const QString& label, const Music* music);
 
     // MANCANO LE MODIFICHE QUANDO AVVIENE UNA PUBBLICAZIONE E DI CONSEGUENZA LA RIMOZIONE
+
+public slots:
+    void prova();
 };
 
 #endif // CONTROLLER_H

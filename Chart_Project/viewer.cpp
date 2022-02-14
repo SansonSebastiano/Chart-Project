@@ -1,59 +1,63 @@
 #include "viewer.h"
+#include "controller.h"
+
+QPushButton *Viewer::createButton(const QString& title){
+    QPushButton *button = new QPushButton(title);
+
+    // Aggiungere caratteristiche...
+    //button->setGeometry(10, 40, 180, 40);
+    //setfont
+
+    return button;
+}
+
+// WARNING : impostare i parent tra i widget
 
 void Viewer::addMenus(QVBoxLayout *mainLayout)
 {
     QMenuBar *menuBar = new QMenuBar(this);
 
-    QMenu *file = new QMenu ("File", menuBar);
-    QMenu *edit = new QMenu ("Edit", menuBar);
+    file = new QMenu ("File", menuBar);
+    edit = new QMenu ("Edit", menuBar);
+    chart = new QMenu ("Grafici", menuBar);
 
     menuBar->addMenu(file);
     menuBar->addMenu(edit);
+    menuBar->addMenu(chart);
 
     file->addAction(new QAction("Carica dati", file));
     file->addAction(new QAction("Salva dati", file));
     file->addAction(new QAction("Chiudi", file));
 
-    edit->addAction(new QAction("Aggiungi nuova musica", file));
+    edit->addAction(new QAction("Aggiungi nuova musica", edit));
+    edit->addAction(new QAction("Filtra", edit));
+
+    chart->addAction(new QAction("Line Chart", chart));
+    chart->addAction(new QAction("Pie Chart", chart));
+    chart->addAction(new QAction("Histogram Chart", chart));
 
     mainLayout->addWidget(menuBar);
 }
 
-void Viewer::addScreen(QVBoxLayout *mainLayout, QHBoxLayout *screen)
+void Viewer::addControll_1(QVBoxLayout *mainLayout)
 {
-    QVBoxLayout *screenLayout = new QVBoxLayout;
-
-    QFrame *frame = new QFrame;
-
-    frame->setStyleSheet(".QFrame{background-color: rgb(211, 211, 211); border-radius: 10px}");
-    frame->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-
-    screenLayout->addWidget(frame);
-    screenLayout->setSpacing(0);
-
-    screen->addLayout(screenLayout);
-    mainLayout->addLayout(screenLayout);
-}
-
-void Viewer::addButtons(QVBoxLayout *mainLayout)
-{
-    QHBoxLayout *buttonLayout = new QHBoxLayout;
+    QHBoxLayout *buttonLayout_1 = new QHBoxLayout;
     QHBoxLayout *dataBtnLayout = new QHBoxLayout;
     QHBoxLayout *chartBtnLayout = new QHBoxLayout;
 
     //QPushButton *newLabel = new QPushButton("Nuova Label");
-    QPushButton *btn_uploadData = new QPushButton("Carica dati");
-    QPushButton *btn_saveData = new QPushButton("Salva dati");
+    btn_uploadData = createButton("Carica dati");
+    btn_saveData = createButton("Salva dati");
 
     dataBtnLayout->addWidget(btn_uploadData);
     dataBtnLayout->addWidget(btn_saveData);
 
     dataBtnLayout->setSpacing(10);
-    dataBtnLayout->setContentsMargins(100, 0, 20 ,0);
+    dataBtnLayout->setContentsMargins(150, 0, 20 ,0);
 
-    QPushButton *btn_lineChart = new QPushButton("Line Chart");
-    QPushButton *btn_pieChart = new QPushButton("Pie Chart");
-    QPushButton *btn_histogram = new QPushButton("Histogram");
+    btn_lineChart = createButton("Line Chart");
+    btn_pieChart = createButton("Pie Chart");
+    btn_histogram = createButton("Histogram");
 
     chartBtnLayout->addWidget(btn_lineChart);
     chartBtnLayout->addWidget(btn_pieChart);
@@ -62,27 +66,54 @@ void Viewer::addButtons(QVBoxLayout *mainLayout)
     chartBtnLayout->setSpacing(10);
     chartBtnLayout->setContentsMargins(20, 0, 20 ,0);
 
-    buttonLayout->addLayout(dataBtnLayout);
-    buttonLayout->addLayout(chartBtnLayout);
+    buttonLayout_1->addLayout(dataBtnLayout);
+    buttonLayout_1->addLayout(chartBtnLayout);
 
-    mainLayout->addLayout(buttonLayout);
+    mainLayout->addLayout(buttonLayout_1);
 }
 
-void Viewer::addBtn(QVBoxLayout *mainLayout, QHBoxLayout *screen)
+void Viewer::addControll_2(QHBoxLayout *screenLayout)
 {
-    QVBoxLayout *buttoLayout = new QVBoxLayout;
+    QVBoxLayout *buttonLayout_2 = new QVBoxLayout;
 
-    QPushButton *btn_addItem = new QPushButton("+");
-    QPushButton *btn_filter = new QPushButton("Filtra");
+    btn_addItem = createButton("Aggiungi musica");
+    btn_filter = createButton("Filtra");
 
-    buttoLayout->addWidget(btn_addItem);
-    buttoLayout->addWidget(btn_filter);
+    buttonLayout_2->addWidget(btn_addItem);
+    buttonLayout_2->addWidget(btn_filter);
 
-    buttoLayout->setSpacing(5);
-    buttoLayout->setContentsMargins(10, 0, 10, 500);
+    buttonLayout_2->setSpacing(5);
+    buttonLayout_2->setContentsMargins(0, 25, 10, 300);
 
-    screen->addLayout(buttoLayout);
-    mainLayout->addLayout(buttoLayout);
+    screenLayout->addLayout(buttonLayout_2);
+}
+
+void Viewer::addScreen(QVBoxLayout *mainLayout)
+{
+    QHBoxLayout *screenLayout = new QHBoxLayout;
+
+    // button
+    addControll_2(screenLayout);
+
+    // layout table + chart
+    QTableView *table = new QTableView;
+    myModel = new TableModel();
+
+    table->setModel(myModel);
+
+    screenLayout->addWidget(table);
+
+    /*
+    QFrame *frame = new QFrame;
+
+    frame->setStyleSheet(".QFrame{background-color: rgb(211, 211, 211); border-radius: 10px}");
+    frame->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+    screenLayout->addWidget(frame);
+    screenLayout->setSpacing(0);
+    */
+
+    mainLayout->addLayout(screenLayout);
 }
 
 Viewer::Viewer(QWidget *parent) : QWidget(parent) {
@@ -92,17 +123,30 @@ Viewer::Viewer(QWidget *parent) : QWidget(parent) {
     addMenus(mainLayout);
 
     // Aggiungere i pulsanti
-    addButtons(mainLayout);
+    addControll_1(mainLayout);
 
     // Aggiungere schermo
-    QHBoxLayout *tmp = new QHBoxLayout;
-    addBtn(mainLayout, tmp);
-    addScreen(mainLayout, tmp);
-    mainLayout->addLayout(tmp);
+    addScreen(mainLayout);
 
     // Aggiungere ...
 
     //mainLayout->setSpacing(0);
     setLayout(mainLayout);
-    resize(QSize(1024, 720));
+    resize(QSize(1920, 1080));
+}
+
+void Viewer::setController(Controller *c) {
+    controller = c;
+
+    // IMPLEMENTAZIONE SEGNALI E SLOT
+
+    connect(btn_uploadData, SIGNAL(clicked()), controller, SLOT(prova()));
+
+}
+
+void Viewer::setList(QList<const Music *> l) { list = l; }
+
+void Viewer::showCatalog() {
+    myModel->setCatalog(list);
+    myModel->insertRows(0, list.size(), QModelIndex());
 }

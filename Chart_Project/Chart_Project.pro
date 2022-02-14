@@ -24,6 +24,7 @@ SOURCES += \
     phisycalmedium.cpp \
     recordlabel.cpp \
     release.cpp \
+    tablemodel.cpp \
     test.cpp \
     viewer.cpp
 
@@ -40,6 +41,7 @@ HEADERS += \
     phisycalmedium.h \
     recordlabel.h \
     release.h \
+    tablemodel.h \
     viewer.h
 
 # Default rules for deployment.

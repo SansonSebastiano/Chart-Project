@@ -20,6 +20,8 @@ public:
     void releaseMusic(const Release* album);
 
     void getAllInfo() const;
+
+    vector<const Music*> getData() const;
 };
 
 #endif // MODEL_H
