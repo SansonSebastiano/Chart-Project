@@ -19,6 +19,13 @@ public:
 
     QVariant data(const QModelIndex &index, int role) const override;
     QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
+
+    bool insertRows(int position, int rows, const QModelIndex &parent = QModelIndex()) override;
+    bool removeRows(int position, int rows, const QModelIndex &parent = QModelIndex()) override;
+
+    bool setData(const QModelIndex &index, const QVariant &value, int role) override;
+
+    void appendData(const Music* m);
 private:
     QVector<const Music*> catalog;
 };

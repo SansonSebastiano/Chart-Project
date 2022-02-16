@@ -89,3 +89,48 @@ QVariant TableModel::data(const QModelIndex &index, int role) const {
     }
     return QVariant();
 }
+
+/*
+void TableModel::appendData(const Music *m) {
+    catalog.push_back(m);
+}
+*/
+
+bool TableModel::insertRows(int position, int rows, const QModelIndex &parent) {
+    Q_UNUSED(parent);
+    beginInsertRows(QModelIndex(), position, position + rows - 1);
+
+    for (int row = 0; row < rows; ++row) {
+        //catalog.at(position);
+    }
+
+    endInsertRows();
+    return true;
+}
+
+bool TableModel::removeRows(int position, int rows, const QModelIndex &parent) {
+    Q_UNUSED(parent);
+    beginRemoveRows(QModelIndex(), position, position + rows - 1);
+
+    for (int row = 0; row < rows; ++row){
+        catalog.removeAt(position);
+    }
+
+    endRemoveRows();
+    return true;
+}
+
+// bisogna prima aggiungere la nuova musica a 'catalog'
+
+
+bool TableModel::setData(const QModelIndex &index, const QVariant &value, int role) {
+    if (index.isValid() && role == Qt::DisplayRole){
+        int row = index.row();
+
+        auto newMusic = value.value<const Music*>();
+        catalog.push_back(newMusic);
+        //QVariant test = QVariant::fromValue<const Music*>(newMusic);
+
+
+    }
+}

@@ -171,15 +171,6 @@ QVector<const Music*> Controller::initData() {
 }
 
 // SLOTS
-void Controller::prova() {
-    loadDataFrom("sample_1");
-    //model->getAllInfo();
-
-    auto data = model->getData();
-
-    //QVector<const Music*> myVector = QVector<const Music*>::fromStdVector(data);
-
-    //view->setVector(myVector);
-
-    qDebug() << "slot attivato" << endl;
+void Controller::showDialog() {
+    view->customForm();
 }

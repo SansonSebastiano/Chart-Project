@@ -1,7 +1,7 @@
 #ifndef MUSIC_H
 #define MUSIC_H
 
-#pragma once
+#include <QMetaType>
 #include<string>
 using std::string;
 
@@ -25,4 +25,6 @@ public:
     virtual string getInfo() const;
 };
 
+// FORSE TOGLIERE
+Q_DECLARE_METATYPE(const Music*)
 #endif // MUSIC_H

@@ -11,6 +11,11 @@
 #include <QPushButton>
 #include <QTableView>
 #include <QStandardItemModel>
+#include <QLabel>
+#include <QLineEdit>
+#include <QDialog>
+#include <QComboBox>
+#include <QDateEdit>
 
 #include <phisycalmedium.h>
 #include <digitalmedium.h>
@@ -49,13 +54,13 @@ private:
     void addControll_1(QVBoxLayout *mainLayout);
     void addScreen(QVBoxLayout *mainLayout);
     void addControll_2(QHBoxLayout *screenLayout);
-
 public:
     explicit Viewer(QWidget *parent = nullptr);
 
     void setController(Controller *c);
+    void customForm();
 
-   // void setVector(QVector<const Music*> v);
+    //void setVector(QVector<const Music*> v);
 };
 
 #endif // VIEWER_H

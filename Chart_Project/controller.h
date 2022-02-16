@@ -52,7 +52,8 @@ public:
     QVector<const Music*> initData();
 
 public slots:
-    void prova();
+    //void saveCatalog();
+    void showDialog();
 };
 
 #endif // CONTROLLER_H
