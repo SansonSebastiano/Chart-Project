@@ -10,6 +10,7 @@
 #include <QFrame>
 #include <QPushButton>
 #include <QTableView>
+#include <QStandardItemModel>
 
 #include <phisycalmedium.h>
 #include <digitalmedium.h>
@@ -22,7 +23,7 @@ class Viewer : public QWidget{
 private:
     Controller *controller;
 
-    QList<const Music*> list;
+    QVector<const Music*> catalog;
 
     // Components' layout
     // Menu
@@ -47,16 +48,14 @@ private:
     void addMenus(QVBoxLayout *mainLayout);
     void addControll_1(QVBoxLayout *mainLayout);
     void addScreen(QVBoxLayout *mainLayout);
-
     void addControll_2(QHBoxLayout *screenLayout);
 
 public:
     explicit Viewer(QWidget *parent = nullptr);
 
     void setController(Controller *c);
-    void setList(QList<const Music*> l);
 
-    void showCatalog();
+   // void setVector(QVector<const Music*> v);
 };
 
 #endif // VIEWER_H

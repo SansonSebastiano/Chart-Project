@@ -14,7 +14,7 @@
 class Controller : public QObject{
     Q_OBJECT
 private:
-    Viewer *view;   // da inizializzare
+    Viewer *view;
     Model *model;
 
     xml_IO xmlio;
@@ -49,7 +49,7 @@ public:
 
     void removeFromFile(const QString& label, const Music* music);
 
-    // MANCANO LE MODIFICHE QUANDO AVVIENE UNA PUBBLICAZIONE E DI CONSEGUENZA LA RIMOZIONE
+    QVector<const Music*> initData();
 
 public slots:
     void prova();

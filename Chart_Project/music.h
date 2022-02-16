@@ -1,6 +1,7 @@
 #ifndef MUSIC_H
 #define MUSIC_H
 
+#pragma once
 #include<string>
 using std::string;
 

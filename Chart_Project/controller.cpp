@@ -4,7 +4,7 @@ const QDir Controller::project_path(PROJECT_PATH);
 const QString Controller::dataSetDir("/RecordLabel/");
 
 // WARNING : al nome della record label
-Controller::Controller(QObject *parent) : QObject(parent) {}
+Controller::Controller(QObject *parent) : QObject(parent), model(new Model) { }
 
 void Controller::setModel(Model *m) { model = m; }
 
@@ -159,21 +159,27 @@ void Controller::removeFromFile(const QString& label, const Music* music) {
     writeOnFile(label, document);
 }
 
+QVector<const Music*> Controller::initData() {
+    loadDataFrom("sample_1");
+
+    //model->getAllInfo();
+
+    auto data = model->getData();
+    QVector<const Music*> myVector = QVector<const Music*>::fromStdVector(data);
+
+    return myVector;
+}
+
 // SLOTS
-
-
 void Controller::prova() {
     loadDataFrom("sample_1");
     //model->getAllInfo();
 
     auto data = model->getData();
 
-    QList<const Music*> myList;
-    myList.reserve(data.size());
-    std::copy(data.begin(), data.end(), std::back_inserter(myList));
+    //QVector<const Music*> myVector = QVector<const Music*>::fromStdVector(data);
 
-    view->setList(myList);
-    view->showCatalog();
+    //view->setVector(myVector);
 
     qDebug() << "slot attivato" << endl;
 }

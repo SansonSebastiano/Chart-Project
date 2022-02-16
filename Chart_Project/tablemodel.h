@@ -12,22 +12,15 @@ class TableModel : public QAbstractTableModel{
     Q_OBJECT
 public:
     TableModel(QObject *parent = nullptr);
+    TableModel(const QVector<const Music*> &_catalog, QObject *parent = nullptr);
 
-    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
-    int columnCount(const QModelIndex &parent = QModelIndex()) const override;
+    int rowCount(const QModelIndex &parent) const override;
+    int columnCount(const QModelIndex &parent) const override;
 
-    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+    QVariant data(const QModelIndex &index, int role) const override;
     QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
-
-    bool setData(const QModelIndex &index, const QVariant &value,int role) override;
-    bool insertRows(int position, int rows, const QModelIndex &index = QModelIndex()) override;
-    bool removeRows(int position, int rows, const QModelIndex &index = QModelIndex()) override;
-
-    void setCatalog(QList<const Music*> l);
-
 private:
-    // come farli contenere la musica? template?
-    QList<const Music*> list;
+    QVector<const Music*> catalog;
 };
 
 #endif // TABLEMODEL_H

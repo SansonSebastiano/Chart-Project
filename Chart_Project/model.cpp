@@ -26,8 +26,12 @@ void Model::getAllInfo() const{
 }
 
 vector<const Music*> Model::getData() const {
-    vector<const Music*> catalog(rl->getReleased());
-    catalog.insert(catalog.end(), rl->getNotReleased().begin(), rl->getNotReleased().end());
+    auto released = rl->getReleased();
+    auto not_released = rl->getNotReleased();
+    vector<const Music*> catalog;
+    catalog.reserve(released.size() + not_released.size());
+    catalog.insert(catalog.end(), released.begin(), released.end());
+    catalog.insert(catalog.end(), not_released.begin(), not_released.end());
 
     return catalog;
 }

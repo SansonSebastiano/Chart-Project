@@ -21,16 +21,16 @@ const QString xml_IO::support("support");
 const QString xml_IO::listeners("listeners");
 const QString xml_IO::platform("platform");
 
+
+// Lettura
 const Album* xml_IO::readAlbum(QDomElement node){
     return new Album(node.attribute(genre, genre).toStdString(),                    // genere musicale
                      node.attribute(album_name, album_name).toStdString(),          // nome album
                      node.attribute(album_artist, album_artist).toStdString());     // artista
 }
 
-// Lettura
-
 const Date xml_IO::readDate(QDomElement childNode){
-    qDebug() << childNode.tagName();
+    //qDebug() << childNode.tagName();
     if(childNode.tagName() == release)
         return Date (converter::str_to_uint(childNode.attribute(day, day).toStdString()),       // giorno
                      converter::str_to_uint(childNode.attribute(month, month).toStdString()),   // mese

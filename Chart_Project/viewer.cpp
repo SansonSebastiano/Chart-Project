@@ -97,7 +97,11 @@ void Viewer::addScreen(QVBoxLayout *mainLayout)
 
     // layout table + chart
     QTableView *table = new QTableView;
-    myModel = new TableModel();
+
+    // USARE UNO SIGNAL - SLOT
+    catalog = controller->initData();
+    qDebug() << "catalog is empty : " << catalog.isEmpty() << endl;
+    myModel = new TableModel(catalog);
 
     table->setModel(myModel);
 
@@ -116,7 +120,9 @@ void Viewer::addScreen(QVBoxLayout *mainLayout)
     mainLayout->addLayout(screenLayout);
 }
 
-Viewer::Viewer(QWidget *parent) : QWidget(parent) {
+Viewer::Viewer(QWidget *parent) : QWidget(parent), controller(new Controller) {
+
+
     QVBoxLayout *mainLayout = new QVBoxLayout;
 
     // Aggiungere la barra dei menu
@@ -144,9 +150,4 @@ void Viewer::setController(Controller *c) {
 
 }
 
-void Viewer::setList(QList<const Music *> l) { list = l; }
-
-void Viewer::showCatalog() {
-    myModel->setCatalog(list);
-    myModel->insertRows(0, list.size(), QModelIndex());
-}
+//void Viewer::setVector(QVector<const Music *> v) { vector = v; }
