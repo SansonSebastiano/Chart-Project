@@ -17,6 +17,7 @@
 #include <QComboBox>
 #include <QDateEdit>
 #include <QCheckBox>
+#include <QGroupBox>
 
 #include <phisycalmedium.h>
 #include <digitalmedium.h>
@@ -50,23 +51,33 @@ private:
     QPushButton *btn_add;
     QPushButton *btn_cancel;
 
+    QTableView *table;
     TableModel *myModel;
 
     QDialog *formDialog;
-
-    QPushButton *createButton(const QString& title);
 
     void addMenus(QVBoxLayout *mainLayout);
     void addControll_1(QVBoxLayout *mainLayout);
     void addScreen(QVBoxLayout *mainLayout);
     void addControll_2(QHBoxLayout *screenLayout);
 
+    QPushButton *createButton(const QString& title);
+
+    // Dialog layout
+    QHBoxLayout *createHEditLine(QLabel *l, QWidget *w);
+    QVBoxLayout *createVEditLine(QLabel *l, QList<QWidget*> *lw);
+    QVBoxLayout *createLineLayout(QList<QBoxLayout*> *vbl, int leftMargin, int topMargin, int rightMargin, int bottomMargin);
+
+    void createCustomDialog();
+
+    // COMBOBOX PER PUBBLICARE GLI ALBUM
+
 public:
     explicit Viewer(QWidget *parent = nullptr);
 
     void setController(Controller *c);
-    void customForm();
 
+    void showFormDialog();
     void closeFormDialog();
 
     void addNewMusic();

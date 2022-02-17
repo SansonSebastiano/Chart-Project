@@ -3,6 +3,7 @@
 
 // ATTENZIONE AI MEMORY LEAK
 // MEGLIO CREARE DIFFERENTI WIDGET CUSTOM CLASS ?
+// WARNING : impostare le parentelle tra i widget/layout
 
 QPushButton *Viewer::createButton(const QString& title){
     QPushButton *button = new QPushButton(title);
@@ -12,10 +13,154 @@ QPushButton *Viewer::createButton(const QString& title){
     return button;
 }
 
-// WARNING : impostare i parent tra i widget
+QHBoxLayout *Viewer::createHEditLine(QLabel *l, QWidget *w) {
+    QHBoxLayout *layout = new QHBoxLayout();
 
-void Viewer::addMenus(QVBoxLayout *mainLayout)
-{
+    layout->addWidget(l);
+    layout->addWidget(w);
+
+    return layout;
+}
+
+QVBoxLayout *Viewer::createVEditLine(QLabel *l, QList<QWidget*> *lw) {
+    QVBoxLayout *layout = new QVBoxLayout();
+
+    layout->addWidget(l);
+
+    for (auto it = lw->begin(); it != lw->end(); ++it)
+        layout->addWidget(*it);
+
+    return layout;
+}
+
+QVBoxLayout *Viewer::createLineLayout(QList<QBoxLayout*> *vbl, int leftMargin, int topMargin, int rightMargin, int bottomMargin){
+    QVBoxLayout *layout = new QVBoxLayout();
+
+    layout->setContentsMargins(leftMargin, topMargin, rightMargin, bottomMargin);
+
+    for (auto it = vbl->begin(); it != vbl->end(); ++it)
+        layout->addLayout(*it);
+
+    return layout;
+}
+
+void Viewer::createCustomDialog() {
+    formDialog = new QDialog();
+
+    // add QGroupBox
+    QList<QWidget*> *lineEdit = new QList<QWidget*>();
+    QList<QBoxLayout*> *layoutList = new QList<QBoxLayout*>();    
+
+    // Music info
+    QGroupBox *musicGB = new QGroupBox("Info Musica");
+    // name line
+    QLabel *nameLabel = new QLabel("Nome: ");
+    // da dichiarare come campi dati in realta
+    QLineEdit *nameEdit = new QLineEdit();      // solo string
+    QHBoxLayout *nameLine = createHEditLine(nameLabel, nameEdit);
+
+    // artist line
+    QLabel *artistLabel = new QLabel("Artista: ");
+    // da dichiarare come campi dati in realta
+    QLineEdit *artistEdit = new QLineEdit();    // solo string
+    QHBoxLayout *artistLine = createHEditLine(artistLabel, artistEdit);
+
+    // genre line
+    QLabel *genreLabel = new QLabel("Genere: ");
+    // da dichiarare come campi dati in realta
+    QLineEdit *genreEdit = new QLineEdit();     // solo string
+    QHBoxLayout *genreLine = createHEditLine(genreLabel, genreEdit);
+
+    // adding music info layout
+    layoutList->push_back(nameLine);
+    layoutList->push_back(artistLine);
+    layoutList->push_back(genreLine);
+    QVBoxLayout *musicInfoLayout = createLineLayout(layoutList, 10, 10 ,10, 20);
+    //musicGB->setLayout(musicInfoLayout);
+
+    // ADD to release or not possibility
+
+    // Release info
+    // release line
+    QLabel *releaseLabel = new QLabel("Data Pubblicazione: ");
+    // da dichiarare come campi dati in realta
+    QDateEdit *releaseDE = new QDateEdit();
+
+    releaseDE->setMaximumDate(QDate::currentDate());
+
+    QHBoxLayout *releaseLine = createHEditLine(releaseLabel, releaseDE);
+    // adding release info layout
+    layoutList->clear();
+    layoutList->push_back(releaseLine);
+    QVBoxLayout *releaseInfoLayout = createLineLayout(layoutList, 10, 10 ,10, 20);
+
+    // PhisycalMedium info
+    // support line
+    QLabel *supportLabel = new QLabel("Supporti: ");
+    // da dichiarare come campi dati in realta
+    lineEdit->push_back(new QCheckBox("CD"));
+    lineEdit->push_back(new QCheckBox("Vinile"));
+    lineEdit->push_back(new QCheckBox("Cassetta"));
+
+    QVBoxLayout *supportLine = createVEditLine(supportLabel, lineEdit);
+
+    // sales line
+    QLabel *salesLabel = new QLabel("Vendite: ");
+    // da dichiarare come campi dati in realta
+    QLineEdit *salesEdit = new QLineEdit();     // solo uint
+    QHBoxLayout *salesLine = createHEditLine(salesLabel, salesEdit);
+    // adding pm info layout
+    layoutList->clear();
+    layoutList->push_back(supportLine);
+    layoutList->push_back(salesLine);
+    QVBoxLayout *pmLayout = createLineLayout(layoutList, 10, 10, 10, 20);
+
+    // DigitalMedium info
+    // platform line
+    lineEdit->clear();
+    QLabel *platformLabel = new QLabel("Piattaforme: ");
+    // da dichiarare come campi dati in realta
+    lineEdit->push_back(new QCheckBox("Spotify"));
+    lineEdit->push_back(new QCheckBox("Apple Music"));
+    lineEdit->push_back(new QCheckBox("Tidal"));
+    lineEdit->push_back(new QCheckBox("Deezer"));
+    lineEdit->push_back(new QCheckBox("YouTube Music"));
+    lineEdit->push_back(new QCheckBox("Amazon Music"));
+
+    QVBoxLayout *platformLine = createVEditLine(platformLabel, lineEdit);
+
+    // listeners line
+    QLabel *listenersLabel = new QLabel("Ascolti: ");
+    // da dichiarare come campi dati in realta
+    QLineEdit *listenersEdit = new QLineEdit();     // solo uint
+    QHBoxLayout *listenersLine = createHEditLine(listenersLabel, listenersEdit);
+    // adding dm info lauout
+    layoutList->clear();
+    layoutList->push_back(platformLine);
+    layoutList->push_back(listenersLine);
+    QVBoxLayout *dmLayout = createLineLayout(layoutList, 10, 10, 10, 20);
+
+    // adding buttons layout
+    QHBoxLayout *buttonLayout = new QHBoxLayout();
+    buttonLayout->addWidget(btn_add);
+    buttonLayout->addWidget(btn_cancel);
+    buttonLayout->setContentsMargins(500, 10, 20, 20);
+
+    // compose layout
+    layoutList->clear();
+    layoutList->push_back(musicInfoLayout);
+    layoutList->push_back(releaseInfoLayout);
+    layoutList->push_back(pmLayout);
+    layoutList->push_back(dmLayout);
+    layoutList->push_back(buttonLayout);
+    QVBoxLayout *formLayout = createLineLayout(layoutList, 0, 0, 0 ,0);
+
+    formDialog->resize(QSize(720, 360));
+    formDialog->setLayout(formLayout);
+    formDialog->setModal(true);
+}
+
+void Viewer::addMenus(QVBoxLayout *mainLayout) {
     QMenuBar *menuBar = new QMenuBar(this);
 
     file = new QMenu ("File", menuBar);
@@ -99,7 +244,7 @@ void Viewer::addScreen(QVBoxLayout *mainLayout) {
     QHBoxLayout *tc_layout = new QHBoxLayout;
 
     // layout table
-    QTableView *table = new QTableView;
+    table = new QTableView;
 
     // USARE UNO SIGNAL - SLOT ?
     catalog = controller->initData();
@@ -126,159 +271,7 @@ void Viewer::addScreen(QVBoxLayout *mainLayout) {
     mainLayout->addLayout(screenLayout);
 }
 
-// DA SISTEMARE
-void Viewer::customForm() {
-    formDialog = new QDialog;
-
-    // dialog layout
-    QVBoxLayout *formLayout = new QVBoxLayout();
-
-    // dialog's button
-    //btn_add = createButton("Aggiungi");
-    //btn_cancel = createButton("Cancella");
-
-    // music info layout
-    // USE QGroupBox    <---------------------------------------------------------
-    QVBoxLayout *musicInfoLayout = new QVBoxLayout();
-    QVBoxLayout *releaseInfoLayout = new QVBoxLayout();
-    QVBoxLayout *pmLayout = new QVBoxLayout();
-    QVBoxLayout *dmLayout = new QVBoxLayout();
-    QHBoxLayout *buttonLayout = new QHBoxLayout();
-
-    // music edit line layout
-    QHBoxLayout *nameLine = new QHBoxLayout();
-    QHBoxLayout *artistLine = new QHBoxLayout();
-    QHBoxLayout *genreLine = new QHBoxLayout();
-    // release edit line layout
-    QHBoxLayout *releaseLine = new QHBoxLayout();
-    // pm edit line layout
-    QHBoxLayout *supportLine = new QHBoxLayout();
-    QVBoxLayout *supportCKB = new QVBoxLayout();
-    QHBoxLayout *salesLine = new QHBoxLayout();
-    //dm edit line layout
-    QHBoxLayout *platformLine = new QHBoxLayout();
-    QVBoxLayout *platformCKB = new QVBoxLayout();
-    QHBoxLayout *listenersLine = new QHBoxLayout();
-
-    // widget component
-    //  - Music
-    QLabel *nameLabel = new QLabel("Nome: ");
-    QLabel *artistLabel = new QLabel("Artista: ");
-    QLabel *genreLable = new QLabel("Genere: ");
-
-    QLineEdit *nameEdit = new QLineEdit;
-    QLineEdit *artistEdit = new QLineEdit;
-    QLineEdit *genreEdit = new QLineEdit;
-
-    //  - Release
-    QLabel *releaseLabel = new QLabel("Data Pubblicazione");
-    QDateEdit *releaseDE = new QDateEdit();
-
-    releaseDE->setMaximumDate(QDate::currentDate());
-    //  - PhisycalMedium
-    QLabel *pmLabel = new QLabel("Supporti: ");
-    QList<QCheckBox*> *pmCKB = new QList<QCheckBox*>();
-
-    pmCKB->push_back(new QCheckBox("CD"));
-    pmCKB->push_back(new QCheckBox("Vinile"));
-    pmCKB->push_back(new QCheckBox("Cassetta"));
-
-    QLabel *salesLabel = new QLabel("Vendite: ");
-    QLineEdit *salesEdit = new QLineEdit;
-    //  -DigitalMedium
-    QLabel *dmLabel = new QLabel("Piattaforme: ");
-    QList<QCheckBox*> *dmCKB = new QList<QCheckBox*>();
-
-    dmCKB->push_back(new QCheckBox("Spotify"));
-    dmCKB->push_back(new QCheckBox("Apple Music"));
-    dmCKB->push_back(new QCheckBox("Tidal"));
-    dmCKB->push_back(new QCheckBox("Deezer"));
-    dmCKB->push_back(new QCheckBox("YouTube Music"));
-    dmCKB->push_back(new QCheckBox("Amazon Music"));
-
-    QLabel *listenersLabel = new QLabel("Ascolti: ");
-    QLineEdit *listenersEdit = new QLineEdit;
-
-    // adding widget component to corresponding layout
-    nameLine->addWidget(nameLabel);
-    nameLine->addWidget(nameEdit);
-
-    artistLine->addWidget(artistLabel);
-    artistLine->addWidget(artistEdit);
-
-    genreLine->addWidget(genreLable);
-    genreLine->addWidget(genreEdit);
-
-    releaseLine->addWidget(releaseLabel);
-    releaseLine->addWidget(releaseDE);
-
-    supportLine->addWidget(pmLabel);
-
-    supportCKB->addWidget(pmCKB->at(0));
-    supportCKB->addWidget(pmCKB->at(1));
-    supportCKB->addWidget(pmCKB->at(2));
-
-    supportLine->addLayout(supportCKB);
-
-    salesLine->addWidget(salesLabel);
-    salesLine->addWidget(salesEdit);
-
-    platformLine->addWidget(dmLabel);
-
-    platformCKB->addWidget(dmCKB->at(0));
-    platformCKB->addWidget(dmCKB->at(1));
-    platformCKB->addWidget(dmCKB->at(2));
-    platformCKB->addWidget(dmCKB->at(3));
-    platformCKB->addWidget(dmCKB->at(4));
-    platformCKB->addWidget(dmCKB->at(5));
-
-    platformLine->addLayout(platformCKB);
-
-    listenersLine->addWidget(listenersLabel);
-    listenersLine->addWidget(listenersEdit);
-
-    // adding edit line layout
-    musicInfoLayout->setContentsMargins(10, 10 ,10, 20);
-    musicInfoLayout->addLayout(nameLine);
-    musicInfoLayout->addLayout(artistLine);
-    musicInfoLayout->addLayout(genreLine);
-
-    releaseInfoLayout->setContentsMargins(10, 10, 10, 20);
-    releaseInfoLayout->addLayout(releaseLine);
-
-    pmLayout->setContentsMargins(10, 10, 10, 20);
-    pmLayout->addLayout(supportLine);
-    pmLayout->addLayout(salesLine);
-
-    dmLayout->setContentsMargins(10, 10, 10, 20);
-    dmLayout->addLayout(platformLine);
-    dmLayout->addLayout(listenersLine);
-
-    buttonLayout->setContentsMargins(500, 10, 10, 10);
-    buttonLayout->addWidget(btn_add);
-    buttonLayout->addWidget(btn_cancel);
-
-    // adding music info layout
-    formLayout->addLayout(musicInfoLayout);
-    formLayout->addLayout(releaseInfoLayout);
-    formLayout->addLayout(pmLayout);
-    formLayout->addLayout(dmLayout);
-    formLayout->addLayout(buttonLayout);
-
-    // setting dialog
-    formDialog->resize(QSize(720, 360));
-    formDialog->setLayout(formLayout);
-    formDialog->setModal(true);
-    formDialog->show();
-}
-
-void Viewer::closeFormDialog() {
-    formDialog->close();
-}
-
 Viewer::Viewer(QWidget *parent) : QWidget(parent), controller(new Controller) {
-
-
     QVBoxLayout *mainLayout = new QVBoxLayout;
 
     // Aggiungere la barra dei menu
@@ -292,6 +285,7 @@ Viewer::Viewer(QWidget *parent) : QWidget(parent), controller(new Controller) {
         // dialog's button
         btn_add = createButton("Aggiungi");
         btn_cancel = createButton("Cancella");
+        createCustomDialog();
 
     addScreen(mainLayout);
 
@@ -311,8 +305,14 @@ void Viewer::setController(Controller *c) {
     connect(btn_add, SIGNAL(clicked()), controller, SLOT(addMusic()));
 }
 
+void Viewer::showFormDialog() { formDialog->show(); }
+
+void Viewer::closeFormDialog() { formDialog->close(); }
+
 void Viewer::addNewMusic() {
     // get all attribute to create new music -> to invoke constructor
+
+    // ATTENZIONE : aggiornare anche su file e su RecordLabel per evitare inconsistenza
     DigitalMedium *example = new DigitalMedium("Genre", "Name", "Artist", Date(2, 5, 1983), AppleMusic, 1000);
 
     myModel->addEntry(example);

@@ -172,7 +172,7 @@ QVector<const Music*> Controller::initData() {
 
 // SLOTS
 void Controller::showDialog() {
-    view->customForm();
+    view->showFormDialog();
 }
 
 void Controller::closeDialog() {
