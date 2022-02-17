@@ -21,7 +21,7 @@ private:
     vector<const Music*> released;
     vector<const Music*> not_released;
 public:
-    RecordLabel(const string& _name = ""); // TOGLIERE IL PARAMETRO DI DEFAULT ??
+    RecordLabel(const string& _name = "");
     ~RecordLabel();
     /*
      * @brief   ritorna il nome dell'etichetta discografica

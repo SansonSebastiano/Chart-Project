@@ -20,7 +20,10 @@ void RecordLabel::insert(const Music* music) {
 // DA TESTARE
 
 vector<const Music*> RecordLabel::getByName(vector<const Music *> v, const string &album_name) const {
-    //controllo se 'v' e' vuoto?
+    //controllo se
+        // - 'v' e' vuoto?
+        // - album_name nullo
+
     vector<const Music*> result;
     for(auto it = v.begin(); it != v.end(); ++it)
         if((*it)->getName() == album_name)
@@ -31,6 +34,10 @@ vector<const Music*> RecordLabel::getByName(vector<const Music *> v, const strin
 }
 
 vector<const Music*> RecordLabel::getByGenre(vector<const Music *> v, const string &genre) const {
+    //controllo se
+        // - 'v' e' vuoto?
+        // - genre nullo
+
     vector<const Music*> result;
     for(auto it = v.begin(); it != v.end(); ++it)
         if((*it)->getGenre() == genre)
@@ -41,7 +48,11 @@ vector<const Music*> RecordLabel::getByGenre(vector<const Music *> v, const stri
     return result;
 }
 
-vector<const Music*> RecordLabel::getByArtist(vector<const Music *> v, const string &artist) const{
+vector<const Music*> RecordLabel::getByArtist(vector<const Music *> v, const string &artist) const {
+    //controllo se
+        // - 'v' e' vuoto?
+        // - artist nullo
+
     vector<const Music*> result;
     for(auto it = v.begin(); it != v.end(); ++it)
         if((*it)->getArtist() == artist)
@@ -52,6 +63,10 @@ vector<const Music*> RecordLabel::getByArtist(vector<const Music *> v, const str
 }
 
 vector<const Release*> RecordLabel::getByYear(vector<const Music *> v, uint year) const {
+    //controllo se
+        // - 'v' e' vuoto?
+        //
+
     vector<const Release*> result;
     for(auto it = v.begin(); it != v.end(); ++it)
         if(dynamic_cast<const Release*>(*it)->getReleaseDate().getYear() == year)
@@ -62,6 +77,10 @@ vector<const Release*> RecordLabel::getByYear(vector<const Music *> v, uint year
 }
 
 vector<const Release*> RecordLabel::getByPlatform(vector<const Release*> v, Platform platform) const{
+    //controllo se
+        // - 'v' e' vuoto?
+        // - platform == None_Platform
+
     vector<const Release*> result;
     const DM* pdm = nullptr;
 
@@ -75,6 +94,10 @@ vector<const Release*> RecordLabel::getByPlatform(vector<const Release*> v, Plat
 }
 
 vector<const Release*> RecordLabel::getBySupport(vector<const Release*> v, Support support) const{
+    //controllo se
+        // - 'v' e' vuoto?
+        // - support = None_Support
+
     vector<const Release*> result;
     const PM *ppm = nullptr;
 
@@ -88,6 +111,10 @@ vector<const Release*> RecordLabel::getBySupport(vector<const Release*> v, Suppo
 }
 
 vector<const Release*> RecordLabel::getBetweenYears(vector<const Music*> v, const Date& from, const Date& to) const{
+    //controllo se
+        // - 'v' e' vuoto?
+        // - from & to sono di default ????
+
     vector<const Release*> result;
     const Release* pr = nullptr;
     for(auto it = v.begin(); it != v.end(); ++it){
@@ -100,6 +127,8 @@ vector<const Release*> RecordLabel::getBetweenYears(vector<const Music*> v, cons
 }
 
 double RecordLabel::getTotProfit(vector<const Release*> r) const {
+    // controllo se r è vuoto ??
+
     double tot_profit = 0.0;
     for(auto it = r.begin(); it != r.end(); ++it)
         tot_profit += (*it)->getProfit();
@@ -107,7 +136,9 @@ double RecordLabel::getTotProfit(vector<const Release*> r) const {
 }
 
 // DA TESTARE
-uint RecordLabel::getTotNumbers(vector<const Release *> r) const{
+uint RecordLabel::getTotNumbers(vector<const Release *> r) const {
+    // controllo se r è vuoto ??
+
     uint tot_numbers = 0;
     for(auto it = r.begin(); it != r.end(); ++it)
         tot_numbers += (*it)->getNumbers();
@@ -115,6 +146,8 @@ uint RecordLabel::getTotNumbers(vector<const Release *> r) const{
 }
 
 void RecordLabel::release(const Release *album){
+    // controllo se album vuoto
+
     bool found = false;
 
     for (auto it = not_released.begin(); it != not_released.end() && !found; ++it)
@@ -128,6 +161,8 @@ void RecordLabel::release(const Release *album){
 }
 
 bool RecordLabel::isElapsed1Year(const Release *album) const{
+    // controllo se album vuoto
+
     if(album->getElapsedYears() >= 1) return true;
     else return false;
 }
@@ -137,6 +172,8 @@ vector<const Music*> RecordLabel::getReleased() const{ return released; }
 vector<const Music*> RecordLabel::getNotReleased() const{ return not_released; }
 
 void RecordLabel::removeFromNotReleased(const Music *music) {
+    // controllo se music vuoto
+
     bool found = false;
 
     for(auto it = not_released.begin(); it != not_released.end() && !found; ++it)

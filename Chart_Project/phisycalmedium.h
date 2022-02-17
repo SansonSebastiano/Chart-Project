@@ -39,7 +39,7 @@ public:
     static const string support_names[];
     static const uint MAX_PVALUES;
 
-    PhisycalMedium(const string& _genre, const string& _album_name, const string& _album_artist, const Date& _rd, Support _support, uint _ns);
+    PhisycalMedium(const string& _genre = "", const string& _album_name = "", const string& _album_artist = "", const Date& _rd = Date(), Support _support = None_Support, uint _ns = 0);
     virtual ~PhisycalMedium() = default;
     /*
      * @brief   restituisce il numero di copie vendute

@@ -36,7 +36,7 @@ public:
     static const string platform_names[];
     static const uint MAX_SVALUES;
 
-    DigitalMedium(const string& _genre, const string& _album_name, const string& _album_artist, const Date& _rd, Platform _platform, uint _listeners);
+    DigitalMedium(const string& _genre = "", const string& _album_name = "", const string& _album_artist = "", const Date& _rd = Date(), Platform _platform = None_Platform, uint _listeners = 0);
     virtual ~DigitalMedium() = default;
     /*
      * @brief   restituisce il nome del servizio digitale

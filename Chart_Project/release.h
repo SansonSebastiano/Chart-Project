@@ -18,7 +18,7 @@ protected:
      */
     virtual void setProfit() = 0;
 public:
-    Release(const string& _genre, const string& _album_name, const string& _artist_name, const Date& _rd);
+    Release(const string& _genre = "", const string& _album_name = "", const string& _artist_name = "", const Date& _rd = Date ());
     virtual ~Release() = default;
     /*
      * @brief   restituisce il guadagno di un album

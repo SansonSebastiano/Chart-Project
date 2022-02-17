@@ -16,6 +16,7 @@
 #include <QDialog>
 #include <QComboBox>
 #include <QDateEdit>
+#include <QCheckBox>
 
 #include <phisycalmedium.h>
 #include <digitalmedium.h>
@@ -35,18 +36,23 @@ private:
     QMenu *file;
     QMenu *edit;
     QMenu *chart;
-    // Buttons
+    // Buttons controlls_1
     QPushButton *btn_uploadData;
     QPushButton *btn_saveData;
 
     QPushButton *btn_lineChart;
     QPushButton *btn_pieChart;
     QPushButton *btn_histogram;
-
+    // Buttons controlls_1
     QPushButton *btn_addItem;
     QPushButton *btn_filter;
+    // Buttons dialog
+    QPushButton *btn_add;
+    QPushButton *btn_cancel;
 
     TableModel *myModel;
+
+    QDialog *formDialog;
 
     QPushButton *createButton(const QString& title);
 
@@ -54,13 +60,16 @@ private:
     void addControll_1(QVBoxLayout *mainLayout);
     void addScreen(QVBoxLayout *mainLayout);
     void addControll_2(QHBoxLayout *screenLayout);
+
 public:
     explicit Viewer(QWidget *parent = nullptr);
 
     void setController(Controller *c);
     void customForm();
 
-    //void setVector(QVector<const Music*> v);
+    void closeFormDialog();
+
+    void addNewMusic();
 };
 
 #endif // VIEWER_H

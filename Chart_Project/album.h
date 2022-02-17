@@ -8,7 +8,7 @@ private:
     string name;
     string artist;
 public:
-    Album(const string& _genre, const string& _name, const string& _artist);
+    Album(const string& _genre = "", const string& _name = "", const string& _artist = "");
     virtual ~Album() = default;
     /*
      * @brief   restituisce il nome di una album

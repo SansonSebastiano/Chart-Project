@@ -90,19 +90,12 @@ QVariant TableModel::data(const QModelIndex &index, int role) const {
     return QVariant();
 }
 
-/*
-void TableModel::appendData(const Music *m) {
-    catalog.push_back(m);
-}
-*/
-
 bool TableModel::insertRows(int position, int rows, const QModelIndex &parent) {
     Q_UNUSED(parent);
     beginInsertRows(QModelIndex(), position, position + rows - 1);
 
-    for (int row = 0; row < rows; ++row) {
-        //catalog.at(position);
-    }
+    for (int row = 0; row < rows; ++row)
+        catalog.push_back(new Album());     // non mi convince molto
 
     endInsertRows();
     return true;
@@ -112,25 +105,42 @@ bool TableModel::removeRows(int position, int rows, const QModelIndex &parent) {
     Q_UNUSED(parent);
     beginRemoveRows(QModelIndex(), position, position + rows - 1);
 
-    for (int row = 0; row < rows; ++row){
+    for (int row = 0; row < rows; ++row)
         catalog.removeAt(position);
-    }
 
     endRemoveRows();
     return true;
 }
 
-// bisogna prima aggiungere la nuova musica a 'catalog'
-
-
 bool TableModel::setData(const QModelIndex &index, const QVariant &value, int role) {
-    if (index.isValid() && role == Qt::DisplayRole){
-        int row = index.row();
-
+    if (index.isValid() && role == Qt::DisplayRole){            // controllo se value, ovvero newMusic e' nullo ??
         auto newMusic = value.value<const Music*>();
-        catalog.push_back(newMusic);
-        //QVariant test = QVariant::fromValue<const Music*>(newMusic);
+        catalog.replace(index.row(), newMusic);                            // pero' attenzione che devo aggiungerlo alla record label e nel file per evitare inconsistenza
 
+        emit dataChanged(index, index, {Qt::DisplayRole});
+        return true;
+    }
+    return false;
+}
 
+Qt::ItemFlags TableModel::flags(const QModelIndex &index) const {
+    Q_UNUSED(index);        // sicuro ???
+    return Qt::ItemIsEnabled;
+}
+
+const QVector<const Music*> &TableModel::getMusics() const { return catalog; }
+
+void TableModel::addEntry(const Music* m) {
+    if(!getMusics().contains(m)){
+        insertRows(0, 1, QModelIndex());
+
+        int position = catalog.size() - 1;
+
+        QModelIndex i = index(position, 0, QModelIndex());
+        //QVariant::fromValue<const Music*>(m);
+        setData(i, QVariant::fromValue<const Music*>(m), Qt::DisplayRole);
+    }else {
+       // QMessageBox::information(this, tr("Duplicate music"), tr(""));
+        cout << endl << "Duplicate music: " << m->getName() << " already exists!" << endl;
     }
 }

@@ -9,7 +9,7 @@ class Music{
 private:
     string genre;
 public:
-    Music(const string& _genre);
+    Music(const string& _genre = "");
     virtual ~Music() = default;
     /*
      * @brief   restituisce un genere musicale

@@ -54,6 +54,8 @@ public:
 public slots:
     //void saveCatalog();
     void showDialog();
+    void closeDialog();
+    void addMusic();
 };
 
 #endif // CONTROLLER_H

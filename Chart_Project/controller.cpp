@@ -174,3 +174,13 @@ QVector<const Music*> Controller::initData() {
 void Controller::showDialog() {
     view->customForm();
 }
+
+void Controller::closeDialog() {
+    view->closeFormDialog();
+}
+
+void Controller::addMusic() {
+    view->addNewMusic();
+
+    view->closeFormDialog();
+}
