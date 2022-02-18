@@ -18,6 +18,7 @@
 #include <QDateEdit>
 #include <QCheckBox>
 #include <QGroupBox>
+#include<QFormLayout>
 
 #include <phisycalmedium.h>
 #include <digitalmedium.h>
@@ -64,10 +65,45 @@ private:
     QPushButton *createButton(const QString& title);
 
     // Dialog layout
-    QHBoxLayout *createHEditLine(QLabel *l, QWidget *w);
-    QVBoxLayout *createVEditLine(QLabel *l, QList<QWidget*> *lw);
-    QVBoxLayout *createLineLayout(QList<QBoxLayout*> *vbl, int leftMargin, int topMargin, int rightMargin, int bottomMargin);
 
+    // Components
+    QLineEdit *nameEdit;
+    QLineEdit *artistEdit;
+    QLineEdit *genreEdit;
+
+    QDateEdit *releaseDE;
+
+    QCheckBox *cdCKB;
+    QLineEdit *cdSalesEdit;
+    QCheckBox *vnlCKB;
+    QLineEdit *vnlSalesEdit;
+    QCheckBox *cstCKB;
+    QLineEdit *cstSalesEdit;
+
+    QCheckBox *spotifyCKB;
+    QLineEdit *spoListenersEdit;
+    QCheckBox *appMusicCKB;
+    QLineEdit *appMListenersEdit;
+    QCheckBox *tidalCKB;
+    QLineEdit *tidListenersEdit;
+    QCheckBox *deezerCKB;
+    QLineEdit *deeListenersEdit;
+    QCheckBox *youMusicCKB;
+    QLineEdit *youListenersEdit;
+    QCheckBox *amMusicCKB;
+    QLineEdit *AmListenersEdit;
+
+    // UNIFICARE I PROSSIMI DUE METODI
+    QHBoxLayout *createHEditLine(QList<QWidget*> *lw);
+    QVBoxLayout *createVEditLine(QList<QWidget*> *lw);
+    QVBoxLayout *createLineLayout(QList<QLayout*> *vbl, int leftMargin = 0, int topMargin = 0, int rightMargin = 0, int bottomMargin = 0);
+
+    QVBoxLayout * addMusicLine(QList<QLayout*> *layoutList, QList<QWidget*> *lineEdit);
+    QVBoxLayout * addRelaseLine(QList<QLayout*> *layoutList, QList<QWidget*> *lineEdit);
+    QVBoxLayout * addPMLine(QList<QLayout*> *layoutList, QList<QWidget*> *lineEdit);
+    QVBoxLayout * addDMLine(QList<QLayout*> *layoutList, QList<QWidget*> *lineEdit);
+
+    void initDialogComponets();
     void createCustomDialog();
 
     // COMBOBOX PER PUBBLICARE GLI ALBUM
@@ -80,6 +116,7 @@ public:
     void showFormDialog();
     void closeFormDialog();
 
+    void getDataInput();
     void addNewMusic();
 };
 
