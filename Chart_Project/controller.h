@@ -56,6 +56,8 @@ public slots:
     void showDialog();
     void closeDialog();
     void addMusic();
+
+    void showTextEdit();
 };
 
 #endif // CONTROLLER_H

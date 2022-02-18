@@ -184,3 +184,7 @@ void Controller::addMusic() {
 
     view->closeFormDialog();
 }
+
+void Controller::showTextEdit() {
+    view->showEditLine();
+}

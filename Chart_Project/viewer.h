@@ -19,6 +19,7 @@
 #include <QCheckBox>
 #include <QGroupBox>
 #include<QFormLayout>
+#include <QRadioButton>
 
 #include <phisycalmedium.h>
 #include <digitalmedium.h>
@@ -45,7 +46,7 @@ private:
     QPushButton *btn_lineChart;
     QPushButton *btn_pieChart;
     QPushButton *btn_histogram;
-    // Buttons controlls_1
+    // Buttons controlls_2
     QPushButton *btn_addItem;
     QPushButton *btn_filter;
     // Buttons dialog
@@ -64,9 +65,16 @@ private:
 
     QPushButton *createButton(const QString& title);
 
-    // Dialog layout
+    // FARE UNA CLASSE
+    // Dialog Layout
+    QVBoxLayout *releaseFormLayout;
+    QWidget *container_1;
+    QWidget *container_2;
+    QWidget *container_3;
 
-    // Components
+    // Dialog Components
+    QRadioButton *publicRB;
+
     QLineEdit *nameEdit;
     QLineEdit *artistEdit;
     QLineEdit *genreEdit;
@@ -93,15 +101,14 @@ private:
     QCheckBox *amMusicCKB;
     QLineEdit *AmListenersEdit;
 
-    // UNIFICARE I PROSSIMI DUE METODI
-    QHBoxLayout *createHEditLine(QList<QWidget*> *lw);
-    QVBoxLayout *createVEditLine(QList<QWidget*> *lw);
-    QVBoxLayout *createLineLayout(QList<QLayout*> *vbl, int leftMargin = 0, int topMargin = 0, int rightMargin = 0, int bottomMargin = 0);
+    QFormLayout *createFormLayout(const QString& label, QWidget* w);
+    QHBoxLayout *createHEditLine(QList<QWidget*> *lw, QWidget *parent = nullptr);
+    QVBoxLayout *createLineLayout(QList<QLayout*> *vbl, int leftMargin = 0, int topMargin = 0, int rightMargin = 0, int bottomMargin = 0, QWidget *parent = nullptr);
 
-    QVBoxLayout * addMusicLine(QList<QLayout*> *layoutList, QList<QWidget*> *lineEdit);
-    QVBoxLayout * addRelaseLine(QList<QLayout*> *layoutList, QList<QWidget*> *lineEdit);
-    QVBoxLayout * addPMLine(QList<QLayout*> *layoutList, QList<QWidget*> *lineEdit);
-    QVBoxLayout * addDMLine(QList<QLayout*> *layoutList, QList<QWidget*> *lineEdit);
+    QVBoxLayout * addMusicLine(QList<QLayout*> *layoutList);
+    QVBoxLayout * addRelaseLine(QList<QLayout*> *layoutList, QWidget *parent = nullptr);
+    QVBoxLayout * addPMLine(QList<QLayout*> *layoutList, QList<QWidget*> *lineEdit, QWidget *parent = nullptr);
+    QVBoxLayout * addDMLine(QList<QLayout*> *layoutList, QList<QWidget*> *lineEdit, QWidget *parent = nullptr);
 
     void initDialogComponets();
     void createCustomDialog();
@@ -115,6 +122,7 @@ public:
 
     void showFormDialog();
     void closeFormDialog();
+    void showEditLine();
 
     void getDataInput();
     void addNewMusic();

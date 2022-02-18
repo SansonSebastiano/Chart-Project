@@ -15,6 +15,7 @@ CONFIG += c++11
 SOURCES += \
     album.cpp \
     controller.cpp \
+    customformdialog.cpp \
     date.cpp \
     digitalmedium.cpp \
     io_handler.cpp \
@@ -32,6 +33,7 @@ HEADERS += \
     album.h \
     cast_helper.h \
     controller.h \
+    customformdialog.h \
     date.h \
     digitalmedium.h \
     exceptions.h \
