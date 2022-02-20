@@ -52,12 +52,17 @@ public:
     QVector<const Music*> initData();
 
 public slots:
-    //void saveCatalog();
     void showDialog();
     void closeDialog();
+    void enableDialog();
+    //void saveCatalog();
+    /*
+
+
     void addMusic();
 
     void showTextEdit();
+    */
 };
 
 #endif // CONTROLLER_H
