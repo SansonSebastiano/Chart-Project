@@ -30,8 +30,21 @@ vector<const Music*> Model::getData() const {
     auto not_released = rl->getNotReleased();
     vector<const Music*> catalog;
     catalog.reserve(released.size() + not_released.size());
-    catalog.insert(catalog.end(), released.begin(), released.end());
     catalog.insert(catalog.end(), not_released.begin(), not_released.end());
+    catalog.insert(catalog.end(), released.begin(), released.end());
 
     return catalog;
+}
+
+bool Model::isPresent(const Music *m) const {
+    auto catalog = getData();
+    bool found = false;
+
+    for (auto it = catalog.begin(); it != catalog.end() && !found; ++it)
+        if ((*it)->getName() == m->getName() &&
+                (*it)->getArtist() == m->getArtist() &&
+                (*it)->getGenre() == m->getGenre())
+            found = true;
+
+    return found;
 }

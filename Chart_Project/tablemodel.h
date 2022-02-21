@@ -40,8 +40,6 @@ public:
         // boh altro...
 private:
     QVector<const Music*> catalog;
-
-    bool isPresent(const Music* m) const;
 };
 
 #endif // TABLEMODEL_H

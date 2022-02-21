@@ -50,19 +50,13 @@ public:
     void removeFromFile(const QString& label, const Music* music);
 
     QVector<const Music*> initData();
+    bool isPresent(const Music* m) const;
 
 public slots:
     void showDialog();
     void closeDialog();
     void enableDialog();
-    //void saveCatalog();
-    /*
-
-
-    void addMusic();
-
-    void showTextEdit();
-    */
+    void getNewMusic();
 };
 
 #endif // CONTROLLER_H

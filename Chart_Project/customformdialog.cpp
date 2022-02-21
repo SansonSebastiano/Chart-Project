@@ -4,29 +4,32 @@ CustomFormDialog::CustomFormDialog() : nameEdit(new QLineEdit()),
                                        artistEdit(new QLineEdit()),
                                        genreEdit(new QLineEdit()),
 
-                                       publicRB(new QRadioButton("Pubblica")),
-
+                                       //releaseBox(new QGroupBox("Info Pubblicazione")),
                                        releaseDE(new QDateEdit()),
 
+                                       // INT VALIDATOR
+                                       // MOSTRARE I PREZZI
+                                       //pmBox(new QGroupBox("Info Supporti Fisici")),
                                        cdCKB(new QCheckBox("CD")),
                                        vnlCKB(new QCheckBox("Vinile")),
                                        cstCKB(new QCheckBox("Cassetta")),
-                                       cdEdit(new QLineEdit("Vendite")),
-                                       vnlEdit(new QLineEdit("Vendite")),
-                                       cstEdit(new QLineEdit("Vendite")),
+                                       cdEdit(new QLineEdit()),
+                                       vnlEdit(new QLineEdit()),
+                                       cstEdit(new QLineEdit()),
 
+                                       //dmBox(new QGroupBox("Info Piattaforme Digitali")),
                                        sptfCKB(new QCheckBox("Spotify")),
                                        applmCKB(new QCheckBox("Apple Music")),
                                        tdlCKB(new QCheckBox("Tidal")),
                                        dzrCKB(new QCheckBox("Deezer")),
                                        ytmCKB(new QCheckBox("YouTube Music")),
                                        amzCKB(new QCheckBox("Amazon Music")),
-                                       sptfEdit(new QLineEdit("Ascolti")),
-                                       applmEdit(new QLineEdit("Ascolti")),
-                                       tdlEdit(new QLineEdit("Ascolti")),
-                                       dzrEdit(new QLineEdit("Ascolti")),
-                                       ytmEdit(new QLineEdit("Ascolti")),
-                                       amzEdit(new QLineEdit("Ascolti")),
+                                       sptfEdit(new QLineEdit()),
+                                       applmEdit(new QLineEdit()),
+                                       tdlEdit(new QLineEdit()),
+                                       dzrEdit(new QLineEdit()),
+                                       ytmEdit(new QLineEdit()),
+                                       amzEdit(new QLineEdit()),
 
                                        btn_add(new QPushButton("Aggiungi")),
                                        btn_cancel(new QPushButton("Cancella"))
@@ -35,29 +38,55 @@ CustomFormDialog::CustomFormDialog() : nameEdit(new QLineEdit()),
     releaseDE->setMaximumDate(QDate::currentDate());
 
     cdEdit->setDisabled(true);
+    cdEdit->setValidator(new QIntValidator());
+
     vnlEdit->setDisabled(true);
+    vnlEdit->setValidator(new QIntValidator());
+
     cstEdit->setDisabled(true);
+    cstEdit->setValidator(new QIntValidator());
 
     sptfEdit->setDisabled(true);
+    sptfEdit->setValidator(new QIntValidator());
+
     applmEdit->setDisabled(true);
+    applmEdit->setValidator(new QIntValidator());
+
     tdlEdit->setDisabled(true);
+    tdlEdit->setValidator(new QIntValidator());
+
     dzrEdit->setDisabled(true);
+    dzrEdit->setValidator(new QIntValidator());
+
     ytmEdit->setDisabled(true);
+    ytmEdit->setValidator(new QIntValidator());
+
     amzEdit->setDisabled(true);
+    amzEdit->setValidator(new QIntValidator());
 
     //btn_add->setDisabled(true);
 
     //resize(QSize(500, 500));
     setModal(true);
-    createDialogLayout();
+    //createDialogLayout();
 }
 
 const QPushButton *CustomFormDialog::getAddbtn() const { return btn_add; }
 const QPushButton *CustomFormDialog::getCancbtn() const { return btn_cancel; }
 
+const QLineEdit *CustomFormDialog::getNameEdit() const { return nameEdit; }
+const QLineEdit *CustomFormDialog::getArtistEdit() const { return artistEdit; }
+const QLineEdit *CustomFormDialog::getGenreEdit() const { return  genreEdit; }
+
+const QDateEdit *CustomFormDialog::getReleaseDE() const { return releaseDE; }
+
 const QCheckBox *CustomFormDialog::getcdCKB() const { return cdCKB; }
 const QCheckBox *CustomFormDialog::getvnlCKB() const { return vnlCKB; }
 const QCheckBox *CustomFormDialog::getcstCKB() const { return cstCKB; }
+
+const QLineEdit *CustomFormDialog::getCdEdit() const { return  cdEdit; }
+const QLineEdit *CustomFormDialog::getVnlEdit() const { return vnlEdit; }
+const QLineEdit *CustomFormDialog::getCstEdit() const { return cstEdit; }
 
 const QCheckBox *CustomFormDialog::getsptfCKB() const { return sptfCKB; }
 const QCheckBox *CustomFormDialog::getapplmCKB() const { return applmCKB; }
@@ -65,6 +94,13 @@ const QCheckBox *CustomFormDialog::gettdlCKB() const { return tdlCKB; }
 const QCheckBox *CustomFormDialog::getdzrCKB() const { return dzrCKB; }
 const QCheckBox *CustomFormDialog::getytmCKB() const { return ytmCKB; }
 const QCheckBox *CustomFormDialog::getamzCKB() const { return amzCKB; }
+
+const QLineEdit *CustomFormDialog::getSptfEdit() const { return sptfEdit; }
+const QLineEdit *CustomFormDialog::getApplmEdit() const { return applmEdit; }
+const QLineEdit *CustomFormDialog::getTdlEdit() const { return tdlEdit; }
+const QLineEdit *CustomFormDialog::getDzrEdit() const { return dzrEdit; }
+const QLineEdit *CustomFormDialog::getYtmEdit() const { return ytmEdit; }
+const QLineEdit *CustomFormDialog::getAmzEdit() const { return amzEdit; }
 
 void CustomFormDialog::createFormLayout(const QString &label, QWidget *w, QVBoxLayout *vbl) {
     QFormLayout *formLayout = new QFormLayout();
@@ -81,7 +117,6 @@ void CustomFormDialog::createLine(QWidget *ckb, QWidget *lineEdit, QFormLayout *
 
     line->addWidget(ckb);
     line->addWidget(lineEdit);
-    line->setContentsMargins(0, 0, 0, 0);
     line->setSpacing(50);
     //line->setAlignment(ckb, Qt::AlignLeft);
     //line->setAlignment(lineEdit, Qt::AlignRight);
@@ -115,10 +150,17 @@ void CustomFormDialog::createReleaseBox(QVBoxLayout *vbl) {
 
     createFormLayout("Data Pubblicazione: ", releaseDE, boxLayout);
 
+    //releaseBox->setLayout(boxLayout);
+    //releaseBox->setDisabled(true);
+
+
     QGroupBox *groupBox = new QGroupBox("Info Pubblicazione");
     groupBox->setLayout(boxLayout);
+    //groupBox->setDisabled(true);
 
     vbl->addWidget(groupBox);
+
+    //vbl->addWidget(releaseBox);
 }
 
 void CustomFormDialog::createPMBox(QVBoxLayout *vbl) {
@@ -132,6 +174,7 @@ void CustomFormDialog::createPMBox(QVBoxLayout *vbl) {
 
     QGroupBox *groupBox = new QGroupBox("Info Supporti Fisici");
     groupBox->setLayout(boxLayout);
+    //groupBox->setDisabled(true);
 
     vbl->addWidget(groupBox);
 }
@@ -153,17 +196,33 @@ void CustomFormDialog::createDMBox(QVBoxLayout *vbl) {
 
     QGroupBox *groupBox = new QGroupBox("Info Piattaforme Digitali");
     groupBox->setLayout(boxLayout);
+    //groupBox->setDisabled(true);
 
     vbl->addWidget(groupBox);
 }
 
-void CustomFormDialog::createDialogLayout() {
+void CustomFormDialog::createAddMusicLayout() {
     QVBoxLayout *dialogLayout = new QVBoxLayout();
 
     // add Music Box
     createMusicBox(dialogLayout);
-    // add to public possibility
-    createFormLayout("", publicRB, dialogLayout);
+
+    // button layout
+    QHBoxLayout *buttonLayout = new QHBoxLayout();
+    buttonLayout->addWidget(btn_add);
+    buttonLayout->addWidget(btn_cancel);
+    buttonLayout->setAlignment(Qt::AlignRight);
+
+    dialogLayout->addLayout(buttonLayout);
+
+    setLayout(dialogLayout);
+}
+
+void CustomFormDialog::createReleaseMusicLayout(const QVector<const Music*> *notReleased) {
+    QVBoxLayout *dialogLayout = new QVBoxLayout();
+
+    // add combobox with not releases music
+
     // add Release Box
     createReleaseBox(dialogLayout);
     // add PhisycalMedium Box
@@ -182,17 +241,11 @@ void CustomFormDialog::createDialogLayout() {
     setLayout(dialogLayout);
 }
 
-void CustomFormDialog::enableComponents() {
+void CustomFormDialog::enableReleaseComponents() {
     //if (publicRB->isChecked())
         // enable release layout
     //else
         // disable release layout
-    /*
-    if(!nameEdit->text().isEmpty() && !artistEdit->text().isEmpty() && !genreEdit->text().isEmpty())
-        btn_add->setDisabled(false);
-    else
-        btn_add->setDisabled(true);
-        */
 
     if (cdCKB->isChecked())
         cdEdit->setDisabled(false);
@@ -240,23 +293,81 @@ void CustomFormDialog::enableComponents() {
         amzEdit->setDisabled(true);
 }
 
+void CustomFormDialog::enableAddBtn() {
+    // DA RIVEDERE
+    /*
+    if(checkMusicInput())
+        btn_add->setDisabled(false);
+    else
+        btn_add->setDisabled(true);
+        */
+}
+
+bool CustomFormDialog::checkLine(const QCheckBox *cb, const QLineEdit *le, const QString &message) const {
+    if (cb->isChecked()) {
+        if (!le->text().isEmpty())
+            return true;
+        else {
+            QMessageBox::warning(const_cast<QLineEdit*>(le), tr("Campi vuoti"), "Campo " + message + " necessario", QMessageBox::Ok);
+            return false;
+        }
+    }
+    return false;
+}
+
+bool CustomFormDialog::checkMusicInput() const {
+    return  !nameEdit->text().isEmpty() &&
+            !artistEdit->text().isEmpty() &&
+            !genreEdit->text().isEmpty();
+}
+
+bool CustomFormDialog::checkPMInput() const {
+    return  checkLine(cdCKB, cdEdit, "vendite") ||
+            checkLine(vnlCKB, vnlEdit, "vendite") ||
+            checkLine(cstCKB, cstEdit, "vendite");
+}
+
+bool CustomFormDialog::checkDMInput() const {
+    return  checkLine(sptfCKB, sptfEdit, "ascolti") ||
+            checkLine(applmCKB, applmEdit, "ascolti") ||
+            checkLine(tdlCKB, tdlEdit, "ascolti") ||
+            checkLine(dzrCKB, dzrEdit, "ascolti") ||
+            checkLine(ytmCKB, ytmEdit, "ascolti") ||
+            checkLine(amzCKB, amzEdit, "ascolti");
+}
+
+void CustomFormDialog::resetComponents() {
+    nameEdit->clear();
+    artistEdit->clear();
+    genreEdit->clear();
+
+    releaseDE->clear();
+
+    cdCKB->setChecked(false);
+    vnlCKB->setChecked(false);
+    cstCKB->setChecked(false);
+
+    cdEdit->clear();
+    vnlEdit->clear();
+    cstEdit->clear();
+
+    sptfCKB->setChecked(false);;
+    applmCKB->setChecked(false);
+    tdlCKB->setChecked(false);
+    dzrCKB->setChecked(false);
+    ytmCKB->setChecked(false);
+    amzCKB->setChecked(false);
+
+    sptfEdit->clear();
+    applmEdit->clear();
+    tdlEdit->clear();
+    dzrEdit->clear();
+    ytmEdit->clear();
+    amzEdit->clear();
+}
+
 /*
 
-
-    // SIGNAL E SLOT
-    connect(btn_cancel, SIGNAL(clicked()), controller, SLOT(closeDialog()));
-    connect(btn_add, SIGNAL(clicked()), controller, SLOT(addMusic()));
-    // checkbox signal & slot
-    connect(cdCKB, SIGNAL(stateChanged(int)), controller, SLOT(showTextEdit()));
-    connect(vnlCKB, SIGNAL(stateChanged(int)), controller, SLOT(showTextEdit()));
-    connect(cstCKB, SIGNAL(stateChanged(int)), controller, SLOT(showTextEdit()));
-
-    connect(spotifyCKB, SIGNAL(stateChanged(int)), controller, SLOT(showTextEdit()));
-    connect(appMusicCKB, SIGNAL(stateChanged(int)), controller, SLOT(showTextEdit()));
-    connect(tidalCKB, SIGNAL(stateChanged(int)), controller, SLOT(showTextEdit()));
-    connect(deezerCKB, SIGNAL(stateChanged(int)), controller, SLOT(showTextEdit()));
-    connect(youMusicCKB, SIGNAL(stateChanged(int)), controller, SLOT(showTextEdit()));
-    connect(amMusicCKB, SIGNAL(stateChanged(int)), controller, SLOT(showTextEdit()));
 
 
 void Viewer::getDataInput() {

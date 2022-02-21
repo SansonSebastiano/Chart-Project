@@ -4,7 +4,7 @@ const QDir Controller::project_path(PROJECT_PATH);
 const QString Controller::dataSetDir("/RecordLabel/");
 
 // WARNING : al nome della record label
-Controller::Controller(QObject *parent) : QObject(parent), model(new Model) { }
+Controller::Controller(QObject *parent) : QObject(parent), model(new Model()) { }
 
 void Controller::setModel(Model *m) { model = m; }
 
@@ -160,9 +160,7 @@ void Controller::removeFromFile(const QString& label, const Music* music) {
 }
 
 QVector<const Music*> Controller::initData() {
-    loadDataFrom("sample_1");
-
-    //model->getAllInfo();
+    loadDataFrom("sample_1");       // ATTENZIONE : QUANDO NECESSARIO CAMBIARE NOME DEL FILE
 
     auto data = model->getData();
     QVector<const Music*> myVector = QVector<const Music*>::fromStdVector(data);
@@ -170,12 +168,26 @@ QVector<const Music*> Controller::initData() {
     return myVector;
 }
 
+// SLOTS
 void Controller::showDialog() { view->showFormDialog(); }
 void Controller::closeDialog() { view->closeFormDialog(); }
 void Controller::enableDialog() { view->enableFormDialogComponents(); }
+void Controller::getNewMusic() {
+    auto newMusic = view->getMusicInput();
+    if (newMusic){
+        if (!model->isPresent(newMusic))
+            view->addNewMusic(newMusic);
+        else{
+            view->showWarning("The following: \n" + QString::fromStdString(newMusic->getInfo()) + "\nalready exists");
+            view->closeFormDialog();
+        }
+    }
+    else
+        view->showWarning("Campi obbligatori");
+}
 
 /*
-// SLOTS
+
 
 
 

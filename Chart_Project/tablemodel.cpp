@@ -130,30 +130,11 @@ Qt::ItemFlags TableModel::flags(const QModelIndex &index) const {
 
 const QVector<const Music*> &TableModel::getMusics() const { return catalog; }
 
-bool TableModel::isPresent(const Music *m) const {
-    auto v = getMusics();
-    bool found = false;
-
-    for(auto it = v.begin(); it != v.end() && !found; ++it)
-        if ((*it)->getName() == m->getName() &&
-            (*it)->getArtist() == m->getArtist() &&
-            (*it)->getGenre() == m->getGenre())
-                found = true;
-
-    return found;
-}
-
 void TableModel::addEntry(const Music* m) {
-    if(!isPresent(m)){
-        insertRows(0, 1, QModelIndex());
+    insertRows(0, 1, QModelIndex());
 
-        int position = catalog.size() - 1;
+    int position = catalog.size() - 1;
 
-        QModelIndex i = index(position, 0, QModelIndex());
-        //QVariant::fromValue<const Music*>(m);
-        setData(i, QVariant::fromValue<const Music*>(m), Qt::DisplayRole);
-    }else {
-       // QMessageBox::information(this, tr("Duplicate music"), tr(""));
-        cout << endl << "Duplicate music: " << m->getName() << " already exists!" << endl;
-    }
+    QModelIndex i = index(position, 0, QModelIndex());
+    setData(i, QVariant::fromValue<const Music*>(m), Qt::DisplayRole);
 }

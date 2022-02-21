@@ -20,6 +20,8 @@
 #include <QGroupBox>
 #include<QFormLayout>
 #include <QRadioButton>
+#include <QMessageBox>
+#include <QPair>
 
 #include <phisycalmedium.h>
 #include <digitalmedium.h>
@@ -34,6 +36,7 @@ private:
     Controller *controller;
 
     QVector<const Music*> catalog;
+    QVector<const Music*> toSave;
 
     // Components' layout
     // Menu
@@ -49,13 +52,14 @@ private:
     QPushButton *btn_histogram;
     // Buttons controlls_2
     QPushButton *btn_addItem;
+    QPushButton *btn_release;
     QPushButton *btn_filter;
     // Buttons dialog
     QPushButton *btn_add;
     QPushButton *btn_cancel;
 
     QTableView *table;
-    TableModel *myModel;
+    TableModel *myTableModel;
 
     CustomFormDialog *cfd;
 
@@ -66,18 +70,21 @@ private:
 
     QPushButton *createButton(const QString& title);
 
-    // COMBOBOX PER PUBBLICARE GLI ALBUM
+    void capitalizeInput(string& input);
 
 public:
     explicit Viewer(QWidget *parent = nullptr);
+    ~Viewer() = default;
 
     void setController(Controller *c);
 
     void showFormDialog();
     void closeFormDialog();
     void enableFormDialogComponents();
-
-    void addNewMusic();
+    void showWarning(const QString &message);
+    Music *getMusicInput();
+    void getReleaseInput();
+    void addNewMusic(const Music* newMusic);
 };
 
 #endif // VIEWER_H
