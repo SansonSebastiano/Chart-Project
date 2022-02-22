@@ -6,7 +6,10 @@ const QString Controller::dataSetDir("/RecordLabel/");
 // WARNING : al nome della record label
 Controller::Controller(QObject *parent) : QObject(parent), model(new Model()) { }
 
-void Controller::setModel(Model *m) { model = m; }
+void Controller::setModel(Model *m) {
+    model = m;
+    //loadDataFrom("sample_1");       // ATTENZIONE : QUANDO NECESSARIO CAMBIARE NOME DEL FILE
+}
 
 void Controller::setViewer(Viewer *v) { view = v ; }
 
@@ -169,6 +172,7 @@ QVector<const Music*> Controller::initData() {
 }
 
 // SLOTS
+void Controller::showTable() { view->setTable(); }
 void Controller::showDialog() { view->showFormDialog(); }
 void Controller::closeDialog() { view->closeFormDialog(); }
 void Controller::enableDialog() { view->enableFormDialogComponents(); }
@@ -179,7 +183,7 @@ void Controller::getNewMusic() {
             view->addNewMusic(newMusic);
         else{
             view->showWarning("The following: \n" + QString::fromStdString(newMusic->getInfo()) + "\nalready exists");
-            view->closeFormDialog();
+            view->resetComponent();
         }
     }
     else

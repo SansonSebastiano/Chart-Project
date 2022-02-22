@@ -24,7 +24,7 @@ void Viewer::addMenus(QVBoxLayout *mainLayout) {
     menuBar->addMenu(edit);
     menuBar->addMenu(chart);
 
-    //file->addAction(new QAction("Carica dati", file));
+    file->addAction(new QAction("Carica dati", file));  // DA IMPLEMENTARE
     file->addAction(new QAction("Salva dati", file));
     file->addAction(new QAction("Chiudi", file));
 
@@ -45,10 +45,10 @@ void Viewer::addControll_1(QVBoxLayout *mainLayout)
     QHBoxLayout *chartBtnLayout = new QHBoxLayout;
 
     //QPushButton *newLabel = new QPushButton("Nuova Label");
-    //btn_uploadData = createButton("Carica dati");
+    btn_uploadData = createButton("Carica dati");   // DA IMPLEMENTARE
     btn_saveData = createButton("Salva dati");
 
-    //dataBtnLayout->addWidget(btn_uploadData);
+    dataBtnLayout->addWidget(btn_uploadData);
     dataBtnLayout->addWidget(btn_saveData);
 
     dataBtnLayout->setSpacing(10);
@@ -90,44 +90,24 @@ void Viewer::addControll_2(QHBoxLayout *screenLayout)
 }
 
 void Viewer::addScreen(QVBoxLayout *mainLayout) {
-    QHBoxLayout *screenLayout = new QHBoxLayout;
+    screenLayout = new QHBoxLayout;
 
     // button
     addControll_2(screenLayout);
+    // table layout
+    table_layout = new QHBoxLayout;
 
-    // table + chart layout
-    QHBoxLayout *tc_layout = new QHBoxLayout;
-
-    // layout table
-    table = new QTableView;
-
-    // USARE UNO SIGNAL - SLOT => upload data button?
-    catalog = controller->initData();       // NON MI CONVINCE MOLTO
-    qDebug() << "catalog is empty : " << catalog.isEmpty() << endl;
-    myTableModel = new TableModel(catalog);
-
-    table->setModel(myTableModel);
-    //table->setWindowTitle();
-
-    tc_layout->addWidget(table);
-
-    // layout chart
-    /*
-    QFrame *frame = new QFrame; // ci andra chartlayout
-
+    frame = new QFrame;
     frame->setStyleSheet(".QFrame{background-color: rgb(211, 211, 211); border-radius: 10px}");
     frame->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    tc_layout->addWidget(frame);
-    */
-
-    screenLayout->addLayout(tc_layout);
-
+    //table_layout->addWidget(frame);
+    screenLayout->addWidget(frame);
     mainLayout->addLayout(screenLayout);
 }
 
 Viewer::Viewer(QWidget *parent) : QWidget(parent), controller(new Controller) {
-    QVBoxLayout *mainLayout = new QVBoxLayout;
+    mainLayout = new QVBoxLayout;
 
     // init Dialog-Form
     cfd = new CustomFormDialog();
@@ -153,6 +133,7 @@ void Viewer::setController(Controller *c) {
     controller = c;
 
     // IMPLEMENTAZIONE SEGNALI E SLOT
+    connect(btn_uploadData, SIGNAL(clicked()), controller, SLOT(showTable()));
         // to show/close custom form dialog
     connect(btn_addItem, SIGNAL(clicked()), controller, SLOT(showDialog()));
     connect(cfd->getCancbtn(), SIGNAL(clicked()), controller, SLOT(closeDialog()));
@@ -176,7 +157,27 @@ void Viewer::setController(Controller *c) {
     connect(cfd->getAddbtn(), SIGNAL(clicked()), controller, SLOT(getNewMusic()));
 }
 
+void Viewer::setTable() {
+    table = new QTableView;
+
+    catalog = controller->initData();       // NON MI CONVINCE MOLTO
+    qDebug() << "catalog is empty : " << catalog.isEmpty() << endl;
+    myTableModel = new TableModel(catalog);
+
+    table->setModel(myTableModel);
+    //table->setWindowTitle();
+
+    table_layout->addWidget(table);
+    frame->setLayout(table_layout);
+    /*
+    screenLayout->addLayout(table_layout);
+    mainLayout->addLayout(screenLayout);
+    */
+}
+
 void Viewer::showFormDialog() { cfd->show(); }
+
+void Viewer::resetComponent() { cfd->resetComponents(); }
 
 void Viewer::closeFormDialog() {
     cfd->resetComponents();

@@ -53,6 +53,7 @@ public:
     bool isPresent(const Music* m) const;
 
 public slots:
+    void showTable();
     void showDialog();
     void closeDialog();
     void enableDialog();

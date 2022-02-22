@@ -39,6 +39,10 @@ private:
     QVector<const Music*> toSave;
 
     // Components' layout
+    QVBoxLayout *mainLayout;
+    QHBoxLayout *screenLayout;
+    QHBoxLayout *table_layout;
+    QFrame *frame;
     // Menu
     QMenu *file;
     QMenu *edit;
@@ -78,7 +82,9 @@ public:
 
     void setController(Controller *c);
 
+    void setTable();
     void showFormDialog();
+    void resetComponent();
     void closeFormDialog();
     void enableFormDialogComponents();
     void showWarning(const QString &message);
