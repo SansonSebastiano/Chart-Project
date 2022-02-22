@@ -164,7 +164,7 @@ void Controller::removeFromFile(const QString& label, const Music* music) {
 
 QVector<const Music*> Controller::initData() {
     loadDataFrom("sample_1");       // ATTENZIONE : QUANDO NECESSARIO CAMBIARE NOME DEL FILE
-
+    qDebug() << "Catalog loaded from file" << endl;
     auto data = model->getData();
     QVector<const Music*> myVector = QVector<const Music*>::fromStdVector(data);
 
@@ -176,11 +176,16 @@ void Controller::showTable() { view->setTable(); }
 void Controller::showDialog() { view->showFormDialog(); }
 void Controller::closeDialog() { view->closeFormDialog(); }
 void Controller::enableDialog() { view->enableFormDialogComponents(); }
+
 void Controller::getNewMusic() {
     auto newMusic = view->getMusicInput();
     if (newMusic){
-        if (!model->isPresent(newMusic))
+        if (!model->isPresent(newMusic)){
+            // aggiungo 'newMusic' a RecordLabel
+            model->insertMusic(newMusic);
+            // aggiungo 'newMusic' alla tabella
             view->addNewMusic(newMusic);
+        }
         else{
             view->showWarning("The following: \n" + QString::fromStdString(newMusic->getInfo()) + "\nalready exists");
             view->resetComponent();
@@ -189,19 +194,3 @@ void Controller::getNewMusic() {
     else
         view->showWarning("Campi obbligatori");
 }
-
-/*
-
-
-
-
-void Controller::addMusic() {
-    view->addNewMusic();
-
-    view->closeFormDialog();
-}
-
-void Controller::showTextEdit() {
-    view->showEditLine();
-}
-*/

@@ -161,7 +161,7 @@ void Viewer::setTable() {
     table = new QTableView;
 
     catalog = controller->initData();       // NON MI CONVINCE MOLTO
-    qDebug() << "catalog is empty : " << catalog.isEmpty() << endl;
+    qDebug() << "Is catalog loaded? " << !catalog.isEmpty() << endl;
     myTableModel = new TableModel(catalog);
 
     table->setModel(myTableModel);
@@ -188,12 +188,17 @@ void Viewer::enableFormDialogComponents() {
     cfd->enableReleaseComponents();
 }
 
+// non sono molto convinto : dovrebbe farlo il controller??
 void Viewer::capitalizeInput(string& input) {
     if (!input.empty()){
         input[0] = std::toupper(input[0]);
 
-        for (uint i = 1; i < input.length(); ++i)
-            input[i] = std::tolower(input[i]);
+        for (uint i = 1; i < input.length(); ++i){
+            if (input[i - 1] == ' ')
+                input[i] = std::toupper(input[i]);
+            else
+                input[i] = std::tolower(input[i]);
+        }
     }
 }
 
@@ -216,7 +221,6 @@ Music *Viewer::getMusicInput() {
         genre = cfd->getGenreEdit()->text().toStdString();
         capitalizeInput(genre);
 
-        //addNewMusic(new Album(genre, name, artist));
         return new Album(genre, name, artist);
     }
 
@@ -308,8 +312,10 @@ void Viewer::getReleaseInput() {
 }
 
 void Viewer::addNewMusic(const Music* newMusic) {
-    // ATTENZIONE : aggiornare anche su file e su RecordLabel per evitare inconsistenza
+    toSave.push_back(newMusic);
+
     myTableModel->addEntry(newMusic);
+    qDebug() << QString::fromStdString(newMusic->getName()) << " inserted" << endl;
     closeFormDialog();
 }
 

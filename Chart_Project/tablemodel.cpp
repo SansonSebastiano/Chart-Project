@@ -72,7 +72,7 @@ QVariant TableModel::data(const QModelIndex &index, int role) const {
         if (index.column() == 3 && release)
             return QString::fromStdString(release->getReleaseDate().getDate());
         if (index.column() == 4 && release)
-            return QString::fromStdString(release->double_to_string(release->getProfit()));
+            return QString::fromStdString(release->double_to_string(release->getProfit()) + " €");
 
         const auto pm = dynamic_cast<const PhisycalMedium*>(music);
         const auto dm = dynamic_cast<const DigitalMedium*>(music);
@@ -80,12 +80,14 @@ QVariant TableModel::data(const QModelIndex &index, int role) const {
         if (index.column() == 5 && pm)
             return QString::fromStdString(pm->support_names[pm->getSupport()]);
         if (index.column() == 6 && pm)
-            return QString::fromStdString(pm->double_to_string(pm->getNumbers()));
+            return QVariant(pm->getNumbers()).toString();
+            //return QString::fromStdString(pm->double_to_string(pm->getNumbers()));
 
         if (index.column() == 7 && dm)
             return QString::fromStdString(dm->platform_names[dm->getPlatform()]);
         if (index.column() == 8 && dm)
-            return QString::fromStdString(dm->double_to_string(dm->getNumbers()));
+            return QVariant(dm->getNumbers()).toString();
+            //return QString::fromStdString(dm->double_to_string(dm->getNumbers()));
     }
     return QVariant();
 }
@@ -113,9 +115,9 @@ bool TableModel::removeRows(int position, int rows, const QModelIndex &parent) {
 }
 
 bool TableModel::setData(const QModelIndex &index, const QVariant &value, int role) {
-    if (index.isValid() && role == Qt::DisplayRole){            // controllo se value, ovvero newMusic e' nullo ??
+    if (index.isValid() && role == Qt::DisplayRole){
         auto newMusic = value.value<const Music*>();
-        catalog.replace(index.row(), newMusic);                            // pero' attenzione che devo aggiungerlo alla record label e nel file per evitare inconsistenza
+        catalog.replace(index.row(), newMusic);
 
         emit dataChanged(index, index, {Qt::DisplayRole});
         return true;
