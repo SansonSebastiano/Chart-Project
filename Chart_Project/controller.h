@@ -58,6 +58,7 @@ public slots:
     void closeDialog();
     void enableDialog();
     void getNewMusic();
+    void saveToFile();
 };
 
 #endif // CONTROLLER_H

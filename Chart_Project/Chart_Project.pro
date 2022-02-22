@@ -1,6 +1,4 @@
 
-RESOURCES += RecordLabel/sample_1.xml
-
 DEFINES += PROJECT_PATH=\"\\\"$${_PRO_FILE_PWD_}/\\\"\"
 
 QT       += core gui

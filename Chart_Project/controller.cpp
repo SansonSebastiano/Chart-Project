@@ -6,10 +6,7 @@ const QString Controller::dataSetDir("/RecordLabel/");
 // WARNING : al nome della record label
 Controller::Controller(QObject *parent) : QObject(parent), model(new Model()) { }
 
-void Controller::setModel(Model *m) {
-    model = m;
-    //loadDataFrom("sample_1");       // ATTENZIONE : QUANDO NECESSARIO CAMBIARE NOME DEL FILE
-}
+void Controller::setModel(Model *m) { model = m; }
 
 void Controller::setViewer(Viewer *v) { view = v ; }
 
@@ -197,4 +194,15 @@ void Controller::getNewMusic() {
     }
     else
         view->showWarning("Campi obbligatori");
+}
+
+void Controller::saveToFile() {
+    QVector<const Music*> v = view->getToSave();
+    view->clearToSave();
+    // controllo se 'v' e' vuoto?
+    if (!v.isEmpty())
+        for (auto it = v.begin(); it != v.end(); ++it)
+            appendTo("sample_1", *it);
+    else
+        view->showWarning("Nuova musica non inserita");
 }

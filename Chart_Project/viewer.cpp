@@ -5,6 +5,18 @@
 // MEGLIO CREARE DIFFERENTI WIDGET CUSTOM CLASS ?
 // WARNING : impostare le parentelle tra i widget/layout
 
+void Viewer::closeEvent(QCloseEvent *event) {
+    QMessageBox::StandardButton resBtn = QMessageBox::Yes;
+    // controllo se toSave ha elementi
+    if(!toSave.isEmpty())
+        resBtn = QMessageBox::question(this, "APP NAME", tr("Non hai salvato la nuova musica inserita!\nContinuare?\n"), QMessageBox::No | QMessageBox::Yes, QMessageBox::Yes);
+
+    if (resBtn != QMessageBox::Yes)
+        event->ignore();
+    else
+        event->accept();
+}
+
 QPushButton *Viewer::createButton(const QString& title){
     QPushButton *button = new QPushButton(title);
 
@@ -45,11 +57,11 @@ void Viewer::addControll_1(QVBoxLayout *mainLayout)
     QHBoxLayout *chartBtnLayout = new QHBoxLayout;
 
     //QPushButton *newLabel = new QPushButton("Nuova Label");
-    btn_uploadData = createButton("Carica dati");   // DA IMPLEMENTARE
     btn_saveData = createButton("Salva dati");
+    btn_uploadData = createButton("Carica dati");   // DA IMPLEMENTARE
 
-    dataBtnLayout->addWidget(btn_uploadData);
     dataBtnLayout->addWidget(btn_saveData);
+    dataBtnLayout->addWidget(btn_uploadData);
 
     dataBtnLayout->setSpacing(10);
     dataBtnLayout->setContentsMargins(160, 0, 500 ,0);
@@ -106,7 +118,7 @@ void Viewer::addScreen(QVBoxLayout *mainLayout) {
     mainLayout->addLayout(screenLayout);
 }
 
-Viewer::Viewer(QWidget *parent) : QWidget(parent), controller(new Controller) {
+Viewer::Viewer(QWidget *parent) : QDialog(parent), controller(new Controller) {
     mainLayout = new QVBoxLayout;
 
     // init Dialog-Form
@@ -132,6 +144,8 @@ Viewer::Viewer(QWidget *parent) : QWidget(parent), controller(new Controller) {
 void Viewer::setController(Controller *c) {
     controller = c;
 
+    connect(btn_saveData, SIGNAL(clicked()), controller, SLOT(saveToFile()));
+
     // IMPLEMENTAZIONE SEGNALI E SLOT
     connect(btn_uploadData, SIGNAL(clicked()), controller, SLOT(showTable()));
         // to show/close custom form dialog
@@ -148,7 +162,6 @@ void Viewer::setController(Controller *c) {
     connect(cfd->getdzrCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableDialog()));
     connect(cfd->getytmCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableDialog()));
     connect(cfd->getamzCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableDialog()));
-
     /*
     connect(cfd->getCdEdit(), SIGNAL(editingFinished()), controller, SLOT(enableDialog()));
     connect(cfd->getVnlEdit(), SIGNAL(editingFinished()), controller, SLOT(enableDialog()));
@@ -206,7 +219,7 @@ void Viewer::showWarning(const QString &message) {
     QMessageBox::warning(this, tr("Campi vuoti"), message, QMessageBox::Ok);
 }
 
-Music *Viewer::getMusicInput() {
+const Music *Viewer::getMusicInput() {
     string name;
     string artist;
     string genre;
@@ -319,3 +332,6 @@ void Viewer::addNewMusic(const Music* newMusic) {
     closeFormDialog();
 }
 
+QVector<const Music*> Viewer::getToSave() const{ return toSave; }
+
+void Viewer::clearToSave() { toSave.clear(); }

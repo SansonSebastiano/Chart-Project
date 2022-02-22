@@ -30,7 +30,7 @@
 
 class Controller;
 
-class Viewer : public QWidget{
+class Viewer : public QDialog{
     Q_OBJECT
 private:
     Controller *controller;
@@ -48,8 +48,8 @@ private:
     QMenu *edit;
     QMenu *chart;
     // Buttons controlls_1
-    QPushButton *btn_uploadData;
     QPushButton *btn_saveData;
+    QPushButton *btn_uploadData;
 
     QPushButton *btn_lineChart;
     QPushButton *btn_pieChart;
@@ -66,6 +66,9 @@ private:
     TableModel *myTableModel;
 
     CustomFormDialog *cfd;
+
+    // overloading
+    void closeEvent(QCloseEvent *event);
 
     void addMenus(QVBoxLayout *mainLayout);
     void addControll_1(QVBoxLayout *mainLayout);
@@ -88,9 +91,12 @@ public:
     void closeFormDialog();
     void enableFormDialogComponents();
     void showWarning(const QString &message);
-    Music *getMusicInput();
+    const Music *getMusicInput();
     void getReleaseInput();
     void addNewMusic(const Music* newMusic);
+
+    QVector<const Music*> getToSave() const;
+    void clearToSave();
 };
 
 #endif // VIEWER_H
