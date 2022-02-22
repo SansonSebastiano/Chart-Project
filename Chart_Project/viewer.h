@@ -26,7 +26,8 @@
 #include <phisycalmedium.h>
 #include <digitalmedium.h>
 #include "tablemodel.h"
-#include "customformdialog.h"
+#include "musicdialog.h"
+#include "releasedialog.h"
 
 class Controller;
 
@@ -65,7 +66,8 @@ private:
     QTableView *table;
     TableModel *myTableModel;
 
-    CustomFormDialog *cfd;
+    MusicDialog *md;
+    ReleaseDialog *rd;
 
     // overloading
     void closeEvent(QCloseEvent *event);
@@ -86,14 +88,19 @@ public:
     void setController(Controller *c);
 
     void setTable();
-    void showFormDialog();
+    // manage custom form dialog
     void resetComponent();
-    void closeFormDialog();
-    void enableFormDialogComponents();
-    void showWarning(const QString &message);
+    void closeDialog();
+    // dialog to add new music
+    void showMusicDialog();
     const Music *getMusicInput();
-    void getReleaseInput();
     void addNewMusic(const Music* newMusic);
+    // dialog to release music
+    void showReleaseDialog(const QVector<const Music*> &notReleased);
+    void getReleaseInput();
+    void enableReleaseDialogComponents();
+    // display warning dialog
+    void showWarning(const QString &message);
 
     QVector<const Music*> getToSave() const;
     void clearToSave();

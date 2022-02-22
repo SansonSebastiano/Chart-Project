@@ -174,9 +174,9 @@ QVector<const Music*> Controller::initData() {
 
 // SLOTS
 void Controller::showTable() { view->setTable(); }
-void Controller::showDialog() { view->showFormDialog(); }
-void Controller::closeDialog() { view->closeFormDialog(); }
-void Controller::enableDialog() { view->enableFormDialogComponents(); }
+void Controller::showMusicDialog() { view->showMusicDialog(); }
+void Controller::closeDialog() { view->closeDialog(); }
+void Controller::enableDialog() { view->enableReleaseDialogComponents(); }
 
 void Controller::getNewMusic() {
     auto newMusic = view->getMusicInput();
@@ -205,4 +205,11 @@ void Controller::saveToFile() {
             appendTo("sample_1", *it);
     else
         view->showWarning("Nuova musica non inserita");
+}
+
+void Controller::showReleaseDialog() {
+    auto data = model->getNotReleased();
+    QVector<const Music*> myVector = QVector<const Music*>::fromStdVector(data);
+
+    view->showReleaseDialog(myVector);
 }

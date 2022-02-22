@@ -15,16 +15,18 @@ CONFIG += c++11
 SOURCES += \
     album.cpp \
     controller.cpp \
-    customformdialog.cpp \
     date.cpp \
     digitalmedium.cpp \
+    formdialog.cpp \
     io_handler.cpp \
     main.cpp \
     model.cpp \
     music.cpp \
+    musicdialog.cpp \
     phisycalmedium.cpp \
     recordlabel.cpp \
     release.cpp \
+    releasedialog.cpp \
     tablemodel.cpp \
     test.cpp \
     viewer.cpp
@@ -33,16 +35,18 @@ HEADERS += \
     album.h \
     cast_helper.h \
     controller.h \
-    customformdialog.h \
     date.h \
     digitalmedium.h \
     exceptions.h \
+    formdialog.h \
     io_handler.h \
     model.h \
     music.h \
+    musicdialog.h \
     phisycalmedium.h \
     recordlabel.h \
     release.h \
+    releasedialog.h \
     tablemodel.h \
     viewer.h
 

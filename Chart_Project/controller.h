@@ -54,11 +54,13 @@ public:
 
 public slots:
     void showTable();
-    void showDialog();
+    void showMusicDialog();
     void closeDialog();
     void enableDialog();
     void getNewMusic();
     void saveToFile();
+
+    void showReleaseDialog();
 };
 
 #endif // CONTROLLER_H

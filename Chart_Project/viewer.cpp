@@ -52,6 +52,7 @@ void Viewer::addMenus(QVBoxLayout *mainLayout) {
 
 void Viewer::addControll_1(QVBoxLayout *mainLayout)
 {
+    // QGROUPBUTTONS
     QHBoxLayout *buttonLayout_1 = new QHBoxLayout;
     QHBoxLayout *dataBtnLayout = new QHBoxLayout;
     QHBoxLayout *chartBtnLayout = new QHBoxLayout;
@@ -83,8 +84,8 @@ void Viewer::addControll_1(QVBoxLayout *mainLayout)
     mainLayout->addLayout(buttonLayout_1);
 }
 
-void Viewer::addControll_2(QHBoxLayout *screenLayout)
-{
+void Viewer::addControll_2(QHBoxLayout *screenLayout){
+    // QGROUPBUTTONS
     QVBoxLayout *buttonLayout_2 = new QVBoxLayout;
 
     btn_addItem = createButton("Aggiungi musica");
@@ -121,9 +122,9 @@ void Viewer::addScreen(QVBoxLayout *mainLayout) {
 Viewer::Viewer(QWidget *parent) : QDialog(parent), controller(new Controller) {
     mainLayout = new QVBoxLayout;
 
-    // init Dialog-Form
-    cfd = new CustomFormDialog();
-    cfd->createAddMusicLayout();
+    // init Custom-Dialog-Form
+    md = new MusicDialog();
+    rd = new ReleaseDialog();
 
     // Add menu bar
     addMenus(mainLayout);
@@ -144,30 +145,27 @@ Viewer::Viewer(QWidget *parent) : QDialog(parent), controller(new Controller) {
 void Viewer::setController(Controller *c) {
     controller = c;
 
+    // IMPLEMENTAZIONE SEGNALI E SLOT
     connect(btn_saveData, SIGNAL(clicked()), controller, SLOT(saveToFile()));
 
-    // IMPLEMENTAZIONE SEGNALI E SLOT
     connect(btn_uploadData, SIGNAL(clicked()), controller, SLOT(showTable()));
-        // to show/close custom form dialog
-    connect(btn_addItem, SIGNAL(clicked()), controller, SLOT(showDialog()));
-    connect(cfd->getCancbtn(), SIGNAL(clicked()), controller, SLOT(closeDialog()));
-        // checkbox's cfd signal/slot
-    connect(cfd->getcdCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableDialog()));
-    connect(cfd->getvnlCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableDialog()));
-    connect(cfd->getcstCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableDialog()));
+        // to show/close Music custom form dialog
+    connect(btn_addItem, SIGNAL(clicked()), controller, SLOT(showMusicDialog()));
+    connect(md->getCancBtn(), SIGNAL(clicked()), controller, SLOT(closeDialog()));
+    connect(md->getAddBtn(), SIGNAL(clicked()), controller, SLOT(getNewMusic()));
+        // to show/close Release custo form dialog and checkbox's signal
+    connect(btn_release, SIGNAL(clicked()), controller, SLOT(showReleaseDialog()));
 
-    connect(cfd->getsptfCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableDialog()));
-    connect(cfd->getapplmCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableDialog()));
-    connect(cfd->gettdlCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableDialog()));
-    connect(cfd->getdzrCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableDialog()));
-    connect(cfd->getytmCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableDialog()));
-    connect(cfd->getamzCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableDialog()));
-    /*
-    connect(cfd->getCdEdit(), SIGNAL(editingFinished()), controller, SLOT(enableDialog()));
-    connect(cfd->getVnlEdit(), SIGNAL(editingFinished()), controller, SLOT(enableDialog()));
-    connect(cfd->getCstEdit(), SIGNAL(editingFinished()), controller, SLOT(enableDialog()));
-    */
-    connect(cfd->getAddbtn(), SIGNAL(clicked()), controller, SLOT(getNewMusic()));
+    connect(rd->getcdCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableDialog()));
+    connect(rd->getvnlCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableDialog()));
+    connect(rd->getcstCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableDialog()));
+
+    connect(rd->getsptfCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableDialog()));
+    connect(rd->getapplmCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableDialog()));
+    connect(rd->gettdlCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableDialog()));
+    connect(rd->getdzrCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableDialog()));
+    connect(rd->getytmCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableDialog()));
+    connect(rd->getamzCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableDialog()));
 }
 
 void Viewer::setTable() {
@@ -188,20 +186,19 @@ void Viewer::setTable() {
     */
 }
 
-void Viewer::showFormDialog() { cfd->show(); }
-
-void Viewer::resetComponent() { cfd->resetComponents(); }
-
-void Viewer::closeFormDialog() {
-    cfd->resetComponents();
-    cfd->close();
+void Viewer::showMusicDialog() {
+    md->createAddMusicLayout();
+    md->show();
 }
 
-void Viewer::enableFormDialogComponents() {
-    cfd->enableReleaseComponents();
+void Viewer::resetComponent() { md->resetComponents(); }
+
+void Viewer::closeDialog() {
+    md->resetComponents();
+    md->close();
 }
 
-// non sono molto convinto : dovrebbe farlo il controller??
+// non sono molto convinto : non dovrebbe farlo il controller??
 void Viewer::capitalizeInput(string& input) {
     if (!input.empty()){
         input[0] = std::toupper(input[0]);
@@ -225,13 +222,13 @@ const Music *Viewer::getMusicInput() {
     string genre;
 
     // validazione
-    if (cfd->checkMusicInput()){
+    if (md->checkMusicInput()){
 
-        name = cfd->getNameEdit()->text().toStdString();
+        name = md->getNameEdit()->text().toStdString();
         capitalizeInput(name);
-        artist = cfd->getArtistEdit()->text().toStdString();
+        artist = md->getArtistEdit()->text().toStdString();
         capitalizeInput(artist);
-        genre = cfd->getGenreEdit()->text().toStdString();
+        genre = md->getGenreEdit()->text().toStdString();
         capitalizeInput(genre);
 
         return new Album(genre, name, artist);
@@ -240,11 +237,23 @@ const Music *Viewer::getMusicInput() {
     return nullptr;
 }
 
+void Viewer::addNewMusic(const Music* newMusic) {
+    // FORSE SAREBBE MEGLIO FARLO FARE AL CONTROLLER??
+    toSave.push_back(newMusic);
+
+    myTableModel->addEntry(newMusic);
+    qDebug() << QString::fromStdString(newMusic->getInfo()) << " inserted" << endl;
+    closeDialog();
+}
+
+void Viewer::showReleaseDialog(const QVector<const Music*> &notReleased) {
+    // get data for combo box
+    rd->createReleaseMusicLayout(notReleased);
+    rd->show();
+}
+
 void Viewer::getReleaseInput() {
     // ADATTARE ALLA COMBOBOX
-    string name;
-    string artist;
-    string genre;
 
     uint day = 0;
     uint month = 0;
@@ -253,84 +262,70 @@ void Viewer::getReleaseInput() {
     QPair<Support, uint> *pm = new QPair<Support, uint>();
     QPair<Platform, uint> *dm = new QPair<Platform, uint>();
 
-    // controlli
-    if (cfd->checkMusicInput()){
+    // controllo validita' della data di pubblicazione delegata a RecordLabel
+    day = rd->getReleaseDE()->date().day();
+    month = rd->getReleaseDE()->date().month();
+    year = rd->getReleaseDE()->date().year();
 
-        name = cfd->getNameEdit()->text().toStdString();
-        artist = cfd->getArtistEdit()->text().toStdString();
-        genre = cfd->getGenreEdit()->text().toStdString();
 
-        // controllo validita' della data di pubblicazione delegata a RecordLabel
-        day = cfd->getReleaseDE()->date().day();
-        month = cfd->getReleaseDE()->date().month();
-        year = cfd->getReleaseDE()->date().year();
-
-         if(!cfd->checkPMInput() && !cfd->checkDMInput())
-             addNewMusic(new Album(genre, name, artist));
-
-        if(cfd->checkPMInput()){
-            if (cfd->getcdCKB()->isChecked()) {
-                pm->first = CD;
-                pm->second = cfd->getCdEdit()->text().toUInt();
-                addNewMusic(new PM(genre, name, artist, Date(day, month, year), pm->first, pm->second));
-            }
-            if (cfd->getvnlCKB()->isChecked()) {
-                pm->first = Vinile ;
-                pm->second = cfd->getVnlEdit()->text().toUInt();
-                addNewMusic(new PM(genre, name, artist, Date(day, month, year), pm->first, pm->second));
-            }
-            if (cfd->getcstCKB()->isChecked()) {
-                pm->first = Cassetta;
-                pm->second = cfd->getCstEdit()->text().toUInt();
-                addNewMusic(new PM(genre, name, artist, Date(day, month, year), pm->first, pm->second));
-            }
+    if(rd->checkPMInput()){
+        if (rd->getcdCKB()->isChecked()) {
+            pm->first = CD;
+            pm->second = rd->getCdEdit()->text().toUInt();
+            //addNewMusic(new PM(genre, name, artist, Date(day, month, year), pm->first, pm->second));
         }
-
-        if (cfd->checkDMInput()){
-            if(cfd->getsptfCKB()->isChecked()){
-                dm->first = Spotify;
-                dm->second = cfd->getSptfEdit()->text().toUInt();
-                addNewMusic(new DM(genre, name, artist, Date(day, month, year), dm->first, dm->second));
-            }
-            if(cfd->getapplmCKB()->isChecked()){
-                dm->first = AppleMusic;
-                dm->second = cfd->getApplmEdit()->text().toUInt();
-                addNewMusic(new DM(genre, name, artist, Date(day, month, year), dm->first, dm->second));
-            }
-            if(cfd->gettdlCKB()->isChecked()){
-                dm->first = Tidal;
-                dm->second = cfd->getTdlEdit()->text().toUInt();
-                addNewMusic(new DM(genre, name, artist, Date(day, month, year), dm->first, dm->second));
-            }
-            if(cfd->getdzrCKB()->isChecked()){
-                dm->first = Deezer;
-                dm->second = cfd->getDzrEdit()->text().toUInt();
-                addNewMusic(new DM(genre, name, artist, Date(day, month, year), dm->first, dm->second));
-            }if(cfd->getytmCKB()->isChecked()){
-                dm->first = YoutubeMusic;
-                dm->second = cfd->getYtmEdit()->text().toUInt();
-                addNewMusic(new DM(genre, name, artist, Date(day, month, year), dm->first, dm->second));
-            }
-            if(cfd->getamzCKB()->isChecked()){
-                dm->first = AmazonMusic;
-                dm->second = cfd->getAmzEdit()->text().toUInt();
-                addNewMusic(new DM(genre, name, artist, Date(day, month, year), dm->first, dm->second));
-            }
+        if (rd->getvnlCKB()->isChecked()) {
+            pm->first = Vinile ;
+            pm->second = rd->getVnlEdit()->text().toUInt();
+            //addNewMusic(new PM(genre, name, artist, Date(day, month, year), pm->first, pm->second));
         }
-    }else {
+        if (rd->getcstCKB()->isChecked()) {
+            pm->first = Cassetta;
+            pm->second = rd->getCstEdit()->text().toUInt();
+            //addNewMusic(new PM(genre, name, artist, Date(day, month, year), pm->first, pm->second));
+        }
+    }
+
+    if (rd->checkDMInput()){
+        if(rd->getsptfCKB()->isChecked()){
+            dm->first = Spotify;
+            dm->second = rd->getSptfEdit()->text().toUInt();
+            //addNewMusic(new DM(genre, name, artist, Date(day, month, year), dm->first, dm->second));
+        }
+        if(rd->getapplmCKB()->isChecked()){
+            dm->first = AppleMusic;
+            dm->second = rd->getApplmEdit()->text().toUInt();
+            //addNewMusic(new DM(genre, name, artist, Date(day, month, year), dm->first, dm->second));
+        }
+        if(rd->gettdlCKB()->isChecked()){
+            dm->first = Tidal;
+            dm->second = rd->getTdlEdit()->text().toUInt();
+            //addNewMusic(new DM(genre, name, artist, Date(day, month, year), dm->first, dm->second));
+        }
+        if(rd->getdzrCKB()->isChecked()){
+            dm->first = Deezer;
+            dm->second = rd->getDzrEdit()->text().toUInt();
+            //addNewMusic(new DM(genre, name, artist, Date(day, month, year), dm->first, dm->second));
+        }if(rd->getytmCKB()->isChecked()){
+            dm->first = YoutubeMusic;
+            dm->second = rd->getYtmEdit()->text().toUInt();
+            //addNewMusic(new DM(genre, name, artist, Date(day, month, year), dm->first, dm->second));
+        }
+        if(rd->getamzCKB()->isChecked()){
+            dm->first = AmazonMusic;
+            dm->second = rd->getAmzEdit()->text().toUInt();
+            //addNewMusic(new DM(genre, name, artist, Date(day, month, year), dm->first, dm->second));
+        }
+    }
+    else {
+        // DA SISTEMARE
         QMessageBox::warning(this, tr("Campi vuoti"), tr("I campi 'Nome', 'Artista', 'Genre' sono obbligatori"), QMessageBox::Ok);
     }
     delete pm;
     delete dm;
 }
 
-void Viewer::addNewMusic(const Music* newMusic) {
-    toSave.push_back(newMusic);
-
-    myTableModel->addEntry(newMusic);
-    qDebug() << QString::fromStdString(newMusic->getName()) << " inserted" << endl;
-    closeFormDialog();
-}
+void Viewer::enableReleaseDialogComponents() { rd->enableComponents(); }
 
 QVector<const Music*> Viewer::getToSave() const{ return toSave; }
 

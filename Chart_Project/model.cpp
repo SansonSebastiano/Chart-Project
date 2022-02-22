@@ -36,6 +36,8 @@ vector<const Music*> Model::getData() const {
     return catalog;
 }
 
+vector<const Music*> Model::getNotReleased() const { return rl->getNotReleased(); }
+
 bool Model::isPresent(const Music *m) const {
     auto catalog = getData();
     bool found = false;

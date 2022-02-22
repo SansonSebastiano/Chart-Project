@@ -21,9 +21,10 @@ public:
 
     void getAllInfo() const;
 
-    bool isPresent(const Music*) const;
-
     vector<const Music*> getData() const;
+    vector<const Music*> getNotReleased() const;
+
+    bool isPresent(const Music*) const;
 };
 
 #endif // MODEL_H
