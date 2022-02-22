@@ -19,9 +19,13 @@ void Controller::readFromFile(const QString& label, QDomDocument& document){
 
     if(!file.open(QFile::ReadOnly | QIODevice::Text))
         qDebug() << label + ".xml " << "opening failed" << endl;
+    else
+        qDebug() << label + ".xml " << "opening successed" << endl;
 
     if(!document.setContent(&file))
         qDebug() << "Loaded input file failed" << endl;
+    else
+        qDebug() << "Loaded input file successed" << endl;
     file.close();
 }
 
@@ -164,7 +168,7 @@ void Controller::removeFromFile(const QString& label, const Music* music) {
 
 QVector<const Music*> Controller::initData() {
     loadDataFrom("sample_1");       // ATTENZIONE : QUANDO NECESSARIO CAMBIARE NOME DEL FILE
-    qDebug() << "Catalog loaded from file" << endl;
+
     auto data = model->getData();
     QVector<const Music*> myVector = QVector<const Music*>::fromStdVector(data);
 

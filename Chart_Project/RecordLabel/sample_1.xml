@@ -1,0 +1,19 @@
+<catalog>
+ <album genre="Rap" artist="Salmo" name="Flop"/>
+ <album genre="Rock" artist="Nirvana" name="Nevermind"/>
+ <PM num_sales="340243" genre="Rap" artist="Salmo" support="0" name="Midnite">
+  <release month="9" day="10" year="2013"/>
+ </PM>
+ <PM num_sales="1000" genre="Rap" artist="Dr. Dre" support="0" name="2001">
+  <release month="9" day="12" year="2000"/>
+ </PM>
+ <DM genre="Jazz" artist="Wynton Marsalis" listeners="1450450" name="Standard &amp; Ballads" platform="0">
+  <release month="9" day="12" year="2000"/>
+ </DM>
+ <PM num_sales="1000" genre="Rap" artist="DJ Shocca" support="1" name="60 Hz">
+  <release month="9" day="12" year="2000"/>
+ </PM>
+ <PM genre="Rock" num_sales="1000" artist="Linkin Park" support="2" name="Meteora">
+  <release month="9" day="12" year="2000"/>
+ </PM>
+</catalog>
