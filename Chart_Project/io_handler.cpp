@@ -157,9 +157,11 @@ void xml_IO::removeByName(QDomNodeList list, const string &name) {
 
             if(element.attribute(album_name, album_name).toStdString() == name){
                 element.parentNode().removeChild(element);
+                qDebug() << QString::fromStdString("Album/Song named: " + name + " DELETED FROM FILE SUCCESSED") << endl << endl;
             }
         }
-    }
+    }else
+        qDebug() << QString::fromStdString("Album/Song named: " + name + " NOT PRESENT TO DELETE FROM FILE") << endl << endl;
 }
 
 

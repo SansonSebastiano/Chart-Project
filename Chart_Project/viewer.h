@@ -101,6 +101,7 @@ public:
     void enableReleaseDialogComponents();
     // display warning dialog
     void showWarning(const QString &message);
+    QMessageBox::StandardButton showQuestion(const QString &message);
 
     QVector<const Music*> getToSave() const;
     void clearToSave();

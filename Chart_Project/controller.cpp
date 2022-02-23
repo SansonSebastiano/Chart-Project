@@ -38,6 +38,7 @@ void Controller::writeOnFile(const QString& label, const QDomDocument& document)
     QTextStream content(&file);
     content << document.toString();
     file.close();
+    qDebug() << "Written with successful" << endl;
 }
 
 void Controller::loadDataFrom(const QString& label){
@@ -186,10 +187,13 @@ void Controller::closeDialog() { view->closeDialog(); }
 void Controller::saveToFile() {
     QVector<const Music*> v = view->getToSave();
     view->clearToSave();
-    // controllo se 'v' e' vuoto?
+    // controllo se 'v' e' vuoto
     if (!v.isEmpty())
-        for (auto it = v.begin(); it != v.end(); ++it)
+        for (auto it = v.begin(); it != v.end(); ++it){
             appendTo("sample_1", *it);
+            // testing
+            removeFromFile("sample_1", *it);
+        }
     else
         view->showWarning("Nuova musica non inserita");
 }
@@ -207,13 +211,18 @@ void Controller::addNewMusic() {
 
     if (newMusic){
         if (!model->isPresent(newMusic)){
-            // aggiungo 'newMusic' a RecordLabel
-            model->insertMusic(newMusic);
-            // aggiungo 'newMusic' alla tabella
-            view->addMusic(newMusic);
+            auto ask = view->showQuestion("Sei sicuro di inserire: \n" + QString::fromStdString(newMusic->getInfo()));
+
+            if (ask == QMessageBox::Yes){
+                // aggiungo 'newMusic' a RecordLabel
+                model->insertMusic(newMusic);
+                // aggiungo 'newMusic' alla tabella
+                view->addMusic(newMusic);
+            }else
+                view->resetComponent();
         }
         else{
-            view->showWarning("The following: \n\n" + QString::fromStdString(newMusic->getInfo()) + "\n\nalready exists");
+            view->showWarning(QString::fromStdString(newMusic->getInfo()) + "\n\n è già esistente");
             view->resetComponent();
         }
     }
@@ -249,12 +258,16 @@ void Controller::releaseMusic() {
    auto toRemove = toRelease.at(0);
 
    if (!toRelease.empty()){
-       for (auto it = toRelease.begin(); it != toRelease.end(); ++it){
-           model->insertMusic((*it));
-           view->addMusic((*it));
-       }
-       view->removeMusic(getIndex(toRemove));
-       model->removeMusic(toRemove);
+       auto ask = view->showQuestion("Dati inseriti correttamente? \nSei sicuro di continuare con la pubblicazione?");
+       if (ask == QMessageBox::Yes){
+           for (auto it = toRelease.begin(); it != toRelease.end(); ++it){
+               model->insertMusic((*it));
+               view->addMusic((*it));
+           }
+           view->removeMusic(getIndex(toRemove));
+           model->removeMusic(toRemove);
+       }else
+           view->resetComponent();
    }
    else {
        view->showWarning("Campi vuoti");

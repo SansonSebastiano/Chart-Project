@@ -236,10 +236,6 @@ void Viewer::capitalizeInput(string& input) {
     }
 }
 
-void Viewer::showWarning(const QString &message) {
-    QMessageBox::warning(this, tr("Campi vuoti"), message, QMessageBox::Ok);
-}
-
 const Music *Viewer::getMusicInput() {
     string name;
     string artist;
@@ -332,6 +328,9 @@ std::vector<const Release*> Viewer::getReleaseInput() {
 }
 
 void Viewer::enableReleaseDialogComponents() { rd->enableComponents(); }
+
+void Viewer::showWarning(const QString &message) { QMessageBox::warning(this, tr("Campi vuoti"), message, QMessageBox::Ok); }
+QMessageBox::StandardButton Viewer::showQuestion(const QString &message) { return QMessageBox::question(this, " ", message, QMessageBox::No | QMessageBox::Yes, QMessageBox::Yes); }
 
 QVector<const Music*> Viewer::getToSave() const{ return toSave; }
 
