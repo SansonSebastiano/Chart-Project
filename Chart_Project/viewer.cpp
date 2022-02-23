@@ -39,10 +39,10 @@ void Viewer::addMenus(QVBoxLayout *mainLayout) {
     menuBar->addMenu(chart);
 
     file->addAction(new QAction("Carica dati", file));  // DA IMPLEMENTARE
-    file->addAction(new QAction("Salva dati", file));
-    file->addAction(new QAction("Chiudi", file));
+    file->addAction(new QAction("Salva dati", file));   // DA IMPLEMENTARE
+    file->addAction(new QAction("Chiudi", file));       // DA IMPLEMENTARE
 
-    edit->addAction(new QAction("Aggiungi nuova musica", edit));
+    edit->addAction(new QAction("Aggiungi nuova musica", edit));    // DA IMPLEMENTARE
     edit->addAction(new QAction("Filtra", edit));
 
     chart->addAction(new QAction("Line Chart", chart));
@@ -144,7 +144,7 @@ Viewer::Viewer(QWidget *parent) : QDialog(parent), controller(new Controller) {
 
     //mainLayout->setSpacing(0);
     setLayout(mainLayout);
-    resize(QSize(1920, 1080));
+    resize(QSize(1920, 720));
 }
 
 void Viewer::setController(Controller *c) {
@@ -198,7 +198,7 @@ void Viewer::addMusic(const Music* newMusic) {
     toSave.push_back(newMusic);
 
     myTableModel->addEntry(newMusic);
-    qDebug() << QString::fromStdString(newMusic->getInfo()) << " inserted" << endl;
+    qDebug() << QString::fromStdString(newMusic->getInfo()) << " \n ADDED TO TABLE" << endl;
 
     closeDialog();
 }
@@ -228,7 +228,7 @@ void Viewer::capitalizeInput(string& input) {
         input[0] = std::toupper(input[0]);
 
         for (uint i = 1; i < input.length(); ++i){
-            if (input[i - 1] == ' ')
+            if (input[i - 1] == ' ' || input[i - 1] == '.' || input[i - 1] == '-')
                 input[i] = std::toupper(input[i]);
             else
                 input[i] = std::tolower(input[i]);
@@ -291,17 +291,14 @@ std::vector<const Release*> Viewer::getReleaseInput() {
         if (rd->getcdCKB()->isChecked()) {
             numbers = rd->getCdEdit()->text().toUInt();
             result.push_back(new PM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), CD, numbers));
-            //addNewMusic(new PM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), pm->first, pm->second));
         }
         if (rd->getvnlCKB()->isChecked()) {
             numbers = rd->getVnlEdit()->text().toUInt();
             result.push_back(new PM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), Vinile, numbers));
-            //addNewMusic(new PM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), Vinile, numbers));
         }
         if (rd->getcstCKB()->isChecked()) {
             numbers = rd->getCstEdit()->text().toUInt();
             result.push_back(new PM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), Cassetta, numbers));
-            //addNewMusic(new PM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), Cassetta, numbers));
         }
     }
 
@@ -309,32 +306,26 @@ std::vector<const Release*> Viewer::getReleaseInput() {
         if(rd->getsptfCKB()->isChecked()){
             numbers = rd->getSptfEdit()->text().toUInt();
             result.push_back(new DM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), Spotify, numbers));
-            //addNewMusic(new DM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), Spotify, numbers));
         }
         if(rd->getapplmCKB()->isChecked()){
             numbers = rd->getApplmEdit()->text().toUInt();
             result.push_back(new DM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), AppleMusic, numbers));
-            //addNewMusic(new DM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), AppleMusic, numbers));
         }
         if(rd->gettdlCKB()->isChecked()){
             numbers = rd->getTdlEdit()->text().toUInt();
             result.push_back(new DM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), Tidal, numbers));
-            //addNewMusic(new DM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), Tidal, numbers));
         }
         if(rd->getdzrCKB()->isChecked()){
             numbers = rd->getDzrEdit()->text().toUInt();
             result.push_back(new DM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), Deezer, numbers));
-            //addNewMusic(new DM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), Deezer, numbers));
         }
         if(rd->getytmCKB()->isChecked()){
             numbers = rd->getYtmEdit()->text().toUInt();
             result.push_back(new DM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), YoutubeMusic, numbers));
-            //addNewMusic(new DM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), YoutubeMusic, numbers));
         }
         if(rd->getamzCKB()->isChecked()){
             numbers = rd->getAmzEdit()->text().toUInt();
             result.push_back(new DM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), AmazonMusic, numbers));
-            //addNewMusic(new DM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), AmazonMusic, numbers));
         }
     }
     return result;

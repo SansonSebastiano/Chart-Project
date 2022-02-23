@@ -235,26 +235,26 @@ void Controller::enableDialog() { view->enableReleaseDialogComponents(); }
 
 int Controller::getIndex(const Music* music) {
     auto catalog = model->getData();
-    // non funziona dopo aver inserito musica nuova
-    for (auto it = catalog.begin(); it != catalog.end(); ++it)
-        if ((*it)->getName() == music->getName() && (*it)->getArtist() == music->getArtist() && (*it)->getGenre() == music->getGenre())
+
+    for (auto it = catalog.begin(); it != catalog.end(); ++it){
+
+        if (!dynamic_cast<const Release*>(*it) && ((*it)->getName() == music->getName() && (*it)->getArtist() == music->getArtist() && (*it)->getGenre() == music->getGenre()))
             return it - catalog.begin();
+    }
     return -1;
 }
 
 void Controller::releaseMusic() {
    auto toRelease = view->getReleaseInput();
-   auto toRemove = view->getReleaseInput().at(0);
-
-   cout << "index to remove : " << getIndex(toRemove) << endl;
+   auto toRemove = toRelease.at(0);
 
    if (!toRelease.empty()){
        for (auto it = toRelease.begin(); it != toRelease.end(); ++it){
            model->insertMusic((*it));
            view->addMusic((*it));
        }
-       // DA SISTEMARE
-       //model->removeMusic(toRemove);
+       view->removeMusic(getIndex(toRemove));
+       model->removeMusic(toRemove);
    }
    else {
        view->showWarning("Campi vuoti");

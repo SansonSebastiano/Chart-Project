@@ -3,8 +3,10 @@
 RecordLabel::RecordLabel(const string& _name) : RL_name(_name) {}
 
 RecordLabel::~RecordLabel() {
-    for(auto r : released) delete r;
-    for(auto nr : not_released) delete nr;
+    for(auto c : catalog) delete c;
+
+    //for(auto r : released) delete r;
+    //for(auto nr : not_released) delete nr;
 }
 
 string RecordLabel::getRLName() const { return RL_name; }
@@ -12,9 +14,14 @@ string RecordLabel::getRLName() const { return RL_name; }
 void RecordLabel::insert(const Music* music) {
     //if(!music) throw string("NoInsert");        // DEFINIRE UNA CLASSE DI ECCEZIONI
 
+    catalog.push_back(music);
+    cout << music->getInfo() << " \nINSERTED TO RECORD LABEL" << endl << endl;
+    /*
     if (dynamic_cast<const Release*>(music))     // se e' un album che e' stato pubblicato
         released.push_back(static_cast<const Release*>(music));
-    else not_released.push_back(music);         // altrimenti
+    else
+        not_released.push_back(music);         // altrimenti
+        */
 }
 
 // DA TESTARE
@@ -147,7 +154,7 @@ uint RecordLabel::getTotNumbers(vector<const Release *> r) const {
 
 void RecordLabel::release(const Release *release){
     // controllo se album vuoto
-
+    auto not_released = getNotReleased();
     bool found = false;
 
     for (auto it = not_released.begin(); it != not_released.end() && !found; ++it)
@@ -160,45 +167,51 @@ void RecordLabel::release(const Release *release){
     //if(!found) throw string("NameNotFound");  // DEFINIRE UNA CLASSE DI ECCEZIONI
 }
 
-bool RecordLabel::isElapsed1Year(const Release *album) const{
+bool RecordLabel::isElapsed1Year(const Release *release) const{
     // controllo se album vuoto
 
-    if(album->getElapsedYears() >= 1) return true;
+    if(release->getElapsedYears() >= 1) return true;
     else return false;
 
 }
 
-vector<const Music*> RecordLabel::getReleased() const{ return released; }
-
-vector<const Music*> RecordLabel::getNotReleased() const{ return not_released; }
-
-void RecordLabel::removeFromNotReleased(const Music *music) {
-    // controllo se music vuoto
-
-    bool found = false;
-
-    for(auto it = not_released.begin(); it != not_released.end() && !found; ++it)
-        if(isPresent(music)){
-            delete (*it);
-            it = not_released.erase(it);
-            it--;
-            found = true;
-        }
-    // DA TESTARE
-    //if(!found) throw string("NameNotFound");  // DEFINIRE UNA CLASSE DI ECCEZIONI
+vector<const Music*> RecordLabel::getAll() {
+    return catalog;
 }
 
-bool RecordLabel::isPresent(const Music *m) const {
+vector<const Music*> RecordLabel::getReleased() const{
+    vector<const Music*> released;
+
+    for (auto it = catalog.begin(); it != catalog.end(); ++it)
+        if (dynamic_cast<const Release*>(*it))
+            released.push_back(*it);
+
+    return released;
+}
+
+vector<const Music*> RecordLabel::getNotReleased() const{
+    vector<const Music*> not_released;
+
+    for (auto it = catalog.begin(); it != catalog.end(); ++it)
+        if(!dynamic_cast<const Release*>(*it))
+            not_released.push_back(*it);
+
+    return not_released;
+}
+
+void RecordLabel::removeNotReleased(const Music *music) {
     // controllo se music vuoto
     bool found = false;
 
-    for (auto it = not_released.begin(); it != not_released.end() && !found; ++it)
-        if ((*it)->getName() == m->getName() &&
-                (*it)->getArtist() == m->getArtist() &&
-                (*it)->getGenre() == m->getGenre())
+    for(auto it = catalog.begin(); it != catalog.end() && !found; ++it)
+        if(!dynamic_cast<const Release*>(*it) && ((*it)->getName() == music->getName() && (*it)->getArtist() == music->getArtist() && (*it)->getGenre() == music->getGenre())){
+            cout << (*it)->getInfo();
+            delete (*it);
+            it = catalog.erase(it);
+            it--;
             found = true;
-
-    return found;
+            cout << "\tDELETED FROM RECORD LABEL" << endl << endl;
+        }
     // DA TESTARE
     //if(!found) throw string("NameNotFound");  // DEFINIRE UNA CLASSE DI ECCEZIONI
 }

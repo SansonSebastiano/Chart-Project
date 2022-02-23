@@ -107,8 +107,12 @@ bool TableModel::removeRows(int position, int rows, const QModelIndex &parent) {
     Q_UNUSED(parent);
     beginRemoveRows(QModelIndex(), position, position + rows - 1);
 
+    cout << catalog.at(position)->getInfo();
+
     for (int row = 0; row < rows; ++row)
         catalog.removeAt(position);
+
+    cout << "\tDELETED FROM TABLE" << endl << endl;
 
     endRemoveRows();
     return true;

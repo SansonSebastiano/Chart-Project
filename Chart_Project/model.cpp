@@ -6,7 +6,7 @@ void Model::insertMusic(const Music *music){ rl->insert(music); }
 
 void Model::releaseMusic(const Release *release){ rl->release(release); }
 
-void Model::removeMusic(const Music *music) { rl->removeFromNotReleased(music); }
+void Model::removeMusic(const Music *music) { rl->removeNotReleased(music); }
 
 void Model::getAllInfo() const{
     auto r  = rl->getReleased();
@@ -24,18 +24,25 @@ void Model::getAllInfo() const{
 }
 
 vector<const Music*> Model::getData() const {
-    auto released = rl->getReleased();
-    auto not_released = rl->getNotReleased();
+    auto all = rl->getAll();
+
     vector<const Music*> catalog;
-    catalog.reserve(released.size() + not_released.size());
-    catalog.insert(catalog.end(), not_released.begin(), not_released.end());
-    catalog.insert(catalog.end(), released.begin(), released.end());
+    catalog.reserve(all.size());
+    catalog.insert(catalog.end(), all.begin(), all.end());
 
     return catalog;
 }
 
 vector<const Music*> Model::getNotReleased() const { return rl->getNotReleased(); }
 
-bool Model::isPresent(const Music *m) const {
-    return rl->isPresent(m);
+bool Model::isPresent(const Music *m
+                      ) const {
+    auto all = rl->getAll();
+    bool found = false;
+
+    for (auto it = all.begin(); it != all.end() && !found; ++it)
+        if ((*it)->getName() == m->getName() && (*it)->getArtist() == m->getArtist() && (*it)->getGenre() == m->getGenre())
+            found = true;
+
+    return found;
 }

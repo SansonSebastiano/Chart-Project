@@ -18,8 +18,10 @@ private:
     // raccolta di tutta la musica prodotta, appartenente all'etichetta discografica:
     //  - pubblicata
     //  - non pubblicata
-    vector<const Music*> released;
-    vector<const Music*> not_released;
+    vector<const Music*> catalog;
+
+    //vector<const Music*> released;
+    //vector<const Music*> not_released;
 public:
     RecordLabel(const string& _name = "");
     ~RecordLabel();
@@ -89,12 +91,17 @@ public:
      */
     uint getTotNumbers(vector<const Release*> r) const;
     /*
-     * @brief   restituisce gli album pubblicati
+     * @brief   restituisce tutta la musica
+     * @return  vector<const Music*>
+     */
+    vector<const Music*> getAll();
+    /*
+     * @brief   restituisce la musica pubblicata
      * @return  vector<const Music*>
      */
     vector<const Music*> getReleased() const;
     /*
-     * @brief   restituisce gli album non pubblicati
+     * @brief   restituisce la musica non pubblicata
      * @return  vector<const Music*>
      */
     vector<const Music*> getNotReleased() const;
@@ -116,14 +123,7 @@ public:
      * @ ECCEZIONI  ??
      * @return  void
      */
-    void removeFromNotReleased(const Music* music);
-    /*
-     * @brief   controlla se la musica in input esiste
-     * @param   const Music*
-     * @ ECCEZIONI  ??
-     * @return  bool
-     */
-    bool isPresent(const Music* music) const;
+    void removeNotReleased(const Music* music);
 
     // POSSIBILITA DI TOGLIERE UN ALBUM DA 'released' ?
 };

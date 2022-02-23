@@ -21,7 +21,6 @@
 #include<QFormLayout>
 #include <QRadioButton>
 #include <QMessageBox>
-#include <QPair>
 
 #include <phisycalmedium.h>
 #include <digitalmedium.h>
