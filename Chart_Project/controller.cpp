@@ -218,8 +218,7 @@ void Controller::addNewMusic() {
                 model->insertMusic(newMusic);
                 // aggiungo 'newMusic' alla tabella
                 view->addMusic(newMusic);
-            }else
-                view->resetComponent();
+            }
         }
         else{
             view->showWarning(QString::fromStdString(newMusic->getInfo()) + "\n\n è già esistente");
@@ -266,8 +265,7 @@ void Controller::releaseMusic() {
            }
            view->removeMusic(getIndex(toRemove));
            model->removeMusic(toRemove);
-       }else
-           view->resetComponent();
+       }
    }
    else {
        view->showWarning("Campi vuoti");

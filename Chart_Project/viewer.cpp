@@ -283,7 +283,7 @@ std::vector<const Release*> Viewer::getReleaseInput() {
     year = rd->getReleaseDE()->date().year();
 
 
-    if(rd->checkPMInput()){
+    if(rd->checkPMInput() || rd->checkDMInput()){
         if (rd->getcdCKB()->isChecked()) {
             numbers = rd->getCdEdit()->text().toUInt();
             result.push_back(new PM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), CD, numbers));
@@ -296,9 +296,7 @@ std::vector<const Release*> Viewer::getReleaseInput() {
             numbers = rd->getCstEdit()->text().toUInt();
             result.push_back(new PM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), Cassetta, numbers));
         }
-    }
 
-    if (rd->checkDMInput()){
         if(rd->getsptfCKB()->isChecked()){
             numbers = rd->getSptfEdit()->text().toUInt();
             result.push_back(new DM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), Spotify, numbers));
@@ -323,8 +321,9 @@ std::vector<const Release*> Viewer::getReleaseInput() {
             numbers = rd->getAmzEdit()->text().toUInt();
             result.push_back(new DM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), AmazonMusic, numbers));
         }
-    }
-    return result;
+        return result;
+    }else
+        return { };
 }
 
 void Viewer::enableReleaseDialogComponents() { rd->enableComponents(); }
