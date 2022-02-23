@@ -88,16 +88,17 @@ public:
     void setController(Controller *c);
 
     void setTable();
+    void addMusic(const Music *newMusic);
+    void removeMusic(uint index);
     // manage custom form dialog
     void resetComponent();
     void closeDialog();
     // dialog to add new music
     void showMusicDialog();
     const Music *getMusicInput();
-    void addNewMusic(const Music* newMusic);
     // dialog to release music
     void showReleaseDialog(const QVector<const Music*> &notReleased);
-    void getReleaseInput();
+    std::vector<const Release*> getReleaseInput();
     void enableReleaseDialogComponents();
     // display warning dialog
     void showWarning(const QString &message);

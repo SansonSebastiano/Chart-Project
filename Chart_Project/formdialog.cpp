@@ -1,8 +1,8 @@
 #include "formdialog.h"
 
 FormDialog::FormDialog(QWidget* parent) :  QDialog(parent),
-                                           btn_add(new QPushButton()),
-                                           btn_cancel(new QPushButton("Cancella"))
+                                           btn_add(new QPushButton(parent)),
+                                           btn_cancel(new QPushButton("Cancella", parent))
 {
     setModal(true);
 }
@@ -25,8 +25,8 @@ bool FormDialog::checkLine(const QCheckBox *cb, const QLineEdit *le, const QStri
     return false;
 }
 
-void FormDialog::createFormLayout(const QString &label, QWidget *w, QVBoxLayout *vbl) {
-    QFormLayout *formLayout = new QFormLayout();
+void FormDialog::createFormLayout(const QString &label, QWidget *w, QVBoxLayout *vbl, QWidget* parent) {
+    QFormLayout *formLayout = new QFormLayout(parent);
     formLayout->setFormAlignment(Qt::AlignAbsolute);
     formLayout->setLabelAlignment(Qt::AlignLeft);
     formLayout->setAlignment(w, Qt::AlignRight);

@@ -163,6 +163,8 @@ void Controller::removeFromFile(const QString& label, const Music* music) {
     writeOnFile(label, document);
 }
 
+// FARE DELLE GETTER?? <------------
+
 QVector<const Music*> Controller::initData() {
     loadDataFrom("sample_1");       // ATTENZIONE : QUANDO NECESSARIO CAMBIARE NOME DEL FILE
 
@@ -172,29 +174,14 @@ QVector<const Music*> Controller::initData() {
     return myVector;
 }
 
+const Music *Controller::getFromNotReleased(uint index) {
+    auto data = model->getNotReleased();
+    return data.at(index);
+}
+
 // SLOTS
 void Controller::showTable() { view->setTable(); }
-void Controller::showMusicDialog() { view->showMusicDialog(); }
 void Controller::closeDialog() { view->closeDialog(); }
-void Controller::enableDialog() { view->enableReleaseDialogComponents(); }
-
-void Controller::getNewMusic() {
-    auto newMusic = view->getMusicInput();
-    if (newMusic){
-        if (!model->isPresent(newMusic)){
-            // aggiungo 'newMusic' a RecordLabel
-            model->insertMusic(newMusic);
-            // aggiungo 'newMusic' alla tabella
-            view->addNewMusic(newMusic);
-        }
-        else{
-            view->showWarning("The following: \n" + QString::fromStdString(newMusic->getInfo()) + "\nalready exists");
-            view->resetComponent();
-        }
-    }
-    else
-        view->showWarning("Campi obbligatori");
-}
 
 void Controller::saveToFile() {
     QVector<const Music*> v = view->getToSave();
@@ -207,9 +194,70 @@ void Controller::saveToFile() {
         view->showWarning("Nuova musica non inserita");
 }
 
+void Controller::showMusicDialog() {
+    auto data = model->getNotReleased();
+    if (!data.empty())
+        view->showMusicDialog();
+    else
+        view->showWarning("Dati non caricati");
+}
+
+void Controller::addNewMusic() {
+    auto newMusic = view->getMusicInput();
+
+    if (newMusic){
+        if (!model->isPresent(newMusic)){
+            // aggiungo 'newMusic' a RecordLabel
+            model->insertMusic(newMusic);
+            // aggiungo 'newMusic' alla tabella
+            view->addMusic(newMusic);
+        }
+        else{
+            view->showWarning("The following: \n\n" + QString::fromStdString(newMusic->getInfo()) + "\n\nalready exists");
+            view->resetComponent();
+        }
+    }
+    else
+        view->showWarning("Campi obbligatori");
+}
+
 void Controller::showReleaseDialog() {
     auto data = model->getNotReleased();
     QVector<const Music*> myVector = QVector<const Music*>::fromStdVector(data);
 
-    view->showReleaseDialog(myVector);
+    if (!myVector.isEmpty())
+        view->showReleaseDialog(myVector);
+    else
+        view->showWarning("Non c'e' nulla da pubblicare");
+}
+
+void Controller::enableDialog() { view->enableReleaseDialogComponents(); }
+
+int Controller::getIndex(const Music* music) {
+    auto catalog = model->getData();
+    // non funziona dopo aver inserito musica nuova
+    for (auto it = catalog.begin(); it != catalog.end(); ++it)
+        if ((*it)->getName() == music->getName() && (*it)->getArtist() == music->getArtist() && (*it)->getGenre() == music->getGenre())
+            return it - catalog.begin();
+    return -1;
+}
+
+void Controller::releaseMusic() {
+   auto toRelease = view->getReleaseInput();
+   auto toRemove = view->getReleaseInput().at(0);
+
+   cout << "index to remove : " << getIndex(toRemove) << endl;
+
+   if (!toRelease.empty()){
+       for (auto it = toRelease.begin(); it != toRelease.end(); ++it){
+           model->insertMusic((*it));
+           view->addMusic((*it));
+       }
+       // DA SISTEMARE
+       //model->removeMusic(toRemove);
+   }
+   else {
+       view->showWarning("Campi vuoti");
+       view->resetComponent();
+   }
 }

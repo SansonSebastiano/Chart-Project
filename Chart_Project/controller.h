@@ -50,17 +50,21 @@ public:
     void removeFromFile(const QString& label, const Music* music);
 
     QVector<const Music*> initData();
-    bool isPresent(const Music* m) const;
+
+    const Music* getFromNotReleased(uint index);
 
 public slots:
     void showTable();
-    void showMusicDialog();
     void closeDialog();
-    void enableDialog();
-    void getNewMusic();
     void saveToFile();
 
+    void showMusicDialog();
+    void addNewMusic();
+
     void showReleaseDialog();
+    void enableDialog();
+    int getIndex(const Music* music);
+    void releaseMusic();
 };
 
 #endif // CONTROLLER_H

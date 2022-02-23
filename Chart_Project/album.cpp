@@ -7,7 +7,7 @@ string Album::getName() const { return name; }
 string Album::getArtist() const { return artist; }
 
 string Album::getInfo() const {
-    return "Album: " + name + "\n" +
-           "Artista: " + artist + "\n" +
+    return "Album: " + name + " | " +
+           "Artista: " + artist + " | " +
            Music::getInfo();
 }

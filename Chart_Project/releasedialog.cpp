@@ -1,31 +1,31 @@
 #include "releasedialog.h"
 
 ReleaseDialog::ReleaseDialog(QWidget* parent) : FormDialog(parent),
-                                                toPublicCB(new QComboBox()),
+                                                toPublicCB(new QComboBox(parent)),
                                                 //releaseBox(new QGroupBox("Info Pubblicazione")),
-                                                releaseDE(new QDateEdit()),
+                                                releaseDE(new QDateEdit(parent)),
 
                                                 // INT VALIDATOR
                                                 // MOSTRARE I PREZZI
-                                                cdCKB(new QCheckBox("CD")),
-                                                vnlCKB(new QCheckBox("Vinile")),
-                                                cstCKB(new QCheckBox("Cassetta")),
-                                                cdEdit(new QLineEdit()),
-                                                vnlEdit(new QLineEdit()),
-                                                cstEdit(new QLineEdit()),
+                                                cdCKB(new QCheckBox("CD", parent)),
+                                                vnlCKB(new QCheckBox("Vinile", parent)),
+                                                cstCKB(new QCheckBox("Cassetta",parent)),
+                                                cdEdit(new QLineEdit(parent)),
+                                                vnlEdit(new QLineEdit(parent)),
+                                                cstEdit(new QLineEdit(parent)),
 
-                                                sptfCKB(new QCheckBox("Spotify")),
-                                                applmCKB(new QCheckBox("Apple Music")),
-                                                tdlCKB(new QCheckBox("Tidal")),
-                                                dzrCKB(new QCheckBox("Deezer")),
-                                                ytmCKB(new QCheckBox("YouTube Music")),
-                                                amzCKB(new QCheckBox("Amazon Music")),
-                                                sptfEdit(new QLineEdit()),
-                                                applmEdit(new QLineEdit()),
-                                                tdlEdit(new QLineEdit()),
-                                                dzrEdit(new QLineEdit()),
-                                                ytmEdit(new QLineEdit()),
-                                                amzEdit(new QLineEdit()),
+                                                sptfCKB(new QCheckBox("Spotify", parent)),
+                                                applmCKB(new QCheckBox("Apple Music", parent)),
+                                                tdlCKB(new QCheckBox("Tidal", parent)),
+                                                dzrCKB(new QCheckBox("Deezer", parent)),
+                                                ytmCKB(new QCheckBox("YouTube Music", parent)),
+                                                amzCKB(new QCheckBox("Amazon Music", parent)),
+                                                sptfEdit(new QLineEdit(parent)),
+                                                applmEdit(new QLineEdit(parent)),
+                                                tdlEdit(new QLineEdit(parent)),
+                                                dzrEdit(new QLineEdit(parent)),
+                                                ytmEdit(new QLineEdit(parent)),
+                                                amzEdit(new QLineEdit(parent)),
 
                                                 musicToPublic(QStringList())
 {
@@ -34,31 +34,31 @@ ReleaseDialog::ReleaseDialog(QWidget* parent) : FormDialog(parent),
     releaseDE->setMaximumDate(QDate::currentDate());
 
     cdEdit->setDisabled(true);
-    cdEdit->setValidator(new QIntValidator());
+    cdEdit->setValidator(new QIntValidator(parent));
 
     vnlEdit->setDisabled(true);
-    vnlEdit->setValidator(new QIntValidator());
+    vnlEdit->setValidator(new QIntValidator(parent));
 
     cstEdit->setDisabled(true);
-    cstEdit->setValidator(new QIntValidator());
+    cstEdit->setValidator(new QIntValidator(parent));
 
     sptfEdit->setDisabled(true);
-    sptfEdit->setValidator(new QIntValidator());
+    sptfEdit->setValidator(new QIntValidator(parent));
 
     applmEdit->setDisabled(true);
-    applmEdit->setValidator(new QIntValidator());
+    applmEdit->setValidator(new QIntValidator(parent));
 
     tdlEdit->setDisabled(true);
-    tdlEdit->setValidator(new QIntValidator());
+    tdlEdit->setValidator(new QIntValidator(parent));
 
     dzrEdit->setDisabled(true);
-    dzrEdit->setValidator(new QIntValidator());
+    dzrEdit->setValidator(new QIntValidator(parent));
 
     ytmEdit->setDisabled(true);
-    ytmEdit->setValidator(new QIntValidator());
+    ytmEdit->setValidator(new QIntValidator(parent));
 
     amzEdit->setDisabled(true);
-    amzEdit->setValidator(new QIntValidator());
+    amzEdit->setValidator(new QIntValidator(parent));
 }
 
 const QComboBox *ReleaseDialog::getToPubliCB() const { return toPublicCB; }
@@ -88,8 +88,8 @@ const QLineEdit *ReleaseDialog::getYtmEdit() const { return ytmEdit; }
 const QLineEdit *ReleaseDialog::getAmzEdit() const { return amzEdit; }
 
 
-void ReleaseDialog::createLine(QWidget *ckb, QWidget *lineEdit, QFormLayout *fl) {
-    QHBoxLayout *line = new QHBoxLayout();
+void ReleaseDialog::createLine(QWidget *ckb, QWidget *lineEdit, QFormLayout *fl, QWidget* parent) {
+    QHBoxLayout *line = new QHBoxLayout(parent);
 
     line->addWidget(ckb);
     line->addWidget(lineEdit);
@@ -100,57 +100,57 @@ void ReleaseDialog::createLine(QWidget *ckb, QWidget *lineEdit, QFormLayout *fl)
     fl->addItem(line);
 }
 
-void ReleaseDialog::createMediumLine(QWidget *ckb, QWidget *lineEdit, QVBoxLayout *vbl) {
-    QFormLayout *formLayout = new QFormLayout();
+void ReleaseDialog::createMediumLine(QWidget *ckb, QWidget *lineEdit, QVBoxLayout *vbl, QWidget* parent) {
+    QFormLayout *formLayout = new QFormLayout(parent);
     formLayout->setFormAlignment(Qt::AlignAbsolute);
     createLine(ckb, lineEdit, formLayout);
 
     vbl->addLayout(formLayout);
 }
 
-void ReleaseDialog::createReleaseBox(QVBoxLayout *vbl) {
-    QVBoxLayout *boxLayout = new QVBoxLayout();
+void ReleaseDialog::createReleaseBox(QVBoxLayout *vbl, QWidget* parent) {
+    QVBoxLayout *boxLayout = new QVBoxLayout(parent);
 
    createFormLayout("Data Pubblicazione: ", releaseDE, boxLayout);
 
-   QGroupBox *groupBox = new QGroupBox("Info Pubblicazione");
+   QGroupBox *groupBox = new QGroupBox("Info Pubblicazione", parent);
    groupBox->setLayout(boxLayout);
 
    vbl->addWidget(groupBox);
 }
 
-void ReleaseDialog::createPMBox(QVBoxLayout *vbl) {
-    QVBoxLayout *boxLayout = new QVBoxLayout();
+void ReleaseDialog::createPMBox(QVBoxLayout *vbl, QWidget* parent) {
+    QVBoxLayout *boxLayout = new QVBoxLayout(parent);
     // cd line
-    createMediumLine(cdCKB, cdEdit, boxLayout);
+    createMediumLine(cdCKB, cdEdit, boxLayout, parent);
     // vinyl line
-    createMediumLine(vnlCKB, vnlEdit, boxLayout);
+    createMediumLine(vnlCKB, vnlEdit, boxLayout, parent);
     // cassette line
-    createMediumLine(cstCKB, cstEdit, boxLayout);
+    createMediumLine(cstCKB, cstEdit, boxLayout, parent);
 
-    QGroupBox *groupBox = new QGroupBox("Info Supporti Fisici");
+    QGroupBox *groupBox = new QGroupBox("Info Supporti Fisici", parent);
     groupBox->setLayout(boxLayout);
     //groupBox->setDisabled(true);
 
     vbl->addWidget(groupBox);
 }
 
-void ReleaseDialog::createDMBox(QVBoxLayout *vbl) {
-    QVBoxLayout *boxLayout = new QVBoxLayout();
+void ReleaseDialog::createDMBox(QVBoxLayout *vbl, QWidget* parent) {
+    QVBoxLayout *boxLayout = new QVBoxLayout(parent);
     // spotify line
-    createMediumLine(sptfCKB, sptfEdit, boxLayout);
+    createMediumLine(sptfCKB, sptfEdit, boxLayout, parent);
     // apple music line
-    createMediumLine(applmCKB, applmEdit, boxLayout);
+    createMediumLine(applmCKB, applmEdit, boxLayout, parent);
     // tidal line
-    createMediumLine(tdlCKB, tdlEdit, boxLayout);
+    createMediumLine(tdlCKB, tdlEdit, boxLayout, parent);
     // deezer line
-    createMediumLine(dzrCKB, dzrEdit, boxLayout);
+    createMediumLine(dzrCKB, dzrEdit, boxLayout, parent);
     // youtube music line
-    createMediumLine(ytmCKB, ytmEdit, boxLayout);
+    createMediumLine(ytmCKB, ytmEdit, boxLayout, parent);
     // amazon music line
-    createMediumLine(amzCKB, amzEdit, boxLayout);
+    createMediumLine(amzCKB, amzEdit, boxLayout, parent);
 
-    QGroupBox *groupBox = new QGroupBox("Info Piattaforme Digitali");
+    QGroupBox *groupBox = new QGroupBox("Info Piattaforme Digitali", parent);
     groupBox->setLayout(boxLayout);
     //groupBox->setDisabled(true);
 
@@ -160,26 +160,30 @@ void ReleaseDialog::createDMBox(QVBoxLayout *vbl) {
 const QStringList ReleaseDialog::getMusicToPublic() const { return musicToPublic; }
 
 void ReleaseDialog::setMusicToPublic(const QVector<const Music *> &notReleased) {
+    musicToPublic.clear();
+    toPublicCB->clear();
     for (auto it = notReleased.begin(); it != notReleased.end(); ++it)
-        musicToPublic.push_back(QString::fromStdString((*it)->getInfo()));
+        musicToPublic.push_back(QString::fromStdString((*it)->getInfo()));  // DA SISTEMARE
+
+    toPublicCB->addItems(getMusicToPublic());
 }
 
-void ReleaseDialog::createReleaseMusicLayout(const QVector<const Music*> &notReleased) {
-    QVBoxLayout *dialogLayout = new QVBoxLayout();
+void ReleaseDialog::createReleaseMusicLayout(/*const QVector<const Music*> &notReleased,*/ QWidget* parent) {
+    QVBoxLayout *dialogLayout = new QVBoxLayout(parent);
 
     // add combobox with not releases music
-    setMusicToPublic(notReleased);
-    toPublicCB->addItems(getMusicToPublic());
+    //setMusicToPublic(notReleased);
+    //toPublicCB->addItems(getMusicToPublic());
     dialogLayout->addWidget(toPublicCB);
     // add Release Box
-    createReleaseBox(dialogLayout);
+    createReleaseBox(dialogLayout, parent);
     // add PhisycalMedium Box
-    createPMBox(dialogLayout);
+    createPMBox(dialogLayout, parent);
     // add DigitalMedium Box
-    createDMBox(dialogLayout);
+    createDMBox(dialogLayout, parent);
 
     // button layout
-    QHBoxLayout *buttonLayout = new QHBoxLayout();
+    QHBoxLayout *buttonLayout = new QHBoxLayout(parent);
     buttonLayout->addWidget(getAddBtn());
     buttonLayout->addWidget(getCancBtn());
     buttonLayout->setAlignment(Qt::AlignRight);

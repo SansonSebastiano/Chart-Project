@@ -25,7 +25,7 @@ public:
     FormDialog(QWidget* parent = Q_NULLPTR);
     ~FormDialog() = default;
 
-    void createFormLayout(const QString &label, QWidget *w, QVBoxLayout *vbl);
+    void createFormLayout(const QString &label, QWidget *w, QVBoxLayout *vbl, QWidget* parent = Q_NULLPTR);
     bool checkLine(const QCheckBox *cb, const QLineEdit *le, const QString &message) const;
 
     void setAddBtn(const QString &buttonLabel);

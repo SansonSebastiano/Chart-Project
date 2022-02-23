@@ -1,9 +1,9 @@
 #include "musicdialog.h"
 
 MusicDialog::MusicDialog(QWidget* parent) :     FormDialog(parent),
-                                                nameEdit(new QLineEdit()),
-                                                artistEdit(new QLineEdit()),
-                                                genreEdit(new QLineEdit())
+                                                nameEdit(new QLineEdit(parent)),
+                                                artistEdit(new QLineEdit(parent)),
+                                                genreEdit(new QLineEdit(parent))
 {
     setAddBtn("Aggiungi");
 }
@@ -12,27 +12,27 @@ const QLineEdit *MusicDialog::getNameEdit() const { return nameEdit; }
 const QLineEdit *MusicDialog::getArtistEdit() const { return artistEdit; }
 const QLineEdit *MusicDialog::getGenreEdit() const { return  genreEdit; }
 
-void MusicDialog::createMusicBox(QVBoxLayout *vbl) {
-    QVBoxLayout *boxLayout = new QVBoxLayout();
+void MusicDialog::createMusicBox(QVBoxLayout *vbl, QWidget* parent) {
+    QVBoxLayout *boxLayout = new QVBoxLayout(parent);
 
     createFormLayout("Nome: ", nameEdit, boxLayout);
     createFormLayout("Artista: ", artistEdit, boxLayout);
     createFormLayout("Genere: ", genreEdit, boxLayout);
 
-    QGroupBox *groupBox = new QGroupBox("Info Musica");
+    QGroupBox *groupBox = new QGroupBox("Info Musica", parent);
     groupBox->setLayout(boxLayout);
 
     vbl->addWidget(groupBox);
 }
 
-void MusicDialog::createAddMusicLayout() {
-    QVBoxLayout *dialogLayout = new QVBoxLayout();
+void MusicDialog::createAddMusicLayout(QWidget* parent) {
+    QVBoxLayout *dialogLayout = new QVBoxLayout(parent);
 
     // add Music Box
-    createMusicBox(dialogLayout);
+    createMusicBox(dialogLayout, parent);
 
     // button layout
-    QHBoxLayout *buttonLayout = new QHBoxLayout();
+    QHBoxLayout *buttonLayout = new QHBoxLayout(parent);
     buttonLayout->addWidget(getAddBtn());
     buttonLayout->addWidget(getCancBtn());
     buttonLayout->setAlignment(Qt::AlignRight);

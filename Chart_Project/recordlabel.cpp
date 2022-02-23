@@ -145,14 +145,14 @@ uint RecordLabel::getTotNumbers(vector<const Release *> r) const {
     return tot_numbers;
 }
 
-void RecordLabel::release(const Release *album){
+void RecordLabel::release(const Release *release){
     // controllo se album vuoto
 
     bool found = false;
 
     for (auto it = not_released.begin(); it != not_released.end() && !found; ++it)
-        if((*it)->getName() == album->getName() && isElapsed1Year(album)) {
-            insert(album);
+        if((*it)->getName() == release->getName() && isElapsed1Year(release)) {
+            insert(release);
             found = true;
      }
     // DA TESTARE
@@ -165,6 +165,7 @@ bool RecordLabel::isElapsed1Year(const Release *album) const{
 
     if(album->getElapsedYears() >= 1) return true;
     else return false;
+
 }
 
 vector<const Music*> RecordLabel::getReleased() const{ return released; }
@@ -177,12 +178,27 @@ void RecordLabel::removeFromNotReleased(const Music *music) {
     bool found = false;
 
     for(auto it = not_released.begin(); it != not_released.end() && !found; ++it)
-        if((*it)->getName() == music->getName()){
+        if(isPresent(music)){
             delete (*it);
             it = not_released.erase(it);
             it--;
             found = true;
         }
+    // DA TESTARE
+    //if(!found) throw string("NameNotFound");  // DEFINIRE UNA CLASSE DI ECCEZIONI
+}
+
+bool RecordLabel::isPresent(const Music *m) const {
+    // controllo se music vuoto
+    bool found = false;
+
+    for (auto it = not_released.begin(); it != not_released.end() && !found; ++it)
+        if ((*it)->getName() == m->getName() &&
+                (*it)->getArtist() == m->getArtist() &&
+                (*it)->getGenre() == m->getGenre())
+            found = true;
+
+    return found;
     // DA TESTARE
     //if(!found) throw string("NameNotFound");  // DEFINIRE UNA CLASSE DI ECCEZIONI
 }

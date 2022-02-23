@@ -16,6 +16,7 @@ public:
     TableModel(QObject *parent = nullptr);
     TableModel(const QVector<const Music*> &_catalog, QObject *parent = nullptr);
 
+    // da mettere private
     int rowCount(const QModelIndex &parent) const override;
     int columnCount(const QModelIndex &parent) const override;
 
@@ -33,11 +34,7 @@ public:
 
     // aggiunge una "nuova musica"
     void addEntry(const Music* m);
-
-    // pubblicare "una musica", valutare varie possibilita:
-        // bottone pubblica
-        // editing
-        // boh altro...
+    void removeEntry(uint index);
 private:
     QVector<const Music*> catalog;
 };

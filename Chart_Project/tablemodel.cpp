@@ -140,3 +140,7 @@ void TableModel::addEntry(const Music* m) {
     QModelIndex i = index(position, 0, QModelIndex());
     setData(i, QVariant::fromValue<const Music*>(m), Qt::DisplayRole);
 }
+
+void TableModel::removeEntry(uint index) {
+    removeRows(index, 1, QModelIndex());
+}

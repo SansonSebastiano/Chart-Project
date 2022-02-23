@@ -15,9 +15,11 @@ public:
 
     //void newRL(string rl_name);
 
-    void insertMusic(const Music* album);
+    void insertMusic(const Music* music);
 
-    void releaseMusic(const Release* album);
+    void releaseMusic(const Release* release);
+
+    void removeMusic(const Music* music);
 
     void getAllInfo() const;
 

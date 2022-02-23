@@ -104,19 +104,26 @@ public:
      * @ ECCEZIONI  ??
      * @return  void
      */
-    void release(const Release* album);
+    void release(const Release* release);
     /*
      * @brief   restituisce true se e' trascorso almeno un anno dalla sua pubblicazione
      * @return  bool
      */
-    bool isElapsed1Year(const Release* album) const;
+    bool isElapsed1Year(const Release* release) const;
     /*
-     * @brief   rimuove un album da not_release
+     * @brief   rimuove musica da not_release
      * @param   const Album*
      * @ ECCEZIONI  ??
      * @return  void
      */
     void removeFromNotReleased(const Music* music);
+    /*
+     * @brief   controlla se la musica in input esiste
+     * @param   const Music*
+     * @ ECCEZIONI  ??
+     * @return  bool
+     */
+    bool isPresent(const Music* music) const;
 
     // POSSIBILITA DI TOGLIERE UN ALBUM DA 'released' ?
 };

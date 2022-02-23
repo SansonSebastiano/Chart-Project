@@ -17,12 +17,12 @@ private:
 
     QStringList musicToPublic;
 
-    void createLine(QWidget *ckb, QWidget *lineEdit, QFormLayout *fl);
-    void createMediumLine(QWidget *ckb, QWidget *lineEdit, QVBoxLayout *vbl);
+    void createLine(QWidget *ckb, QWidget *lineEdit, QFormLayout *fl, QWidget* parent = Q_NULLPTR);
+    void createMediumLine(QWidget *ckb, QWidget *lineEdit, QVBoxLayout *vbl, QWidget* parent = Q_NULLPTR);
 
-    void createReleaseBox(QVBoxLayout *vbl);
-    void createPMBox(QVBoxLayout *vbl);
-    void createDMBox(QVBoxLayout *vbl);
+    void createReleaseBox(QVBoxLayout *vbl, QWidget* parent = Q_NULLPTR);
+    void createPMBox(QVBoxLayout *vbl, QWidget* parent = Q_NULLPTR);
+    void createDMBox(QVBoxLayout *vbl, QWidget* parent = Q_NULLPTR);
 
 public:
     ReleaseDialog(QWidget* parent = Q_NULLPTR);
@@ -31,7 +31,7 @@ public:
     const QStringList getMusicToPublic() const;
     void setMusicToPublic(const QVector<const Music*> &notReleased);
 
-    void createReleaseMusicLayout(const QVector<const Music*> &notReleased);
+    void createReleaseMusicLayout(/*const QVector<const Music*> &notReleased,*/ QWidget* parent = Q_NULLPTR);
 
     const QComboBox* getToPubliCB() const;
 

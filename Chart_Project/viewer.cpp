@@ -4,8 +4,10 @@
 // ATTENZIONE AI MEMORY LEAK
 // MEGLIO CREARE DIFFERENTI WIDGET CUSTOM CLASS ?
 // WARNING : impostare le parentelle tra i widget/layout
+// OCCHIO AI PARENT
 
 void Viewer::closeEvent(QCloseEvent *event) {
+    // DA SISTEMARE
     QMessageBox::StandardButton resBtn = QMessageBox::Yes;
     // controllo se toSave ha elementi
     if(!toSave.isEmpty())
@@ -123,8 +125,11 @@ Viewer::Viewer(QWidget *parent) : QDialog(parent), controller(new Controller) {
     mainLayout = new QVBoxLayout;
 
     // init Custom-Dialog-Form
-    md = new MusicDialog();
-    rd = new ReleaseDialog();
+    md = new MusicDialog(parent);
+    md->createAddMusicLayout();
+
+    rd = new ReleaseDialog(parent);
+    rd->createReleaseMusicLayout();
 
     // Add menu bar
     addMenus(mainLayout);
@@ -152,9 +157,11 @@ void Viewer::setController(Controller *c) {
         // to show/close Music custom form dialog
     connect(btn_addItem, SIGNAL(clicked()), controller, SLOT(showMusicDialog()));
     connect(md->getCancBtn(), SIGNAL(clicked()), controller, SLOT(closeDialog()));
-    connect(md->getAddBtn(), SIGNAL(clicked()), controller, SLOT(getNewMusic()));
+    connect(md->getAddBtn(), SIGNAL(clicked()), controller, SLOT(addNewMusic()));
         // to show/close Release custo form dialog and checkbox's signal
     connect(btn_release, SIGNAL(clicked()), controller, SLOT(showReleaseDialog()));
+    connect(rd->getCancBtn(), SIGNAL(clicked()), controller, SLOT(closeDialog()));
+    connect(rd->getAddBtn(), SIGNAL(clicked()), controller, SLOT(releaseMusic()));
 
     connect(rd->getcdCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableDialog()));
     connect(rd->getvnlCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableDialog()));
@@ -186,17 +193,34 @@ void Viewer::setTable() {
     */
 }
 
-void Viewer::showMusicDialog() {
-    md->createAddMusicLayout();
-    md->show();
+void Viewer::addMusic(const Music* newMusic) {
+    // FORSE SAREBBE MEGLIO FARLO FARE AL CONTROLLER??
+    toSave.push_back(newMusic);
+
+    myTableModel->addEntry(newMusic);
+    qDebug() << QString::fromStdString(newMusic->getInfo()) << " inserted" << endl;
+
+    closeDialog();
 }
 
-void Viewer::resetComponent() { md->resetComponents(); }
+void Viewer::removeMusic(uint index) {
+    // per rimuovere
+    myTableModel->removeEntry(index);
+}
+
+void Viewer::resetComponent() {
+    md->resetComponents();
+    rd->resetComponents();
+}
 
 void Viewer::closeDialog() {
-    md->resetComponents();
+    resetComponent();
+
     md->close();
+    rd->close();
 }
+
+void Viewer::showMusicDialog() { md->show(); }
 
 // non sono molto convinto : non dovrebbe farlo il controller??
 void Viewer::capitalizeInput(string& input) {
@@ -237,30 +261,25 @@ const Music *Viewer::getMusicInput() {
     return nullptr;
 }
 
-void Viewer::addNewMusic(const Music* newMusic) {
-    // FORSE SAREBBE MEGLIO FARLO FARE AL CONTROLLER??
-    toSave.push_back(newMusic);
-
-    myTableModel->addEntry(newMusic);
-    qDebug() << QString::fromStdString(newMusic->getInfo()) << " inserted" << endl;
-    closeDialog();
-}
-
+// ReleaseDialog
 void Viewer::showReleaseDialog(const QVector<const Music*> &notReleased) {
     // get data for combo box
-    rd->createReleaseMusicLayout(notReleased);
+    rd->setMusicToPublic(notReleased);
     rd->show();
 }
 
-void Viewer::getReleaseInput() {
+std::vector<const Release*> Viewer::getReleaseInput() {
+    std::vector<const Release*> result;
     // ADATTARE ALLA COMBOBOX
+    uint index = rd->getToPubliCB()->currentIndex();
+    auto selectedMusic = controller->getFromNotReleased(index);
+    qDebug() << "selected item: " << QString::fromStdString(selectedMusic->getInfo()) << endl;
 
-    uint day = 0;
-    uint month = 0;
-    uint year = 0;
+    uint day(0);
+    uint month(0);
+    uint year(0);
 
-    QPair<Support, uint> *pm = new QPair<Support, uint>();
-    QPair<Platform, uint> *dm = new QPair<Platform, uint>();
+    uint numbers(0);
 
     // controllo validita' della data di pubblicazione delegata a RecordLabel
     day = rd->getReleaseDE()->date().day();
@@ -270,59 +289,55 @@ void Viewer::getReleaseInput() {
 
     if(rd->checkPMInput()){
         if (rd->getcdCKB()->isChecked()) {
-            pm->first = CD;
-            pm->second = rd->getCdEdit()->text().toUInt();
-            //addNewMusic(new PM(genre, name, artist, Date(day, month, year), pm->first, pm->second));
+            numbers = rd->getCdEdit()->text().toUInt();
+            result.push_back(new PM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), CD, numbers));
+            //addNewMusic(new PM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), pm->first, pm->second));
         }
         if (rd->getvnlCKB()->isChecked()) {
-            pm->first = Vinile ;
-            pm->second = rd->getVnlEdit()->text().toUInt();
-            //addNewMusic(new PM(genre, name, artist, Date(day, month, year), pm->first, pm->second));
+            numbers = rd->getVnlEdit()->text().toUInt();
+            result.push_back(new PM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), Vinile, numbers));
+            //addNewMusic(new PM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), Vinile, numbers));
         }
         if (rd->getcstCKB()->isChecked()) {
-            pm->first = Cassetta;
-            pm->second = rd->getCstEdit()->text().toUInt();
-            //addNewMusic(new PM(genre, name, artist, Date(day, month, year), pm->first, pm->second));
+            numbers = rd->getCstEdit()->text().toUInt();
+            result.push_back(new PM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), Cassetta, numbers));
+            //addNewMusic(new PM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), Cassetta, numbers));
         }
     }
 
     if (rd->checkDMInput()){
         if(rd->getsptfCKB()->isChecked()){
-            dm->first = Spotify;
-            dm->second = rd->getSptfEdit()->text().toUInt();
-            //addNewMusic(new DM(genre, name, artist, Date(day, month, year), dm->first, dm->second));
+            numbers = rd->getSptfEdit()->text().toUInt();
+            result.push_back(new DM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), Spotify, numbers));
+            //addNewMusic(new DM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), Spotify, numbers));
         }
         if(rd->getapplmCKB()->isChecked()){
-            dm->first = AppleMusic;
-            dm->second = rd->getApplmEdit()->text().toUInt();
-            //addNewMusic(new DM(genre, name, artist, Date(day, month, year), dm->first, dm->second));
+            numbers = rd->getApplmEdit()->text().toUInt();
+            result.push_back(new DM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), AppleMusic, numbers));
+            //addNewMusic(new DM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), AppleMusic, numbers));
         }
         if(rd->gettdlCKB()->isChecked()){
-            dm->first = Tidal;
-            dm->second = rd->getTdlEdit()->text().toUInt();
-            //addNewMusic(new DM(genre, name, artist, Date(day, month, year), dm->first, dm->second));
+            numbers = rd->getTdlEdit()->text().toUInt();
+            result.push_back(new DM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), Tidal, numbers));
+            //addNewMusic(new DM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), Tidal, numbers));
         }
         if(rd->getdzrCKB()->isChecked()){
-            dm->first = Deezer;
-            dm->second = rd->getDzrEdit()->text().toUInt();
-            //addNewMusic(new DM(genre, name, artist, Date(day, month, year), dm->first, dm->second));
-        }if(rd->getytmCKB()->isChecked()){
-            dm->first = YoutubeMusic;
-            dm->second = rd->getYtmEdit()->text().toUInt();
-            //addNewMusic(new DM(genre, name, artist, Date(day, month, year), dm->first, dm->second));
+            numbers = rd->getDzrEdit()->text().toUInt();
+            result.push_back(new DM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), Deezer, numbers));
+            //addNewMusic(new DM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), Deezer, numbers));
+        }
+        if(rd->getytmCKB()->isChecked()){
+            numbers = rd->getYtmEdit()->text().toUInt();
+            result.push_back(new DM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), YoutubeMusic, numbers));
+            //addNewMusic(new DM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), YoutubeMusic, numbers));
         }
         if(rd->getamzCKB()->isChecked()){
-            dm->first = AmazonMusic;
-            dm->second = rd->getAmzEdit()->text().toUInt();
-            //addNewMusic(new DM(genre, name, artist, Date(day, month, year), dm->first, dm->second));
+            numbers = rd->getAmzEdit()->text().toUInt();
+            result.push_back(new DM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), AmazonMusic, numbers));
+            //addNewMusic(new DM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), AmazonMusic, numbers));
         }
     }
-    else {
-        // DA SISTEMARE
-        QMessageBox::warning(this, tr("Campi vuoti"), tr("I campi 'Nome', 'Artista', 'Genre' sono obbligatori"), QMessageBox::Ok);
-    }
-    delete pm;
-    delete dm;
+    return result;
 }
 
 void Viewer::enableReleaseDialogComponents() { rd->enableComponents(); }
