@@ -13,13 +13,17 @@ public:
     MusicDialog(QWidget* parent = Q_NULLPTR);
     ~MusicDialog() = default;
 
-    const QLineEdit *getNameEdit() const;
-    const QLineEdit *getArtistEdit() const;
-    const QLineEdit *getGenreEdit() const;
+    std::string getInputName() const;
+    std::string getInputArtist() const;
+    std::string getInputGenre() const;
 
     void createAddMusicLayout(QWidget* parent = Q_NULLPTR);
 
     bool checkMusicInput() const;
+
+    string capitalizeInput(string input);
+
+    const Music* getInput();
 
     void resetComponents() override;
 };

@@ -7,16 +7,24 @@ using std::string;
 
 class Music{
 private:
-    string genre;
+    string genre;   // genere musicale
 public:
     Music(const string& _genre = "");
     virtual ~Music() = default;
     /*
-     * @brief   restituisce un genere musicale
+     * @brief   ritorna un genere musicale
      * @return  string
      */
     string getGenre() const;
+    /*
+     * @brief   restituisce il nome della musica
+     * @return  string
+     */
     virtual string getName() const = 0;
+    /*
+     * @brief   restituisce l'artista della musica
+     * @return  string
+     */
     virtual string getArtist() const = 0;
     /*
      * @brief   restituisce informazioni riguardante il prodotto musicale
@@ -25,6 +33,7 @@ public:
     virtual string getInfo() const;
 };
 
-// FORSE TOGLIERE
+// permette la conversione con QVariant
+// necessario in tableModel.h /.cpp
 Q_DECLARE_METATYPE(const Music*)
 #endif // MUSIC_H

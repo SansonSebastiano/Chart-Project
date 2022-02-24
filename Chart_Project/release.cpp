@@ -8,6 +8,7 @@ Date Release::getReleaseDate() const { return release_date; }
 
 double Release::getProfit() const { return profit; }
 
+// sottrae dalla data corrente l'anno di rilascio di un prodotto musicale e divide per 365, ottenendo il numero di anni trascorsi
 uint Release::getElapsedYears() const { return ((Date::getNow() - release_date) / 365); }
 
 string Release::getInfo() const {

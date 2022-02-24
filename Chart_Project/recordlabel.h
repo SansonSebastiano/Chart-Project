@@ -7,7 +7,7 @@ typedef PhisycalMedium PM;
 #include "digitalmedium.h"
 typedef DigitalMedium DM;
 
-#include "exceptions.h"
+#include "exceptions.h"         // FARE ECCEZIONI
 
 #include <vector>
 using std::vector;
@@ -19,9 +19,6 @@ private:
     //  - pubblicata
     //  - non pubblicata
     vector<const Music*> catalog;
-
-    //vector<const Music*> released;
-    //vector<const Music*> not_released;
 public:
     RecordLabel(const string& _name = "");
     ~RecordLabel();
@@ -31,52 +28,72 @@ public:
      */
     string getRLName() const;
     /*
-     * @brief   pensa a come fare la insert:
-     *          - PER GLI ALBUM PUBBLICATI (ovvero che andranno nel vettore 'released'
-     *              - in ordine cronologico? (ovviamente per gli album pubblicati)
-     *              -
-     *          - PER GLI ALBUM ANCORA NON PUBBLICATI (ovvero che andranno nel vettore 'not_released'
-     *              -
+     * @brief   inserisce un prodotto musicale nel catalogo dell'etichetta discografica
      * @pre     per gli album pubblicati: deve essere trascorso almeno un anno dalla sua pubblicazione per essere inserito
-     * @param   const Album*
+     * @param   const Music*
      * @ ECCEZIONI  da fare
      * @return  void
      */
     void insert(const Music* music);
     /*
-     * @brief   scansiona il vettore in input ed "estrae" tutti gli album (e le relative pubblicazioni, se pubblicato) il cui nome e' dato in input
-     * @param   string album_name, vector<const Music*> v
-     * @ ECCEZIONI  nel caso il nome dell'album sia errato
+     * @brief   scansiona il vettore in input e restituisce tutta la musica il cui nome e' dato in input
+     * @param   string &name
+     * @param   vector<const Music*> v
+     * @ ECCEZIONI  nel caso il nome sia errato ??
      * @return  vector<const Music*>
      */
-    vector<const Music*> getByName(vector<const Music*> v, const string& album_name) const;
+    vector<const Music*> getByName(vector<const Music*> v, const string& name) const;
+    /*
+     * @brief   scansiona il vettore in input e restituisce tutta la musica il cui genere e' dato in input
+     * @param   string &genre
+     * @param   vector<const Music*> v
+     * @ ECCEZIONI  nel caso il genere sia errato ??
+     * @return  vector<const Music*>
+     */
     vector<const Music*> getByGenre(vector<const Music*> v, const string& genre) const;
+    /*
+     * @brief   scansiona il vettore in input e restituisce tutta la musica il cui artista e' dato in input
+     * @param   string &artist
+     * @param   vector<const Music*> v
+     * @ ECCEZIONI  nel caso l'artista sia errato ??
+     * @return  vector<const Music*>
+     */
     vector<const Music*> getByArtist(vector<const Music*> v, const string& artist) const;
-
+    /*
+     * @brief   scansiona il vettore in input e restituisce tutta la musica il cui anno e' dato in input
+     * @param   uint year
+     * @param   vector<const Music*> v
+     * @ ECCEZIONI  nel caso l'anno sia errato ??
+     * @return  vector<const Release*>
+     */
     vector<const Release*> getByYear(vector<const Music*> v, uint year) const;
     /*
-     * @brief   scansiona 'released' ed "estrae" tutti gli album pubblicati in un intervallo di anni
-     * @param   vector<const Release*> v, Date from, Date to
+     * @brief   scansiona il vettore in input e restituisce tutta la musica pubblicata in un intervallo di anni dato in input
+     * @param   vector<const Music*> v
+     * @param   Date &from
+     * @param   Date &to
      * @ ECCEZIONI  ??
      * @return  vector<const Release*>
      */
     vector<const Release*> getBetweenYears(vector<const Music*> v, const Date& from, const Date& to) const;
     /*
-     * @brief   scansiona 'released' ed "estrae" tutti gli album pubblicati nella stessa piattaforma data in input
+     * @brief   scansiona il vettore in input e restituisce tutta la musica pubblicata in una piattaforma data in input
      * @param   Platform platform
+     * @param   vector<const Release*> v
      * @ ECCEZIONI  ??
      * @return  vector<const Release*>
      */
     vector<const Release*> getByPlatform(vector<const Release*> v, Platform platform) const;
     /*
-     * @brief   scansiona 'released' ed "estrae" tutti gli album pubblicati nello stesso supporto fisico dato in input
+     * @brief   scansiona il vettore in input e restituisce tutta la musica pubblicata in un supporto fisico dato in input
      * @param   Support support
+     * @param   vector<const Release*> v
      * @ ECCEZIONI  ??
      * @return  vector<const Release*>
      */
     vector<const Release*> getBySupport(vector<const Release*> v, Support support) const;
     /*
-     * @brief   somma e ritorna l'incasso totale di alcuni album pubblicati
+     * @brief   somma e ritorna l'incasso totale di un vettore di musica pubblicata data in input
      * @param   vector<const Release*> r
      * @return  double
      */
@@ -84,14 +101,14 @@ public:
     /*
      * @brief   somma e ritorna il numero totale di
      *              - vendite, se il vettore contiene PhiscycalMedium
-     *              - ascolti se il vettore contiene DigitalMedium
-     *          di alcuni album pubblicati
+     *              - ascolti, se il vettore contiene DigitalMedium
+     *          di un vettore di musica pubblicata in input
      * @param   vector<const Release*> r
      * @return  unsigned int
      */
     uint getTotNumbers(vector<const Release*> r) const;
     /*
-     * @brief   restituisce tutta la musica
+     * @brief   restituisce tutta la musica dell'etichetta discografica
      * @return  vector<const Music*>
      */
     vector<const Music*> getAll();
@@ -106,20 +123,22 @@ public:
      */
     vector<const Music*> getNotReleased() const;
     /*
-     * @brief   pubblica un album su un supporto fisico/digitale se e' passato almeno un anno dalla sua pubblicazione
-     * @param   const Album*, Date, Support/Platform, num_sales/listeners
+     * €pre     trascorso almeno un anno dalla data di pubblicazione di 'release'
+     * @brief   pubblica un prodotto musicale (in input) su un supporto fisico/digitale se e' passato almeno un anno dalla sua pubblicazione
+     * @param   const Release* release
      * @ ECCEZIONI  ??
      * @return  void
      */
     void release(const Release* release);
     /*
-     * @brief   restituisce true se e' trascorso almeno un anno dalla sua pubblicazione
+     * @brief   restituisce true se e' trascorso almeno un anno dalla data di pubblicazione di un prodotto musicale in input
+     * @param   const Release* release
      * @return  bool
      */
     bool isElapsed1Year(const Release* release) const;
     /*
-     * @brief   rimuove musica da not_release
-     * @param   const Album*
+     * @brief   rimuove prodotto musicale non pubblicato dal catalogo
+     * @param   const Music*
      * @ ECCEZIONI  ??
      * @return  void
      */

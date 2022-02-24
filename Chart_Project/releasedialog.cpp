@@ -61,9 +61,9 @@ ReleaseDialog::ReleaseDialog(QWidget* parent) : FormDialog(parent),
     amzEdit->setValidator(new QIntValidator(parent));
 }
 
-const QComboBox *ReleaseDialog::getToPubliCB() const { return toPublicCB; }
+uint ReleaseDialog::getToPublicIndexItem() const { return toPublicCB->currentIndex(); }
 
-const QDateEdit *ReleaseDialog::getReleaseDE() const { return releaseDE; }
+const QDate ReleaseDialog::getReleaseDate() const { return releaseDE->date(); }
 
 const QCheckBox *ReleaseDialog::getcdCKB() const { return cdCKB; }
 const QCheckBox *ReleaseDialog::getvnlCKB() const { return vnlCKB; }
@@ -185,7 +185,7 @@ void ReleaseDialog::createReleaseMusicLayout(/*const QVector<const Music*> &notR
     // button layout
     QHBoxLayout *buttonLayout = new QHBoxLayout(parent);
     buttonLayout->addWidget(getAddBtn());
-    buttonLayout->addWidget(getCancBtn());
+    //buttonLayout->addWidget(getCancBtn());
     buttonLayout->setAlignment(Qt::AlignRight);
 
     dialogLayout->addLayout(buttonLayout);
@@ -240,6 +240,18 @@ void ReleaseDialog::enableComponents() {
         amzEdit->setDisabled(true);
 }
 
+bool ReleaseDialog::checkLine(const QCheckBox *cb, const QLineEdit *le, const QString &message) const {
+    if (cb->isChecked()) {
+        if (!le->text().isEmpty())
+            return true;
+        else {
+            QMessageBox::warning(const_cast<QLineEdit*>(le), tr("Campi vuoti"), "Campo " + message + " necessario", QMessageBox::Ok);
+            return false;
+        }
+    }
+    return false;
+}
+/*
 bool ReleaseDialog::checkPMInput() const {
     return  checkLine(cdCKB, cdEdit, "vendite") ||
             checkLine(vnlCKB, vnlEdit, "vendite") ||
@@ -254,7 +266,7 @@ bool ReleaseDialog::checkDMInput() const {
             checkLine(ytmCKB, ytmEdit, "ascolti") ||
             checkLine(amzCKB, amzEdit, "ascolti");
 }
-
+*/
 void ReleaseDialog::resetComponents() {
     releaseDE->clear();
 
@@ -279,4 +291,81 @@ void ReleaseDialog::resetComponents() {
     dzrEdit->clear();
     ytmEdit->clear();
     amzEdit->clear();
+}
+
+bool  ReleaseDialog::isAllUnchecked() {
+    return  !cdCKB->isChecked() &&
+            !vnlCKB->isChecked() &&
+            !cstCKB->isChecked() &&
+            !sptfCKB->isChecked() &&
+            !applmCKB->isChecked() &&
+            !tdlCKB->isChecked() &&
+            !dzrCKB->isChecked() &&
+            !amzCKB->isChecked();
+}
+
+std::vector<const Release*> ReleaseDialog::getInput(const std::vector<const Music*> &not_released) {
+    std::vector<const Release*> result;
+
+    auto selectedMusic = not_released.at(getToPublicIndexItem());
+    cout << "SELECTED ITEM : " << selectedMusic->getInfo() << endl;
+
+    // controllo validita' della data di pubblicazione delegata a RecordLabel
+    uint day(getReleaseDate().day());
+    uint month(getReleaseDate().month());
+    uint year(getReleaseDate().year());
+
+    uint numbers(0);
+
+
+    // si deve controllare se il rispettivo campo QEditLine e' vuoto
+    if (checkLine(getcdCKB(), getCdEdit(), "'Vendite CD'")){
+        // campo QEditLine non vuoto
+        // acquisisco input
+        cout << "cd line" << endl;
+        numbers = getCdEdit()->text().toUInt();
+        result.push_back(new PhisycalMedium(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), CD, numbers));
+    }
+    if (checkLine(getvnlCKB(), getVnlEdit(), "'Vendite Vinile'")) {
+        cout << "vinile line" << endl;
+        numbers = getVnlEdit()->text().toUInt();
+        result.push_back(new PhisycalMedium(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), Vinile, numbers));
+    }
+    if (checkLine(getcstCKB(), getCstEdit(), "'Vendite Cassetta'")) {
+        cout << "cassetta line" << endl;
+        numbers = getCstEdit()->text().toUInt();
+        result.push_back(new PhisycalMedium(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), Cassetta, numbers));
+    }
+    // DM
+    if(checkLine(getsptfCKB(), getSptfEdit(), "'Ascolti Spotify'")){
+        cout << "spotify line" << endl;
+        numbers = getSptfEdit()->text().toUInt();
+        result.push_back(new DigitalMedium(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), Spotify, numbers));
+    }
+    if(checkLine(getapplmCKB(), getApplmEdit(), "'Ascolti Apple Music'")){
+        cout << "apple music line" << endl;
+        numbers = getApplmEdit()->text().toUInt();
+        result.push_back(new DigitalMedium(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), AppleMusic, numbers));
+    }
+    if(checkLine(gettdlCKB(), getTdlEdit(), "'Ascolti Tidal'")){
+        cout << "tidal line" << endl;
+        numbers = getTdlEdit()->text().toUInt();
+        result.push_back(new DigitalMedium(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), Tidal, numbers));
+    }
+    if(checkLine(getdzrCKB(), getDzrEdit(), "'Ascolti Deezer'")){
+        cout << "deezer line" << endl;
+        numbers = getDzrEdit()->text().toUInt();
+        result.push_back(new DigitalMedium(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), Deezer, numbers));
+    }
+    if(checkLine(getytmCKB(), getYtmEdit(), "'Ascolti YouTube Music'")){
+        cout << "youtube music line" << endl;
+        numbers = getYtmEdit()->text().toUInt();
+        result.push_back(new DigitalMedium(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), YoutubeMusic, numbers));
+    }
+    if(checkLine(getamzCKB(), getAmzEdit(), "'Ascolti Amazon Music'")){
+        cout << "amazon music line" << endl;
+        numbers = getAmzEdit()->text().toUInt();
+        result.push_back(new DigitalMedium(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), AmazonMusic, numbers));
+    }
+    return result;
 }

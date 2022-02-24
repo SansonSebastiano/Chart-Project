@@ -7,9 +7,11 @@
 #include <QTextStream>
 
 #include "io_handler.h"
-
 #include "viewer.h"
 #include "model.h"
+
+#include "musicdialog.h"
+#include "releasedialog.h"
 
 class Controller : public QObject{
     Q_OBJECT
@@ -35,10 +37,9 @@ public:
         // GENERE, ARTISTA, NOME ALBUM: scegliere convenzione
 
     // DA COMMENTARE
-    // DA DEFINIRE SE CONST
     // da mettere private?
 
-    void loadDataFrom(const QString& label);   // MARCARE CONST ??
+    void loadDataFrom(const QString& label);
 
     void isExists(const QString& label, const Music* music);
     void newSave(const QString& label, const Music* music);
@@ -51,18 +52,16 @@ public:
 
     QVector<const Music*> initData();
 
-    const Music* getFromNotReleased(uint index);
-
 public slots:
     void showTable();
-    void closeDialog();
+    void closeDialog(FormDialog *dialog);
     void saveToFile();
 
     void showMusicDialog();
     void addNewMusic();
 
     void showReleaseDialog();
-    void enableDialog();
+    void enableRDComponents();
     int getIndex(const Music* music);
     void releaseMusic();
 };

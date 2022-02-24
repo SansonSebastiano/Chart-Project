@@ -1,8 +1,8 @@
 #include "formdialog.h"
 
 FormDialog::FormDialog(QWidget* parent) :  QDialog(parent),
-                                           btn_add(new QPushButton(parent)),
-                                           btn_cancel(new QPushButton("Cancella", parent))
+                                           btn_add(new QPushButton(parent))
+                                           //btn_cancel(new QPushButton("Cancella", parent))
 {
     setModal(true);
 }
@@ -11,19 +11,7 @@ void FormDialog::setAddBtn(const QString &buttonLabel) { btn_add->setText(button
 
 QPushButton *FormDialog::getAddBtn() const { return btn_add; }
 
-QPushButton *FormDialog::getCancBtn() const { return btn_cancel; }
-
-bool FormDialog::checkLine(const QCheckBox *cb, const QLineEdit *le, const QString &message) const {
-    if (cb->isChecked()) {
-        if (!le->text().isEmpty())
-            return true;
-        else {
-            QMessageBox::warning(const_cast<QLineEdit*>(le), tr("Campi vuoti"), "Campo " + message + " necessario", QMessageBox::Ok);
-            return false;
-        }
-    }
-    return false;
-}
+//QPushButton *FormDialog::getCancBtn() const { return btn_cancel; }
 
 void FormDialog::createFormLayout(const QString &label, QWidget *w, QVBoxLayout *vbl, QWidget* parent) {
     QFormLayout *formLayout = new QFormLayout(parent);

@@ -155,175 +155,69 @@ void Viewer::setController(Controller *c) {
 
     connect(btn_uploadData, SIGNAL(clicked()), controller, SLOT(showTable()));
         // to show/close Music custom form dialog
-    connect(btn_addItem, SIGNAL(clicked()), controller, SLOT(showMusicDialog()));
-    connect(md->getCancBtn(), SIGNAL(clicked()), controller, SLOT(closeDialog()));
+    connect(btn_addItem, &QPushButton::clicked, controller, &Controller::showMusicDialog);
+    //connect(btn_addItem, SIGNAL(clicked()), controller, SLOT(showMusicDialog()));
+    //connect(md->getCancBtn(), SIGNAL(clicked()), controller, SLOT(closeDialog(FormDialog*)));
     connect(md->getAddBtn(), SIGNAL(clicked()), controller, SLOT(addNewMusic()));
         // to show/close Release custo form dialog and checkbox's signal
     connect(btn_release, SIGNAL(clicked()), controller, SLOT(showReleaseDialog()));
-    connect(rd->getCancBtn(), SIGNAL(clicked()), controller, SLOT(closeDialog()));
+    //connect(rd->getCancBtn(), SIGNAL(clicked()), controller, SLOT(closeDialog(FormDialog*)));
     connect(rd->getAddBtn(), SIGNAL(clicked()), controller, SLOT(releaseMusic()));
 
-    connect(rd->getcdCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableDialog()));
-    connect(rd->getvnlCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableDialog()));
-    connect(rd->getcstCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableDialog()));
+    connect(rd->getcdCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableRDComponents()));
+    connect(rd->getvnlCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableRDComponents()));
+    connect(rd->getcstCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableRDComponents()));
 
-    connect(rd->getsptfCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableDialog()));
-    connect(rd->getapplmCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableDialog()));
-    connect(rd->gettdlCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableDialog()));
-    connect(rd->getdzrCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableDialog()));
-    connect(rd->getytmCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableDialog()));
-    connect(rd->getamzCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableDialog()));
+    connect(rd->getsptfCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableRDComponents()));
+    connect(rd->getapplmCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableRDComponents()));
+    connect(rd->gettdlCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableRDComponents()));
+    connect(rd->getdzrCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableRDComponents()));
+    connect(rd->getytmCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableRDComponents()));
+    connect(rd->getamzCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableRDComponents()));
 }
 
 void Viewer::setTable() {
     table = new QTableView;
 
-    catalog = controller->initData();       // NON MI CONVINCE MOLTO
-    qDebug() << "Is catalog loaded? " << !catalog.isEmpty() << endl;
-    myTableModel = new TableModel(catalog);
+    if (catalog.isEmpty()){
+        catalog = controller->initData();       // NON MI CONVINCE MOLTO
+        qDebug() << "Is catalog loaded? " << !catalog.isEmpty() << endl;
+        myTableModel = new TableModel(catalog);
 
-    table->setModel(myTableModel);
-    //table->setWindowTitle();
+        table->setModel(myTableModel);
+        //table->setWindowTitle();
 
-    table_layout->addWidget(table);
-    frame->setLayout(table_layout);
-    /*
-    screenLayout->addLayout(table_layout);
-    mainLayout->addLayout(screenLayout);
-    */
+        table_layout->addWidget(table);
+        frame->setLayout(table_layout);
+    }else
+        showWarning("Dati già caricati");
 }
 
-void Viewer::addMusic(const Music* newMusic) {
+void Viewer::addMusicToTable(const Music* newMusic) {
     // FORSE SAREBBE MEGLIO FARLO FARE AL CONTROLLER??
     toSave.push_back(newMusic);
 
     myTableModel->addEntry(newMusic);
     qDebug() << QString::fromStdString(newMusic->getInfo()) << " \n ADDED TO TABLE" << endl;
-
-    closeDialog();
 }
 
-void Viewer::removeMusic(uint index) {
-    // per rimuovere
-    myTableModel->removeEntry(index);
+void Viewer::removeMusicFromTable(uint index) { myTableModel->removeEntry(index); }
+
+MusicDialog *Viewer::getMusicDialog() const { return md; }
+ReleaseDialog *Viewer::getReleaseDialog() const { return rd; }
+
+void Viewer::showDialog(FormDialog *dialog, const QVector<const Music*> &notReleased) {
+    auto releaseDialog = dynamic_cast<ReleaseDialog*>(dialog);
+    if (releaseDialog)
+        releaseDialog->setMusicToPublic(notReleased);
+
+    dialog->show();
 }
 
-void Viewer::resetComponent() {
-    md->resetComponents();
-    rd->resetComponents();
-}
-
-void Viewer::closeDialog() {
-    resetComponent();
-
-    md->close();
-    rd->close();
-}
-
-void Viewer::showMusicDialog() { md->show(); }
-
-// non sono molto convinto : non dovrebbe farlo il controller??
-void Viewer::capitalizeInput(string& input) {
-    if (!input.empty()){
-        input[0] = std::toupper(input[0]);
-
-        for (uint i = 1; i < input.length(); ++i){
-            if (input[i - 1] == ' ' || input[i - 1] == '.' || input[i - 1] == '-')
-                input[i] = std::toupper(input[i]);
-            else
-                input[i] = std::tolower(input[i]);
-        }
-    }
-}
-
-const Music *Viewer::getMusicInput() {
-    string name;
-    string artist;
-    string genre;
-
-    // validazione
-    if (md->checkMusicInput()){
-
-        name = md->getNameEdit()->text().toStdString();
-        capitalizeInput(name);
-        artist = md->getArtistEdit()->text().toStdString();
-        capitalizeInput(artist);
-        genre = md->getGenreEdit()->text().toStdString();
-        capitalizeInput(genre);
-
-        return new Album(genre, name, artist);
-    }
-
-    return nullptr;
-}
-
-// ReleaseDialog
-void Viewer::showReleaseDialog(const QVector<const Music*> &notReleased) {
-    // get data for combo box
-    rd->setMusicToPublic(notReleased);
-    rd->show();
-}
-
-std::vector<const Release*> Viewer::getReleaseInput() {
-    std::vector<const Release*> result;
-    // ADATTARE ALLA COMBOBOX
-    uint index = rd->getToPubliCB()->currentIndex();
-    auto selectedMusic = controller->getFromNotReleased(index);
-    qDebug() << "selected item: " << QString::fromStdString(selectedMusic->getInfo()) << endl;
-
-    uint day(0);
-    uint month(0);
-    uint year(0);
-
-    uint numbers(0);
-
-    // controllo validita' della data di pubblicazione delegata a RecordLabel
-    day = rd->getReleaseDE()->date().day();
-    month = rd->getReleaseDE()->date().month();
-    year = rd->getReleaseDE()->date().year();
-
-
-    if(rd->checkPMInput() || rd->checkDMInput()){
-        if (rd->getcdCKB()->isChecked()) {
-            numbers = rd->getCdEdit()->text().toUInt();
-            result.push_back(new PM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), CD, numbers));
-        }
-        if (rd->getvnlCKB()->isChecked()) {
-            numbers = rd->getVnlEdit()->text().toUInt();
-            result.push_back(new PM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), Vinile, numbers));
-        }
-        if (rd->getcstCKB()->isChecked()) {
-            numbers = rd->getCstEdit()->text().toUInt();
-            result.push_back(new PM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), Cassetta, numbers));
-        }
-
-        if(rd->getsptfCKB()->isChecked()){
-            numbers = rd->getSptfEdit()->text().toUInt();
-            result.push_back(new DM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), Spotify, numbers));
-        }
-        if(rd->getapplmCKB()->isChecked()){
-            numbers = rd->getApplmEdit()->text().toUInt();
-            result.push_back(new DM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), AppleMusic, numbers));
-        }
-        if(rd->gettdlCKB()->isChecked()){
-            numbers = rd->getTdlEdit()->text().toUInt();
-            result.push_back(new DM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), Tidal, numbers));
-        }
-        if(rd->getdzrCKB()->isChecked()){
-            numbers = rd->getDzrEdit()->text().toUInt();
-            result.push_back(new DM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), Deezer, numbers));
-        }
-        if(rd->getytmCKB()->isChecked()){
-            numbers = rd->getYtmEdit()->text().toUInt();
-            result.push_back(new DM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), YoutubeMusic, numbers));
-        }
-        if(rd->getamzCKB()->isChecked()){
-            numbers = rd->getAmzEdit()->text().toUInt();
-            result.push_back(new DM(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), AmazonMusic, numbers));
-        }
-        return result;
-    }else
-        return { };
+void Viewer::resetComponents(FormDialog *dialog) { dialog->resetComponents(); }
+void Viewer::closeDialog(FormDialog *dialog) {
+    resetComponents(dialog);
+    dialog->close();
 }
 
 void Viewer::enableReleaseDialogComponents() { rd->enableComponents(); }

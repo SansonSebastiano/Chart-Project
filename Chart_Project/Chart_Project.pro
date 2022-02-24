@@ -33,12 +33,12 @@ SOURCES += \
 
 HEADERS += \
     album.h \
-    cast_helper.h \
     controller.h \
     date.h \
     digitalmedium.h \
     exceptions.h \
     formdialog.h \
+    helper.h \
     io_handler.h \
     model.h \
     music.h \

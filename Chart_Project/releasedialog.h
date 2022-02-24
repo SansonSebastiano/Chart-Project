@@ -33,9 +33,11 @@ public:
 
     void createReleaseMusicLayout(/*const QVector<const Music*> &notReleased,*/ QWidget* parent = Q_NULLPTR);
 
-    const QComboBox* getToPubliCB() const;
+    // forse dovrei ritornare direttamente quello che mi serve e non i componenti
 
-    const QDateEdit *getReleaseDE() const;
+    uint getToPublicIndexItem() const;
+
+    const QDate getReleaseDate() const;
 
     const QCheckBox* getcdCKB() const;
     const QCheckBox* getvnlCKB() const;
@@ -60,10 +62,14 @@ public:
     const QLineEdit *getAmzEdit() const;
 
     void enableComponents();
-
-    bool checkPMInput() const;
-    bool checkDMInput() const;
+    bool checkLine(const QCheckBox *cb, const QLineEdit *le, const QString &message) const;
+    //bool checkPMInput() const;
+    //bool checkDMInput() const;
 
     void resetComponents() override;
+
+    bool isAllUnchecked();
+
+    std::vector<const Release*> getInput(const std::vector<const Music*> &not_released);
 };
 #endif // RELEASEDIALOG_H

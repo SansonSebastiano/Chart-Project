@@ -175,14 +175,11 @@ QVector<const Music*> Controller::initData() {
     return myVector;
 }
 
-const Music *Controller::getFromNotReleased(uint index) {
-    auto data = model->getNotReleased();
-    return data.at(index);
-}
-
-// SLOTS
+//------------------------------------------------------------
+//                          SLOTS
+//------------------------------------------------------------
 void Controller::showTable() { view->setTable(); }
-void Controller::closeDialog() { view->closeDialog(); }
+void Controller::closeDialog(FormDialog *dialog) { view->closeDialog(dialog); }
 
 void Controller::saveToFile() {
     QVector<const Music*> v = view->getToSave();
@@ -192,22 +189,25 @@ void Controller::saveToFile() {
         for (auto it = v.begin(); it != v.end(); ++it){
             appendTo("sample_1", *it);
             // testing
-            removeFromFile("sample_1", *it);
+            // attenzione : la musica non rilasciata verrà eliminata
+            //removeFromFile("sample_1", *it);
         }
     else
         view->showWarning("Nuova musica non inserita");
 }
 
 void Controller::showMusicDialog() {
-    auto data = model->getNotReleased();
+    auto dialog = view->getMusicDialog();
+    auto data = model->getData();
     if (!data.empty())
-        view->showMusicDialog();
+        view->showDialog(dialog);
     else
         view->showWarning("Dati non caricati");
 }
 
 void Controller::addNewMusic() {
-    auto newMusic = view->getMusicInput();
+    auto dialog = view->getMusicDialog();
+    auto newMusic = dialog->getInput();
 
     if (newMusic){
         if (!model->isPresent(newMusic)){
@@ -217,12 +217,14 @@ void Controller::addNewMusic() {
                 // aggiungo 'newMusic' a RecordLabel
                 model->insertMusic(newMusic);
                 // aggiungo 'newMusic' alla tabella
-                view->addMusic(newMusic);
+                view->addMusicToTable(newMusic);
+
+                view->closeDialog(dialog);
             }
         }
         else{
             view->showWarning(QString::fromStdString(newMusic->getInfo()) + "\n\n è già esistente");
-            view->resetComponent();
+            view->resetComponents(dialog);
         }
     }
     else
@@ -230,16 +232,17 @@ void Controller::addNewMusic() {
 }
 
 void Controller::showReleaseDialog() {
+    auto dialog = view->getReleaseDialog();
     auto data = model->getNotReleased();
     QVector<const Music*> myVector = QVector<const Music*>::fromStdVector(data);
 
     if (!myVector.isEmpty())
-        view->showReleaseDialog(myVector);
+        view->showDialog(dialog, myVector);
     else
         view->showWarning("Non c'e' nulla da pubblicare");
 }
 
-void Controller::enableDialog() { view->enableReleaseDialogComponents(); }
+void Controller::enableRDComponents() { view->enableReleaseDialogComponents(); }
 
 int Controller::getIndex(const Music* music) {
     auto catalog = model->getData();
@@ -253,22 +256,57 @@ int Controller::getIndex(const Music* music) {
 }
 
 void Controller::releaseMusic() {
-   auto toRelease = view->getReleaseInput();
-   auto toRemove = toRelease.at(0);
+    auto not_released = model->getNotReleased();
+    auto dialog = view->getReleaseDialog();
 
-   if (!toRelease.empty()){
+    if(dialog->isAllUnchecked())
+        // nessuna checkbox selezionata
+        view->showWarning("Campi vuoti");
+    else{
+        // almeno una checkbox selezionata
+        // controllare che il rispettivo campo QEditLine non sia vuoto
+        // acquisire input
+
+        //testing
+        //
+
+        auto toRelease = dialog->getInput(not_released);
+        auto toRemove = toRelease.at(0);
+
+        if (!toRelease.empty()){
+           auto ask = view->showQuestion("Dati inseriti correttamente? \nSei sicuro di continuare con la pubblicazione?");
+           if (ask == QMessageBox::Yes){
+               for (auto it = toRelease.begin(); it != toRelease.end(); ++it){
+                   model->insertMusic((*it));
+                   view->addMusicToTable((*it));
+               }
+               view->removeMusicFromTable(getIndex(toRemove));
+               model->removeMusic(toRemove);
+
+               view->closeDialog(dialog);
+           }
+        }else
+            view->showWarning("Non hai inserito correttamente i dati");
+    }
+
+    /*
+    std::vector<const Release*> toRelease = view->test();
+    //bool isEmpty = view->getReleaseInput(toRelease);
+    auto toRemove = toRelease.at(0);
+
+    if (!toRelease.empty()){
        auto ask = view->showQuestion("Dati inseriti correttamente? \nSei sicuro di continuare con la pubblicazione?");
        if (ask == QMessageBox::Yes){
            for (auto it = toRelease.begin(); it != toRelease.end(); ++it){
                model->insertMusic((*it));
-               view->addMusic((*it));
+               view->addMusicToTable((*it));
+
+               view->closeDialog(dialog);
            }
-           view->removeMusic(getIndex(toRemove));
+           view->removeMusicFromTable(getIndex(toRemove));
            model->removeMusic(toRemove);
        }
-   }
-   else {
+    }else
        view->showWarning("Campi vuoti");
-       view->resetComponent();
-   }
+       */
 }

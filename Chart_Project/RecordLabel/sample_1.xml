@@ -1,19 +1,19 @@
 <catalog>
- <album artist="Salmo" name="Flop" genre="Rap"/>
- <album artist="Nirvana" name="Nevermind" genre="Rock"/>
- <PM support="0" artist="Salmo" name="Midnite" num_sales="340243" genre="Rap">
-  <release month="9" day="10" year="2013"/>
+ <album genre="Rap" name="Flop" artist="Salmo"/>
+ <album genre="Rock" name="Nevermind" artist="Nirvana"/>
+ <PM genre="Rap" num_sales="340243" name="Midnite" artist="Salmo" support="0">
+  <release month="9" year="2013" day="10"/>
  </PM>
- <PM support="0" artist="Dr. Dre" name="2001" num_sales="1000" genre="Rap">
-  <release month="9" day="12" year="2000"/>
+ <PM genre="Rap" num_sales="1000" name="2001" artist="Dr. Dre" support="0">
+  <release month="9" year="2000" day="12"/>
  </PM>
- <DM artist="Wynton Marsalis" name="Standard &amp; Ballads" platform="0" genre="Jazz" listeners="1450450">
-  <release month="9" day="12" year="2000"/>
+ <DM genre="Jazz" listeners="1450450" name="Standard &amp; Ballads" artist="Wynton Marsalis" platform="0">
+  <release month="9" year="2000" day="12"/>
  </DM>
- <PM support="1" artist="DJ Shocca" name="60 Hz" num_sales="1000" genre="Rap">
-  <release month="9" day="12" year="2000"/>
+ <PM genre="Rap" num_sales="1000" name="60 Hz" artist="DJ Shocca" support="1">
+  <release month="9" year="2000" day="12"/>
  </PM>
- <PM support="2" artist="Linkin Park" name="Meteora" num_sales="1000" genre="Rock">
-  <release month="9" day="12" year="2000"/>
+ <PM genre="Rock" num_sales="1000" name="Meteora" artist="Linkin Park" support="2">
+  <release month="9" year="2000" day="12"/>
  </PM>
 </catalog>

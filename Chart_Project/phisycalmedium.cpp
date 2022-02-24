@@ -1,5 +1,6 @@
 #include "phisycalmedium.h"
 
+// imposta i costi di default per copia di vari tipi di supporti
 const double PhisycalMedium::cd_price = 15.00;
 const double PhisycalMedium::vnl_price = 25.00;
 const double PhisycalMedium::cst_price = 15.00;
@@ -14,11 +15,11 @@ PhisycalMedium::PhisycalMedium(const string& _genre, const string& _album_name, 
 
 void PhisycalMedium::setProfit() {
     if (support == CD)
-        profit = cd_price * getElapsedYears();
+        profit = cd_price * num_sales * getElapsedYears();      // profitto = costo CD * #vendite medie annuo * anni trascorsi
     else if (support == Vinile)
-        profit = vnl_price * num_sales * getElapsedYears();
+        profit = vnl_price * num_sales * getElapsedYears();     // profitto = costo Vinile * #vendite medie annuo * anni trascorsi
     else
-        profit = cst_price * num_sales * getElapsedYears();
+        profit = cst_price * num_sales * getElapsedYears();     // profitto = costo Cassetta * #vendite medie annuo * anni trascorsi
 }
 
 uint PhisycalMedium::getNumbers() const{ return num_sales; }
@@ -29,5 +30,5 @@ string PhisycalMedium::getInfo() const {
     return Release::getInfo() + "\n" +
            "Supporto Fisico: " + support_names[support] + "\n" +
            "Vendite Annue: " + std::to_string(num_sales) + "\n" +
-           "Profitto Annuo: " + double_to_string(getProfit()) + " €";
+           "Profitto: " + double_to_string(getProfit()) + " €";
 }

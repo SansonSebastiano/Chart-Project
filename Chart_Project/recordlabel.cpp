@@ -16,24 +16,18 @@ void RecordLabel::insert(const Music* music) {
 
     catalog.push_back(music);
     cout << music->getInfo() << " \nINSERTED TO RECORD LABEL" << endl << endl;
-    /*
-    if (dynamic_cast<const Release*>(music))     // se e' un album che e' stato pubblicato
-        released.push_back(static_cast<const Release*>(music));
-    else
-        not_released.push_back(music);         // altrimenti
-        */
 }
 
 // DA TESTARE
 
-vector<const Music*> RecordLabel::getByName(vector<const Music *> v, const string &album_name) const {
+vector<const Music*> RecordLabel::getByName(vector<const Music *> v, const string &name) const {
     //controllo se
         // - 'v' e' vuoto?
-        // - album_name nullo
+        // - name nullo
 
     vector<const Music*> result;
     for(auto it = v.begin(); it != v.end(); ++it)
-        if((*it)->getName() == album_name)
+        if((*it)->getName() == name)
             result.push_back(*it);
 
     //if(result.empty()) throw string("NameNotFound");  // DEFINIRE UNA CLASSE DI ECCEZIONI

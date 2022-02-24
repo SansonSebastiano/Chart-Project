@@ -21,17 +21,17 @@ public:
     Release(const string& _genre = "", const string& _album_name = "", const string& _artist_name = "", const Date& _rd = Date ());
     virtual ~Release() = default;
     /*
-     * @brief   restituisce il guadagno di un album
+     * @brief   restituisce il profitto di un prodotto musicale
      * @return  double
      */
     double getProfit() const;
     /*
-     * @brief   restituisce la data di uscita di una album
+     * @brief   restituisce la data di uscita di un prodotto musicale
      * @return  Date
      */
     Date getReleaseDate() const;
     /*
-     * @brief   restituisce il numero di anni passati dalla pubblicazione di un album
+     * @brief   restituisce il numero di anni passati dalla pubblicazione di un prodotto musicale
      * @return  unsigned int
      */
     uint getElapsedYears() const;
@@ -41,7 +41,7 @@ public:
      */
     virtual string getInfo() const override;
     /*
-     * @brief   restituisce il numero riguardante ascolti/vendite ...
+     * @brief   restituisce il numero riguardante ascolti/vendite di un prodotto musicale
      * @return  unsigned int
      */
     virtual uint getNumbers() const = 0;
@@ -50,7 +50,7 @@ public:
      * @param   double profit
      * @return  string
      */
-    std::string double_to_string(double value) const;
+    string double_to_string(double profit) const;
 };
 
 #endif // RELEASE_H

@@ -3,18 +3,19 @@
 
 #include "release.h"
 
-// definisco gli elementi per una enumerazione
+// macro:
+// - definisco gli elementi per l'enumerazione di supporti fisici
 #define FOREACH_SUPPORTS(S) \
     S(CD)                   \
     S(Vinile)               \
     S(Cassetta)             \
     S(None_Support)         \
-// generazione enumerazione
+// - generazione enumerazione
 #define GENERATE_ENUM(ENUM) ENUM,
-// generazione stringhe
+// - generazione stringhe dall'enumerazione
 #define GENERATE_STRING(STRING) #STRING,
 
-// nome del supporto fisico
+// dichiarazione enumerazione di supporti fisici
 enum Support { FOREACH_SUPPORTS(GENERATE_ENUM) };
 
 class PhisycalMedium : public Release{
@@ -37,6 +38,7 @@ private:
 public:
     // contiene i nomi (di tipo string) dei supporti fisici
     static const string support_names[];
+    // contiene il valore massimo dell'enumerazione
     static const uint MAX_PVALUES;
 
     PhisycalMedium(const string& _genre = "", const string& _album_name = "", const string& _album_artist = "", const Date& _rd = Date(), Support _support = None_Support, uint _ns = 0);

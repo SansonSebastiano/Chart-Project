@@ -78,26 +78,28 @@ private:
 
     QPushButton *createButton(const QString& title);
 
-    void capitalizeInput(string& input);
-
 public:
     explicit Viewer(QWidget *parent = nullptr);
     ~Viewer() = default;
 
     void setController(Controller *c);
-
     void setTable();
-    void addMusic(const Music *newMusic);
-    void removeMusic(uint index);
+    void addMusicToTable(const Music *newMusic);
+    void removeMusicFromTable(uint index);
+
+    MusicDialog *getMusicDialog() const;
+    ReleaseDialog *getReleaseDialog() const;
+    //----------------------------------------------------------
+    // E' CORRETTO CHE ALCUNE FUNZIONI SIANO ESEGUITE DA VIEWER ? IN REALTA' FORSE SAREBBE MEGLIO DAL CONTROLLER?
+    //----------------------------------------------------------
     // manage custom form dialog
-    void resetComponent();
-    void closeDialog();
-    // dialog to add new music
-    void showMusicDialog();
-    const Music *getMusicInput();
+    void showDialog(FormDialog *dialog, const QVector<const Music*> &notReleased = QVector<const Music*>());
+    void resetComponents(FormDialog *dialog);
+    void closeDialog(FormDialog *dialog);
+
     // dialog to release music
-    void showReleaseDialog(const QVector<const Music*> &notReleased);
-    std::vector<const Release*> getReleaseInput();
+    bool getReleaseInput(std::vector<const Release*>& result);
+    std::vector<const Release*> test();
     void enableReleaseDialogComponents();
     // display warning dialog
     void showWarning(const QString &message);

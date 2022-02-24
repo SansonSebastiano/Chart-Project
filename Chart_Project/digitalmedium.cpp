@@ -1,6 +1,6 @@
 #include "digitalmedium.h"
 
-const double DigitalMedium::price = 0.25;
+const double DigitalMedium::price = 0.15;   // costo per ascolto
 
 const string DigitalMedium::platform_names[]  = { FOREACH_PLATFORMS(GENERATE_STRING) };
 const uint DigitalMedium::MAX_SVALUES  = None_Platform + 1;
@@ -11,7 +11,7 @@ DigitalMedium::DigitalMedium(const string& _genre, const string& _album_name, co
     listeners(_listeners) { DigitalMedium::setProfit(); }
 
 void DigitalMedium::setProfit(){
-    profit = price * listeners * getElapsedYears();
+    profit = price * listeners * getElapsedYears();     // profitto = costo per ascolto * #ascolti medi annuo * anni trascorsi
 }
 
 Platform DigitalMedium::getPlatform() const{
@@ -27,5 +27,5 @@ string DigitalMedium::getInfo() const {
     return Release::getInfo() + "\n" +
            "Piattaforma: " + platform_names[platform] + "\n" +
            "Ascoltatori Annui: " + std::to_string(listeners) + "\n" +
-           "Profitto Annuo: " + double_to_string(getProfit()) + " €";
+           "Profitto: " + double_to_string(getProfit()) + " €";
 }

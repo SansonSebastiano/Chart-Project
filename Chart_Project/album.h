@@ -5,24 +5,24 @@
 
 class Album : public Music{
 private:
-    string name;
-    string artist;
+    string name;    // nome dell'album
+    string artist;  // artista dell'album
 public:
     Album(const string& _genre = "", const string& _name = "", const string& _artist = "");
     virtual ~Album() = default;
     /*
-     * @brief   restituisce il nome di una album
+     * @brief   restituisce il nome di un album
      * @return  string
      */
      string getName() const override;
     /*
-     * @brief   restituisce l'artista di una album
+     * @brief   restituisce l'artista di un album
      * @return  string
      */
      string getArtist() const override;
      /*
       * @brief   restituisce informazioni riguardante il prodotto musicale
-      * @return  void
+      * @return  string
       */
      virtual string getInfo() const override;
 };

@@ -15,22 +15,22 @@
 #include <QMessageBox>
 #include <QComboBox>
 
-#include "release.h"
+#include "phisycalmedium.h"
+#include "digitalmedium.h"
 
 class FormDialog : public QDialog {
 private:
     // dialog's buttons
-    QPushButton *btn_add, *btn_cancel;
+    QPushButton *btn_add /**btn_cancel*/;
 public:
     FormDialog(QWidget* parent = Q_NULLPTR);
     ~FormDialog() = default;
 
     void createFormLayout(const QString &label, QWidget *w, QVBoxLayout *vbl, QWidget* parent = Q_NULLPTR);
-    bool checkLine(const QCheckBox *cb, const QLineEdit *le, const QString &message) const;
 
     void setAddBtn(const QString &buttonLabel);
     QPushButton* getAddBtn() const;
-    QPushButton* getCancBtn() const;
+    //QPushButton* getCancBtn() const;
 
     virtual void resetComponents() = 0;
 };
