@@ -175,22 +175,45 @@ QVector<const Music*> Controller::initData() {
     return myVector;
 }
 
+const QVector<const Music*> Controller::getToSave() const { return toSave; }
+
 //------------------------------------------------------------
 //                          SLOTS
 //------------------------------------------------------------
-void Controller::showTable() { view->setTable(); }
+void Controller::showTable() {
+    if (catalog.isEmpty()) {
+        catalog = initData();
+        qDebug() << "Is catalog loaded? " << !catalog.isEmpty() << endl;
+
+        view->setTable(catalog);
+    }else
+        view->showWarning("Dati già caricati");
+}
+
 void Controller::closeDialog(FormDialog *dialog) { view->closeDialog(dialog); }
 
+void Controller::removeFromToSave(const Music *music) {
+    bool found (false);
+    for (auto it = toSave.begin(); it != toSave.end() && !found; ++it){
+        if(!dynamic_cast<const Release*>(*it) && ((*it)->getName() == music->getName() && (*it)->getArtist() == music->getArtist() && (*it)->getGenre() == music->getGenre())){
+            //delete (*it);
+            it = toSave.erase(it);
+            it--;
+            found = true;
+        }
+    }
+}
+
 void Controller::saveToFile() {
-    QVector<const Music*> v = view->getToSave();
-    view->clearToSave();
+    QVector<const Music*> v (toSave); //view->getToSave();
+    toSave.clear(); //view->clearToSave();
     // controllo se 'v' e' vuoto
     if (!v.isEmpty())
         for (auto it = v.begin(); it != v.end(); ++it){
             appendTo("sample_1", *it);
             // testing
             // attenzione : la musica non rilasciata verrà eliminata
-            //removeFromFile("sample_1", *it);
+            removeFromFile("sample_1", *it);
         }
     else
         view->showWarning("Nuova musica non inserita");
@@ -218,6 +241,8 @@ void Controller::addNewMusic() {
                 model->insertMusic(newMusic);
                 // aggiungo 'newMusic' alla tabella
                 view->addMusicToTable(newMusic);
+                // aggiungo 'newMusic' a toSave
+                toSave.push_back(newMusic);
 
                 view->closeDialog(dialog);
             }
@@ -266,19 +291,25 @@ void Controller::releaseMusic() {
         if (dialog->isAllEmpty())
             // e rispettiva edit line vuota
             view->showWarning("Compilare almeno un campo");
-        else {
-            // rispettiva edit line non vuota => acquisizione input
-            auto not_released = model->getNotReleased();
-            auto toRelease = dialog->getInput(not_released);
-            auto toRemove = toRelease.at(0);
-
+        else {            
             auto ask = view->showQuestion("Dati inseriti correttamente? \nSei sicuro di continuare con la pubblicazione?");
             if (ask == QMessageBox::Yes){
+                // rispettiva edit line non vuota => acquisizione input
+                auto not_released = model->getNotReleased();
+                auto toRelease = dialog->getInput(not_released);
+                auto toRemove = toRelease.at(0);
+
+                // rimuovere la versione non pubblica del prodotto musicale appena pubblicato
+                removeFromToSave(toRemove);
+
+                view->removeMusicFromTable(getIndex(toRemove));
+
                 for (auto it = toRelease.begin(); it != toRelease.end(); ++it){
                     model->insertMusic((*it));
                     view->addMusicToTable((*it));
+
+                    toSave.push_back(*it);
                 }
-                view->removeMusicFromTable(getIndex(toRemove));
                 model->removeMusic(toRemove);
 
                 view->closeDialog(dialog);

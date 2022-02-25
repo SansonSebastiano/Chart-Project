@@ -35,8 +35,8 @@ class Viewer : public QDialog{
 private:
     Controller *controller;
 
-    QVector<const Music*> catalog;
-    QVector<const Music*> toSave;
+    //QVector<const Music*> catalog;
+    //QVector<const Music*> toSave;
 
     // Components' layout
     QVBoxLayout *mainLayout;
@@ -83,7 +83,7 @@ public:
     ~Viewer() = default;
 
     void setController(Controller *c);
-    void setTable();
+    void setTable(QVector<const Music*> catalog);
     void addMusicToTable(const Music *newMusic);
     void removeMusicFromTable(uint index);
 
@@ -105,8 +105,8 @@ public:
     void showWarning(const QString &message);
     QMessageBox::StandardButton showQuestion(const QString &message);
 
-    QVector<const Music*> getToSave() const;
-    void clearToSave();
+    //QVector<const Music*> getToSave() const;
+    //void clearToSave();
 };
 
 #endif // VIEWER_H

@@ -35,10 +35,9 @@ vector<const Music*> Model::getData() const {
 
 vector<const Music*> Model::getNotReleased() const { return rl->getNotReleased(); }
 
-bool Model::isPresent(const Music *m
-                      ) const {
+bool Model::isPresent(const Music *m) const {
     auto all = rl->getAll();
-    bool found = false;
+    bool found(false);
 
     for (auto it = all.begin(); it != all.end() && !found; ++it)
         if ((*it)->getName() == m->getName() && (*it)->getArtist() == m->getArtist() && (*it)->getGenre() == m->getGenre())

@@ -149,7 +149,7 @@ uint RecordLabel::getTotNumbers(vector<const Release *> r) const {
 void RecordLabel::release(const Release *release){
     // controllo se album vuoto
     auto not_released = getNotReleased();
-    bool found = false;
+    bool found(false);
 
     for (auto it = not_released.begin(); it != not_released.end() && !found; ++it)
         if((*it)->getName() == release->getName() && isElapsed1Year(release)) {
@@ -195,7 +195,7 @@ vector<const Music*> RecordLabel::getNotReleased() const{
 
 void RecordLabel::removeNotReleased(const Music *music) {
     // controllo se music vuoto
-    bool found = false;
+    bool found(false);
 
     for(auto it = catalog.begin(); it != catalog.end() && !found; ++it)
         if(!dynamic_cast<const Release*>(*it) && ((*it)->getName() == music->getName() && (*it)->getArtist() == music->getArtist() && (*it)->getGenre() == music->getGenre())){
@@ -209,3 +209,5 @@ void RecordLabel::removeNotReleased(const Music *music) {
     // DA TESTARE
     //if(!found) throw string("NameNotFound");  // DEFINIRE UNA CLASSE DI ECCEZIONI
 }
+
+// fare una funzione isPresent() generalizzata?

@@ -10,7 +10,7 @@ void Viewer::closeEvent(QCloseEvent *event) {
     // DA SISTEMARE
     QMessageBox::StandardButton resBtn = QMessageBox::Yes;
     // controllo se toSave ha elementi
-    if(!toSave.isEmpty())
+    if(!controller->getToSave().isEmpty())
         resBtn = QMessageBox::question(this, "APP NAME", tr("Non hai salvato la nuova musica inserita!\nContinuare?\n"), QMessageBox::No | QMessageBox::Yes, QMessageBox::Yes);
 
     if (resBtn != QMessageBox::Yes)
@@ -176,26 +176,21 @@ void Viewer::setController(Controller *c) {
     connect(rd->getamzCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableRDComponents()));
 }
 
-void Viewer::setTable() {
+void Viewer::setTable(QVector<const Music*> catalog) {
     table = new QTableView;
 
-    if (catalog.isEmpty()){
-        catalog = controller->initData();       // NON MI CONVINCE MOLTO
-        qDebug() << "Is catalog loaded? " << !catalog.isEmpty() << endl;
-        myTableModel = new TableModel(catalog);
+    myTableModel = new TableModel(catalog);
 
-        table->setModel(myTableModel);
-        //table->setWindowTitle();
+    table->setModel(myTableModel);
+    //table->setWindowTitle();
 
-        table_layout->addWidget(table);
-        frame->setLayout(table_layout);
-    }else
-        showWarning("Dati già caricati");
+    table_layout->addWidget(table);
+    frame->setLayout(table_layout);
 }
 
 void Viewer::addMusicToTable(const Music* newMusic) {
     // FORSE SAREBBE MEGLIO FARLO FARE AL CONTROLLER??
-    toSave.push_back(newMusic);
+    //toSave.push_back(newMusic);
 
     myTableModel->addEntry(newMusic);
     qDebug() << QString::fromStdString(newMusic->getInfo()) << " \n ADDED TO TABLE" << endl;
@@ -225,6 +220,6 @@ void Viewer::enableReleaseDialogComponents() { rd->enableComponents(); }
 void Viewer::showWarning(const QString &message) { QMessageBox::warning(this, tr("Campi vuoti"), message, QMessageBox::Ok); }
 QMessageBox::StandardButton Viewer::showQuestion(const QString &message) { return QMessageBox::question(this, " ", message, QMessageBox::No | QMessageBox::Yes, QMessageBox::Yes); }
 
-QVector<const Music*> Viewer::getToSave() const{ return toSave; }
+//QVector<const Music*> Viewer::getToSave() const{ return toSave; }
 
-void Viewer::clearToSave() { toSave.clear(); }
+//void Viewer::clearToSave() { toSave.clear(); }

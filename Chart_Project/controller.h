@@ -21,6 +21,9 @@ private:
 
     xml_IO xmlio;
 
+    QVector<const Music*> catalog;  // preleva tutti i dati da file e caricarli nella tabella
+    QVector<const Music*> toSave;   // memorizza i dati da salvare su file
+
     static const QDir project_path;
     static const QString dataSetDir;
 
@@ -51,10 +54,13 @@ public:
     void removeFromFile(const QString& label, const Music* music);
 
     QVector<const Music*> initData();
+    const QVector<const Music*> getToSave() const;
 
 public slots:
     void showTable();
     void closeDialog(FormDialog *dialog);
+
+    void removeFromToSave(const Music* music);
     void saveToFile();
 
     void showMusicDialog();
