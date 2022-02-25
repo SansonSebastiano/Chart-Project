@@ -40,7 +40,7 @@ bool Model::isPresent(const Music *m) const {
     bool found(false);
 
     for (auto it = all.begin(); it != all.end() && !found; ++it)
-        if ((*it)->getName() == m->getName() && (*it)->getArtist() == m->getArtist() && (*it)->getGenre() == m->getGenre())
+        if (rl->areSame((*it), m))
             found = true;
 
     return found;

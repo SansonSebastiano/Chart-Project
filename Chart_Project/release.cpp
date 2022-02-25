@@ -22,3 +22,10 @@ std::string Release::double_to_string(double value) const{
 
     return ss.str();
 }
+
+/*
+bool Release::operator==(const Music &other) const {
+    return  Album::operator==(other) &&
+            release_date == dynamic_cast<const Release&>(other).getReleaseDate();
+}
+*/

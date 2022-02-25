@@ -198,7 +198,7 @@ void RecordLabel::removeNotReleased(const Music *music) {
     bool found(false);
 
     for(auto it = catalog.begin(); it != catalog.end() && !found; ++it)
-        if(!dynamic_cast<const Release*>(*it) && ((*it)->getName() == music->getName() && (*it)->getArtist() == music->getArtist() && (*it)->getGenre() == music->getGenre())){
+        if(!dynamic_cast<const Release*>(*it) && areSame((*it), music)){
             cout << (*it)->getInfo();
             delete (*it);
             it = catalog.erase(it);
@@ -210,4 +210,7 @@ void RecordLabel::removeNotReleased(const Music *music) {
     //if(!found) throw string("NameNotFound");  // DEFINIRE UNA CLASSE DI ECCEZIONI
 }
 
-// fare una funzione isPresent() generalizzata?
+bool RecordLabel::areSame(const Music *m1, const Music *m2) const {
+    return (m1->getName() == m2->getName() && m1->getArtist() == m2->getArtist() && m1->getGenre() == m2->getGenre());
+
+}

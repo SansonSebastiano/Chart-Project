@@ -143,6 +143,14 @@ public:
      * @return  void
      */
     void removeNotReleased(const Music* music);
+    /*
+     * @brief   cerca se un prodotto musicale, in input, e' presente nel vettore ,passato in input
+     * @param   const Music*
+     * @param   const vector<const Music*>
+     * @ ECCEZIONI  ??
+     * @return  bool
+     */
+    bool areSame(const Music*, const Music*) const;
 
     // POSSIBILITA DI TOGLIERE UN ALBUM DA 'released' ?
 };

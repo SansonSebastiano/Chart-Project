@@ -51,6 +51,12 @@ public:
      * @return  string
      */
     string double_to_string(double profit) const;
+    /*
+     * IN TEORIA NON SERVE
+     * @brief   ridefinizione operatore di uguaglianza
+     * @return  bool
+     */
+    //virtual bool operator == (const Music& other) const override;
 };
 
 #endif // RELEASE_H

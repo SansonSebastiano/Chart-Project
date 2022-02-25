@@ -219,7 +219,3 @@ void Viewer::enableReleaseDialogComponents() { rd->enableComponents(); }
 
 void Viewer::showWarning(const QString &message) { QMessageBox::warning(this, tr("Campi vuoti"), message, QMessageBox::Ok); }
 QMessageBox::StandardButton Viewer::showQuestion(const QString &message) { return QMessageBox::question(this, " ", message, QMessageBox::No | QMessageBox::Yes, QMessageBox::Yes); }
-
-//QVector<const Music*> Viewer::getToSave() const{ return toSave; }
-
-//void Viewer::clearToSave() { toSave.clear(); }

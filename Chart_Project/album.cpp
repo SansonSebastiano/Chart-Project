@@ -11,3 +11,4 @@ string Album::getInfo() const {
            "Artista: " + artist + " | " +
            Music::getInfo();
 }
+
