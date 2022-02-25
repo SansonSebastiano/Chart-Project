@@ -196,7 +196,6 @@ void Controller::removeFromToSave(const Music *music) {
     bool found (false);
     for (auto it = toSave.begin(); it != toSave.end() && !found; ++it){
         if(!dynamic_cast<const Release*>(*it) && ((*it)->getName() == music->getName() && (*it)->getArtist() == music->getArtist() && (*it)->getGenre() == music->getGenre())){
-            //delete (*it);
             it = toSave.erase(it);
             it--;
             found = true;
@@ -301,7 +300,6 @@ void Controller::releaseMusic() {
 
                 // rimuovere la versione non pubblica del prodotto musicale appena pubblicato
                 removeFromToSave(toRemove);
-
                 view->removeMusicFromTable(getIndex(toRemove));
 
                 for (auto it = toRelease.begin(); it != toRelease.end(); ++it){
@@ -316,50 +314,4 @@ void Controller::releaseMusic() {
             }
         }
     }
-
-    /*
-     *              NEW
-        auto toRelease = dialog->getInput(not_released);
-        auto toRemove = toRelease.at(0);
-
-        if (!toRelease.empty()){
-           auto ask = view->showQuestion("Dati inseriti correttamente? \nSei sicuro di continuare con la pubblicazione?");
-           if (ask == QMessageBox::Yes){
-               for (auto it = toRelease.begin(); it != toRelease.end(); ++it){
-                   model->insertMusic((*it));
-                   view->addMusicToTable((*it));
-               }
-               view->removeMusicFromTable(getIndex(toRemove));
-               model->removeMusic(toRemove);
-
-               view->closeDialog(dialog);
-           }
-        }else
-            view->showWarning("Non hai inserito correttamente i dati");
-    */
-
-    //---------------------------------------------------
-
-    /*
-     *              OLD
-     *
-    std::vector<const Release*> toRelease = view->test();
-    //bool isEmpty = view->getReleaseInput(toRelease);
-    auto toRemove = toRelease.at(0);
-
-    if (!toRelease.empty()){
-       auto ask = view->showQuestion("Dati inseriti correttamente? \nSei sicuro di continuare con la pubblicazione?");
-       if (ask == QMessageBox::Yes){
-           for (auto it = toRelease.begin(); it != toRelease.end(); ++it){
-               model->insertMusic((*it));
-               view->addMusicToTable((*it));
-
-               view->closeDialog(dialog);
-           }
-           view->removeMusicFromTable(getIndex(toRemove));
-           model->removeMusic(toRemove);
-       }
-    }else
-       view->showWarning("Campi vuoti");
-       */
 }
