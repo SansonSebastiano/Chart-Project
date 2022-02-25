@@ -31,7 +31,7 @@ public:
     const QStringList getMusicToPublic() const;
     void setMusicToPublic(const QVector<const Music*> &notReleased);
 
-    void createReleaseMusicLayout(/*const QVector<const Music*> &notReleased,*/ QWidget* parent = Q_NULLPTR);
+    void createReleaseMusicLayout(QWidget* parent = Q_NULLPTR);
 
     // forse dovrei ritornare direttamente quello che mi serve e non i componenti
 
@@ -43,10 +43,6 @@ public:
     const QCheckBox* getvnlCKB() const;
     const QCheckBox* getcstCKB() const;
 
-    const QLineEdit *getCdEdit() const;
-    const QLineEdit *getVnlEdit() const;
-    const QLineEdit *getCstEdit() const;
-
     const QCheckBox* getsptfCKB() const;
     const QCheckBox* getapplmCKB() const;
     const QCheckBox* gettdlCKB() const;
@@ -54,21 +50,17 @@ public:
     const QCheckBox* getytmCKB() const;
     const QCheckBox* getamzCKB() const;
 
-    const QLineEdit *getSptfEdit() const;
-    const QLineEdit *getApplmEdit() const;
-    const QLineEdit *getTdlEdit() const;
-    const QLineEdit *getDzrEdit() const;
-    const QLineEdit *getYtmEdit() const;
-    const QLineEdit *getAmzEdit() const;
-
     void enableComponents();
     bool checkLine(const QCheckBox *cb, const QLineEdit *le, const QString &message) const;
+    bool checkLineEdit(const QLineEdit *le) const;
+
     //bool checkPMInput() const;
     //bool checkDMInput() const;
 
     void resetComponents() override;
 
-    bool isAllUnchecked();
+    bool isAllUnchecked() const;
+    bool isAllEmpty() const;
 
     std::vector<const Release*> getInput(const std::vector<const Music*> &not_released);
 };

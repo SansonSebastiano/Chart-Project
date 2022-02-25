@@ -14,6 +14,22 @@ PhisycalMedium::PhisycalMedium(const string& _genre, const string& _album_name, 
     num_sales(_ns) { PhisycalMedium::setProfit(); }
 
 void PhisycalMedium::setProfit() {
+    /*
+     * // da fare anche su DM
+    switch (support) {
+    case CD:
+        profit = cd_price * num_sales * getElapsedYears();
+        break;
+    case Vinile:
+        profit = vnl_price * num_sales * getElapsedYears();
+        break;
+    case Cassetta:
+        profit = cst_price * num_sales * getElapsedYears();
+        break;
+    default:
+        break;
+    }*/
+
     if (support == CD)
         profit = cd_price * num_sales * getElapsedYears();      // profitto = costo CD * #vendite medie annuo * anni trascorsi
     else if (support == Vinile)

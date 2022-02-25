@@ -256,20 +256,38 @@ int Controller::getIndex(const Music* music) {
 }
 
 void Controller::releaseMusic() {
-    auto not_released = model->getNotReleased();
     auto dialog = view->getReleaseDialog();
 
-    if(dialog->isAllUnchecked())
+    if (dialog->isAllUnchecked())
         // nessuna checkbox selezionata
-        view->showWarning("Campi vuoti");
-    else{
+        view->showWarning("Scegliere almeno una Piattaforma/Supporto!");
+    else {
         // almeno una checkbox selezionata
-        // controllare che il rispettivo campo QEditLine non sia vuoto
-        // acquisire input
+        if (dialog->isAllEmpty())
+            // e rispettiva edit line vuota
+            view->showWarning("Compilare almeno un campo");
+        else {
+            // rispettiva edit line non vuota => acquisizione input
+            auto not_released = model->getNotReleased();
+            auto toRelease = dialog->getInput(not_released);
+            auto toRemove = toRelease.at(0);
 
-        //testing
-        //
+            auto ask = view->showQuestion("Dati inseriti correttamente? \nSei sicuro di continuare con la pubblicazione?");
+            if (ask == QMessageBox::Yes){
+                for (auto it = toRelease.begin(); it != toRelease.end(); ++it){
+                    model->insertMusic((*it));
+                    view->addMusicToTable((*it));
+                }
+                view->removeMusicFromTable(getIndex(toRemove));
+                model->removeMusic(toRemove);
 
+                view->closeDialog(dialog);
+            }
+        }
+    }
+
+    /*
+     *              NEW
         auto toRelease = dialog->getInput(not_released);
         auto toRemove = toRelease.at(0);
 
@@ -287,9 +305,13 @@ void Controller::releaseMusic() {
            }
         }else
             view->showWarning("Non hai inserito correttamente i dati");
-    }
+    */
+
+    //---------------------------------------------------
 
     /*
+     *              OLD
+     *
     std::vector<const Release*> toRelease = view->test();
     //bool isEmpty = view->getReleaseInput(toRelease);
     auto toRemove = toRelease.at(0);

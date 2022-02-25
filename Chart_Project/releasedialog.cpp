@@ -69,24 +69,12 @@ const QCheckBox *ReleaseDialog::getcdCKB() const { return cdCKB; }
 const QCheckBox *ReleaseDialog::getvnlCKB() const { return vnlCKB; }
 const QCheckBox *ReleaseDialog::getcstCKB() const { return cstCKB; }
 
-const QLineEdit *ReleaseDialog::getCdEdit() const { return  cdEdit; }
-const QLineEdit *ReleaseDialog::getVnlEdit() const { return vnlEdit; }
-const QLineEdit *ReleaseDialog::getCstEdit() const { return cstEdit; }
-
 const QCheckBox *ReleaseDialog::getsptfCKB() const { return sptfCKB; }
 const QCheckBox *ReleaseDialog::getapplmCKB() const { return applmCKB; }
 const QCheckBox *ReleaseDialog::gettdlCKB() const { return tdlCKB; }
 const QCheckBox *ReleaseDialog::getdzrCKB() const { return dzrCKB; }
 const QCheckBox *ReleaseDialog::getytmCKB() const { return ytmCKB; }
 const QCheckBox *ReleaseDialog::getamzCKB() const { return amzCKB; }
-
-const QLineEdit *ReleaseDialog::getSptfEdit() const { return sptfEdit; }
-const QLineEdit *ReleaseDialog::getApplmEdit() const { return applmEdit; }
-const QLineEdit *ReleaseDialog::getTdlEdit() const { return tdlEdit; }
-const QLineEdit *ReleaseDialog::getDzrEdit() const { return dzrEdit; }
-const QLineEdit *ReleaseDialog::getYtmEdit() const { return ytmEdit; }
-const QLineEdit *ReleaseDialog::getAmzEdit() const { return amzEdit; }
-
 
 void ReleaseDialog::createLine(QWidget *ckb, QWidget *lineEdit, QFormLayout *fl, QWidget* parent) {
     QHBoxLayout *line = new QHBoxLayout(parent);
@@ -128,7 +116,7 @@ void ReleaseDialog::createPMBox(QVBoxLayout *vbl, QWidget* parent) {
     // cassette line
     createMediumLine(cstCKB, cstEdit, boxLayout, parent);
 
-    QGroupBox *groupBox = new QGroupBox("Info Supporti Fisici", parent);
+    QGroupBox *groupBox = new QGroupBox("Supporti Fisici", parent);
     groupBox->setLayout(boxLayout);
     //groupBox->setDisabled(true);
 
@@ -150,7 +138,7 @@ void ReleaseDialog::createDMBox(QVBoxLayout *vbl, QWidget* parent) {
     // amazon music line
     createMediumLine(amzCKB, amzEdit, boxLayout, parent);
 
-    QGroupBox *groupBox = new QGroupBox("Info Piattaforme Digitali", parent);
+    QGroupBox *groupBox = new QGroupBox("Piattaforme Digitali", parent);
     groupBox->setLayout(boxLayout);
     //groupBox->setDisabled(true);
 
@@ -168,12 +156,9 @@ void ReleaseDialog::setMusicToPublic(const QVector<const Music *> &notReleased) 
     toPublicCB->addItems(getMusicToPublic());
 }
 
-void ReleaseDialog::createReleaseMusicLayout(/*const QVector<const Music*> &notReleased,*/ QWidget* parent) {
+void ReleaseDialog::createReleaseMusicLayout(QWidget* parent) {
     QVBoxLayout *dialogLayout = new QVBoxLayout(parent);
 
-    // add combobox with not releases music
-    //setMusicToPublic(notReleased);
-    //toPublicCB->addItems(getMusicToPublic());
     dialogLayout->addWidget(toPublicCB);
     // add Release Box
     createReleaseBox(dialogLayout, parent);
@@ -251,6 +236,11 @@ bool ReleaseDialog::checkLine(const QCheckBox *cb, const QLineEdit *le, const QS
     }
     return false;
 }
+
+bool ReleaseDialog::checkLineEdit(const QLineEdit *le) const {
+    return le->isEnabled() && !le->text().isEmpty();
+}
+
 /*
 bool ReleaseDialog::checkPMInput() const {
     return  checkLine(cdCKB, cdEdit, "vendite") ||
@@ -293,7 +283,7 @@ void ReleaseDialog::resetComponents() {
     amzEdit->clear();
 }
 
-bool  ReleaseDialog::isAllUnchecked() {
+bool  ReleaseDialog::isAllUnchecked() const{
     return  !cdCKB->isChecked() &&
             !vnlCKB->isChecked() &&
             !cstCKB->isChecked() &&
@@ -304,6 +294,18 @@ bool  ReleaseDialog::isAllUnchecked() {
             !amzCKB->isChecked();
 }
 
+bool ReleaseDialog::isAllEmpty() const {
+    return  cdEdit->text().isEmpty() &&
+            vnlEdit->text().isEmpty() &&
+            cstEdit->text().isEmpty() &&
+            sptfEdit->text().isEmpty() &&
+            applmEdit->text().isEmpty() &&
+            tdlEdit->text().isEmpty() &&
+            dzrEdit->text().isEmpty() &&
+            amzEdit->text().isEmpty();
+}
+
+// PRE : almeno una edit line non vuota
 std::vector<const Release*> ReleaseDialog::getInput(const std::vector<const Music*> &not_released) {
     std::vector<const Release*> result;
 
@@ -311,61 +313,59 @@ std::vector<const Release*> ReleaseDialog::getInput(const std::vector<const Musi
     cout << "SELECTED ITEM : " << selectedMusic->getInfo() << endl;
 
     // controllo validita' della data di pubblicazione delegata a RecordLabel
+    // ricorda infatti di implementare le eccezioni e catturarle
     uint day(getReleaseDate().day());
     uint month(getReleaseDate().month());
     uint year(getReleaseDate().year());
 
     uint numbers(0);
 
-
-    // si deve controllare se il rispettivo campo QEditLine e' vuoto
-    if (checkLine(getcdCKB(), getCdEdit(), "'Vendite CD'")){
-        // campo QEditLine non vuoto
-        // acquisisco input
+    if (checkLineEdit(cdEdit)){
         cout << "cd line" << endl;
-        numbers = getCdEdit()->text().toUInt();
+        numbers = cdEdit->text().toUInt();
         result.push_back(new PhisycalMedium(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), CD, numbers));
     }
-    if (checkLine(getvnlCKB(), getVnlEdit(), "'Vendite Vinile'")) {
+    if (checkLineEdit(vnlEdit)) {
         cout << "vinile line" << endl;
-        numbers = getVnlEdit()->text().toUInt();
+        numbers = vnlEdit->text().toUInt();
         result.push_back(new PhisycalMedium(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), Vinile, numbers));
     }
-    if (checkLine(getcstCKB(), getCstEdit(), "'Vendite Cassetta'")) {
+    if (checkLineEdit(cstEdit)) {
         cout << "cassetta line" << endl;
-        numbers = getCstEdit()->text().toUInt();
+        numbers = cstEdit->text().toUInt();
         result.push_back(new PhisycalMedium(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), Cassetta, numbers));
     }
     // DM
-    if(checkLine(getsptfCKB(), getSptfEdit(), "'Ascolti Spotify'")){
+    if(checkLineEdit(sptfEdit)){
         cout << "spotify line" << endl;
-        numbers = getSptfEdit()->text().toUInt();
+        numbers = sptfEdit->text().toUInt();
         result.push_back(new DigitalMedium(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), Spotify, numbers));
     }
-    if(checkLine(getapplmCKB(), getApplmEdit(), "'Ascolti Apple Music'")){
+    if(checkLineEdit(applmEdit)){
         cout << "apple music line" << endl;
-        numbers = getApplmEdit()->text().toUInt();
+        numbers = applmEdit->text().toUInt();
         result.push_back(new DigitalMedium(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), AppleMusic, numbers));
     }
-    if(checkLine(gettdlCKB(), getTdlEdit(), "'Ascolti Tidal'")){
+    if(checkLineEdit(tdlEdit)){
         cout << "tidal line" << endl;
-        numbers = getTdlEdit()->text().toUInt();
+        numbers = tdlEdit->text().toUInt();
         result.push_back(new DigitalMedium(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), Tidal, numbers));
     }
-    if(checkLine(getdzrCKB(), getDzrEdit(), "'Ascolti Deezer'")){
+    if(checkLineEdit(dzrEdit)){
         cout << "deezer line" << endl;
-        numbers = getDzrEdit()->text().toUInt();
+        numbers = dzrEdit->text().toUInt();
         result.push_back(new DigitalMedium(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), Deezer, numbers));
     }
-    if(checkLine(getytmCKB(), getYtmEdit(), "'Ascolti YouTube Music'")){
+    if(checkLineEdit(ytmEdit)){
         cout << "youtube music line" << endl;
-        numbers = getYtmEdit()->text().toUInt();
+        numbers = ytmEdit->text().toUInt();
         result.push_back(new DigitalMedium(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), YoutubeMusic, numbers));
     }
-    if(checkLine(getamzCKB(), getAmzEdit(), "'Ascolti Amazon Music'")){
+    if(checkLineEdit(amzEdit)){
         cout << "amazon music line" << endl;
-        numbers = getAmzEdit()->text().toUInt();
+        numbers = amzEdit->text().toUInt();
         result.push_back(new DigitalMedium(selectedMusic->getGenre(), selectedMusic->getName(), selectedMusic->getArtist(), Date(day, month, year), AmazonMusic, numbers));
     }
     return result;
 }
+// POST : ritorno result non vuoto
