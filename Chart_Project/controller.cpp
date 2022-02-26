@@ -195,7 +195,7 @@ void Controller::closeDialog(FormDialog *dialog) { view->closeDialog(dialog); }
 void Controller::removeFromToSave(const Music *music) {
     bool found (false);
     for (auto it = toSave.begin(); it != toSave.end() && !found; ++it){
-        if(!dynamic_cast<const Release*>(*it) && ((*it)->getName() == music->getName() && (*it)->getArtist() == music->getArtist() && (*it)->getGenre() == music->getGenre())){
+        if(!dynamic_cast<const Release*>(*it) && model->areEquals((*it), music)/*((*it)->getName() == music->getName() && (*it)->getArtist() == music->getArtist() && (*it)->getGenre() == music->getGenre())*/){
             it = toSave.erase(it);
             it--;
             found = true;
@@ -304,7 +304,9 @@ void Controller::releaseMusic() {
 
                 for (auto it = toRelease.begin(); it != toRelease.end(); ++it){
                     model->insertMusic((*it));
-                    view->addMusicToTable((*it));
+                    // se trascorso almeno un anno => forse logicamente/concettualmente debole
+                    if (model->isElapsed1Year(*it))
+                        view->addMusicToTable((*it));
 
                     toSave.push_back(*it);
                 }

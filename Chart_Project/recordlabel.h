@@ -108,7 +108,7 @@ public:
      */
     uint getTotNumbers(vector<const Release*> r) const;
     /*
-     * @brief   restituisce tutta la musica dell'etichetta discografica
+     * @brief   restituisce tutta la musica dell'etichetta discografica, quella pubblicata, ritorna solo se e' trascorso almeno un anno
      * @return  vector<const Music*>
      */
     vector<const Music*> getAll();

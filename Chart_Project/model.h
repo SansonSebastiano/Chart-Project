@@ -27,6 +27,10 @@ public:
     vector<const Music*> getNotReleased() const;
 
     bool isPresent(const Music*) const;
+
+    bool areEquals(const Music* m1, const Music *m2) const;
+
+    bool isElapsed1Year(const Release *release) const;
 };
 
 #endif // MODEL_H

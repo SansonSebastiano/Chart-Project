@@ -45,3 +45,11 @@ bool Model::isPresent(const Music *m) const {
 
     return found;
 }
+
+bool Model::areEquals(const Music *m1, const Music *m2) const {
+    return rl->areSame(m1, m2);
+}
+
+bool Model::isElapsed1Year(const Release *release) const {
+    return rl->isElapsed1Year(release);
+}

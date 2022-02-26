@@ -16,4 +16,7 @@
  <PM genre="Rock" num_sales="1000" name="Meteora" artist="Linkin Park" support="2">
   <release month="9" year="2000" day="12"/>
  </PM>
+  <PM genre="Raggae" num_sales="1000" name="Mary Jane" artist="Non So" support="2">
+  <release month="1" year="2022" day="12"/>
+ </PM>
 </catalog>

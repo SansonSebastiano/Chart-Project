@@ -152,7 +152,7 @@ void RecordLabel::release(const Release *release){
     bool found(false);
 
     for (auto it = not_released.begin(); it != not_released.end() && !found; ++it)
-        if((*it)->getName() == release->getName() && isElapsed1Year(release)) {
+        if(/*(*it)->getName() == release->getName()*/areSame((*it), release) /*&& isElapsed1Year(release)*/) {
             insert(release);
             found = true;
      }
@@ -170,7 +170,16 @@ bool RecordLabel::isElapsed1Year(const Release *release) const{
 }
 
 vector<const Music*> RecordLabel::getAll() {
-    return catalog;
+    vector<const Music*> result;
+    const Release* r;
+
+    for (auto it = catalog.begin(); it != catalog.end(); ++it) {
+        r = dynamic_cast<const Release*>(*it);
+        if (!r || (r && isElapsed1Year(r)))
+            result.push_back(*it);
+    }
+
+    return result;
 }
 
 vector<const Music*> RecordLabel::getReleased() const{
