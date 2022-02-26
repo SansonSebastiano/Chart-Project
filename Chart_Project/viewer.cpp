@@ -34,20 +34,29 @@ void Viewer::addMenus(QVBoxLayout *mainLayout) {
     edit = new QMenu ("Edit", menuBar);
     chart = new QMenu ("Grafici", menuBar);
 
+    AC_upload = new QAction("Carica dati", file);
+    AC_save = new QAction("Salva dati", file);
+    //AC_close = new QAction("Chiudi", file);
+    AC_add = new QAction("Aggiungi nuova musica", edit);
+    AC_release = new QAction("Pubblica musica", edit);
+    AC_lineChart = new QAction("Line Chart", chart);
+    AC_pieChart = new QAction("Pie Chart", chart);
+    AC_barChart = new QAction("Bar Chart", chart);
+
     menuBar->addMenu(file);
     menuBar->addMenu(edit);
     menuBar->addMenu(chart);
 
-    file->addAction(new QAction("Carica dati", file));  // DA IMPLEMENTARE
-    file->addAction(new QAction("Salva dati", file));   // DA IMPLEMENTARE
-    file->addAction(new QAction("Chiudi", file));       // DA IMPLEMENTARE
+    file->addAction(AC_upload);
+    file->addAction(AC_save);
+    //file->addAction(AC_close);       // DA IMPLEMENTARE
 
-    edit->addAction(new QAction("Aggiungi nuova musica", edit));    // DA IMPLEMENTARE
-    edit->addAction(new QAction("Filtra", edit));
+    edit->addAction(AC_add);
+    edit->addAction(AC_release);
 
-    chart->addAction(new QAction("Line Chart", chart));
-    chart->addAction(new QAction("Pie Chart", chart));
-    chart->addAction(new QAction("Histogram Chart", chart));
+    chart->addAction(AC_lineChart);         // DA IMPLEMENTARE
+    chart->addAction(AC_pieChart);          // DA IMPLEMENTARE
+    chart->addAction(AC_barChart);    // DA IMPLEMENTARE
 
     mainLayout->addWidget(menuBar);
 }
@@ -92,11 +101,11 @@ void Viewer::addControll_2(QHBoxLayout *screenLayout){
 
     btn_addItem = createButton("Aggiungi musica");
     btn_release = createButton("Pubblica");
-    btn_filter = createButton("Filtra");
+    //btn_filter = createButton("Filtra");
 
     buttonLayout_2->addWidget(btn_addItem);
     buttonLayout_2->addWidget(btn_release);
-    buttonLayout_2->addWidget(btn_filter);
+    //buttonLayout_2->addWidget(btn_filter);
 
     buttonLayout_2->setSpacing(5);
     buttonLayout_2->setContentsMargins(0, 25, 10, 300);
@@ -151,29 +160,33 @@ void Viewer::setController(Controller *c) {
     controller = c;
 
     // IMPLEMENTAZIONE SEGNALI E SLOT
-    connect(btn_saveData, SIGNAL(clicked()), controller, SLOT(saveToFile()));
-
-    connect(btn_uploadData, SIGNAL(clicked()), controller, SLOT(showTable()));
-        // to show/close Music custom form dialog
+        // close mainwindow
+    //connect(AC_close, &QAction::triggered, QApplication::instance(), &QApplication::quit);
+        // save data
+    connect(btn_saveData, &QPushButton::clicked, controller, &Controller::saveToFile);
+    connect(AC_save, &QAction::triggered, controller, &Controller::saveToFile);
+        // upload data
+    connect(btn_uploadData, &QPushButton::clicked, controller, &Controller::showTable);
+    connect(AC_upload, &QAction::triggered, controller, &Controller::showTable);
+        // to handle Music custom form dialog
     connect(btn_addItem, &QPushButton::clicked, controller, &Controller::showMusicDialog);
-    //connect(btn_addItem, SIGNAL(clicked()), controller, SLOT(showMusicDialog()));
-    //connect(md->getCancBtn(), SIGNAL(clicked()), controller, SLOT(closeDialog(FormDialog*)));
-    connect(md->getAddBtn(), SIGNAL(clicked()), controller, SLOT(addNewMusic()));
-        // to show/close Release custo form dialog and checkbox's signal
-    connect(btn_release, SIGNAL(clicked()), controller, SLOT(showReleaseDialog()));
-    //connect(rd->getCancBtn(), SIGNAL(clicked()), controller, SLOT(closeDialog(FormDialog*)));
-    connect(rd->getAddBtn(), SIGNAL(clicked()), controller, SLOT(releaseMusic()));
+    connect(AC_add, &QAction::triggered, controller, &Controller::showMusicDialog);
+    connect(md->getAddBtn(), &QPushButton::clicked, controller, &Controller::addNewMusic);
+        // to handle Release custom form dialog and checkbox's signal
+    connect(btn_release, &QPushButton::clicked, controller, &Controller::showReleaseDialog);
+    connect(AC_release, &QAction::triggered, controller, &Controller::showReleaseDialog);
+    connect(rd->getAddBtn(), &QPushButton::clicked, controller, &Controller::releaseMusic);
 
-    connect(rd->getcdCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableRDComponents()));
-    connect(rd->getvnlCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableRDComponents()));
-    connect(rd->getcstCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableRDComponents()));
+    connect(rd->getcdCKB(), &QCheckBox::stateChanged, controller, &Controller::enableRDComponents);
+    connect(rd->getvnlCKB(), &QCheckBox::stateChanged, controller, &Controller::enableRDComponents);
+    connect(rd->getcstCKB(), &QCheckBox::stateChanged, controller, &Controller::enableRDComponents);
 
-    connect(rd->getsptfCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableRDComponents()));
-    connect(rd->getapplmCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableRDComponents()));
-    connect(rd->gettdlCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableRDComponents()));
-    connect(rd->getdzrCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableRDComponents()));
-    connect(rd->getytmCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableRDComponents()));
-    connect(rd->getamzCKB(), SIGNAL(stateChanged(int)), controller, SLOT(enableRDComponents()));
+    connect(rd->getsptfCKB(), &QCheckBox::stateChanged, controller, &Controller::enableRDComponents);
+    connect(rd->getapplmCKB(), &QCheckBox::stateChanged, controller, &Controller::enableRDComponents);
+    connect(rd->gettdlCKB(), &QCheckBox::stateChanged, controller, &Controller::enableRDComponents);
+    connect(rd->getdzrCKB(), &QCheckBox::stateChanged, controller, &Controller::enableRDComponents);
+    connect(rd->getytmCKB(), &QCheckBox::stateChanged, controller, &Controller::enableRDComponents);
+    connect(rd->getamzCKB(), &QCheckBox::stateChanged, controller, &Controller::enableRDComponents);
 }
 
 void Viewer::setTable(QVector<const Music*> catalog) {
@@ -199,6 +212,7 @@ void Viewer::addMusicToTable(const Music* newMusic) {
 void Viewer::removeMusicFromTable(uint index) { myTableModel->removeEntry(index); }
 
 MusicDialog *Viewer::getMusicDialog() const { return md; }
+
 ReleaseDialog *Viewer::getReleaseDialog() const { return rd; }
 
 void Viewer::showDialog(FormDialog *dialog, const QVector<const Music*> &notReleased) {
@@ -210,6 +224,7 @@ void Viewer::showDialog(FormDialog *dialog, const QVector<const Music*> &notRele
 }
 
 void Viewer::resetComponents(FormDialog *dialog) { dialog->resetComponents(); }
+
 void Viewer::closeDialog(FormDialog *dialog) {
     resetComponents(dialog);
     dialog->close();
@@ -218,4 +233,5 @@ void Viewer::closeDialog(FormDialog *dialog) {
 void Viewer::enableReleaseDialogComponents() { rd->enableComponents(); }
 
 void Viewer::showWarning(const QString &message) { QMessageBox::warning(this, tr("Campi vuoti"), message, QMessageBox::Ok); }
+
 QMessageBox::StandardButton Viewer::showQuestion(const QString &message) { return QMessageBox::question(this, " ", message, QMessageBox::No | QMessageBox::Yes, QMessageBox::Yes); }

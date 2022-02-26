@@ -1,6 +1,7 @@
 #ifndef VIEWER_H
 #define VIEWER_H
 
+#include <QApplication>
 #include <QWidget>
 #include <QMenuBar>
 #include <QMenu>
@@ -37,27 +38,21 @@ private:
 
     // Components' layout
     QVBoxLayout *mainLayout;
-    QHBoxLayout *screenLayout;
-    QHBoxLayout *table_layout;
+    QHBoxLayout *screenLayout, *table_layout;
     QFrame *frame;
     // Menu
-    QMenu *file;
-    QMenu *edit;
-    QMenu *chart;
-    // Buttons controlls_1
-    QPushButton *btn_saveData;
-    QPushButton *btn_uploadData;
+    QMenu *file, *edit, *chart;
+    // menu's actions
+    QAction *AC_upload, *AC_save, /**AC_close,*/ *AC_add, *AC_release, *AC_lineChart, *AC_pieChart, *AC_barChart;
 
-    QPushButton *btn_lineChart;
-    QPushButton *btn_pieChart;
-    QPushButton *btn_histogram;
+    // Buttons controlls_1
+    QPushButton *btn_saveData, *btn_uploadData;
+
+    QPushButton *btn_lineChart, *btn_pieChart, *btn_histogram;
     // Buttons controlls_2
-    QPushButton *btn_addItem;
-    QPushButton *btn_release;
-    QPushButton *btn_filter;
+    QPushButton *btn_addItem, *btn_release,*btn_filter;
     // Buttons dialog
-    QPushButton *btn_add;
-    QPushButton *btn_cancel;
+    QPushButton *btn_add, *btn_cancel;
 
     QTableView *table;
     TableModel *myTableModel;

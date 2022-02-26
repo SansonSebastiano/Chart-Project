@@ -14,7 +14,6 @@ CONFIG += c++11
 
 SOURCES += \
     album.cpp \
-    chart.cpp \
     controller.cpp \
     date.cpp \
     digitalmedium.cpp \
@@ -34,7 +33,6 @@ SOURCES += \
 
 HEADERS += \
     album.h \
-    chart.h \
     controller.h \
     date.h \
     digitalmedium.h \
