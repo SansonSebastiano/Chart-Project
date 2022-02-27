@@ -30,14 +30,14 @@ private:
    // costo per ascolto in €
    static const double price;
    /*
-    * @brief   imposta il guadagno di una album: prodotto tra #ascolti e il prezzo per ascolto
+    * @brief   imposta il guadagno di un prodotto musicale: prodotto tra #ascolti e il prezzo per ascolto
     * @return  void
     */
     void setProfit() override;
 public:
     // contiene i nomi delle piattaforme di streaming
     static const string platform_names[];
-    // contiene il valore massimo dell'enumerazione - E' NECESSARIO ????
+    // contiene il valore massimo dell'enumerazione
     static const uint MAX_SVALUES;
 
     DigitalMedium(const string& _genre = "", const string& _album_name = "", const string& _album_artist = "", const Date& _rd = Date(), Platform _platform = None_Platform, uint _listeners = 0);

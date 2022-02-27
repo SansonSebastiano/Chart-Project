@@ -20,10 +20,11 @@ enum Support { FOREACH_SUPPORTS(GENERATE_ENUM) };
 
 class PhisycalMedium : public Release{
 private:
-    // tipo di supporto fisico utilizzato per la vendita dell'album
+    // tipo di supporto fisico utilizzato per la vendita di un prodotto musicale
     Support support;
     // numero di copie vendute in media ogni anno
     uint num_sales;
+    // DA RIVEDERE QUESTE 3 VARIABILI E METTERLE PUBBLICHE ??
     // costo per copia CD in € di default
     static const double cd_price;
     // costo per copia Vinile in € di default
@@ -31,12 +32,12 @@ private:
     // costo per copia Cassetta in € di default
     static const double cst_price;
     /*
-     * @brief   imposta il guadagno di una album: prodotto tra #copie vendute e il prezzo per copia
+     * @brief   imposta il guadagno di un prodotto musicale: prodotto tra #copie vendute (in media in un anno) e il prezzo per copia
      * @return  void
      */
      void setProfit() override;
 public:
-    // contiene i nomi (di tipo string) dei supporti fisici
+    // contiene i nomi dei supporti fisici
     static const string support_names[];
     // contiene il valore massimo dell'enumerazione
     static const uint MAX_PVALUES;

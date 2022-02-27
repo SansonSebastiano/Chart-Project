@@ -20,7 +20,7 @@ void RecordLabel::insert(const Music* music) {
 
 // DA TESTARE
 
-vector<const Music*> RecordLabel::getByName(vector<const Music *> v, const string &name) const {
+vector<const Music*> RecordLabel::getByName(const vector<const Music *> &v, const string &name) const {
     //controllo se
         // - 'v' e' vuoto?
         // - name nullo
@@ -34,7 +34,7 @@ vector<const Music*> RecordLabel::getByName(vector<const Music *> v, const strin
     return result;
 }
 
-vector<const Music*> RecordLabel::getByGenre(vector<const Music *> v, const string &genre) const {
+vector<const Music*> RecordLabel::getByGenre(const vector<const Music *> &v, const string &genre) const {
     //controllo se
         // - 'v' e' vuoto?
         // - genre nullo
@@ -49,7 +49,7 @@ vector<const Music*> RecordLabel::getByGenre(vector<const Music *> v, const stri
     return result;
 }
 
-vector<const Music*> RecordLabel::getByArtist(vector<const Music *> v, const string &artist) const {
+vector<const Music*> RecordLabel::getByArtist(const vector<const Music *> &v, const string &artist) const {
     //controllo se
         // - 'v' e' vuoto?
         // - artist nullo
@@ -63,61 +63,56 @@ vector<const Music*> RecordLabel::getByArtist(vector<const Music *> v, const str
     return result;
 }
 
-vector<const Release*> RecordLabel::getByYear(vector<const Music *> v, uint year) const {
+vector<const Release*> RecordLabel::getByYear(const vector<const Music *> &v, const Date& date) const {
     //controllo se
         // - 'v' e' vuoto?
-        //
 
     vector<const Release*> result;
     for(auto it = v.begin(); it != v.end(); ++it)
-        if(dynamic_cast<const Release*>(*it)->getReleaseDate().getYear() == year)
+        if(dynamic_cast<const Release*>(*it)->getReleaseDate().getYear() == date.getYear())
             result.push_back(static_cast<const Release*>(*it));
 
     //if(result.empty()) throw string("YearNotFound");  // DEFINIRE UNA CLASSE DI ECCEZIONI
     return result;
 }
 
-vector<const Release*> RecordLabel::getByPlatform(vector<const Release*> v, Platform platform) const{
+vector<const Release*> RecordLabel::getByPlatform(const vector<const Release*> &v, Platform platform) const{
     //controllo se
         // - 'v' e' vuoto?
         // - platform == None_Platform
 
     vector<const Release*> result;
-    const DM* pdm = nullptr;
 
-    for(auto it = v.begin(); it != v.end(); ++it){
-        pdm = dynamic_cast<const DM*>(*it);
-        if(pdm && pdm->getPlatform() == platform)
-            result.push_back(pdm);
-    }
+    for(auto it = v.begin(); it != v.end(); ++it)
+        if(dynamic_cast<const DM*>(*it)->getPlatform() == platform)
+            result.push_back(static_cast<const DM*>(*it));
     //if(result.empty()) throw string("PlatformNotFound");  // DEFINIRE UNA CLASSE DI ECCEZIONI
     return result;
 }
 
-vector<const Release*> RecordLabel::getBySupport(vector<const Release*> v, Support support) const{
+vector<const Release*> RecordLabel::getBySupport(const vector<const Release*> &v, Support support) const{
     //controllo se
         // - 'v' e' vuoto?
         // - support = None_Support
 
     vector<const Release*> result;
-    const PM *ppm = nullptr;
 
     for(auto it = v.begin(); it != v.end(); ++it){
-        ppm = dynamic_cast<const PM*>(*it);
-        if(ppm && ppm->getSupport() == support)
-            result.push_back(ppm);
+        if(dynamic_cast<const PM*>(*it)->getSupport() == support)
+            result.push_back(static_cast<const PM*>(*it));
     }
     //if(result.empty()) throw string("SupportNotFound");  // DEFINIRE UNA CLASSE DI ECCEZIONI
     return result;
 }
 
-vector<const Release*> RecordLabel::getBetweenYears(vector<const Music*> v, const Date& from, const Date& to) const{
+vector<const Release*> RecordLabel::getBetweenYears(const vector<const Music*> &v, const Date& from, const Date& to) const{
     //controllo se
         // - 'v' e' vuoto?
         // - from & to sono di default ????
 
     vector<const Release*> result;
     const Release* pr = nullptr;
+
     for(auto it = v.begin(); it != v.end(); ++it){
         pr = dynamic_cast<const Release*>(*it);
         if(pr && (pr->getReleaseDate() >= from && pr->getReleaseDate() <= to))
@@ -127,7 +122,7 @@ vector<const Release*> RecordLabel::getBetweenYears(vector<const Music*> v, cons
     return result;
 }
 
-double RecordLabel::getTotProfit(vector<const Release*> r) const {
+double RecordLabel::getTotProfit(const vector<const Release*> &r) const {
     // controllo se r è vuoto ??
 
     double tot_profit = 0.0;
@@ -136,8 +131,7 @@ double RecordLabel::getTotProfit(vector<const Release*> r) const {
     return tot_profit;
 }
 
-// DA TESTARE
-uint RecordLabel::getTotNumbers(vector<const Release *> r) const {
+uint RecordLabel::getTotNumbers(const vector<const Release *> &r) const {
     // controllo se r è vuoto ??
 
     uint tot_numbers = 0;
@@ -146,27 +140,10 @@ uint RecordLabel::getTotNumbers(vector<const Release *> r) const {
     return tot_numbers;
 }
 
-void RecordLabel::release(const Release *release){
-    // controllo se album vuoto
-    auto not_released = getNotReleased();
-    bool found(false);
-
-    for (auto it = not_released.begin(); it != not_released.end() && !found; ++it)
-        if(/*(*it)->getName() == release->getName()*/areSame((*it), release) /*&& isElapsed1Year(release)*/) {
-            insert(release);
-            found = true;
-     }
-    // DA TESTARE
-    //if(!isElapsed1Year(album)) throw string("NotOneYearElapsed"); // DEFINIRE UNA CLASSE DI ECCEZIONI
-    //if(!found) throw string("NameNotFound");  // DEFINIRE UNA CLASSE DI ECCEZIONI
-}
-
 bool RecordLabel::isElapsed1Year(const Release *release) const{
     // controllo se album vuoto
 
-    if(release->getElapsedYears() >= 1) return true;
-    else return false;
-
+    return release->getElapsedYears() >= 1;
 }
 
 vector<const Music*> RecordLabel::getAll() {
@@ -184,10 +161,13 @@ vector<const Music*> RecordLabel::getAll() {
 
 vector<const Music*> RecordLabel::getReleased() const{
     vector<const Music*> released;
+    const Release* r;
 
-    for (auto it = catalog.begin(); it != catalog.end(); ++it)
-        if (dynamic_cast<const Release*>(*it))
+    for (auto it = catalog.begin(); it != catalog.end(); ++it){
+        r = dynamic_cast<const Release*>(*it);
+        if (r && isElapsed1Year(r))
             released.push_back(*it);
+    }
 
     return released;
 }

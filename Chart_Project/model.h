@@ -17,8 +17,6 @@ public:
 
     void insertMusic(const Music* music);
 
-    void releaseMusic(const Release* release);
-
     void removeMusic(const Music* music);
 
     void getAllInfo() const;

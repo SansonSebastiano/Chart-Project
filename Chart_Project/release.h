@@ -13,7 +13,7 @@ private:
 protected:
     double profit;  // in €
     /*
-     * @brief   imposta il guadagno di una album
+     * @brief   imposta il guadagno di un prodotto musicale, in base agli ascoltatori/vendite in media in un anno (365 giorni)
      * @return  void
      */
     virtual void setProfit() = 0;
@@ -37,7 +37,7 @@ public:
     uint getElapsedYears() const;
     /*
      * @brief   restituisce informazioni riguardante il prodotto musicale
-     * @return  void
+     * @return  string
      */
     virtual string getInfo() const override;
     /*
@@ -52,7 +52,7 @@ public:
      */
     string double_to_string(double profit) const;
     /*
-     * IN TEORIA NON SERVE
+     * DA TESTARE
      * @brief   ridefinizione operatore di uguaglianza
      * @return  bool
      */

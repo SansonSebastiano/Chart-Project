@@ -4,8 +4,6 @@ Model::Model(const string& label) : rl(new RecordLabel(label)) { }
 
 void Model::insertMusic(const Music *music){ rl->insert(music); }
 
-void Model::releaseMusic(const Release *release){ rl->release(release); }
-
 void Model::removeMusic(const Music *music) { rl->removeNotReleased(music); }
 
 void Model::getAllInfo() const{
@@ -40,7 +38,7 @@ bool Model::isPresent(const Music *m) const {
     bool found(false);
 
     for (auto it = all.begin(); it != all.end() && !found; ++it)
-        if (rl->areSame((*it), m))
+        if (areEquals((*it), m))
             found = true;
 
     return found;

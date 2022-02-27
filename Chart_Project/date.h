@@ -21,7 +21,7 @@ public:
     Date(uint _day = 0, uint _month = 0, uint _year = 0);
     ~Date() = default;
     /*
-     * @brief   restituisce la data attuale
+     * @brief   restituisce la data corrente al momento della sua invocazione
      * @return  Date
      */
     static Date getNow();
