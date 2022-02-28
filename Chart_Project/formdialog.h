@@ -24,7 +24,7 @@ private:
     QPushButton *btn_add /**btn_cancel*/;
 public:
     FormDialog(QWidget* parent = Q_NULLPTR);
-    ~FormDialog() = default;
+    virtual ~FormDialog() = default;
 
     void createFormLayout(const QString &label, QWidget *w, QVBoxLayout *vbl, QWidget* parent = Q_NULLPTR);
 

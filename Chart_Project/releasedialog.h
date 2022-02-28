@@ -26,7 +26,7 @@ private:
 
 public:
     ReleaseDialog(QWidget* parent = Q_NULLPTR);
-    ~ReleaseDialog() = default;
+    virtual ~ReleaseDialog() = default;
 
     const QStringList getMusicToPublic() const;
     void setMusicToPublic(const QVector<const Music*> &notReleased);
