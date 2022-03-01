@@ -75,7 +75,7 @@ public:
     ~Viewer() = default;
 
     void setController(Controller *c);
-    void setTable(QVector<const Music*> catalog);
+    void setTable(const QVector<const Music*> &catalog);
     void addMusicToTable(const Music *newMusic);
     void removeMusicFromTable(uint index);
 

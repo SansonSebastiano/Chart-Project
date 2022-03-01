@@ -135,10 +135,10 @@ Viewer::Viewer(QWidget *parent) : QDialog(parent), controller(new Controller) {
 
     // init Custom-Dialog-Form
     md = new MusicDialog(parent);
-    md->createAddMusicLayout();
+    md->createFormDialogLayout();
 
     rd = new ReleaseDialog(parent);
-    rd->createReleaseMusicLayout();
+    rd->createFormDialogLayout();
 
     // Add menu bar
     addMenus(mainLayout);
@@ -189,9 +189,8 @@ void Viewer::setController(Controller *c) {
     connect(rd->getamzCKB(), &QCheckBox::stateChanged, controller, &Controller::enableRDComponents);
 }
 
-void Viewer::setTable(QVector<const Music*> catalog) {
+void Viewer::setTable(const QVector<const Music*> &catalog) {
     table = new QTableView;
-
     myTableModel = new TableModel(catalog);
 
     table->setModel(myTableModel);

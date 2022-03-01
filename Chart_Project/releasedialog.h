@@ -28,10 +28,9 @@ public:
     ReleaseDialog(QWidget* parent = Q_NULLPTR);
     virtual ~ReleaseDialog() = default;
 
-    const QStringList getMusicToPublic() const;
     void setMusicToPublic(const QVector<const Music*> &notReleased);
 
-    void createReleaseMusicLayout(QWidget* parent = Q_NULLPTR);
+    void createFormDialogLayout(QWidget* parent = Q_NULLPTR) override;
 
     // forse dovrei ritornare direttamente quello che mi serve e non i componenti
 

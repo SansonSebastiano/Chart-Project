@@ -46,6 +46,4 @@ void BarChart::setChart() {
 
     legend()->setVisible(true);
     legend()->setAlignment(Qt::AlignBottom);
-
-
 }

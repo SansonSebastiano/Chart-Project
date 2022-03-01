@@ -18,7 +18,7 @@ private:
     void setSeries() override;
 public:
     PieChart(const QString &_title, const QList<QString*> &_xData, const QList<qreal*> &_yData);
-    ~PieChart() = default;      // DA IMPLEMENTARE
+    virtual ~PieChart() = default;      // DA IMPLEMENTARE
 
     void setChart() override;
 };

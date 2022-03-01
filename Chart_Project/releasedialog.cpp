@@ -145,18 +145,16 @@ void ReleaseDialog::createDMBox(QVBoxLayout *vbl, QWidget* parent) {
     vbl->addWidget(groupBox);
 }
 
-const QStringList ReleaseDialog::getMusicToPublic() const { return musicToPublic; }
-
 void ReleaseDialog::setMusicToPublic(const QVector<const Music *> &notReleased) {
     musicToPublic.clear();
     toPublicCB->clear();
     for (auto it = notReleased.begin(); it != notReleased.end(); ++it)
         musicToPublic.push_back(QString::fromStdString((*it)->getInfo()));  // DA SISTEMARE
 
-    toPublicCB->addItems(getMusicToPublic());
+    toPublicCB->addItems(musicToPublic);
 }
 
-void ReleaseDialog::createReleaseMusicLayout(QWidget* parent) {
+void ReleaseDialog::createFormDialogLayout(QWidget* parent) {
     QVBoxLayout *dialogLayout = new QVBoxLayout(parent);
 
     dialogLayout->addWidget(toPublicCB);

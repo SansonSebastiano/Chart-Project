@@ -17,7 +17,7 @@ public:
     std::string getInputArtist() const;
     std::string getInputGenre() const;
 
-    void createAddMusicLayout(QWidget* parent = Q_NULLPTR);
+    void createFormDialogLayout(QWidget* parent = Q_NULLPTR) override;
 
     bool checkMusicInput() const;
 

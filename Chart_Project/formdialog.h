@@ -32,6 +32,7 @@ public:
     QPushButton* getAddBtn() const;
     //QPushButton* getCancBtn() const;
 
+    virtual void createFormDialogLayout(QWidget* parent = Q_NULLPTR) = 0;
     virtual void resetComponents() = 0;
 };
 

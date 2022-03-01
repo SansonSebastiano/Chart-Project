@@ -25,7 +25,7 @@ void MusicDialog::createMusicBox(QVBoxLayout *vbl, QWidget* parent) {
     vbl->addWidget(groupBox);
 }
 
-void MusicDialog::createAddMusicLayout(QWidget* parent) {
+void MusicDialog::createFormDialogLayout(QWidget* parent) {
     QVBoxLayout *dialogLayout = new QVBoxLayout(parent);
 
     // add Music Box

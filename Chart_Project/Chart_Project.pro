@@ -17,12 +17,15 @@ SOURCES += \
     abstractchart.cpp \
     album.cpp \
     barchart.cpp \
+    chartdialog.cpp \
+    chartscreen.cpp \
     controller.cpp \
     date.cpp \
     digitalmedium.cpp \
     formdialog.cpp \
     io_handler.cpp \
     linechart.cpp \
+    linechartdialog.cpp \
     main.cpp \
     model.cpp \
     music.cpp \
@@ -40,6 +43,8 @@ HEADERS += \
     abstractchart.h \
     album.h \
     barchart.h \
+    chartdialog.h \
+    chartscreen.h \
     controller.h \
     date.h \
     digitalmedium.h \
@@ -48,6 +53,7 @@ HEADERS += \
     helper.h \
     io_handler.h \
     linechart.h \
+    linechartdialog.h \
     model.h \
     music.h \
     musicdialog.h \

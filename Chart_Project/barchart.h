@@ -20,7 +20,7 @@ private:
     void setSeries() override;
 public:
     BarChart(const QString &_title, const QList<QString*> &_xData, const QList<qreal> &_yData);
-    ~BarChart() = default;  // DA IMPLEMENTARE
+    virtual ~BarChart() = default;  // DA IMPLEMENTARE
 
     void setCategories();   // FORSE NON SERVE
     void setChart() override;

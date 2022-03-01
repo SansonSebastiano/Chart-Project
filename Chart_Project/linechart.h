@@ -15,7 +15,7 @@ private:
     void setSeries() override;
 public:
     LineChart(const QString &_title, const QList<qreal*> &_xData, const QList<qreal*> &_yData );
-    ~LineChart() = default;     // DA IMPLEMENTARE
+    virtual ~LineChart() = default;     // DA IMPLEMENTARE
 
     void setChart() override;
 };
