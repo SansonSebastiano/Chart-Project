@@ -11,16 +11,17 @@ using QtCharts::QPieSlice;
 class PieChart : public AbstractChart{
 private:
     QList<QString*> x_data;
+    QList<qreal*> y_data;
 
-    QPieSeries *series;
     QList<QPieSlice*> slices;
 
-    void setSlices (const QList<QString*> &x_data, const QList<qreal*> &y_data);
+    void setSlices ();
 public:
-    PieChart(const QString &_title, const QList<qreal*> &_y_data, const QList<QString*> &_x_data);
-    ~PieChart() = default;      // default un CAZZO, E' DA IMPLEMENTARE
+    PieChart(const QString &_title, const QList<QString*> &_xData, const QList<qreal*> &_yData);
+    ~PieChart() = default;      // DA IMPLEMENTARE
 
-    void setSeries(const QList<QString*> &x_data, const QList<qreal*> &y_data);
+    void setSeries() override;
+    void setChart();
 };
 
 #endif // PIECHART_H

@@ -11,19 +11,15 @@ class AbstractChart : public QChart {
 private:
     //QList<x_dataType*> x_data;
     QString _title;
-    QAbstractSeries *series;
-    QList<qreal*> y_data;
+protected:
+    QAbstractSeries *mySeries;
+    //QList<qreal*> y_data;
 public:
-    AbstractChart(const QString &_title, const QList<qreal*> &_y_data);
-    virtual ~AbstractChart() = 0;
+    AbstractChart(const QString &_title);
+    virtual ~AbstractChart() = default; // DA IMPLEMENTARE
 
-    //QList<x_dataType*> getXdata() const;
-    QList<qreal*> getYdata() const;
-
-    //void setXdata(const QList<x_dataType*> &_x_data);
-    void setYdata(const QList<qreal*> &_y_data);
-
-    //virtual void setChartData() = 0;
+    QString getTitle() const;
+    virtual void setSeries() = 0;
 };
 
 #endif // ABSTRACTCHART_H

@@ -1,6 +1,11 @@
 #include "piechart.h"
 
-void PieChart::setSlices(const QList<QString *> &x_data, const QList<qreal *> &y_data) {
+PieChart::PieChart(const QString& _title, const QList<QString*> &_xData, const QList<qreal*> &_yData) : AbstractChart(_title), x_data(_xData), y_data(_yData) {
+    mySeries = new QPieSeries();
+}
+
+
+void PieChart::setSlices() {
     auto xit = x_data.begin();
     auto yit = y_data.begin();
 
@@ -12,9 +17,13 @@ void PieChart::setSlices(const QList<QString *> &x_data, const QList<qreal *> &y
     }
 }
 
-void PieChart::setSeries(const QList<QString *> &x_data, const QList<qreal *> &y_data) {
-    setSlices(x_data, y_data);
-
-    series->append(slices);
+void PieChart::setSeries() {
+    setSlices();
+    dynamic_cast<QPieSeries*>(mySeries)->append(slices);
 }
 
+void PieChart::setChart() {
+    addSeries(mySeries);
+    setTitle(getTitle());
+    // ...
+}
