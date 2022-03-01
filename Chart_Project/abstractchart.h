@@ -6,20 +6,19 @@
 #include <QChart>
 QT_CHARTS_USE_NAMESPACE
 
-//template<class x_dataType = QString>    // x_dataType = { QString, qreal }
 class AbstractChart : public QChart {
 private:
-    //QList<x_dataType*> x_data;
     QString _title;
 protected:
     QAbstractSeries *mySeries;
-    //QList<qreal*> y_data;
+    virtual void setSeries() = 0;
 public:
     AbstractChart(const QString &_title);
     virtual ~AbstractChart() = default; // DA IMPLEMENTARE
 
     QString getTitle() const;
-    virtual void setSeries() = 0;
+
+    virtual void setChart() = 0;
 };
 
 #endif // ABSTRACTCHART_H

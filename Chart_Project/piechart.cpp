@@ -15,6 +15,7 @@ void PieChart::setSlices() {
         ++xit;
         ++yit;
     }
+    // another slices' configurations ... MAYBE
 }
 
 void PieChart::setSeries() {
@@ -23,7 +24,10 @@ void PieChart::setSeries() {
 }
 
 void PieChart::setChart() {
+    setSeries();
+
     addSeries(mySeries);
     setTitle(getTitle());
+    // legend
     // ...
 }

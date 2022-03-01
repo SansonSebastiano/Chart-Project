@@ -12,16 +12,15 @@ class PieChart : public AbstractChart{
 private:
     QList<QString*> x_data;
     QList<qreal*> y_data;
-
     QList<QPieSlice*> slices;
 
     void setSlices ();
+    void setSeries() override;
 public:
     PieChart(const QString &_title, const QList<QString*> &_xData, const QList<qreal*> &_yData);
     ~PieChart() = default;      // DA IMPLEMENTARE
 
-    void setSeries() override;
-    void setChart();
+    void setChart() override;
 };
 
 #endif // PIECHART_H

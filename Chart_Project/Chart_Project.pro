@@ -16,11 +16,13 @@ CONFIG += c++11
 SOURCES += \
     abstractchart.cpp \
     album.cpp \
+    barchart.cpp \
     controller.cpp \
     date.cpp \
     digitalmedium.cpp \
     formdialog.cpp \
     io_handler.cpp \
+    linechart.cpp \
     main.cpp \
     model.cpp \
     music.cpp \
@@ -37,6 +39,7 @@ SOURCES += \
 HEADERS += \
     abstractchart.h \
     album.h \
+    barchart.h \
     controller.h \
     date.h \
     digitalmedium.h \
@@ -44,6 +47,7 @@ HEADERS += \
     formdialog.h \
     helper.h \
     io_handler.h \
+    linechart.h \
     model.h \
     music.h \
     musicdialog.h \
