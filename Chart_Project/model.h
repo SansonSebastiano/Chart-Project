@@ -38,7 +38,7 @@ public:
             // -> percentuale musica pubblicata e non
             // -> confrontare incassi medium fisici vs digitali
         // - bar chart :
-            // -> dato un artista x e un suo album y, confrontare i profitti tra i vari medium su cui sono pubblicati l'album y
+            // -> dato un artista x, confrontare i profitti tra i vari medium su cui e' pubblicata la sua musica
             // -> dato un anno x, confrontare vendite supporti fisici
             // -> dato un anno x, confrontare ascolti supporti digitali
 };

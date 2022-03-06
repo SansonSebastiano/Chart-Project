@@ -61,5 +61,5 @@ void LineChartDialog::enableComponents() {
     if (genreRB->isChecked())
         genreCB->setEnabled(true);
     else
-        genreCB->setEnabled(true);
+        genreCB->setEnabled(false);
 }

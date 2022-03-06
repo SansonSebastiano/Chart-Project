@@ -6,7 +6,7 @@
 class BarChartDialog : public ChartDialog {
 private:
     QVBoxLayout *dialogLayout;
-    QComboBox *artistsCB, *releaseCB;
+    QComboBox *artistsCB;
     QDateEdit *date;
 
     void setOptions() override;
@@ -22,7 +22,9 @@ public:
 
     // se necessario renderla astratta nella classe base 'ChartDialog'
     void showDescription();
-    void enableComponents();
+    void enableComponents();    // forse non serve
+
+    void setArtistCB(const QStringList &artists);
 };
 
 #endif // BARCHARTDIALOG_H
