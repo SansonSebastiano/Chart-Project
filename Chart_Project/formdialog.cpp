@@ -22,3 +22,13 @@ void FormDialog::createFormLayout(const QString &label, QWidget *w, QVBoxLayout 
     formLayout->addRow(label, w);
     vbl->addLayout(formLayout);
 }
+
+void FormDialog::createFormLayout(QWidget *w1, QWidget *w2, QVBoxLayout *vbl, QWidget *parent) {
+    QFormLayout *formLayout = new QFormLayout(parent);
+    formLayout->setFormAlignment(Qt::AlignAbsolute);
+    formLayout->setLabelAlignment(Qt::AlignLeft);
+    //formLayout->setAlignment(w, Qt::AlignRight);
+
+    formLayout->addRow(w1, w2);
+    vbl->addLayout(formLayout);
+}

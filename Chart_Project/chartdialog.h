@@ -1,21 +1,24 @@
 #ifndef CHARTDIALOG_H
 #define CHARTDIALOG_H
 
+#include <QLabel>
 #include "formdialog.h"
 
 class ChartDialog : public FormDialog {
-private:
-    QComboBox *options;
-    QStringList optionsList;
+protected:      // CORRETTO????
+    QComboBox *optionsCB;
 public:
     ChartDialog(QWidget* parent = Q_NULLPTR);
     virtual ~ChartDialog() = default;
 
     uint getOptionsIndex() const;
-
-    void setOptionsList(const QStringList &_optionsList);
+    //QComboBox* getOptions() const;
 
     virtual void setOptions() = 0;
+    virtual void createDescriptionBox(QVBoxLayout *vbl, const QString &label, QWidget* parent = Q_NULLPTR);
+    void createOptionsQCBBox(QVBoxLayout *vbl, QWidget* parent = Q_NULLPTR);
+
+    void resetComponents() override;
 };
 
 #endif // CHARTDIALOG_H

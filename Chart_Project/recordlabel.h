@@ -74,7 +74,7 @@ public:
      * @ ECCEZIONI  ??
      * @return  vector<const Release*>
      */
-    vector<const Release*> getBetweenYears(const vector<const Music*> &v, const Date& from, const Date& to) const;
+    vector<const Release*> getBetweenDates(const vector<const Music*> &v, const Date& from, const Date& to) const;
     /*
      * @brief   scansiona il vettore in input e restituisce tutta la musica pubblicata in una piattaforma data in input
      * @param   Platform platform

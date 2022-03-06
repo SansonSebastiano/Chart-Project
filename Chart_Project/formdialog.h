@@ -27,6 +27,7 @@ public:
     virtual ~FormDialog() = default;
 
     void createFormLayout(const QString &label, QWidget *w, QVBoxLayout *vbl, QWidget* parent = Q_NULLPTR);
+    void createFormLayout(QWidget *w1, QWidget *w2, QVBoxLayout *vbl, QWidget *parent = Q_NULLPTR);
 
     void setAddBtn(const QString &buttonLabel);
     QPushButton* getAddBtn() const;

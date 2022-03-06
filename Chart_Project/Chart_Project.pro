@@ -17,6 +17,7 @@ SOURCES += \
     abstractchart.cpp \
     album.cpp \
     barchart.cpp \
+    barchartdialog.cpp \
     chartdialog.cpp \
     chartscreen.cpp \
     controller.cpp \
@@ -32,6 +33,7 @@ SOURCES += \
     musicdialog.cpp \
     phisycalmedium.cpp \
     piechart.cpp \
+    piechartdialog.cpp \
     recordlabel.cpp \
     release.cpp \
     releasedialog.cpp \
@@ -43,6 +45,7 @@ HEADERS += \
     abstractchart.h \
     album.h \
     barchart.h \
+    barchartdialog.h \
     chartdialog.h \
     chartscreen.h \
     controller.h \
@@ -59,6 +62,7 @@ HEADERS += \
     musicdialog.h \
     phisycalmedium.h \
     piechart.h \
+    piechartdialog.h \
     recordlabel.h \
     release.h \
     releasedialog.h \

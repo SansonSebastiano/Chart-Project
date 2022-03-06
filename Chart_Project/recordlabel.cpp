@@ -105,7 +105,7 @@ vector<const Release*> RecordLabel::getBySupport(const vector<const Release*> &v
     return result;
 }
 
-vector<const Release*> RecordLabel::getBetweenYears(const vector<const Music*> &v, const Date& from, const Date& to) const{
+vector<const Release*> RecordLabel::getBetweenDates(const vector<const Music*> &v, const Date& from, const Date& to) const{
     //controllo se
         // - 'v' e' vuoto?
         // - from & to sono di default ????

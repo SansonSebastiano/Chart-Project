@@ -31,7 +31,7 @@ ReleaseDialog::ReleaseDialog(QWidget* parent) : FormDialog(parent),
 {
     setAddBtn("Pubblica");
 
-    releaseDE->setMaximumDate(QDate::currentDate());
+    releaseDE->setMaximumDate(QDate(QDate::currentDate().year() - 1, QDate::currentDate().month(), QDate::currentDate().day()));    // accetta come data massima: esattamente un anno fa
 
     cdEdit->setDisabled(true);
     cdEdit->setValidator(new QIntValidator(parent));
