@@ -101,7 +101,6 @@ public:
     // dialog to release music
     bool getReleaseInput(std::vector<const Release*>& result);
     std::vector<const Release*> test();
-    void enableReleaseDialogComponents();
     // display warning dialog
     void showWarning(const QString &message);
     QMessageBox::StandardButton showQuestion(const QString &message);

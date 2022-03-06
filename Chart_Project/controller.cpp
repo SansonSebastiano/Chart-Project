@@ -270,7 +270,7 @@ void Controller::showReleaseDialog() {
         view->showWarning("Non c'e' nulla da pubblicare");
 }
 
-void Controller::enableRDComponents() { view->enableReleaseDialogComponents(); }
+void Controller::enableRDComponents() { view->getReleaseDialog()->enableComponents(); }
 
 int Controller::getIndex(const Music* music) {
     auto catalog = model->getData();
@@ -333,4 +333,16 @@ void Controller::showLineChartDialog() {
         view->showDialog(dialog);
     }else
         view->showWarning("Non e' stato caricato nessun dato");
+}
+
+void Controller::enableLDComponents() { view->getLineChartDialog()->enableComponents(); }
+
+void Controller::showLineChartWindow() {
+    auto dialog = view->getLineChartDialog();
+
+    // DEFINISCI COSA FARE SE LE DUE DATE SONO UGUALI
+    if(dialog->getGenreRB()->isChecked()) {
+        // get data & set window
+    }else
+        view->showWarning("Seleziona un genere");
 }

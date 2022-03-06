@@ -30,12 +30,6 @@ public:
 
     void createFormDialogLayout(QWidget* parent = Q_NULLPTR) override;
 
-    // forse dovrei ritornare direttamente quello che mi serve e non i componenti
-
-    uint getToPublicIndexItem() const;
-
-    const QDate getReleaseDate() const;
-
     const QCheckBox* getcdCKB() const;
     const QCheckBox* getvnlCKB() const;
     const QCheckBox* getcstCKB() const;

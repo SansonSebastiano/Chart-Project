@@ -190,6 +190,8 @@ void Viewer::setController(Controller *c) {
     connect(rd->getamzCKB(), &QCheckBox::stateChanged, controller, &Controller::enableRDComponents);
         // to handle line chart dialog
     connect(btn_lineChart, &QPushButton::clicked, controller, &Controller::showLineChartDialog);
+    connect(ld->getGenreRB(), &QRadioButton::clicked, controller, &Controller::enableLDComponents);
+    connect(ld->getAddBtn(), &QPushButton::clicked, controller, &Controller::showLineChartWindow);
 }
 
 void Viewer::setTable(const QVector<const Music*> &catalog) {
@@ -219,9 +221,7 @@ ReleaseDialog *Viewer::getReleaseDialog() const { return rd; }
 
 LineChartDialog *Viewer::getLineChartDialog() const { return ld; }
 
-void Viewer::showDialog(FormDialog *dialog) {
-    dialog->show();
-}
+void Viewer::showDialog(FormDialog *dialog) { dialog->show(); }
 
 void Viewer::resetComponents(FormDialog *dialog) { dialog->resetComponents(); }
 
@@ -229,8 +229,6 @@ void Viewer::closeDialog(FormDialog *dialog) {
     resetComponents(dialog);
     dialog->close();
 }
-
-void Viewer::enableReleaseDialogComponents() { rd->enableComponents(); }
 
 void Viewer::showWarning(const QString &message) { QMessageBox::warning(this, tr("Campi vuoti"), message, QMessageBox::Ok); }
 

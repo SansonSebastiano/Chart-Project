@@ -22,8 +22,15 @@ public:
 
     // groupboxes
     void createGenreQCBBox(QVBoxLayout *vbl, QWidget* parent = Q_NULLPTR);
+    void createYearBox(QVBoxLayout *vbl, QWidget *parent = Q_NULLPTR);
+
+    QRadioButton *getGenreRB() const;
 
     void enableComponents();
+
+    uint getYearFrom() const;
+    uint getYearTo() const;
+    std::string getGenreSelected() const;
 };
 
 #endif // LINECHARTDIALOG_H

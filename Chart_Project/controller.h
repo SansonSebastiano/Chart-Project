@@ -75,6 +75,8 @@ public slots:
 
     // line chart dialog
     void showLineChartDialog();
+    void enableLDComponents();
+    void showLineChartWindow();
 };
 
 #endif // CONTROLLER_H

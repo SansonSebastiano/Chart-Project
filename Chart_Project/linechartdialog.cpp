@@ -13,7 +13,9 @@ LineChartDialog::LineChartDialog(QWidget *parent)
     genreCB->setEnabled(false);
 
     from->setMaximumDate(QDate(QDate::currentDate().year() - 1, QDate::currentDate().month(), QDate::currentDate().day())); // accetta come data massima: esattamente un anno fa
+    from->setDisplayFormat("yyyy");
     to->setMaximumDate(QDate::currentDate());   // accetta come data massima: esattamente oggi
+    to->setDisplayFormat("yyyy");
 }
 
 void LineChartDialog::setOptions() { }
@@ -40,11 +42,24 @@ void LineChartDialog::createGenreQCBBox(QVBoxLayout *vbl, QWidget *parent) {
     vbl->addWidget(groupBox);
 }
 
+void LineChartDialog::createYearBox(QVBoxLayout *vbl, QWidget *parent) {
+    QVBoxLayout *boxLayout = new QVBoxLayout(parent);
+
+    createFormLayout("Da: ", from, boxLayout, parent);
+    createFormLayout("A: ", to, boxLayout, parent);
+
+    QGroupBox *groupBox = new QGroupBox("Seleziona l'intervallo di anni:", parent);
+    groupBox->setLayout(boxLayout);
+
+    vbl->addWidget(groupBox);
+}
+
 void LineChartDialog::createFormDialogLayout(QWidget *parent) {
     QVBoxLayout *dialogLayout = new QVBoxLayout(parent);
 
     createDescriptionBox(dialogLayout, desc_option1, parent);
 
+    createYearBox(dialogLayout, parent);
     createGenreQCBBox(dialogLayout, parent);
 
     // button layout
@@ -64,9 +79,16 @@ void LineChartDialog::resetComponents() {
     genreCB->setEnabled(false);
 }
 
+QRadioButton *LineChartDialog::getGenreRB() const { return genreRB; }
+
 void LineChartDialog::enableComponents() {
     if (genreRB->isChecked())
         genreCB->setEnabled(true);
     else
         genreCB->setEnabled(false);
 }
+
+uint LineChartDialog::getYearFrom() const { return from->date().year(); }
+uint LineChartDialog::getYearTo() const { return to->date().year(); }
+
+std::string LineChartDialog::getGenreSelected() const { return genreCB->currentText().toStdString(); }

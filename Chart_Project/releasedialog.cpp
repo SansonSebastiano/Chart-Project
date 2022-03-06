@@ -59,10 +59,6 @@ ReleaseDialog::ReleaseDialog(QWidget* parent) : FormDialog(parent),
     amzEdit->setValidator(new QIntValidator(parent));
 }
 
-uint ReleaseDialog::getToPublicIndexItem() const { return toPublicCB->currentIndex(); }
-
-const QDate ReleaseDialog::getReleaseDate() const { return releaseDE->date(); }
-
 const QCheckBox *ReleaseDialog::getcdCKB() const { return cdCKB; }
 const QCheckBox *ReleaseDialog::getvnlCKB() const { return vnlCKB; }
 const QCheckBox *ReleaseDialog::getcstCKB() const { return cstCKB; }
@@ -289,14 +285,14 @@ bool ReleaseDialog::isAllEmpty() const {
 std::vector<const Release*> ReleaseDialog::getInput(const std::vector<const Music*> &not_released) {
     std::vector<const Release*> result;
 
-    auto selectedMusic = not_released.at(getToPublicIndexItem());
+    auto selectedMusic = not_released.at(toPublicCB->currentIndex());
     cout << "SELECTED ITEM : " << selectedMusic->getInfo() << endl;
 
     // controllo validita' della data di pubblicazione delegata a RecordLabel
     // ricorda infatti di implementare le eccezioni e catturarle
-    uint day(getReleaseDate().day());
-    uint month(getReleaseDate().month());
-    uint year(getReleaseDate().year());
+    uint day(releaseDE->date().day());
+    uint month(releaseDE->date().month());
+    uint year(releaseDE->date().year());
 
     uint numbers(0);
 

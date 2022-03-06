@@ -22,8 +22,6 @@ void ChartDialog::createDescriptionBox(QVBoxLayout *vbl, const QString &label, Q
     vbl->addWidget(groupBox);
 }
 
-//QComboBox* ChartDialog::getOptions() const { return options; }
-
 // PRE : setOptions() must be invocated before
 void ChartDialog::createOptionsQCBBox(QVBoxLayout *vbl, QWidget* parent) {
     QVBoxLayout *boxLayout = new QVBoxLayout(parent);
@@ -36,6 +34,4 @@ void ChartDialog::createOptionsQCBBox(QVBoxLayout *vbl, QWidget* parent) {
     vbl->addWidget(groupBox);
 }
 
-void ChartDialog::resetComponents() {
-    optionsCB->setCurrentIndex(0);
-}
+void ChartDialog::resetComponents() { optionsCB->setCurrentIndex(0); }
