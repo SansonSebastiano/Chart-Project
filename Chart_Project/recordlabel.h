@@ -65,16 +65,7 @@ public:
      * @ ECCEZIONI  nel caso l'anno sia errato ??
      * @return  vector<const Release*>
      */
-    vector<const Release*> getByYear(const vector<const Music*> &v, const Date& date) const;
-    /*
-     * @brief   scansiona il vettore in input e restituisce tutta la musica pubblicata in un intervallo di anni dato in input
-     * @param   const vector<const Release*> &v
-     * @param   const Date &from
-     * @param   const Date &to
-     * @ ECCEZIONI  ??
-     * @return  vector<const Release*>
-     */
-    vector<const Release*> getBetweenDates(const vector<const Music*> &v, const Date& from, const Date& to) const;
+    vector<const Release*> getByYear(const vector<const Music*> &v, uint year) const;
     /*
      * @brief   scansiona il vettore in input e restituisce tutta la musica pubblicata in una piattaforma data in input
      * @param   Platform platform

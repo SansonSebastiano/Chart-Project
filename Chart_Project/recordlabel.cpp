@@ -63,14 +63,16 @@ vector<const Music*> RecordLabel::getByArtist(const vector<const Music *> &v, co
     return result;
 }
 
-vector<const Release*> RecordLabel::getByYear(const vector<const Music *> &v, const Date& date) const {
+vector<const Release*> RecordLabel::getByYear(const vector<const Music *> &v, uint year) const {
     //controllo se
         // - 'v' e' vuoto?
 
     vector<const Release*> result;
-    for(auto it = v.begin(); it != v.end(); ++it)
-        if(dynamic_cast<const Release*>(*it)->getReleaseDate().getYear() == date.getYear())
+    for(auto it = v.begin(); it != v.end(); ++it) {
+        auto pr = dynamic_cast<const Release*>(*it);
+        if(pr && pr->getReleaseDate().getYear() == year)
             result.push_back(static_cast<const Release*>(*it));
+    }
 
     //if(result.empty()) throw string("YearNotFound");  // DEFINIRE UNA CLASSE DI ECCEZIONI
     return result;
@@ -83,9 +85,11 @@ vector<const Release*> RecordLabel::getByPlatform(const vector<const Release*> &
 
     vector<const Release*> result;
 
-    for(auto it = v.begin(); it != v.end(); ++it)
-        if(dynamic_cast<const DM*>(*it)->getPlatform() == platform)
+    for(auto it = v.begin(); it != v.end(); ++it){
+        auto pdm = dynamic_cast<const DM*>(*it);
+        if(pdm && pdm->getPlatform() == platform)
             result.push_back(static_cast<const DM*>(*it));
+    }
     //if(result.empty()) throw string("PlatformNotFound");  // DEFINIRE UNA CLASSE DI ECCEZIONI
     return result;
 }
@@ -98,27 +102,11 @@ vector<const Release*> RecordLabel::getBySupport(const vector<const Release*> &v
     vector<const Release*> result;
 
     for(auto it = v.begin(); it != v.end(); ++it){
-        if(dynamic_cast<const PM*>(*it)->getSupport() == support)
+        auto ppm = dynamic_cast<const PM*>(*it);
+        if(ppm && ppm->getSupport() == support)
             result.push_back(static_cast<const PM*>(*it));
     }
     //if(result.empty()) throw string("SupportNotFound");  // DEFINIRE UNA CLASSE DI ECCEZIONI
-    return result;
-}
-
-vector<const Release*> RecordLabel::getBetweenDates(const vector<const Music*> &v, const Date& from, const Date& to) const{
-    //controllo se
-        // - 'v' e' vuoto?
-        // - from & to sono di default ????
-
-    vector<const Release*> result;
-    const Release* pr = nullptr;
-
-    for(auto it = v.begin(); it != v.end(); ++it){
-        pr = dynamic_cast<const Release*>(*it);
-        if(pr && (pr->getReleaseDate() >= from && pr->getReleaseDate() <= to))
-            result.push_back(pr);
-    }
-    //if(result.empty()) throw string("RangeOfYearsNotFound");  // DEFINIRE UNA CLASSE DI ECCEZIONI
     return result;
 }
 

@@ -1,6 +1,7 @@
 #ifndef MODEL_H
 #define MODEL_H
 
+#include <algorithm>
 #include "recordlabel.h"
 
 class Model{
@@ -30,9 +31,12 @@ public:
 
     bool isElapsed1Year(const Release *release) const;
 
+    vector<const string> getArtist() const;
+
     // opzioni grafici:
         // - linechart :
             // -> prendere musica di genere x, pubblicata in un range di anni, prelevare infine profitto (o vendite o costi?) per ogni anno compreso nel range
+    vector<uint> lineChartOp1(const string &genre, uint from, uint to);
         // - piechart :
             // -> prelevare un numero x di artisti migliori in assoluto (limite max 10?) della label, in base al profitto (o vendite o costi?)
             // -> percentuale musica pubblicata e non

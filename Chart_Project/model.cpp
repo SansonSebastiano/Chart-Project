@@ -44,10 +44,31 @@ bool Model::isPresent(const Music *m) const {
     return found;
 }
 
-bool Model::areEquals(const Music *m1, const Music *m2) const {
-    return rl->areSame(m1, m2);
+bool Model::areEquals(const Music *m1, const Music *m2) const { return rl->areSame(m1, m2); }
+
+bool Model::isElapsed1Year(const Release *release) const { return rl->isElapsed1Year(release); }
+
+vector<const string> Model::getArtist() const {
+    vector<const string> result;
+    auto v = rl->getAll();
+    string key;
+
+    for (auto it = v.begin(); it != v.end(); ++it){
+        key = (*it)->getArtist();   // non mi convince
+
+        if (std::find(result.begin(), result.end(), key) == result.end())
+                result.push_back(key);
+    }
+
+    return result;
 }
 
-bool Model::isElapsed1Year(const Release *release) const {
-    return rl->isElapsed1Year(release);
+vector<uint> Model::lineChartOp1(const string &genre, uint from, uint to) {
+    auto byGenre = rl->getByGenre(rl->getAll(), genre);
+    vector<uint> result;
+
+    for(uint year(from); year <= to; year++)
+        result.push_back(rl->getTotProfit(rl->getByYear(byGenre, year)));
+
+    return result;
 }
