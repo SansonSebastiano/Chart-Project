@@ -195,7 +195,7 @@ void Controller::closeDialog(FormDialog *dialog) { view->closeDialog(dialog); }
 void Controller::removeFromToSave(const Music *music) {
     bool found (false);
     for (auto it = toSave.begin(); it != toSave.end() && !found; ++it){
-        if(!dynamic_cast<const Release*>(*it) && model->areEquals((*it), music)/*((*it)->getName() == music->getName() && (*it)->getArtist() == music->getArtist() && (*it)->getGenre() == music->getGenre())*/){
+        if(!dynamic_cast<const Release*>(*it) && model->areEquals((*it), music)){
             it = toSave.erase(it);
             it--;
             found = true;
@@ -257,11 +257,15 @@ void Controller::addNewMusic() {
 
 void Controller::showReleaseDialog() {
     auto dialog = view->getReleaseDialog();
-    auto data = model->getNotReleased();
-    QVector<const Music*> myVector = QVector<const Music*>::fromStdVector(data);
 
-    if (!myVector.isEmpty())
-        view->showDialog(dialog, myVector);
+    // set music to release into release dialog combobox
+    auto data = model->getNotReleased();
+
+
+    if (!data.empty()) {
+        dialog->setMusicToPublic(data);
+        view->showDialog(dialog);
+    }
     else
         view->showWarning("Non c'e' nulla da pubblicare");
 }
@@ -273,7 +277,7 @@ int Controller::getIndex(const Music* music) {
 
     for (auto it = catalog.begin(); it != catalog.end(); ++it){
 
-        if (!dynamic_cast<const Release*>(*it) && ((*it)->getName() == music->getName() && (*it)->getArtist() == music->getArtist() && (*it)->getGenre() == music->getGenre()))
+        if (!dynamic_cast<const Release*>(*it) && model->areEquals(*it, music))
             return it - catalog.begin();
     }
     return -1;
@@ -316,4 +320,17 @@ void Controller::releaseMusic() {
             }
         }
     }
+}
+
+
+void Controller::showLineChartDialog() {
+    auto dialog = view->getLineChartDialog();
+
+    auto data = model->getGenre();
+
+    if (!data.empty()){
+        dialog->setGenreCB(data);
+        view->showDialog(dialog);
+    }else
+        view->showWarning("Non e' stato caricato nessun dato");
 }

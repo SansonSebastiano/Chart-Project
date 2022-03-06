@@ -23,11 +23,15 @@
 #include <QRadioButton>
 #include <QMessageBox>
 
-#include <phisycalmedium.h>
-#include <digitalmedium.h>
+#include "phisycalmedium.h"
+#include "digitalmedium.h"
+
 #include "tablemodel.h"
+
 #include "musicdialog.h"
 #include "releasedialog.h"
+
+#include "linechartdialog.h"
 
 class Controller;
 
@@ -57,8 +61,12 @@ private:
     QTableView *table;
     TableModel *myTableModel;
 
+    // custom dialog for adding and releasing music
     MusicDialog *md;
     ReleaseDialog *rd;
+
+    // custom dialog for visualize charts
+    LineChartDialog *ld;
 
     // overloading
     void closeEvent(QCloseEvent *event);
@@ -81,11 +89,12 @@ public:
 
     MusicDialog *getMusicDialog() const;
     ReleaseDialog *getReleaseDialog() const;
+    LineChartDialog *getLineChartDialog() const;
     //----------------------------------------------------------
     // E' CORRETTO CHE ALCUNE FUNZIONI SIANO ESEGUITE DA VIEWER ? IN REALTA' FORSE SAREBBE MEGLIO DAL CONTROLLER?
     //----------------------------------------------------------
     // manage custom form dialog
-    void showDialog(FormDialog *dialog, const QVector<const Music*> &notReleased = QVector<const Music*>());
+    void showDialog(FormDialog *dialog);
     void resetComponents(FormDialog *dialog);
     void closeDialog(FormDialog *dialog);
 

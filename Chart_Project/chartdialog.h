@@ -2,6 +2,7 @@
 #define CHARTDIALOG_H
 
 #include <QLabel>
+#include <QPlainTextEdit>
 #include "formdialog.h"
 
 class ChartDialog : public FormDialog {

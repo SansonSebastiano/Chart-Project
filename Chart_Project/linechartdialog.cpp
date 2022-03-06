@@ -18,7 +18,14 @@ LineChartDialog::LineChartDialog(QWidget *parent)
 
 void LineChartDialog::setOptions() { }
 
-void LineChartDialog::setGenreCB(const QStringList &genres) { genreCB->addItems(genres); }
+void LineChartDialog::setGenreCB(const std::vector<const string> &genres) {
+    QStringList list;
+    genreCB->clear();
+    for (auto it = genres.begin(); it != genres.end(); ++it)
+        list.push_back(QString::fromStdString(*it));
+
+    genreCB->addItems(list);
+}
 
 void LineChartDialog::createGenreQCBBox(QVBoxLayout *vbl, QWidget *parent) {
     QVBoxLayout *boxLayout = new QVBoxLayout(parent);

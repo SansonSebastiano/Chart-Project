@@ -15,8 +15,6 @@ private:
     QCheckBox *sptfCKB, *applmCKB, *tdlCKB, *dzrCKB, *ytmCKB, *amzCKB;
     QLineEdit *sptfEdit, *applmEdit, *tdlEdit, *dzrEdit, *ytmEdit, *amzEdit;
 
-    QStringList musicToPublic;
-
     void createLine(QWidget *ckb, QWidget *lineEdit, QFormLayout *fl, QWidget* parent = Q_NULLPTR);
     void createMediumLine(QWidget *ckb, QWidget *lineEdit, QVBoxLayout *vbl, QWidget* parent = Q_NULLPTR);
 
@@ -28,7 +26,7 @@ public:
     ReleaseDialog(QWidget* parent = Q_NULLPTR);
     virtual ~ReleaseDialog() = default;
 
-    void setMusicToPublic(const QVector<const Music*> &notReleased);
+    void setMusicToPublic(const std::vector<const Music*> &notReleased);
 
     void createFormDialogLayout(QWidget* parent = Q_NULLPTR) override;
 

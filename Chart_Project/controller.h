@@ -63,13 +63,18 @@ public slots:
     void removeFromToSave(const Music* music);
     void saveToFile();
 
+    // music dialog
     void showMusicDialog();
     void addNewMusic();
 
+    // release dialog
     void showReleaseDialog();
     void enableRDComponents();
     int getIndex(const Music* music);
     void releaseMusic();
+
+    // line chart dialog
+    void showLineChartDialog();
 };
 
 #endif // CONTROLLER_H

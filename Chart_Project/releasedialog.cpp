@@ -25,9 +25,7 @@ ReleaseDialog::ReleaseDialog(QWidget* parent) : FormDialog(parent),
                                                 tdlEdit(new QLineEdit(parent)),
                                                 dzrEdit(new QLineEdit(parent)),
                                                 ytmEdit(new QLineEdit(parent)),
-                                                amzEdit(new QLineEdit(parent)),
-
-                                                musicToPublic(QStringList())
+                                                amzEdit(new QLineEdit(parent))
 {
     setAddBtn("Pubblica");
 
@@ -145,13 +143,13 @@ void ReleaseDialog::createDMBox(QVBoxLayout *vbl, QWidget* parent) {
     vbl->addWidget(groupBox);
 }
 
-void ReleaseDialog::setMusicToPublic(const QVector<const Music *> &notReleased) {
-    musicToPublic.clear();
+void ReleaseDialog::setMusicToPublic(const std::vector<const Music *> &notReleased) {
+    QStringList list;
     toPublicCB->clear();
     for (auto it = notReleased.begin(); it != notReleased.end(); ++it)
-        musicToPublic.push_back(QString::fromStdString((*it)->getInfo()));  // DA SISTEMARE
+        list.push_back(QString::fromStdString((*it)->getInfo()));
 
-    toPublicCB->addItems(musicToPublic);
+    toPublicCB->addItems(list);
 }
 
 void ReleaseDialog::createFormDialogLayout(QWidget* parent) {
@@ -239,22 +237,6 @@ bool ReleaseDialog::checkLineEdit(const QLineEdit *le) const {
     return le->isEnabled() && !le->text().isEmpty();
 }
 
-/*
-bool ReleaseDialog::checkPMInput() const {
-    return  checkLine(cdCKB, cdEdit, "vendite") ||
-            checkLine(vnlCKB, vnlEdit, "vendite") ||
-            checkLine(cstCKB, cstEdit, "vendite");
-}
-
-bool ReleaseDialog::checkDMInput() const {
-    return  checkLine(sptfCKB, sptfEdit, "ascolti") ||
-            checkLine(applmCKB, applmEdit, "ascolti") ||
-            checkLine(tdlCKB, tdlEdit, "ascolti") ||
-            checkLine(dzrCKB, dzrEdit, "ascolti") ||
-            checkLine(ytmCKB, ytmEdit, "ascolti") ||
-            checkLine(amzCKB, amzEdit, "ascolti");
-}
-*/
 void ReleaseDialog::resetComponents() {
     releaseDE->clear();
 

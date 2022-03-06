@@ -11,7 +11,8 @@ uint ChartDialog::getOptionsIndex() const { return optionsCB->currentIndex(); }
 void ChartDialog::createDescriptionBox(QVBoxLayout *vbl, const QString &label, QWidget *parent) {
     QVBoxLayout *boxLayout = new QVBoxLayout(parent);
 
-    QLabel *description = new QLabel(label, parent);
+    QPlainTextEdit *description = new QPlainTextEdit(label, parent);
+    description->setReadOnly(true);
 
     boxLayout->addWidget(description);
 

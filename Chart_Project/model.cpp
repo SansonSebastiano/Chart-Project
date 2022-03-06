@@ -54,12 +54,26 @@ vector<const string> Model::getArtist() const {
     string key;
 
     for (auto it = v.begin(); it != v.end(); ++it){
-        key = (*it)->getArtist();   // non mi convince
+        key = (*it)->getArtist();
 
         if (std::find(result.begin(), result.end(), key) == result.end())
                 result.push_back(key);
     }
 
+    return result;
+}
+
+vector<const string> Model::getGenre() const {
+    vector<const string> result;
+    auto v = rl->getAll();
+    string key;
+
+    for(auto it = v.begin(); it != v.end(); ++it){
+        key = (*it)->getGenre();
+
+        if(std::find(result.begin(), result.end(), key) == result.end())
+            result.push_back(key);
+    }
     return result;
 }
 

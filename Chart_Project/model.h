@@ -32,6 +32,7 @@ public:
     bool isElapsed1Year(const Release *release) const;
 
     vector<const string> getArtist() const;
+    vector<const string> getGenre() const;
 
     // opzioni grafici:
         // - linechart :

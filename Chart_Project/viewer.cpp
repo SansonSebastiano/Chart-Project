@@ -140,6 +140,9 @@ Viewer::Viewer(QWidget *parent) : QDialog(parent), controller(new Controller) {
     rd = new ReleaseDialog(parent);
     rd->createFormDialogLayout();
 
+    ld = new LineChartDialog(parent);
+    ld->createFormDialogLayout();
+
     // Add menu bar
     addMenus(mainLayout);
 
@@ -160,8 +163,6 @@ void Viewer::setController(Controller *c) {
     controller = c;
 
     // IMPLEMENTAZIONE SEGNALI E SLOT
-        // close mainwindow
-    //connect(AC_close, &QAction::triggered, QApplication::instance(), &QApplication::quit);
         // save data
     connect(btn_saveData, &QPushButton::clicked, controller, &Controller::saveToFile);
     connect(AC_save, &QAction::triggered, controller, &Controller::saveToFile);
@@ -187,6 +188,8 @@ void Viewer::setController(Controller *c) {
     connect(rd->getdzrCKB(), &QCheckBox::stateChanged, controller, &Controller::enableRDComponents);
     connect(rd->getytmCKB(), &QCheckBox::stateChanged, controller, &Controller::enableRDComponents);
     connect(rd->getamzCKB(), &QCheckBox::stateChanged, controller, &Controller::enableRDComponents);
+        // to handle line chart dialog
+    connect(btn_lineChart, &QPushButton::clicked, controller, &Controller::showLineChartDialog);
 }
 
 void Viewer::setTable(const QVector<const Music*> &catalog) {
@@ -214,11 +217,9 @@ MusicDialog *Viewer::getMusicDialog() const { return md; }
 
 ReleaseDialog *Viewer::getReleaseDialog() const { return rd; }
 
-void Viewer::showDialog(FormDialog *dialog, const QVector<const Music*> &notReleased) {
-    auto releaseDialog = dynamic_cast<ReleaseDialog*>(dialog);
-    if (releaseDialog)
-        releaseDialog->setMusicToPublic(notReleased);
+LineChartDialog *Viewer::getLineChartDialog() const { return ld; }
 
+void Viewer::showDialog(FormDialog *dialog) {
     dialog->show();
 }
 
