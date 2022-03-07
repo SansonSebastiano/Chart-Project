@@ -13,13 +13,22 @@
 #include "musicdialog.h"
 #include "releasedialog.h"
 
+#include "linechart.h"
+#include "piechart.h"
+#include "barchart.h"
+
+#include "chartscreen.h"
+
 class Controller : public QObject{
     Q_OBJECT
 private:
     Viewer *view;
     Model *model;
 
-    xml_IO xmlio;
+    xml_IO xmlio;   // DEVE ESSERE UN POINTER !!!!!!
+
+    AbstractChart *chart;
+    ChartScreen *chartWindow;
 
     QVector<const Music*> catalog;  // preleva tutti i dati da file e caricarli nella tabella
     QVector<const Music*> toSave;   // memorizza i dati da salvare su file

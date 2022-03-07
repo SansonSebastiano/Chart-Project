@@ -26,5 +26,7 @@ void ChartScreen::setChartView(AbstractChart* ac) {
         // infine passare l'oggetto abstractchart qui
     myChartModel = ac; // metodo clone ??
     chartView = new QChartView(myChartModel);
+    chartView->setRenderHint(QPainter::Antialiasing);
+
     mainLayout->addWidget(chartView);
 }

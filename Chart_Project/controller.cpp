@@ -353,11 +353,25 @@ void Controller::showLineChartWindow() {
             vector<const Music*> result;
             vector<uint> profits = model->lineChartOp1(genre, from, to, result);
 
+            vector<uint> years;
+            for (uint year = from; year <= to; ++year)
+                years.push_back(year);
+
+            /*
             for(auto it = result.begin(); it != result.end(); ++it)
                 cout << (*it)->getInfo() << endl << endl;
 
             for(auto it = profits.begin(); it != profits.end(); ++it)
                 cout << *it << endl;
+            */
+
+            chart = new LineChart("TITOLO", profits, years);
+            chart->setChart();
+            chartWindow = new ChartScreen(QVector<const Music*>::fromStdVector(result), chart);
+            chartWindow->show();
+
+            dialog->resetComponents();
+            dialog->close();
         }
     }else
         view->showWarning("Seleziona un genere");
