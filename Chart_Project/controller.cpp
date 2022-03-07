@@ -354,16 +354,9 @@ void Controller::showLineChartWindow() {
             vector<uint> profits = model->lineChartOp1(genre, from, to, result);
 
             vector<uint> years;
+            // NON MI CONVINCE : DA SISTEMARE
             for (uint year = from; year <= to; ++year)
                 years.push_back(year);
-
-            /*
-            for(auto it = result.begin(); it != result.end(); ++it)
-                cout << (*it)->getInfo() << endl << endl;
-
-            for(auto it = profits.begin(); it != profits.end(); ++it)
-                cout << *it << endl;
-            */
 
             chart = new LineChart("TITOLO", profits, years);
             chart->setChart();

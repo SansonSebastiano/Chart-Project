@@ -156,7 +156,7 @@ Viewer::Viewer(QWidget *parent) : QDialog(parent), controller(new Controller) {
 
     //mainLayout->setSpacing(0);
     setLayout(mainLayout);
-    resize(QSize(1920, 720));
+    resize(QSize(1080, 720));
 }
 
 void Viewer::setController(Controller *c) {
