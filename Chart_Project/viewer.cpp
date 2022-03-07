@@ -195,13 +195,13 @@ void Viewer::setController(Controller *c) {
 }
 
 void Viewer::setTable(const QVector<const Music*> &catalog) {
-    table = new QTableView;
+    tableView = new QTableView;
     myTableModel = new TableModel(catalog);
 
-    table->setModel(myTableModel);
+    tableView->setModel(myTableModel);
     //table->setWindowTitle();
 
-    table_layout->addWidget(table);
+    table_layout->addWidget(tableView);
     frame->setLayout(table_layout);
 }
 

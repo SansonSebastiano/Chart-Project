@@ -65,7 +65,7 @@ public:
      * @ ECCEZIONI  nel caso l'anno sia errato ??
      * @return  vector<const Release*>
      */
-    vector<const Release*> getByYear(const vector<const Music*> &v, uint year) const;
+    vector<const Music*> getByYear(const vector<const Music*> &v, uint year) const;
     /*
      * @brief   scansiona il vettore in input e restituisce tutta la musica pubblicata in una piattaforma data in input
      * @param   Platform platform
@@ -73,7 +73,7 @@ public:
      * @ ECCEZIONI  ??
      * @return  vector<const Release*>
      */
-    vector<const Release*> getByPlatform(const vector<const Release*> &v, Platform platform) const;
+    vector<const Music*> getByPlatform(const vector<const Music*> &v, Platform platform) const;
     /*
      * @brief   scansiona il vettore in input e restituisce tutta la musica pubblicata in un supporto fisico dato in input
      * @param   Support support
@@ -81,13 +81,13 @@ public:
      * @ ECCEZIONI  ??
      * @return  vector<const Release*>
      */
-    vector<const Release*> getBySupport(const vector<const Release*> &v, Support support) const;
+    vector<const Music*> getBySupport(const vector<const Music*> &v, Support support) const;
     /*
      * @brief   somma e ritorna l'incasso totale di un vettore di musica pubblicata data in input
      * @param   vector<const Release*> r
      * @return  double
      */
-    double getTotProfit(const vector<const Release*> &r) const;
+    double getTotProfit(const vector<const Music*> &r) const;
     /*
      * @brief   somma e ritorna il numero totale di
      *              - vendite, se il vettore contiene PhiscycalMedium
@@ -96,7 +96,7 @@ public:
      * @param   vector<const Release*> r
      * @return  unsigned int
      */
-    uint getTotNumbers(const vector<const Release*> &r) const;
+    uint getTotNumbers(const vector<const Music*> &r) const;
     /*
      * @brief   restituisce tutta la musica dell'etichetta discografica, quella pubblicata, la ritorna se e solo se e' trascorso almeno un anno dalla sua pubblicazione
      * @return  vector<const Music*>

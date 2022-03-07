@@ -58,7 +58,7 @@ private:
     // Buttons dialog
     QPushButton *btn_add, *btn_cancel;
 
-    QTableView *table;
+    QTableView *tableView;
     TableModel *myTableModel;
 
     // custom dialog for adding and releasing music

@@ -7,14 +7,16 @@ ChartScreen::ChartScreen(const QVector<const Music*> &v, AbstractChart* ac, QWid
 
     setTableView(v);
     setChartView(ac);
+
+    setLayout(mainLayout);
 }
 
 void ChartScreen::setTableView(const QVector<const Music *> &v) {
-    myTable = new QTableView();
+    tableView = new QTableView();
     myTableModel = new TableModel(v);
 
-    myTable->setModel(myTableModel);
-    mainLayout->addWidget(myTable);
+    tableView->setModel(myTableModel);
+    mainLayout->addWidget(tableView);
 }
 
 void ChartScreen::setChartView(AbstractChart* ac) {
@@ -24,4 +26,5 @@ void ChartScreen::setChartView(AbstractChart* ac) {
         // infine passare l'oggetto abstractchart qui
     myChartModel = ac; // metodo clone ??
     chartView = new QChartView(myChartModel);
+    mainLayout->addWidget(chartView);
 }

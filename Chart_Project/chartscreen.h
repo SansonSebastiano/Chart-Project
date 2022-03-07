@@ -18,7 +18,7 @@ using QtCharts::QChartView;
 class ChartScreen : public QDialog {
 private:
     TableModel *myTableModel;
-    QTableView *myTable;
+    QTableView *tableView;
 
     AbstractChart *myChartModel;
     QChartView *chartView;

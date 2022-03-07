@@ -77,12 +77,18 @@ vector<const string> Model::getGenre() const {
     return result;
 }
 
-vector<uint> Model::lineChartOp1(const string &genre, uint from, uint to) {
+vector<uint> Model::lineChartOp1(const string &genre, uint from, uint to, vector<const Music*> &data) {
     auto byGenre = rl->getByGenre(rl->getAll(), genre);
     vector<uint> result;
 
-    for(uint year(from); year <= to; year++)
-        result.push_back(rl->getTotProfit(rl->getByYear(byGenre, year)));
+    for(uint year(from); year <= to; year++) {
+        auto byYear = rl->getByYear(byGenre, year);
+
+        data.reserve(data.size() + byYear.size());
+        data.insert(data.end(), byYear.begin(), byYear.end());
+
+        result.push_back(rl->getTotProfit(byYear));
+    }
 
     return result;
 }

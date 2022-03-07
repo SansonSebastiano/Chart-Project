@@ -63,11 +63,12 @@ vector<const Music*> RecordLabel::getByArtist(const vector<const Music *> &v, co
     return result;
 }
 
-vector<const Release*> RecordLabel::getByYear(const vector<const Music *> &v, uint year) const {
+vector<const Music*> RecordLabel::getByYear(const vector<const Music *> &v, uint year) const {
     //controllo se
         // - 'v' e' vuoto?
 
-    vector<const Release*> result;
+    vector<const Music*> result;
+
     for(auto it = v.begin(); it != v.end(); ++it) {
         auto pr = dynamic_cast<const Release*>(*it);
         if(pr && pr->getReleaseDate().getYear() == year)
@@ -78,12 +79,12 @@ vector<const Release*> RecordLabel::getByYear(const vector<const Music *> &v, ui
     return result;
 }
 
-vector<const Release*> RecordLabel::getByPlatform(const vector<const Release*> &v, Platform platform) const{
+vector<const Music*> RecordLabel::getByPlatform(const vector<const Music*> &v, Platform platform) const{
     //controllo se
         // - 'v' e' vuoto?
         // - platform == None_Platform
 
-    vector<const Release*> result;
+    vector<const Music*> result;
 
     for(auto it = v.begin(); it != v.end(); ++it){
         auto pdm = dynamic_cast<const DM*>(*it);
@@ -94,12 +95,12 @@ vector<const Release*> RecordLabel::getByPlatform(const vector<const Release*> &
     return result;
 }
 
-vector<const Release*> RecordLabel::getBySupport(const vector<const Release*> &v, Support support) const{
+vector<const Music*> RecordLabel::getBySupport(const vector<const Music*> &v, Support support) const{
     //controllo se
         // - 'v' e' vuoto?
         // - support = None_Support
 
-    vector<const Release*> result;
+    vector<const Music*> result;
 
     for(auto it = v.begin(); it != v.end(); ++it){
         auto ppm = dynamic_cast<const PM*>(*it);
@@ -110,21 +111,29 @@ vector<const Release*> RecordLabel::getBySupport(const vector<const Release*> &v
     return result;
 }
 
-double RecordLabel::getTotProfit(const vector<const Release*> &r) const {
+double RecordLabel::getTotProfit(const vector<const Music*> &r) const {
     // controllo se r è vuoto ??
 
     double tot_profit = 0.0;
-    for(auto it = r.begin(); it != r.end(); ++it)
-        tot_profit += (*it)->getProfit();
+    for(auto it = r.begin(); it != r.end(); ++it) {
+        auto pr = dynamic_cast<const Release*>(*it);
+        if(pr)
+            tot_profit += pr->getProfit();
+    }
+
     return tot_profit;
 }
 
-uint RecordLabel::getTotNumbers(const vector<const Release *> &r) const {
+uint RecordLabel::getTotNumbers(const vector<const Music *> &r) const {
     // controllo se r è vuoto ??
 
     uint tot_numbers = 0;
-    for(auto it = r.begin(); it != r.end(); ++it)
-        tot_numbers += (*it)->getNumbers();
+    for(auto it = r.begin(); it != r.end(); ++it) {
+        auto pr = dynamic_cast<const Release*>(*it);
+        if(pr)
+            tot_numbers += pr->getNumbers();
+    }
+
     return tot_numbers;
 }
 

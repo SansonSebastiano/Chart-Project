@@ -340,9 +340,25 @@ void Controller::enableLDComponents() { view->getLineChartDialog()->enableCompon
 void Controller::showLineChartWindow() {
     auto dialog = view->getLineChartDialog();
 
-    // DEFINISCI COSA FARE SE LE DUE DATE SONO UGUALI
-    if(dialog->getGenreRB()->isChecked()) {
-        // get data & set window
+    if (dialog->getGenreRB()->isChecked()) {
+        uint from = dialog->getYearFrom(),
+             to = dialog->getYearTo();
+
+        if (from == to || from > to)
+            view->showWarning("Date errate!");
+        else {
+            // get data & set window
+            string genre = dialog->getGenreSelected();
+
+            vector<const Music*> result;
+            vector<uint> profits = model->lineChartOp1(genre, from, to, result);
+
+            for(auto it = result.begin(); it != result.end(); ++it)
+                cout << (*it)->getInfo() << endl << endl;
+
+            for(auto it = profits.begin(); it != profits.end(); ++it)
+                cout << *it << endl;
+        }
     }else
         view->showWarning("Seleziona un genere");
 }
