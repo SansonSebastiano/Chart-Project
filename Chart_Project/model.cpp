@@ -48,8 +48,8 @@ bool Model::areEquals(const Music *m1, const Music *m2) const { return rl->areSa
 
 bool Model::isElapsed1Year(const Release *release) const { return rl->isElapsed1Year(release); }
 
-vector<const string> Model::getArtist() const {
-    vector<const string> result;
+vector< string> Model::getArtist() const {
+    vector< string> result;
     auto v = rl->getAll();
     string key;
 
@@ -63,8 +63,8 @@ vector<const string> Model::getArtist() const {
     return result;
 }
 
-vector<const string> Model::getGenre() const {
-    vector<const string> result;
+vector< string> Model::getGenre() const {
+    vector< string> result;
     auto v = rl->getAll();
     string key;
 

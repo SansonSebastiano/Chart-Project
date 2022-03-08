@@ -20,7 +20,7 @@ LineChartDialog::LineChartDialog(QWidget *parent)
 
 void LineChartDialog::setOptions() { }
 
-void LineChartDialog::setGenreCB(const std::vector<const string> &genres) {
+void LineChartDialog::setGenreCB(const std::vector<string> &genres) {
     QStringList list;
     genreCB->clear();
     for (auto it = genres.begin(); it != genres.end(); ++it)

@@ -18,7 +18,7 @@ public:
     void createFormDialogLayout(QWidget* parent = Q_NULLPTR) override;
     void resetComponents() override;
 
-    void setGenreCB(const std::vector<const string> &genres);
+    void setGenreCB(const std::vector<string> &genres);
 
     // groupboxes
     void createGenreQCBBox(QVBoxLayout *vbl, QWidget* parent = Q_NULLPTR);
