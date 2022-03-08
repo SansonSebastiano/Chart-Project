@@ -23,9 +23,21 @@ void LineChart::setSeries() {
 
 void LineChart::setChart() {
     setSeries();
-
-
     addSeries(mySeries);
+
+    // TODO : da sistemare
+    QDateTimeAxis *axisX = new QDateTimeAxis;
+    axisX->setFormat("yyyy");
+    axisX->setTitleText("Intervallo anni");
+    addAxis(axisX, Qt::AlignBottom);
+    mySeries->attachAxis(axisX);
+
+    QValueAxis *axisY = new QValueAxis;
+    axisY->setMin(0);
+    axisY->setTitleText("Profitto");
+    addAxis(axisY, Qt::AlignLeft);
+    mySeries->attachAxis(axisY);
+
     legend()->hide();
     createDefaultAxes();
     setTitle(getTitle());

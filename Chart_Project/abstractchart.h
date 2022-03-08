@@ -5,6 +5,7 @@
 #include <QList>
 #include <QChart>
 QT_CHARTS_USE_NAMESPACE
+#include <QValueAxis>
 
 class AbstractChart : public QChart {
 private:

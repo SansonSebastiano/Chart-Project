@@ -2,6 +2,7 @@
 #define LINECHART_H
 
 #include <QLineSeries>
+#include <QDateTimeAxis>
 
 #include "abstractchart.h"
 

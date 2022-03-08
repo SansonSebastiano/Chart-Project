@@ -28,6 +28,7 @@ void ChartScreen::setChartView(AbstractChart* ac) {
     chartView = new QChartView(myChartModel);
     chartView->setRenderHint(QPainter::Antialiasing);
 
+
     mainLayout->addWidget(chartView);
     resize(QSize(1080, 720));
 }
