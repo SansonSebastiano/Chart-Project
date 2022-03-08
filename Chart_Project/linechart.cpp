@@ -24,6 +24,7 @@ void LineChart::setSeries() {
 void LineChart::setChart() {
     setSeries();
 
+
     addSeries(mySeries);
     legend()->hide();
     createDefaultAxes();
