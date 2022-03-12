@@ -374,6 +374,22 @@ void Controller::showLineChartWindow() {
 void Controller::showPieChartDialog() {
     auto dialog = view->getPieChartDialog();
     view->showDialog(dialog);
+
+    switch (dialog->getOptionsIndex()) {
+    case 0:
+        model->pieChartOp1();
+        //set chart and show
+        break;
+    case 1:
+        // TESTING
+        auto data = model->pieChartOp2();
+        QList<qreal*> ydata;
+        ydata.push_back(&data.first);
+        ydata.push_back(&data.second);
+        chart = new PieChart("TEST", {"Rilasciata", "Non rilasciata"}, ydata);
+        chart->setChart();
+        // get data to display in table
+    }
 }
 
 void Controller::changeDescription() { view->getPieChartDialog()->switchDescription(); }

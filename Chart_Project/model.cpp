@@ -92,3 +92,20 @@ vector<uint> Model::lineChartOp1(const string &genre, uint from, uint to, vector
 
     return result;
 }
+
+vector<uint> Model::pieChartOp1() {
+    vector<uint> result;
+
+    // fetch catalogo
+    auto all = rl->getReleased();
+    // for cycle to get artist musics
+    auto byArtist = rl->getByArtist(all, "artista");
+
+    return result;
+}
+
+std::pair<double, double> Model::pieChartOp2() {
+    std::pair<double, double> result(rl->getReleased().size(), rl->getNotReleased().size());
+
+    return result;
+}

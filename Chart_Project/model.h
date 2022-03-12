@@ -37,12 +37,12 @@ public:
     // opzioni grafici:
         // - linechart :
             // -> prendere musica di genere x, pubblicata in un range di anni, prelevare infine profitto (o vendite o costi?) per ogni anno compreso nel range
-    vector<const Release*> getLineChartData(uint from, uint to, const string &genre);
     vector<uint> lineChartOp1(const string &genre, uint from, uint to, vector<const Music*> &data);
         // - piechart :
             // -> prelevare un numero x (per ora 5, senza possibilita' di scelta) di artisti migliori in assoluto (limite max 10?) della label, in base al profitto (o vendite o costi?)
-
+    vector<uint> pieChartOp1();
             // -> percentuale musica pubblicata e non
+    std::pair<double, double> pieChartOp2();
             // -> confrontare incassi medium fisici vs digitali
         // - bar chart :
             // -> dato un artista x, confrontare i profitti tra i vari medium su cui e' pubblicata la sua musica

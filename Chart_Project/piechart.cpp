@@ -1,6 +1,6 @@
 #include "piechart.h"
 
-PieChart::PieChart(const QString& _title, const QList<QString*> &_xData, const QList<qreal*> &_yData) : AbstractChart(_title), x_data(_xData), y_data(_yData) {
+PieChart::PieChart(const QString& _title, const QStringList &_xData, const QList<qreal*> &_yData) : AbstractChart(_title), x_data(_xData), y_data(_yData) {
     mySeries = new QPieSeries();
 }
 
@@ -10,7 +10,7 @@ void PieChart::setSlices() {
     auto yit = y_data.begin();
 
     while (xit != x_data.end() && yit != y_data.end()) {
-        slices.push_back(new QPieSlice(**xit,**yit));
+        slices.push_back(new QPieSlice(*xit,**yit));
 
         ++xit;
         ++yit;

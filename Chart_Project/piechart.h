@@ -10,14 +10,15 @@ using QtCharts::QPieSlice;
 
 class PieChart : public AbstractChart{
 private:
-    QList<QString*> x_data;
+    QStringList x_data;
+    //QList<QString*> x_data;
     QList<qreal*> y_data;
     QList<QPieSlice*> slices;
 
     void setSlices ();
     void setSeries() override;
 public:
-    PieChart(const QString &_title, const QList<QString*> &_xData, const QList<qreal*> &_yData);
+    PieChart(const QString &_title, const QStringList &_xData, const QList<qreal*> &_yData);
     virtual ~PieChart() = default;      // DA IMPLEMENTARE
 
     void setChart() override;
