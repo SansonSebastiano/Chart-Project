@@ -18,7 +18,7 @@ void PieChartDialog::createFormDialogLayout(QWidget *parent) {
     // add options' combobox to dialog
     createOptionsQCBBox(dialogLayout, parent);
     // add a detailed description of option selected
-    showDescription();
+    createDescriptionBox(dialogLayout, desc_option1);
 
     // button layout
     QHBoxLayout *buttonLayout = new QHBoxLayout(parent);
@@ -34,17 +34,19 @@ void PieChartDialog::resetComponents() {
     ChartDialog::resetComponents();
 }
 
-void PieChartDialog::showDescription() {
+
+void PieChartDialog::switchDescription() {
     switch (getOptionsIndex()) {
     case 0:
-        createDescriptionBox(dialogLayout, desc_option1);
+        changeTextDescription(desc_option1);
         break;
     case 1:
-        createDescriptionBox(dialogLayout, desc_option2);
+        changeTextDescription(desc_option2);
         break;
     case 2:
-        createDescriptionBox(dialogLayout, desc_option3);
+        changeTextDescription(desc_option3);
     default:
         break;
     }
 }
+

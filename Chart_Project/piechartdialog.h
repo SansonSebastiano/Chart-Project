@@ -15,11 +15,13 @@ public:
     PieChartDialog(QWidget *parent = Q_NULLPTR);
     ~PieChartDialog() = default;
 
+
+
     void createFormDialogLayout(QWidget* parent = Q_NULLPTR) override;
     void resetComponents() override;
 
     // se necessario renderla astratta nella classe base 'ChartDialog'
-    void showDescription();
+    void switchDescription();
 };
 
 #endif // PIECHARTDIALOG_H

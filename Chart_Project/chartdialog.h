@@ -8,15 +8,18 @@
 class ChartDialog : public FormDialog {
 protected:      // CORRETTO????
     QComboBox *optionsCB;
+    QPlainTextEdit *description;
 public:
     ChartDialog(QWidget* parent = Q_NULLPTR);
     virtual ~ChartDialog() = default;
 
     uint getOptionsIndex() const;
-    //QComboBox* getOptions() const;
+    QComboBox* getOptionsCB() const;
+
+    void changeTextDescription(const QString &text);
 
     virtual void setOptions() = 0;
-    virtual void createDescriptionBox(QVBoxLayout *vbl, const QString &label, QWidget* parent = Q_NULLPTR);
+    virtual void createDescriptionBox(QVBoxLayout *vbl, const QString &text, QWidget* parent = Q_NULLPTR);
     void createOptionsQCBBox(QVBoxLayout *vbl, QWidget* parent = Q_NULLPTR);
 
     void resetComponents() override;

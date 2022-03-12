@@ -40,7 +40,8 @@ public:
     vector<const Release*> getLineChartData(uint from, uint to, const string &genre);
     vector<uint> lineChartOp1(const string &genre, uint from, uint to, vector<const Music*> &data);
         // - piechart :
-            // -> prelevare un numero x di artisti migliori in assoluto (limite max 10?) della label, in base al profitto (o vendite o costi?)
+            // -> prelevare un numero x (per ora 5, senza possibilita' di scelta) di artisti migliori in assoluto (limite max 10?) della label, in base al profitto (o vendite o costi?)
+
             // -> percentuale musica pubblicata e non
             // -> confrontare incassi medium fisici vs digitali
         // - bar chart :

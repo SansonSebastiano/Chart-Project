@@ -349,16 +349,17 @@ void Controller::showLineChartWindow() {
         else {
             // get data & set window
             string genre = dialog->getGenreSelected();
-
+            //----------------------------------------------------------------------------------------------------
+            // NON MI CONVINCE : DA SISTEMARE, creare una funzione che imposti i dati da fornire ai charts
+            //----------------------------------------------------------------------------------------------------
             vector<const Music*> result;
             vector<uint> profits = model->lineChartOp1(genre, from, to, result);
-
             vector<uint> years;
-            // NON MI CONVINCE : DA SISTEMARE
+
             for (uint year = from; year <= to; ++year)
                 years.push_back(year);
 
-            chart = new LineChart("TITOLO", profits, years);
+            chart = new LineChart("Profitto per anno in base al genere musicale", profits, years);
             chart->setChart();
             chartWindow = new ChartScreen(QVector<const Music*>::fromStdVector(result), chart);
             chartWindow->show();
@@ -369,3 +370,10 @@ void Controller::showLineChartWindow() {
     }else
         view->showWarning("Seleziona un genere");
 }
+
+void Controller::showPieChartDialog() {
+    auto dialog = view->getPieChartDialog();
+    view->showDialog(dialog);
+}
+
+void Controller::changeDescription() { view->getPieChartDialog()->switchDescription(); }

@@ -1,17 +1,24 @@
 #include "chartdialog.h"
 
-ChartDialog::ChartDialog (QWidget* parent) : FormDialog(parent), optionsCB(new QComboBox(parent)) {
+ChartDialog::ChartDialog (QWidget* parent) : FormDialog(parent), optionsCB(new QComboBox(parent)), description(new QPlainTextEdit()) {
     setAddBtn("Visualizza");
 }
 
 uint ChartDialog::getOptionsIndex() const { return optionsCB->currentIndex(); }
 
+QComboBox *ChartDialog::getOptionsCB() const { return optionsCB; }
+
 //void ChartDialog::setOptions(const QStringList &optionsList) { options->addItems(optionsList); }
 
-void ChartDialog::createDescriptionBox(QVBoxLayout *vbl, const QString &label, QWidget *parent) {
+void ChartDialog::changeTextDescription(const QString &text) {
+    description->clear();
+    description->setPlainText(text);
+}
+
+void ChartDialog::createDescriptionBox(QVBoxLayout *vbl, const QString &text, QWidget *parent) {
     QVBoxLayout *boxLayout = new QVBoxLayout(parent);
 
-    QPlainTextEdit *description = new QPlainTextEdit(label, parent);
+    description->setPlainText(text);
     description->setReadOnly(true);
 
     boxLayout->addWidget(description);
@@ -26,7 +33,7 @@ void ChartDialog::createDescriptionBox(QVBoxLayout *vbl, const QString &label, Q
 void ChartDialog::createOptionsQCBBox(QVBoxLayout *vbl, QWidget* parent) {
     QVBoxLayout *boxLayout = new QVBoxLayout(parent);
 
-    createFormLayout("", optionsCB, vbl, parent);
+    createFormLayout("", optionsCB, boxLayout, parent);
 
     QGroupBox *groupBox = new QGroupBox("Scegli un'opzione: ");
     groupBox->setLayout(boxLayout);

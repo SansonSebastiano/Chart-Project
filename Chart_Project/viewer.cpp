@@ -134,6 +134,7 @@ Viewer::Viewer(QWidget *parent) : QDialog(parent), controller(new Controller) {
     mainLayout = new QVBoxLayout;
 
     // init Custom-Dialog-Form
+    // NON MI CONVINCE
     md = new MusicDialog(parent);
     md->createFormDialogLayout();
 
@@ -142,6 +143,12 @@ Viewer::Viewer(QWidget *parent) : QDialog(parent), controller(new Controller) {
 
     ld = new LineChartDialog(parent);
     ld->createFormDialogLayout();
+
+    pd = new PieChartDialog(parent);
+    pd->createFormDialogLayout();
+
+    //bd = new BarChartDialog(parent);
+    //bd->createFormDialogLayout();
 
     // Add menu bar
     addMenus(mainLayout);
@@ -163,17 +170,17 @@ void Viewer::setController(Controller *c) {
     controller = c;
 
     // IMPLEMENTAZIONE SEGNALI E SLOT
-        // save data
+    // save data
     connect(btn_saveData, &QPushButton::clicked, controller, &Controller::saveToFile);
     connect(AC_save, &QAction::triggered, controller, &Controller::saveToFile);
-        // upload data
+    // upload data
     connect(btn_uploadData, &QPushButton::clicked, controller, &Controller::showTable);
     connect(AC_upload, &QAction::triggered, controller, &Controller::showTable);
-        // to handle Music custom form dialog
+    // to handle Music custom form dialog
     connect(btn_addItem, &QPushButton::clicked, controller, &Controller::showMusicDialog);
     connect(AC_add, &QAction::triggered, controller, &Controller::showMusicDialog);
     connect(md->getAddBtn(), &QPushButton::clicked, controller, &Controller::addNewMusic);
-        // to handle Release custom form dialog and checkbox's signal
+    // to handle Release custom form dialog and checkbox's signal
     connect(btn_release, &QPushButton::clicked, controller, &Controller::showReleaseDialog);
     connect(AC_release, &QAction::triggered, controller, &Controller::showReleaseDialog);
     connect(rd->getAddBtn(), &QPushButton::clicked, controller, &Controller::releaseMusic);
@@ -188,10 +195,18 @@ void Viewer::setController(Controller *c) {
     connect(rd->getdzrCKB(), &QCheckBox::stateChanged, controller, &Controller::enableRDComponents);
     connect(rd->getytmCKB(), &QCheckBox::stateChanged, controller, &Controller::enableRDComponents);
     connect(rd->getamzCKB(), &QCheckBox::stateChanged, controller, &Controller::enableRDComponents);
-        // to handle line chart dialog
+    // to handle line chart dialog
+    connect(AC_lineChart, &QAction::triggered, controller, &Controller::showLineChartDialog);
     connect(btn_lineChart, &QPushButton::clicked, controller, &Controller::showLineChartDialog);
     connect(ld->getGenreRB(), &QRadioButton::clicked, controller, &Controller::enableLDComponents);
     connect(ld->getAddBtn(), &QPushButton::clicked, controller, &Controller::showLineChartWindow);
+    // to handle pie chart dialog
+    connect(btn_pieChart, &QPushButton::clicked, controller, &Controller::showPieChartDialog);
+    connect(pd->getOptionsCB(), static_cast<void(QComboBox::*)(int)>(&QComboBox::activated),
+            [=](int index){
+        Q_UNUSED(index);
+        controller->changeDescription();
+    });
 }
 
 void Viewer::setTable(const QVector<const Music*> &catalog) {
@@ -220,6 +235,8 @@ MusicDialog *Viewer::getMusicDialog() const { return md; }
 ReleaseDialog *Viewer::getReleaseDialog() const { return rd; }
 
 LineChartDialog *Viewer::getLineChartDialog() const { return ld; }
+
+PieChartDialog *Viewer::getPieChartDialog() const { return pd; }
 
 void Viewer::showDialog(FormDialog *dialog) { dialog->show(); }
 

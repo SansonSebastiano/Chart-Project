@@ -25,9 +25,9 @@ void PieChart::setSeries() {
 
 void PieChart::setChart() {
     setSeries();
-
     addSeries(mySeries);
+
     setTitle(getTitle());
-    // legend
+    legend()->show();
     // ...
 }

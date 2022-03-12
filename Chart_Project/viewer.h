@@ -32,6 +32,8 @@
 #include "releasedialog.h"
 
 #include "linechartdialog.h"
+#include "piechartdialog.h"
+#include "barchartdialog.h"
 
 class Controller;
 
@@ -67,6 +69,8 @@ private:
 
     // custom dialog for visualize charts
     LineChartDialog *ld;
+    PieChartDialog *pd;
+    BarChartDialog *bd;
 
     // overloading
     void closeEvent(QCloseEvent *event);
@@ -90,6 +94,7 @@ public:
     MusicDialog *getMusicDialog() const;
     ReleaseDialog *getReleaseDialog() const;
     LineChartDialog *getLineChartDialog() const;
+    PieChartDialog *getPieChartDialog() const;
     //----------------------------------------------------------
     // E' CORRETTO CHE ALCUNE FUNZIONI SIANO ESEGUITE DA VIEWER ? IN REALTA' FORSE SAREBBE MEGLIO DAL CONTROLLER?
     //----------------------------------------------------------

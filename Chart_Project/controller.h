@@ -86,6 +86,10 @@ public slots:
     void showLineChartDialog();
     void enableLDComponents();
     void showLineChartWindow();
+
+    // pie chart dialog
+    void showPieChartDialog();
+    void changeDescription();
 };
 
 #endif // CONTROLLER_H
