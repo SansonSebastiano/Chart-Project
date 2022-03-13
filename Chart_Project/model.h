@@ -31,7 +31,7 @@ public:
 
     bool isElapsed1Year(const Release *release) const;
 
-    vector<string> getArtist() const;
+    vector<string> getArtists() const;
     vector<string> getGenre() const;
 
     // opzioni grafici:
@@ -39,8 +39,8 @@ public:
             // -> prendere musica di genere x, pubblicata in un range di anni, prelevare infine profitto (o vendite o costi?) per ogni anno compreso nel range
     vector<uint> lineChartOp1(const string &genre, uint from, uint to, vector<const Music*> &data);
         // - piechart :
-            // -> prelevare un numero x (per ora 5, senza possibilita' di scelta) di artisti migliori in assoluto (limite max 10?) della label, in base al profitto (o vendite o costi?)
-    vector<uint> pieChartOp1();
+            // -> prelevare un numero x (per ora 5, senza possibilita' di scelta) di artisti migliori in assoluto della label, in base al profitto (o vendite o ascolti?)
+    vector<std::pair<string, double>> pieChartOp1();
             // -> percentuale musica pubblicata e non
     std::pair<double, double> pieChartOp2();
             // -> confrontare incassi medium fisici vs digitali

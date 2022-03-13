@@ -48,7 +48,7 @@ bool Model::areEquals(const Music *m1, const Music *m2) const { return rl->areSa
 
 bool Model::isElapsed1Year(const Release *release) const { return rl->isElapsed1Year(release); }
 
-vector<string> Model::getArtist() const {
+vector<string> Model::getArtists() const {
     vector<string> result;
     auto v = rl->getAll();
     string key;
@@ -93,15 +93,31 @@ vector<uint> Model::lineChartOp1(const string &genre, uint from, uint to, vector
     return result;
 }
 
-vector<uint> Model::pieChartOp1() {
-    vector<uint> result;
+vector<std::pair<string, double>> Model::pieChartOp1() {
+    vector<std::pair<string, double>> test;
+
+    vector<const Music*> byArtist;
+
+    // fect artists
+    auto artists = getArtists();
 
     // fetch catalogo
     auto all = rl->getReleased();
     // for cycle to get artist musics
-    auto byArtist = rl->getByArtist(all, "artista");
+    // NON MI CONVINCE
+    for(auto it = artists.begin(); it != artists.end(); ++it){
+        byArtist = rl->getByArtist(all, *it);
+        test.push_back(std::pair<string, double>(*it, rl->getTotProfit(byArtist)));
+    }
 
-    return result;
+    // TODO : max 5 artisti
+    /*
+     * decrescent sorting
+     * get first five pos
+     *
+     */
+
+    return test;
 }
 
 std::pair<double, double> Model::pieChartOp2() {

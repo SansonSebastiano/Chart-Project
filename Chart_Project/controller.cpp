@@ -391,13 +391,13 @@ void Controller::showPieChartWindow() {
 
     switch (dialog->getOptionsIndex()) {
     case 0:
-        //showPieOp1();
+        setPieOp1();
         break;
     case 1:
-        showPieOp2();
+        setPieOp2();
         break;
     case 2:
-        //showPieOp3();
+        //setPieOp3();
         break;
     default:
         break;
@@ -406,9 +406,30 @@ void Controller::showPieChartWindow() {
     dialog->close();
 }
 
-void Controller::showPieOp2() {
+void Controller::setPieOp1(){
+    auto data = model->pieChartOp1();
+
+    QStringList xdata;
+    QList<qreal*> ydata;
+
+    for(auto it = data.begin(); it != data.end(); ++it){
+        xdata.push_back(QString::fromStdString((*it).first));
+        ydata.push_back(&(*it).second);
+    }
+    chart = new PieChart("TEST", xdata, ydata);
+    chart->setChart();
+
+    chartWindow = new ChartScreen();
+    chartWindow->setChartView(chart);
+    chartWindow->show();
+}
+
+void Controller::setPieOp2() {
     auto data = model->pieChartOp2();
 
+    //----------------------------------------------------------------------------------------------------
+    // NON MI CONVINCE : DA SISTEMARE, creare una funzione che imposti i dati da fornire ai charts
+    //----------------------------------------------------------------------------------------------------
     QList<qreal*> ydata;
     ydata.push_back(&data.first);
     ydata.push_back(&data.second);

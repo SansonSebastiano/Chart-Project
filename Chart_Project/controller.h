@@ -40,9 +40,9 @@ private:
     void readFromFile(const QString& label, QDomDocument& document);
 
     //pie chart options
-    void showPieOp1();
-    void showPieOp2();
-    void showPieOp3();
+    void setPieOp1();
+    void setPieOp2();
+    void setPieOp3();
 public:
     explicit Controller(QObject *parent = nullptr);
     ~Controller() = default; // ??
