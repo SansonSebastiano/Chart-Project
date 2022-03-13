@@ -361,7 +361,10 @@ void Controller::showLineChartWindow() {
 
             chart = new LineChart("Profitto per anno in base al genere musicale", profits, years);
             chart->setChart();
-            chartWindow = new ChartScreen(QVector<const Music*>::fromStdVector(result), chart);
+
+            chartWindow = new ChartScreen();
+            chartWindow->setTableView(QVector<const Music*>::fromStdVector(result));
+            chartWindow->setChartView(chart);
             chartWindow->show();
 
             dialog->resetComponents();
@@ -373,23 +376,47 @@ void Controller::showLineChartWindow() {
 
 void Controller::showPieChartDialog() {
     auto dialog = view->getPieChartDialog();
-    view->showDialog(dialog);
+    auto data = model->getData();
 
-    switch (dialog->getOptionsIndex()) {
-    case 0:
-        model->pieChartOp1();
-        //set chart and show
-        break;
-    case 1:
-        // TESTING
-        auto data = model->pieChartOp2();
-        QList<qreal*> ydata;
-        ydata.push_back(&data.first);
-        ydata.push_back(&data.second);
-        chart = new PieChart("TEST", {"Rilasciata", "Non rilasciata"}, ydata);
-        chart->setChart();
-        // get data to display in table
-    }
+    if (!data.empty())
+        view->showDialog(dialog);
+    else
+        view->showWarning("Non e' stato caricato nessun dato");
 }
 
 void Controller::changeDescription() { view->getPieChartDialog()->switchDescription(); }
+
+void Controller::showPieChartWindow() {
+    auto dialog = view->getPieChartDialog();
+
+    switch (dialog->getOptionsIndex()) {
+    case 0:
+        //showPieOp1();
+        break;
+    case 1:
+        showPieOp2();
+        break;
+    case 2:
+        //showPieOp3();
+        break;
+    default:
+        break;
+    }
+    dialog->resetComponents();
+    dialog->close();
+}
+
+void Controller::showPieOp2() {
+    auto data = model->pieChartOp2();
+
+    QList<qreal*> ydata;
+    ydata.push_back(&data.first);
+    ydata.push_back(&data.second);
+
+    chart = new PieChart("Musica:", {"Rilasciata", "Non rilasciata"}, ydata);
+    chart->setChart();
+
+    chartWindow = new ChartScreen();
+    chartWindow->setChartView(chart);
+    chartWindow->show();
+}

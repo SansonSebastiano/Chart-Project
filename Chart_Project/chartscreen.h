@@ -25,7 +25,7 @@ private:
 
     QHBoxLayout *mainLayout;
 public:
-    ChartScreen(const QVector<const Music*> &v, AbstractChart* ac, QWidget* parent = Q_NULLPTR);
+    ChartScreen(QWidget* parent = Q_NULLPTR);
     ~ChartScreen() = default;   // DA IMPLEMENTARE
 
     void setTableView(const QVector<const Music*> &v);

@@ -45,6 +45,7 @@ void PieChartDialog::switchDescription() {
         break;
     case 2:
         changeTextDescription(desc_option3);
+        break;
     default:
         break;
     }

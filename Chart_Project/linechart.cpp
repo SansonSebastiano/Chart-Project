@@ -46,5 +46,6 @@ void LineChart::setChart() {
 
     legend()->hide();
     setTitle(getTitle());
+    setAnimationOptions(QChart::SeriesAnimations);
     // ...
 }

@@ -1,12 +1,9 @@
 #include "chartscreen.h"
 
-ChartScreen::ChartScreen(const QVector<const Music*> &v, AbstractChart* ac, QWidget* parent) : QDialog(parent) {
+ChartScreen::ChartScreen(QWidget* parent) : QDialog(parent) {
     setModal(false);
 
     mainLayout = new QHBoxLayout();
-
-    setTableView(v);
-    setChartView(ac);
 
     setLayout(mainLayout);
 }

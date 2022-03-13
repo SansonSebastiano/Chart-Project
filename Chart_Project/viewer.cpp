@@ -54,7 +54,7 @@ void Viewer::addMenus(QVBoxLayout *mainLayout) {
     edit->addAction(AC_add);
     edit->addAction(AC_release);
 
-    chart->addAction(AC_lineChart);         // DA IMPLEMENTARE
+    chart->addAction(AC_lineChart);
     chart->addAction(AC_pieChart);          // DA IMPLEMENTARE
     chart->addAction(AC_barChart);    // DA IMPLEMENTARE
 
@@ -163,7 +163,7 @@ Viewer::Viewer(QWidget *parent) : QDialog(parent), controller(new Controller) {
 
     //mainLayout->setSpacing(0);
     setLayout(mainLayout);
-    resize(QSize(1080, 720));
+    resize(QSize(500, 720));
 }
 
 void Viewer::setController(Controller *c) {
@@ -207,6 +207,7 @@ void Viewer::setController(Controller *c) {
         Q_UNUSED(index);
         controller->changeDescription();
     });
+    connect(pd->getAddBtn(), &QPushButton::clicked, controller, &Controller::showPieChartWindow);
 }
 
 void Viewer::setTable(const QVector<const Music*> &catalog) {

@@ -20,7 +20,19 @@ void PieChart::setSlices() {
 
 void PieChart::setSeries() {
     setSlices();
-    dynamic_cast<QPieSeries*>(mySeries)->append(slices);
+
+    auto pieSeries = dynamic_cast<QPieSeries*>(mySeries);
+
+    pieSeries->append(slices);
+
+    pieSeries->setLabelsVisible();
+    pieSeries->setLabelsPosition(QPieSlice::LabelInsideHorizontal);
+
+    //VISUALIZZARE LA PERCENTUALE
+
+    //slices[0]->setLabel(QString("%1%").arg(100 * slices[0]->percentage(), 0, 'f', 1));
+    //slices[1]->setLabel(QString("%1%").arg(100 * slices[1]->percentage(), 0, 'f', 1));
+;
 }
 
 void PieChart::setChart() {
@@ -29,5 +41,6 @@ void PieChart::setChart() {
 
     setTitle(getTitle());
     legend()->show();
+    setAnimationOptions(QChart::SeriesAnimations);
     // ...
 }
