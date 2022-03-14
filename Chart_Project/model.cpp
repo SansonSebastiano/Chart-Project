@@ -93,8 +93,8 @@ vector<uint> Model::lineChartOp1(const string &genre, uint from, uint to, vector
     return result;
 }
 
-vector<std::pair<string, double>> Model::pieChartOp1() {
-    vector<std::pair<string, double>> test;
+vector<std::pair<double, string>> Model::pieChartOp1() {
+    vector<std::pair<double, string>> result;
 
     vector<const Music*> byArtist;
 
@@ -107,17 +107,16 @@ vector<std::pair<string, double>> Model::pieChartOp1() {
     // NON MI CONVINCE
     for(auto it = artists.begin(); it != artists.end(); ++it){
         byArtist = rl->getByArtist(all, *it);
-        test.push_back(std::pair<string, double>(*it, rl->getTotProfit(byArtist)));
+        result.push_back(std::make_pair(rl->getTotProfit(byArtist), *it));
     }
 
-    // TODO : max 5 artisti
-    /*
-     * decrescent sorting
-     * get first five pos
-     *
-     */
+    // ordina in modo decrescente rispetto al primo valore, ovvero double profit
+    std::sort(result.rbegin(), result.rend());
 
-    return test;
+    // mantengo i 5 migliori, ed elimino i restanti
+    result.erase(result.begin() + 5, result.end());
+
+    return result;
 }
 
 std::pair<double, double> Model::pieChartOp2() {

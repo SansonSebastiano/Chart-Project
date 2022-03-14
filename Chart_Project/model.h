@@ -40,7 +40,7 @@ public:
     vector<uint> lineChartOp1(const string &genre, uint from, uint to, vector<const Music*> &data);
         // - piechart :
             // -> prelevare un numero x (per ora 5, senza possibilita' di scelta) di artisti migliori in assoluto della label, in base al profitto (o vendite o ascolti?)
-    vector<std::pair<string, double>> pieChartOp1();
+    vector<std::pair<double, string>> pieChartOp1();
             // -> percentuale musica pubblicata e non
     std::pair<double, double> pieChartOp2();
             // -> confrontare incassi medium fisici vs digitali

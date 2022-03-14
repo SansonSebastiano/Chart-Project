@@ -413,10 +413,10 @@ void Controller::setPieOp1(){
     QList<qreal*> ydata;
 
     for(auto it = data.begin(); it != data.end(); ++it){
-        xdata.push_back(QString::fromStdString((*it).first));
-        ydata.push_back(&(*it).second);
+        xdata.push_back(QString::fromStdString((*it).second));
+        ydata.push_back(&(*it).first);
     }
-    chart = new PieChart("TEST", xdata, ydata);
+    chart = new PieChart("Top 5", xdata, ydata);
     chart->setChart();
 
     chartWindow = new ChartScreen();
