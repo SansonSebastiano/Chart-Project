@@ -99,7 +99,6 @@ vector<const Music*> RecordLabel::getBySupport(const vector<const Music*> &v, Su
     //controllo se
         // - 'v' e' vuoto?
         // - support = None_Support
-
     vector<const Music*> result;
 
     for(auto it = v.begin(); it != v.end(); ++it){
@@ -143,7 +142,7 @@ bool RecordLabel::isElapsed1Year(const Release *release) const{
     return release->getElapsedYears() >= 1;
 }
 
-vector<const Music*> RecordLabel::getAll() {
+vector<const Music*> RecordLabel::getAll() const {
     vector<const Music*> result;
     const Release* r;
 
@@ -156,7 +155,7 @@ vector<const Music*> RecordLabel::getAll() {
     return result;
 }
 
-vector<const Music*> RecordLabel::getReleased() const{
+vector<const Music*> RecordLabel::getReleased() const {
     vector<const Music*> released;
     const Release* r;
 
@@ -169,7 +168,7 @@ vector<const Music*> RecordLabel::getReleased() const{
     return released;
 }
 
-vector<const Music*> RecordLabel::getNotReleased() const{
+vector<const Music*> RecordLabel::getNotReleased() const {
     vector<const Music*> not_released;
 
     for (auto it = catalog.begin(); it != catalog.end(); ++it)
@@ -179,8 +178,31 @@ vector<const Music*> RecordLabel::getNotReleased() const{
     return not_released;
 }
 
+vector<const Music*> RecordLabel::getReleaseOnSupport() const {
+    vector<const Music*> result;
+    auto data(getReleased());
+
+    for(auto it = data.begin(); it != data.end(); ++it)
+        if(dynamic_cast<const PM*>(*it))
+            result.push_back(*it);
+
+    return result;
+}
+
+vector<const Music*> RecordLabel::getReleaseOnPlatform() const {
+    vector<const Music*> result;
+    auto data(getReleased());
+
+    for(auto it = data.begin(); it != data.end(); ++it)
+        if(dynamic_cast<const DM*>(*it))
+            result.push_back(*it);
+
+    return result;
+}
+
 void RecordLabel::removeNotReleased(const Music *music) {
     // controllo se music vuoto
+
     bool found(false);
 
     for(auto it = catalog.begin(); it != catalog.end() && !found; ++it)

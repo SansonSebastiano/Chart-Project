@@ -44,7 +44,7 @@ public:
             // -> percentuale musica pubblicata e non
     std::pair<double, double> pieChartOp2();
             // -> confrontare incassi medium fisici vs digitali
-    void pieChartOp3();
+    std::pair<double, double> pieChartOp3();
         // - bar chart :
             // -> dato un artista x, confrontare i profitti tra i vari medium su cui e' pubblicata la sua musica
             // -> dato un anno x, confrontare vendite supporti fisici

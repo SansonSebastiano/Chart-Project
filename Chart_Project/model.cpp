@@ -7,8 +7,8 @@ void Model::insertMusic(const Music *music){ rl->insert(music); }
 void Model::removeMusic(const Music *music) { rl->removeNotReleased(music); }
 
 void Model::getAllInfo() const{
-    auto r  = rl->getReleased();
-    auto nr = rl->getNotReleased();
+    auto r(rl->getReleased());
+    auto nr(rl->getNotReleased());
 
     cout << "Album non rilasciati: " << endl << endl;
 
@@ -22,7 +22,7 @@ void Model::getAllInfo() const{
 }
 
 vector<const Music*> Model::getData() const {
-    auto all = rl->getAll();
+    auto all(rl->getAll());
 
     vector<const Music*> catalog;
     catalog.reserve(all.size());
@@ -34,7 +34,7 @@ vector<const Music*> Model::getData() const {
 vector<const Music*> Model::getNotReleased() const { return rl->getNotReleased(); }
 
 bool Model::isPresent(const Music *m) const {
-    auto all = rl->getAll();
+    auto all(rl->getAll());
     bool found(false);
 
     for (auto it = all.begin(); it != all.end() && !found; ++it)
@@ -50,7 +50,7 @@ bool Model::isElapsed1Year(const Release *release) const { return rl->isElapsed1
 
 vector<string> Model::getArtists() const {
     vector<string> result;
-    auto v = rl->getAll();
+    auto v(rl->getAll());
     string key;
 
     for (auto it = v.begin(); it != v.end(); ++it){
@@ -65,7 +65,7 @@ vector<string> Model::getArtists() const {
 
 vector<string> Model::getGenre() const {
     vector<string> result;
-    auto v = rl->getAll();
+    auto v(rl->getAll());
     string key;
 
     for(auto it = v.begin(); it != v.end(); ++it){
@@ -78,11 +78,11 @@ vector<string> Model::getGenre() const {
 }
 
 vector<uint> Model::lineChartOp1(const string &genre, uint from, uint to, vector<const Music*> &data) {
-    auto byGenre = rl->getByGenre(rl->getAll(), genre);
+    auto byGenre(rl->getByGenre(rl->getAll(), genre));
     vector<uint> result;
 
     for(uint year(from); year <= to; year++) {
-        auto byYear = rl->getByYear(byGenre, year);
+        auto byYear(rl->getByYear(byGenre, year));
 
         data.reserve(data.size() + byYear.size());
         data.insert(data.end(), byYear.begin(), byYear.end());
@@ -98,11 +98,11 @@ vector<std::pair<double, string>> Model::pieChartOp1() {
 
     vector<const Music*> byArtist;
 
-    // fect artists
-    auto artists = getArtists();
+    // fetch artists
+    auto artists(getArtists());
 
     // fetch catalogo
-    auto all = rl->getReleased();
+    auto all(rl->getReleased());
     // for cycle to get artist musics
     // NON MI CONVINCE
     for(auto it = artists.begin(); it != artists.end(); ++it){
@@ -121,6 +121,13 @@ vector<std::pair<double, string>> Model::pieChartOp1() {
 
 std::pair<double, double> Model::pieChartOp2() {
     std::pair<double, double> result(rl->getReleased().size(), rl->getNotReleased().size());
+
+    return result;
+}
+
+std::pair<double, double> Model::pieChartOp3() {
+    std::pair<double, double> result(rl->getTotProfit(rl->getReleaseOnSupport()),
+                                     rl->getTotProfit(rl->getReleaseOnPlatform()));
 
     return result;
 }

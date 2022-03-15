@@ -322,6 +322,7 @@ void Controller::releaseMusic() {
     }
 }
 
+// RIVEDERE LA PARTE SOTTOSTANTE
 
 void Controller::showLineChartDialog() {
     auto dialog = view->getLineChartDialog();
@@ -348,7 +349,7 @@ void Controller::showLineChartWindow() {
             view->showWarning("Date errate!");
         else {
             // get data & set window
-            string genre = dialog->getGenreSelected();
+            string genre(dialog->getGenreSelected());
             //----------------------------------------------------------------------------------------------------
             // NON MI CONVINCE : DA SISTEMARE, creare una funzione che imposti i dati da fornire ai charts
             //----------------------------------------------------------------------------------------------------
@@ -375,8 +376,8 @@ void Controller::showLineChartWindow() {
 }
 
 void Controller::showPieChartDialog() {
-    auto dialog = view->getPieChartDialog();
-    auto data = model->getData();
+    auto dialog(view->getPieChartDialog());
+    auto data(model->getData());
 
     if (!data.empty())
         view->showDialog(dialog);
@@ -387,7 +388,7 @@ void Controller::showPieChartDialog() {
 void Controller::changeDescription() { view->getPieChartDialog()->switchDescription(); }
 
 void Controller::showPieChartWindow() {
-    auto dialog = view->getPieChartDialog();
+    auto dialog(view->getPieChartDialog());
 
     switch (dialog->getOptionsIndex()) {
     case 0:
@@ -397,9 +398,10 @@ void Controller::showPieChartWindow() {
         setPieOp2();
         break;
     case 2:
-        //setPieOp3();
+        setPieOp3();
         break;
     default:
+        view->showWarning("Opzione errata");
         break;
     }
     dialog->resetComponents();
@@ -407,14 +409,14 @@ void Controller::showPieChartWindow() {
 }
 
 void Controller::setPieOp1(){
-    auto data = model->pieChartOp1();
+    auto data(model->pieChartOp1());
 
     QStringList xdata;
     QList<qreal*> ydata;
 
     for(auto it = data.begin(); it != data.end(); ++it){
-        xdata.push_back(QString::fromStdString((*it).second));
-        ydata.push_back(&(*it).first);
+        xdata.push_back(QString::fromStdString((*it).second));  // artist's name
+        ydata.push_back(&(*it).first);  // artist's tot profit
     }
     chart = new PieChart("Top 5", xdata, ydata);
     chart->setChart();
@@ -425,16 +427,34 @@ void Controller::setPieOp1(){
 }
 
 void Controller::setPieOp2() {
-    auto data = model->pieChartOp2();
-
     //----------------------------------------------------------------------------------------------------
     // NON MI CONVINCE : DA SISTEMARE, creare una funzione che imposti i dati da fornire ai charts
     //----------------------------------------------------------------------------------------------------
+    auto data(model->pieChartOp2());
+
     QList<qreal*> ydata;
-    ydata.push_back(&data.first);
-    ydata.push_back(&data.second);
+    ydata.push_back(&data.first);   // released music
+    ydata.push_back(&data.second);  // not released music
 
     chart = new PieChart("Musica:", {"Rilasciata", "Non rilasciata"}, ydata);
+    chart->setChart();
+
+    chartWindow = new ChartScreen();
+    chartWindow->setChartView(chart);
+    chartWindow->show();
+}
+
+void Controller::setPieOp3() {
+    //----------------------------------------------------------------------------------------------------
+    // NON MI CONVINCE : DA SISTEMARE, creare una funzione che imposti i dati da fornire ai charts
+    //----------------------------------------------------------------------------------------------------
+    auto data(model->pieChartOp3());
+
+    QList<qreal*> ydata;
+    ydata.push_back(&data.first);   //  support's profit
+    ydata.push_back(&data.second);  // platform's profit
+
+    chart = new PieChart("Musica pubblicata:", {"Supporti Fisici", "Piattaforme Digitali"}, ydata);
     chart->setChart();
 
     chartWindow = new ChartScreen();

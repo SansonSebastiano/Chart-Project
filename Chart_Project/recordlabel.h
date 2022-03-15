@@ -101,7 +101,7 @@ public:
      * @brief   restituisce tutta la musica dell'etichetta discografica, quella pubblicata, la ritorna se e solo se e' trascorso almeno un anno dalla sua pubblicazione
      * @return  vector<const Music*>
      */
-    vector<const Music*> getAll();
+    vector<const Music*> getAll() const;
     /*
      * @brief   restituisce la musica pubblicata se e solo se e' trascorso almeno un anno dalla sua pubblicazione
      * @return  vector<const Music*>
@@ -112,6 +112,16 @@ public:
      * @return  vector<const Music*>
      */
     vector<const Music*> getNotReleased() const;
+    /*
+     * @brief   restituisce tutta la musica pubblicata su supporti fisici
+     * @return  vector<const Music*>
+     */
+    vector<const Music*> getReleaseOnSupport() const;
+    /*
+     * @brief   restituisce tutta la musica pubblicata su piattaforme digitali
+     * @return  vector<const Music*>
+     */
+    vector<const Music*> getReleaseOnPlatform() const;
     /*
      * @brief   restituisce true se e' trascorso almeno un anno dalla data di pubblicazione di un prodotto musicale in input
      * @param   const Release* release
