@@ -12,14 +12,15 @@ using QtCharts::QBarSet;
 
 class BarChart : public AbstractChart {
 private:
-    QList<QString*> x_data;
-    QList<qreal> y_data;
+    QStringList x_data;
+    QList<qreal*> y_data;
     QList<QBarSet*> bars;
+    QString year;
 
     void setBars();
     void setSeries() override;
 public:
-    BarChart(const QString &_title, const QList<QString*> &_xData, const QList<qreal> &_yData);
+    BarChart(const QString &_title, const QStringList &_xData, const QList<qreal*> &_yData, const QString &_year);
     virtual ~BarChart() = default;  // DA IMPLEMENTARE
 
     void setCategories();   // FORSE NON SERVE

@@ -39,10 +39,15 @@ private:
     void writeOnFile(const QString& label, const QDomDocument& document);
     void readFromFile(const QString& label, QDomDocument& document);
 
-    //pie chart options
+    // pie chart options
     void setPieOp1();
     void setPieOp2();
     void setPieOp3();
+
+    // bar chart options
+
+    void setBarOp1();
+    void setBarOp2();
 public:
     explicit Controller(QObject *parent = nullptr);
     ~Controller() = default; // ??
@@ -103,6 +108,8 @@ public slots:
 
     // bar chart
     void showBarChartDialog();
+    //void changeDescription();
+    void showBarChartWindow();
 };
 
 #endif // CONTROLLER_H

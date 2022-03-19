@@ -11,11 +11,13 @@ private:
 
     void setOptions() override;
 
-    static const QString /*option1,*/ option2,
-                         /*desc_option1,*/ desc_option2;
+    static const QString option1, option2,
+                         desc_option1, desc_option2;
 public:
     BarChartDialog(QWidget* parent = Q_NULLPTR);
     ~BarChartDialog() = default;  // nb: memory leak
+
+    uint getSelectedYear() const;
 
     void createFormDialogLayout(QWidget* parent = Q_NULLPTR) override;
     void resetComponents() override;

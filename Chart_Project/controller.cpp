@@ -475,3 +475,67 @@ void Controller::showBarChartDialog() {
     }else
         view->showWarning("Non e' stato caricato nessun dato");
 }
+
+// BAR CHART
+
+void Controller::setBarOp1(){
+    auto dialog(view->getBarChartDialog());
+    auto data(model->barChartOp1());
+
+
+
+    QStringList xData;
+    QList<qreal*> yData;
+
+    for (auto it = data.begin(); it != data.end(); ++it){
+        xData.push_back(QString::fromStdString((*it).first));
+        yData.push_back(&(*it).second);
+    }
+
+    chart = new BarChart("TEST", xData, yData, QString::number(dialog->getSelectedYear()));
+    chart->setChart();
+
+    chartWindow = new ChartScreen();
+    chartWindow->setChartView(chart);
+    chartWindow->show();
+}
+
+void Controller::setBarOp2(){
+    auto dialog(view->getBarChartDialog());
+    auto data(model->barChartOp2());
+
+
+
+    QStringList xData;
+    QList<qreal*> yData;
+
+    for (auto it = data.begin(); it != data.end(); ++it){
+        xData.push_back(QString::fromStdString((*it).first));
+        yData.push_back(&(*it).second);
+    }
+
+    chart = new BarChart("TEST", xData, yData, QString::number(dialog->getSelectedYear()));
+    chart->setChart();
+
+    chartWindow = new ChartScreen();
+    chartWindow->setChartView(chart);
+    chartWindow->show();
+}
+
+void Controller::showBarChartWindow() {
+      auto dialog(view->getBarChartDialog());
+
+      switch (dialog->getOptionsIndex()) {
+      case 0:
+          setBarOp1();
+          break;
+      case 1:
+          setBarOp2();
+          break;
+      default:
+          break;
+      }
+
+      dialog->resetComponents();
+      dialog->close();
+}

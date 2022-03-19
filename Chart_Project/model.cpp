@@ -22,13 +22,14 @@ void Model::getAllInfo() const{
 }
 
 vector<const Music*> Model::getData() const {
-    auto all(rl->getAll());
+    /*auto all(rl->getAll());
 
     vector<const Music*> catalog;
     catalog.reserve(all.size());
     catalog.insert(catalog.end(), all.begin(), all.end());
 
-    return catalog;
+    return catalog;*/
+    return rl->getAll();
 }
 
 vector<const Music*> Model::getNotReleased() const { return rl->getNotReleased(); }
@@ -47,6 +48,8 @@ bool Model::isPresent(const Music *m) const {
 bool Model::areEquals(const Music *m1, const Music *m2) const { return rl->areSame(m1, m2); }
 
 bool Model::isElapsed1Year(const Release *release) const { return rl->isElapsed1Year(release); }
+
+// TENTA DI IMPLEMENTARE I PUNTATORI !!!!!!!!!
 
 vector<string> Model::getArtists() const {
     vector<string> result;
@@ -131,3 +134,31 @@ std::pair<double, double> Model::pieChartOp3() {
 
     return result;
 }
+
+vector<std::pair<string, double>> Model::barChartOp1() {
+    auto data(getData());
+    vector<const Music*> bySupport;
+    vector<std::pair<string, double>> result;
+
+    for (int i = CD; i < None_Support; ++i){
+        bySupport = rl->getBySupport(data, static_cast<Support>(i));
+        result.push_back(std::make_pair(PM::support_names[i], rl->getTotProfit(bySupport)));
+    }
+
+    return result;
+}
+
+vector<std::pair<string, double>> Model::barChartOp2() {
+    auto data(getData());
+    vector<const Music*> byPlatform;
+    vector<std::pair<string, double>> result;
+
+    for (int i = Spotify; i < None_Platform; ++i){
+        byPlatform = rl->getByPlatform(data, static_cast<Platform>(i));
+        result.push_back(std::make_pair(DM::platform_names[i], rl->getTotProfit(byPlatform)));
+    }
+
+    return result;
+}
+
+

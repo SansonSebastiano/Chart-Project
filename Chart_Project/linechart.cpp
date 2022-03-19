@@ -36,7 +36,7 @@ void LineChart::setChart() {
     //mySeries->attachAxis(axisX);
 
     QValueAxis *axisY = new QValueAxis;
-    axisY->setMin(0);
+    //axisY->setMin(0);
     axisY->setLabelFormat("%.2f");
     axisY->setTickCount(y_data.size());
     axisY->setTitleText("Profitto (in €)");

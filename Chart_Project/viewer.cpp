@@ -211,6 +211,7 @@ void Viewer::setController(Controller *c) {
     // to handle bar chart
     connect(btn_barChart, &QPushButton::clicked, controller, &Controller::showBarChartDialog);
     connect(AC_barChart, &QAction::triggered, controller, &Controller::showBarChartDialog);
+    connect(bd->getAddBtn(), &QPushButton::clicked, controller, &Controller::showBarChartWindow);
 
 }
 
