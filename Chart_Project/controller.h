@@ -77,6 +77,10 @@ public slots:
     void removeFromToSave(const Music* music);
     void saveToFile();
 
+    //---------------------------------------------------------
+    //  IMPLEMENTRE POLIMORFISMO
+    //---------------------------------------------------------
+
     // music dialog
     void showMusicDialog();
     void addNewMusic();
@@ -87,15 +91,18 @@ public slots:
     int getIndex(const Music* music);
     void releaseMusic();
 
-    // line chart dialog
+    // line chart
     void showLineChartDialog();
     void enableLDComponents();
     void showLineChartWindow();
 
-    // pie chart dialog
+    // pie chart
     void showPieChartDialog();
     void changeDescription();
     void showPieChartWindow();
+
+    // bar chart
+    void showBarChartDialog();
 };
 
 #endif // CONTROLLER_H

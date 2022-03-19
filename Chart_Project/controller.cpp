@@ -327,10 +327,10 @@ void Controller::releaseMusic() {
 void Controller::showLineChartDialog() {
     auto dialog = view->getLineChartDialog();
 
-    auto data = model->getGenre();
+    auto genres = model->getGenre();
 
-    if (!data.empty()){
-        dialog->setGenreCB(data);
+    if (!genres.empty()){
+        dialog->setGenreCB(genres);
         view->showDialog(dialog);
     }else
         view->showWarning("Non e' stato caricato nessun dato");
@@ -360,7 +360,9 @@ void Controller::showLineChartWindow() {
             for (uint year = from; year <= to; ++year)
                 years.push_back(year);
 
-            chart = new LineChart("Profitto per anno in base al genere musicale", profits, years);
+            QString title("Profitto per anno in base al genere musicale: " + QString::fromStdString(genre));
+
+            chart = new LineChart(title, profits, years);
             chart->setChart();
 
             chartWindow = new ChartScreen();
@@ -460,4 +462,16 @@ void Controller::setPieOp3() {
     chartWindow = new ChartScreen();
     chartWindow->setChartView(chart);
     chartWindow->show();
+}
+
+void Controller::showBarChartDialog() {
+    auto dialog(view->getBarChartDialog());
+
+    auto artists(model->getArtists());
+
+    if(!artists.empty()){
+        dialog->setArtistCB(artists);
+        view->showDialog(dialog);
+    }else
+        view->showWarning("Non e' stato caricato nessun dato");
 }

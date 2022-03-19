@@ -8,11 +8,12 @@ const QString PieChartDialog::desc_option1("Questo grafico permette di visualizz
 const QString PieChartDialog::desc_option2("Questo grafico permette di visualizzare la differenza, in termini di percentuale, tra la musica pubblicata e non dell'intero catalogo");
 const QString PieChartDialog::desc_option3("Questo grafico permette di confrontare gli incassi totali, in termini di percentuale, tra la musica pubblicata sui supporti fisici e digitali");
 
-PieChartDialog::PieChartDialog(QWidget *parent) : ChartDialog(parent), dialogLayout(new QVBoxLayout(parent)) { }
+PieChartDialog::PieChartDialog(QWidget *parent) : ChartDialog(parent) { }
 
 void PieChartDialog::setOptions() { optionsCB->addItems({option1, option2, option3}); }
 
 void PieChartDialog::createFormDialogLayout(QWidget *parent) {
+    QVBoxLayout *dialogLayout = new QVBoxLayout(parent);
     // set options' combobox
     setOptions();
     // add options' combobox to dialog

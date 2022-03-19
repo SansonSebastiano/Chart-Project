@@ -5,7 +5,7 @@
 
 class PieChartDialog : public ChartDialog {
 private:
-    QVBoxLayout *dialogLayout;
+    //QVBoxLayout *dialogLayout;
 
     void setOptions() override;
 

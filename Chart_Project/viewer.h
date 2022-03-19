@@ -54,7 +54,7 @@ private:
     // Buttons controlls_1
     QPushButton *btn_saveData, *btn_uploadData;
 
-    QPushButton *btn_lineChart, *btn_pieChart, *btn_histogram;
+    QPushButton *btn_lineChart, *btn_pieChart, *btn_barChart;
     // Buttons controlls_2
     QPushButton *btn_addItem, *btn_release,*btn_filter;
     // Buttons dialog
@@ -95,6 +95,7 @@ public:
     ReleaseDialog *getReleaseDialog() const;
     LineChartDialog *getLineChartDialog() const;
     PieChartDialog *getPieChartDialog() const;
+    BarChartDialog *getBarChartDialog() const;
     //----------------------------------------------------------
     // E' CORRETTO CHE ALCUNE FUNZIONI SIANO ESEGUITE DA VIEWER ? IN REALTA' FORSE SAREBBE MEGLIO DAL CONTROLLER?
     //----------------------------------------------------------

@@ -5,14 +5,14 @@
 
 class BarChartDialog : public ChartDialog {
 private:
-    QVBoxLayout *dialogLayout;
+    //QVBoxLayout *dialogLayout;
     QComboBox *artistsCB;
-    QDateEdit *date;
+    QDateEdit *dateQE;
 
     void setOptions() override;
 
-    static const QString option1, option2, option3,
-                         desc_option1, desc_option2, desc_option3;
+    static const QString /*option1,*/ option2,
+                         /*desc_option1,*/ desc_option2;
 public:
     BarChartDialog(QWidget* parent = Q_NULLPTR);
     ~BarChartDialog() = default;  // nb: memory leak
@@ -21,10 +21,10 @@ public:
     void resetComponents() override;
 
     // se necessario renderla astratta nella classe base 'ChartDialog'
-    void showDescription();
+    void switchDescriptions();
     void enableComponents();    // forse non serve
 
-    void setArtistCB(const QStringList &artists);
+    void setArtistCB(const std::vector<string> &artists);
 };
 
 #endif // BARCHARTDIALOG_H

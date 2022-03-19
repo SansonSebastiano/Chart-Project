@@ -1,25 +1,31 @@
 #include "barchartdialog.h"
 
-const QString BarChartDialog::option1("Confronta i profitti di un artista su vari supporti");
-const QString BarChartDialog::option2("Confronta vendite in un certo anno");
-const QString BarChartDialog::option3("Confronta ascolti in un certo anno");
+//const QString BarChartDialog::option1("Confronta i profitti di un artista su vari supporti");
+const QString BarChartDialog::option2("Medium Fisici vs Digitali");
 
-const QString BarChartDialog::desc_option1("Questo grafico permette di confrontare i profitti della discografia di un artista in vari supporti");
-const QString BarChartDialog::desc_option2("Questo grafico permette di confrontare le vendite su tutti i supporti fisici in un anno dato in input");
-const QString BarChartDialog::desc_option3("Questo grafico permette di confrontare gli ascolti su tutti i supporti digitali in un anno dato in input");
+//const QString BarChartDialog::desc_option1("Questo grafico permette di confrontare i profitti della discografia di un artista in vari supporti");
+const QString BarChartDialog::desc_option2("Questo grafico permette di confrontare le vendite  della musica su supporti fisici vs digitali in un anno dato in input");
 
-BarChartDialog::BarChartDialog(QWidget* parent) : ChartDialog(parent), dialogLayout(new QVBoxLayout(parent)), artistsCB(new QComboBox(parent))
+BarChartDialog::BarChartDialog(QWidget* parent)
+    : ChartDialog(parent),
+      artistsCB(new QComboBox(parent)),
+      dateQE(new QDateEdit(parent))
 {
-    date->setDisplayFormat("yyyy");
+    dateQE->setDisplayFormat("yyyy");
+    dateQE->setMaximumDate(QDate::currentDate());
 }
 
-void BarChartDialog::setOptions() { optionsCB->addItems({option1, option2, option3}); }
+void BarChartDialog::setOptions() { optionsCB->addItems({/*option1,*/ option2}); }
 
 void BarChartDialog::createFormDialogLayout(QWidget *parent) {
+    QVBoxLayout *dialogLayout = new QVBoxLayout(parent);
+
     setOptions();
+
     createOptionsQCBBox(dialogLayout, parent);
     // must setted artistCB before
-    showDescription();
+    createDescriptionBox(dialogLayout, desc_option2);
+    createFormLayout("Seleziona anno: ", dateQE, dialogLayout);
 
     // button layout
     QHBoxLayout *buttonLayout = new QHBoxLayout(parent);
@@ -31,19 +37,17 @@ void BarChartDialog::createFormDialogLayout(QWidget *parent) {
     setLayout(dialogLayout);
 }
 
-void BarChartDialog::showDescription() {
+// NB. c'e' anche su piechartdialog => polimorfismo??
+void BarChartDialog::switchDescriptions() {
     switch (getOptionsIndex()) {
     case 0:
-        createDescriptionBox(dialogLayout, desc_option1);
-        createFormLayout("Artista: ", artistsCB, dialogLayout);
+        //changeTextDescription(desc_option1);
+        //createFormLayout("Artista: ", artistsCB, dialogLayout);
         break;
     case 1:
-        createDescriptionBox(dialogLayout, desc_option2);
-        createFormLayout("Seleziona anno: ", date, dialogLayout);
+        changeTextDescription(desc_option2);
+        //createFormLayout("Seleziona anno: ", date, dialogLayout);
         break;
-    case 2:
-        createDescriptionBox(dialogLayout, desc_option3);
-        createFormLayout("Seleziona anno ", date, dialogLayout);
     default:
         break;
     }
@@ -59,4 +63,12 @@ void BarChartDialog::resetComponents(){
     artistsCB->setCurrentIndex(0);
 }
 
-void BarChartDialog::setArtistCB(const QStringList &artists) { artistsCB->addItems(artists); }
+void BarChartDialog::setArtistCB(const std::vector<string> &artists) {
+    QStringList list;
+    artistsCB->clear();
+
+    for (auto it = artists.begin(); it != artists.end(); ++it)
+        list.push_back(QString::fromStdString(*it));
+
+    artistsCB->addItems(list);
+}

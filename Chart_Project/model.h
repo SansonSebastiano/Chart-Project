@@ -47,8 +47,8 @@ public:
     std::pair<double, double> pieChartOp3();
         // - bar chart :
             // -> dato un artista x, confrontare i profitti tra i vari medium su cui e' pubblicata la sua musica
-            // -> dato un anno x, confrontare vendite supporti fisici
-            // -> dato un anno x, confrontare ascolti supporti digitali
+            // -> dato un anno x, confrontare vendite supporti fisici vs digitali
+    void barChartOp2();
 };
 
 #endif // MODEL_H
