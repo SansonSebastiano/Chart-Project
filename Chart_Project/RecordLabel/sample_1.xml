@@ -1,52 +1,52 @@
 <catalog>
  <album genre="Rap" name="Nome1" artist="Artista1"/>
  <album genre="Rock" name="Nome@" artist="Artista2"/>
- <PM genre="Rap" num_sales="1000" name="Nome3" artist="Artista1" support="0">
+ <PM num_sales="1000" genre="Rap" name="Nome3" artist="Artista1" support="0">
   <release month="9" year="2013" day="10"/>
  </PM>
-  <PM genre="Rap" num_sales="456" name="Nome4" artist="Artista3" support="0">
+ <PM num_sales="456" genre="Rap" name="Nome4" artist="Artista3" support="0">
   <release month="9" year="2012" day="10"/>
  </PM>
-   <PM genre="Rap" num_sales="1230" name="Nome5" artist="Artista5" support="0">
+ <PM num_sales="1230" genre="Rap" name="Nome5" artist="Artista5" support="0">
   <release month="9" year="2011" day="10"/>
  </PM>
-   <PM genre="Rap" num_sales="2000" name="Nome5" artist="Artista4" support="0">
+ <PM num_sales="2000" genre="Rap" name="Nome5" artist="Artista4" support="0">
   <release month="9" year="2010" day="10"/>
  </PM>
-   <PM genre="Rap" num_sales="349" name="Nome6" artist="Artista5" support="0">
+ <PM num_sales="349" genre="Rap" name="Nome6" artist="Artista5" support="0">
   <release month="9" year="2009" day="10"/>
  </PM>
-   <PM genre="Rap" num_sales="650" name="Nome7" artist="Artista6" support="0">
+ <PM num_sales="650" genre="Rap" name="Nome7" artist="Artista6" support="0">
   <release month="9" year="2008" day="10"/>
  </PM>
-   <PM genre="Rap" num_sales="500" name="Nome8" artist="Artista7" support="0">
+ <PM num_sales="500" genre="Rap" name="Nome8" artist="Artista7" support="0">
   <release month="9" year="2007" day="10"/>
  </PM>
-   <PM genre="Rap" num_sales="987" name="Nome11" artist="Artista8" support="0">
+ <PM num_sales="987" genre="Rap" name="Nome11" artist="Artista8" support="0">
   <release month="9" year="2004" day="10"/>
  </PM>
-   <PM genre="Rap" num_sales="100" name="Nome12" artist="Artista3" support="0">
+ <PM num_sales="100" genre="Rap" name="Nome12" artist="Artista3" support="0">
   <release month="9" year="2006" day="10"/>
  </PM>
-   <PM genre="Rap" num_sales="5000" name="Nome13" artist="Artista10" support="0">
+ <PM num_sales="5000" genre="Rap" name="Nome13" artist="Artista10" support="0">
   <release month="9" year="2005" day="10"/>
  </PM>
-   <PM genre="Rap" num_sales="4000" name="Nome9" artist="Artista7" support="0">
+ <PM num_sales="4000" genre="Rap" name="Nome9" artist="Artista7" support="0">
   <release month="9" year="2002" day="10"/>
  </PM>
-   <PM genre="Rap" num_sales="302" name="Nome10" artist="Artista3" support="0">
+ <PM num_sales="302" genre="Rap" name="Nome10" artist="Artista3" support="0">
   <release month="9" year="2003" day="10"/>
  </PM>
- <PM genre="Rap" num_sales="1000" name="2001" artist="Dr. Dre" support="0">
+ <PM num_sales="1000" genre="Rap" name="2001" artist="Dr. Dre" support="0">
   <release month="9" year="2000" day="12"/>
  </PM>
- <DM genre="Jazz" listeners="1000" name="Standard &amp; Ballads" artist="Wynton Marsalis" platform="0">
+ <DM listeners="1000" genre="Jazz" name="Standard &amp; Ballads" artist="Wynton Marsalis" platform="0">
   <release month="9" year="2000" day="12"/>
  </DM>
- <PM genre="Rap" num_sales="1000" name="60 Hz" artist="DJ Shocca" support="1">
+ <PM num_sales="1000" genre="Rap" name="60 Hz" artist="DJ Shocca" support="1">
   <release month="9" year="2001" day="12"/>
  </PM>
- <PM genre="Rock" num_sales="1000" name="Meteora" artist="Linkin Park" support="2">
+ <PM num_sales="1000" genre="Rock" name="Meteora" artist="Linkin Park" support="2">
   <release month="9" year="2000" day="12"/>
  </PM>
 </catalog>

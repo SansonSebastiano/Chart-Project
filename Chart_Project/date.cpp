@@ -12,6 +12,7 @@ Date::Date(uint _day, uint _month, uint _year) {
     if (_year >= 1900 &&
         _month > 0 && _month < 13 &&
         _day > 0 && _day <= getMonthDay(_year, _month)){    // se il giorno e' presente nel mese corrispondente
+
         day = _day;
         month = _month;
         year = _year;
@@ -22,11 +23,7 @@ Date::Date(uint _day, uint _month, uint _year) {
 Date Date::getNow() {
     std::time_t now = std::time(nullptr);
     std::tm *ptm = std::localtime(&now);
-    /*
-    cout << "Year: " << 1900 + ptm->tm_year << endl;
-    cout << "Month: " << 1 + ptm->tm_mon << endl;
-    cout << "Day:  " << ptm->tm_mday << endl;
-    */
+
     return Date(ptm->tm_mday, 1 + ptm->tm_mon, 1900 + ptm->tm_year);
 }
 

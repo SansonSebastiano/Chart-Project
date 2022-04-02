@@ -8,49 +8,100 @@ class Model{
 private:
     RecordLabel *rl;
 public:
-    Model(const string& label = "");
-    ~Model() = default;   // ??
+    Model();
+    //Model(const string& label = "");
+    ~Model() = default;   // DA IMPLEMENTARE : *rl nello heap !!
 
-    // DA COMMENTARE
     // DA DEFINIRE SE CONST
 
     //void newRL(string rl_name);
 
+    /*
+     * @brief   inserisce nuova musica nel catalogo dell'etichetta discografica
+     * @param   const Music*
+     * @return  void
+     */
     void insertMusic(const Music* music);
-
+    /*
+     * @brief   rimuove musica non pubblicata (NB: che e' stata pero' pubblicata appena prima dell'invocazione di questa funzione) dal catalogo dell'etichetta discografica
+     * @param   const Music*
+     * @return  void
+     */
     void removeMusic(const Music* music);
-
-    void getAllInfo() const;
-
-    vector<const Music*> getData() const;
-    vector<const Music*> getNotReleased() const;
-
+    // DA ELIMINARE ?
+    void getCatalogInfo() const;
+    /*
+     * @brief   ritorna l'intero catalogo dell'etichetta discografica
+     *          (NB: della musica pubblicata, viene prevelata soltanto se dalla data della sua pubblicazione e' passato almeno un anno)
+     * @return  vector<const Music*>
+     */
+    vector<const Music*> getCatalog() const;
+    /*
+     * @brief   ritorna tutta la musica non pubblicata dell'etichetta discografica
+     * @return  vector<const Music*>
+     */
+    vector<const Music*> getNotReleasedMusic() const;
+    /*
+     * @brief   controlla se nel catalogo e' presente la musica passata in input
+     * @param   const Music*
+     * @return  bool
+     */
     bool isPresent(const Music*) const;
-
+    // vedi 'areSame' in 'recordlabel.h'
     bool areEquals(const Music* m1, const Music *m2) const;
-
+    // vedi 'isElapsed1Year' in 'recordlabel.h'
     bool isElapsed1Year(const Release *release) const;
-
+    /*
+     * @brief   ritorna tutti gli artisti dell'etichetta discografica
+     * @return  vector<string>
+     */
     vector<string> getArtists() const;
-    vector<string> getGenre() const;
+    /*
+     * @brief   ritorna tutti i generi musicali dell'etichetta discografica
+     * @return  vector<string>
+     */
+    vector<string> getGenres() const;
 
     // opzioni grafici:
     // - LINE CHART :
-        // -> prendere musica di genere x, pubblicata in un range di anni, prelevare infine profitto (o vendite o costi?) per ogni anno compreso nel range
+    /*
+     * @brief   preleva musica di genere x, pubblicata in un range di anni, calcola infine il profitto per ogni anno compreso nel range
+     * @param   const string &
+     * @param   unsigned int
+     * @param   unsigned int
+     * @param   vector<const Music*> &
+     * @return vector<unsigned int>
+     */
     vector<uint> lineChartOp1(const string &genre, uint from, uint to, vector<const Music*> &data);
     // - PIE CHART :
-        // -> prelevare un numero x (per ora 5, senza possibilita' di scelta) di artisti migliori in assoluto della label, in base al profitto (o vendite o ascolti?)
+    /*
+     * @brief   preleva un numero x (per ora 5, senza possibilita' di scelta) di artisti migliori in assoluto della label, in base al profitto
+     * @return  vector<std::pair<double, string>>
+     */
     vector<std::pair<double, string>> pieChartOp1();
-        // -> percentuale musica pubblicata e non
+    /*
+     * @brief   ritorna la quantita' di musica pubblicata e non
+     * @return  vector<std::pair<double, double>>
+     */
     std::pair<double, double> pieChartOp2();
-        // -> confrontare incassi medium fisici vs digitali
+    /*
+     * @brief   confronta gli incassi tra medium fisici e digitali
+     * @return  vector<std::pair<double, double>>
+     */
     std::pair<double, double> pieChartOp3();
     // - BAR CHART :
-        // -> dato un artista x, confrontare i profitti tra i vari medium su cui e' pubblicata la sua musica
-        // -> dato un anno x, confrontare vendite supporti fisici
-    vector<std::pair<string, double>> barChartOp1();
-        // -> dato un anno x, confrontare vendite supporti digitali
-    vector<std::pair<string, double>> barChartOp2();
+    /*
+     * @brief   dato un anno x, confronta le vendite su supporti fisici
+     * @param   unsigned int
+     * @return  vector<std::pair<string, double>>
+     */
+    vector<std::pair<string, double>> barChartOp1(uint year);
+    /*
+     * @brief   dato un anno x, confronta gli ascolti su piattaforme digitali
+     * @param   unsigned int
+     * @return  vector<std::pair<string, double>>
+     */
+    vector<std::pair<string, double>> barChartOp2(uint year);
 };
 
 #endif // MODEL_H

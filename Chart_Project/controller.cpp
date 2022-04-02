@@ -4,12 +4,15 @@ const QDir Controller::project_path(PROJECT_PATH);
 const QString Controller::dataSetDir("/RecordLabel/");
 
 // WARNING : al nome della record label
-Controller::Controller(QObject *parent) : QObject(parent), model(new Model()) { }
+
+Controller::Controller(QObject *parent) : QObject(parent), model(new Model()), xmlio(new xml_IO()) { }
 
 void Controller::setModel(Model *m) { model = m; }
 
 void Controller::setViewer(Viewer *v) { view = v ; }
 
+// I/O operations
+// CONTROLLARE SE I SEGUENTI METODI NECESSITANO DI ECCEZIONI
 void Controller::readFromFile(const QString& label, QDomDocument& document){
     QFile file(project_path.absolutePath() + dataSetDir + label + ".xml");
     qDebug() << project_path.absolutePath() + dataSetDir + label + ".xml" << endl;
@@ -53,15 +56,15 @@ void Controller::loadDataFrom(const QString& label){
         //qDebug() << node.tagName();
         // se e' un album non pubblicato
         if(node.tagName() == xml_IO::_album)
-                model->insertMusic(xmlio.readAlbum(node));
+                model->insertMusic(xmlio->readAlbum(node));
 
         // se un album e' pubblicato su un supporto fisico
         if(node.tagName() == xml_IO::_pm)
-                model->insertMusic(xmlio.readPM(node));
+                model->insertMusic(xmlio->readPM(node));
 
         // se un album e' pubblicato su una piattaforma digitale
         if(node.tagName() == xml_IO::_dm)
-                model->insertMusic(xmlio.readDM(node));
+                model->insertMusic(xmlio->readDM(node));
 
         node = node.nextSiblingElement().toElement();
     }
@@ -89,12 +92,12 @@ void Controller::newSave(const QString& label, const Music *music){
     if(music){
         if(dynamic_cast<const Album*>(music) && !dynamic_cast<const PM*>(music) && !dynamic_cast<const DM*>(music)) {
             node = document.createElement(xml_IO::_album);
-            root.appendChild(xmlio.writeAlbum(node, static_cast<const Album*>(music)));
+            root.appendChild(xmlio->writeAlbum(node, static_cast<const Album*>(music)));
         }
         if(dynamic_cast<const PM*>(music))
-            root.appendChild(xmlio.writePM(document, static_cast<const PM*>(music)));
+            root.appendChild(xmlio->writePM(document, static_cast<const PM*>(music)));
         if (dynamic_cast<const DM*>(music))
-            root.appendChild(xmlio.writeDM(document, static_cast<const DM*>(music)));
+            root.appendChild(xmlio->writeDM(document, static_cast<const DM*>(music)));
     }
     // altrimenti pointer nullo
     writeOnFile(label, document);
@@ -110,12 +113,12 @@ void Controller::appendTo(const QString& label, const Music *music){
     if (music){
         if(dynamic_cast<const Album*>(music) && !dynamic_cast<const PM*>(music) && !dynamic_cast<const DM*>(music)){
             node = document.createElement(xml_IO::_album);
-            document.firstChild().toElement().appendChild(xmlio.writeAlbum(node, static_cast<const Album*>(music)));
+            document.firstChild().toElement().appendChild(xmlio->writeAlbum(node, static_cast<const Album*>(music)));
         }
         if(dynamic_cast<const PM*>(music))
-            document.firstChild().toElement().appendChild(xmlio.writePM(document, static_cast<const PM*>(music)));
+            document.firstChild().toElement().appendChild(xmlio->writePM(document, static_cast<const PM*>(music)));
         if(dynamic_cast<const DM*>(music))
-            document.firstChild().toElement().appendChild(xmlio.writeDM(document, static_cast<const DM*>(music)));
+            document.firstChild().toElement().appendChild(xmlio->writeDM(document, static_cast<const DM*>(music)));
     }
     // altrimenti pointer nullo
 
@@ -129,12 +132,12 @@ void Controller::releasePMToFile(const QString& label, const Album *album, const
     if(album){
         if(support != None_Support){
             QDomNodeList list = document.elementsByTagName(xml_IO::_album);
-            QDomElement result = xmlio.searchByName(list, album->getName());
+            QDomElement result = xmlio->searchByName(list, album);
 
             appendTo(label, new PM(album->getGenre(), album->getName(), album->getArtist(), date, support, num));
         }// else => ECCEZIONE medium nullo
         // inserire questa eccezione dovunque serva e dove manca
-    }// else => music nullo
+    }// else => album nullo
 }
 
 void Controller::releaseDMToFile(const QString& label, const Album *album, const Date &date, uint num, Platform platform){
@@ -144,7 +147,7 @@ void Controller::releaseDMToFile(const QString& label, const Album *album, const
     if(album){
         if(platform != None_Platform){
             QDomNodeList list = document.elementsByTagName(xml_IO::_album);
-            QDomElement result = xmlio.searchByName(list, album->getName());
+            QDomElement result = xmlio->searchByName(list, album);
 
             appendTo(label, new DM(album->getGenre(), album->getName(), album->getArtist(), date, platform, num));
         }// else => ECCEZIONE medium nullo
@@ -153,13 +156,13 @@ void Controller::releaseDMToFile(const QString& label, const Album *album, const
     } // else => music nullo
 }
 
-void Controller::removeFromFile(const QString& label, const Music* music) {
+void Controller::removeFromFile(const QString& label, const Music* music, const QString& music_type) {
     QDomDocument document;
     readFromFile(label, document);
 
-    QDomNodeList list = document.elementsByTagName(xml_IO::_album);
+    QDomNodeList list = document.elementsByTagName(music_type); // lista di album nella quale cercare l'album non publicato da eliminare
 
-    xmlio.removeByName(list, music->getName());
+    xmlio->removeByName(list, music);
 
     writeOnFile(label, document);
 }
@@ -167,9 +170,9 @@ void Controller::removeFromFile(const QString& label, const Music* music) {
 // FARE DELLE GETTER?? <------------
 
 QVector<const Music*> Controller::initData() {
-    loadDataFrom("sample_1");       // ATTENZIONE : QUANDO NECESSARIO CAMBIARE NOME DEL FILE
+    loadDataFrom("sample_1");       // ATTENZIONE : QUANDO NECESSARIO CAMBIARE NOME DEL FILE => variabile statica costante
 
-    auto data = model->getData();
+    auto data = model->getCatalog();
     QVector<const Music*> myVector = QVector<const Music*>::fromStdVector(data);
 
     return myVector;
@@ -196,23 +199,25 @@ void Controller::removeFromToSave(const Music *music) {
     bool found (false);
     for (auto it = toSave.begin(); it != toSave.end() && !found; ++it){
         if(!dynamic_cast<const Release*>(*it) && model->areEquals((*it), music)){
+            qDebug() << QString::fromStdString((*it)->getInfo()) << endl;
             it = toSave.erase(it);
             it--;
             found = true;
+            qDebug() << "REMOVED FROM TOSAVE" << endl;
         }
     }
 }
 
 void Controller::saveToFile() {
-    QVector<const Music*> v (toSave); //view->getToSave();
-    toSave.clear(); //view->clearToSave();
+    QVector<const Music*> v (toSave);
+    toSave.clear();
     // controllo se 'v' e' vuoto
     if (!v.isEmpty())
         for (auto it = v.begin(); it != v.end(); ++it){
             appendTo("sample_1", *it);
-            // testing
-            // attenzione : la musica non rilasciata verrà eliminata
-            removeFromFile("sample_1", *it);
+
+            if(dynamic_cast<const Release*>(*it))
+                removeFromFile("sample_1", *it, xml_IO::_album);
         }
     else
         view->showWarning("Nuova musica non inserita");
@@ -220,7 +225,7 @@ void Controller::saveToFile() {
 
 void Controller::showMusicDialog() {
     auto dialog = view->getMusicDialog();
-    auto data = model->getData();
+    auto data = model->getCatalog();
     if (!data.empty())
         view->showDialog(dialog);
     else
@@ -259,7 +264,7 @@ void Controller::showReleaseDialog() {
     auto dialog = view->getReleaseDialog();
 
     // set music to release into release dialog combobox
-    auto data = model->getNotReleased();
+    auto data = model->getNotReleasedMusic();
 
 
     if (!data.empty()) {
@@ -273,7 +278,7 @@ void Controller::showReleaseDialog() {
 void Controller::enableRDComponents() { view->getReleaseDialog()->enableComponents(); }
 
 int Controller::getIndex(const Music* music) {
-    auto catalog = model->getData();
+    auto catalog = model->getCatalog();
 
     for (auto it = catalog.begin(); it != catalog.end(); ++it){
 
@@ -292,13 +297,13 @@ void Controller::releaseMusic() {
     else {
         // almeno una checkbox selezionata
         if (dialog->isAllEmpty())
-            // e rispettiva edit line vuota
+            // edit line vuota
             view->showWarning("Compilare almeno un campo");
         else {            
             auto ask = view->showQuestion("Dati inseriti correttamente? \nSei sicuro di continuare con la pubblicazione?");
             if (ask == QMessageBox::Yes){
                 // rispettiva edit line non vuota => acquisizione input
-                auto not_released = model->getNotReleased();
+                auto not_released = model->getNotReleasedMusic();
                 auto toRelease = dialog->getInput(not_released);
                 auto toRemove = toRelease.at(0);
 
@@ -327,7 +332,7 @@ void Controller::releaseMusic() {
 void Controller::showLineChartDialog() {
     auto dialog = view->getLineChartDialog();
 
-    auto genres = model->getGenre();
+    auto genres = model->getGenres();
 
     if (!genres.empty()){
         dialog->setGenreCB(genres);
@@ -379,7 +384,7 @@ void Controller::showLineChartWindow() {
 
 void Controller::showPieChartDialog() {
     auto dialog(view->getPieChartDialog());
-    auto data(model->getData());
+    auto data(model->getCatalog());
 
     if (!data.empty())
         view->showDialog(dialog);
@@ -411,6 +416,9 @@ void Controller::showPieChartWindow() {
 }
 
 void Controller::setPieOp1(){
+    //----------------------------------------------------------------------------------------------------
+    // NON MI CONVINCE : DA SISTEMARE, creare una funzione che imposti i dati da fornire ai charts
+    //----------------------------------------------------------------------------------------------------
     auto data(model->pieChartOp1());
 
     QStringList xdata;
@@ -478,11 +486,8 @@ void Controller::showBarChartDialog() {
 
 // BAR CHART
 
-void Controller::setBarOp1(){
-    auto dialog(view->getBarChartDialog());
-    auto data(model->barChartOp1());
-
-
+void Controller::setBarOp1(uint year){
+    auto data(model->barChartOp1(year));
 
     QStringList xData;
     QList<qreal*> yData;
@@ -491,8 +496,8 @@ void Controller::setBarOp1(){
         xData.push_back(QString::fromStdString((*it).first));
         yData.push_back(&(*it).second);
     }
-
-    chart = new BarChart("TEST", xData, yData, QString::number(dialog->getSelectedYear()));
+    // CAMBIARE TITOLO CHART
+    chart = new BarChart("TEST", xData, yData, QString::number(year));
     chart->setChart();
 
     chartWindow = new ChartScreen();
@@ -500,11 +505,8 @@ void Controller::setBarOp1(){
     chartWindow->show();
 }
 
-void Controller::setBarOp2(){
-    auto dialog(view->getBarChartDialog());
-    auto data(model->barChartOp2());
-
-
+void Controller::setBarOp2(uint year){
+    auto data(model->barChartOp2(year));
 
     QStringList xData;
     QList<qreal*> yData;
@@ -513,8 +515,8 @@ void Controller::setBarOp2(){
         xData.push_back(QString::fromStdString((*it).first));
         yData.push_back(&(*it).second);
     }
-
-    chart = new BarChart("TEST", xData, yData, QString::number(dialog->getSelectedYear()));
+    // CAMBIARE TITOLO CHART
+    chart = new BarChart("TEST", xData, yData, QString::number(year));
     chart->setChart();
 
     chartWindow = new ChartScreen();
@@ -527,10 +529,10 @@ void Controller::showBarChartWindow() {
 
       switch (dialog->getOptionsIndex()) {
       case 0:
-          setBarOp1();
+          setBarOp1(dialog->getSelectedYear());
           break;
       case 1:
-          setBarOp2();
+          setBarOp2(dialog->getSelectedYear());
           break;
       default:
           break;

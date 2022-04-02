@@ -1,15 +1,10 @@
 #include "recordlabel.h"
 
-RecordLabel::RecordLabel(const string& _name) : RL_name(_name) {}
+//RecordLabel::RecordLabel(const string& _name) : RL_name(_name) {}
 
-RecordLabel::~RecordLabel() {
-    for(auto c : catalog) delete c;
+RecordLabel::~RecordLabel() { for(auto c : catalog) delete c; }
 
-    //for(auto r : released) delete r;
-    //for(auto nr : not_released) delete nr;
-}
-
-string RecordLabel::getRLName() const { return RL_name; }
+//string RecordLabel::getRLName() const { return RL_name; }
 
 void RecordLabel::insert(const Music* music) {
     //if(!music) throw string("NoInsert");        // DEFINIRE UNA CLASSE DI ECCEZIONI

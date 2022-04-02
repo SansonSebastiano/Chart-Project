@@ -1,41 +1,40 @@
 #include "model.h"
 
-Model::Model(const string& label) : rl(new RecordLabel(label)) { }
+Model::Model() : rl(new RecordLabel()) { }
 
+//Model::Model(const string& label) : rl(new RecordLabel(label)) { }
+
+// inserisce musica nel catalogo dell'etichetta discografica
 void Model::insertMusic(const Music *music){ rl->insert(music); }
 
+// rimuove musica non pubblicata dal catalogo dell'etichetta discografica
 void Model::removeMusic(const Music *music) { rl->removeNotReleased(music); }
 
-void Model::getAllInfo() const{
+// preleva le informazioni di tutta la musica dell'etichetta discografica
+// FORSE DA ELIMINARE
+void Model::getCatalogInfo() const{
     auto r(rl->getReleased());
     auto nr(rl->getNotReleased());
 
-    cout << "Album non rilasciati: " << endl << endl;
+    cout << "Musica non rilasciata: " << endl << endl;
 
     for(auto it = nr.begin(); it != nr.end(); ++it)
          cout << (*it)->getInfo() << endl << endl;
 
-    cout << "Album rilasciati: " << endl << endl;
+    cout << "Musica rilasciata: " << endl << endl;
 
     for(auto it = r.begin(); it != r.end(); ++it)
         cout << (*it)->getInfo() << endl << endl;
 }
 
-vector<const Music*> Model::getData() const {
-    /*auto all(rl->getAll());
+// preleva tutta la musica dal catalogo dell'etichetta discografica
+vector<const Music*> Model::getCatalog() const { return rl->getAll(); }
 
-    vector<const Music*> catalog;
-    catalog.reserve(all.size());
-    catalog.insert(catalog.end(), all.begin(), all.end());
-
-    return catalog;*/
-    return rl->getAll();
-}
-
-vector<const Music*> Model::getNotReleased() const { return rl->getNotReleased(); }
+// preleva tutta la musica non pubblicata dal catalogo dell'etichetta discografica
+vector<const Music*> Model::getNotReleasedMusic() const { return rl->getNotReleased(); }
 
 bool Model::isPresent(const Music *m) const {
-    auto all(rl->getAll());
+    auto all(getCatalog());
     bool found(false);
 
     for (auto it = all.begin(); it != all.end() && !found; ++it)
@@ -66,7 +65,7 @@ vector<string> Model::getArtists() const {
     return result;
 }
 
-vector<string> Model::getGenre() const {
+vector<string> Model::getGenres() const {
     vector<string> result;
     auto v(rl->getAll());
     string key;
@@ -135,26 +134,28 @@ std::pair<double, double> Model::pieChartOp3() {
     return result;
 }
 
-vector<std::pair<string, double>> Model::barChartOp1() {
-    auto data(getData());
-    vector<const Music*> bySupport;
+vector<std::pair<string, double>> Model::barChartOp1(uint year) {
+    auto data(getCatalog());
+    vector<const Music*> bySupport, byYear;
     vector<std::pair<string, double>> result;
 
     for (int i = CD; i < None_Support; ++i){
-        bySupport = rl->getBySupport(data, static_cast<Support>(i));
+        byYear = rl->getByYear(data, year);
+        bySupport = rl->getBySupport(byYear, static_cast<Support>(i));
         result.push_back(std::make_pair(PM::support_names[i], rl->getTotProfit(bySupport)));
     }
 
     return result;
 }
 
-vector<std::pair<string, double>> Model::barChartOp2() {
-    auto data(getData());
-    vector<const Music*> byPlatform;
+vector<std::pair<string, double>> Model::barChartOp2(uint year) {
+    auto data(getCatalog());
+    vector<const Music*> byPlatform, byYear;
     vector<std::pair<string, double>> result;
 
     for (int i = Spotify; i < None_Platform; ++i){
-        byPlatform = rl->getByPlatform(data, static_cast<Platform>(i));
+        byYear = rl->getByYear(data, year);
+        byPlatform = rl->getByPlatform(byYear, static_cast<Platform>(i));
         result.push_back(std::make_pair(DM::platform_names[i], rl->getTotProfit(byPlatform)));
     }
 

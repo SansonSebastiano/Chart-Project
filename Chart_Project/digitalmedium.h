@@ -23,22 +23,17 @@ enum Platform { FOREACH_PLATFORMS(GENERATE_ENUM) };
 
 class DigitalMedium : public Release{
 private:
-    // nome della piattaforma
-   Platform platform;
-   // ascoltatori annui in media
-   uint listeners;
-   // costo per ascolto in €
-   static const double price;
+   Platform platform;           // nome della piattaforma
+   uint listeners;              // ascoltatori annui in media
+   static const double price;   // costo per ascolto in €
    /*
-    * @brief   imposta il guadagno di un prodotto musicale: prodotto tra #ascolti e il prezzo per ascolto
+    * @brief   calcola il guadagno di un prodotto musicale: prodotto tra #ascolti e il prezzo per ascolto
     * @return  void
     */
-    void setProfit() override;
+    void calcProfit() override;
 public:
-    // contiene i nomi delle piattaforme di streaming
-    static const string platform_names[];
-    // contiene il valore massimo dell'enumerazione
-    static const uint MAX_SVALUES;
+    static const string platform_names[];   // contiene i nomi delle piattaforme di streaming
+    static const uint MAX_DM_VALUES;          // contiene il valore massimo dell'enumerazione
 
     DigitalMedium(const string& _genre = "", const string& _album_name = "", const string& _album_artist = "", const Date& _rd = Date(), Platform _platform = None_Platform, uint _listeners = 0);
     virtual ~DigitalMedium() = default;

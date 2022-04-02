@@ -6,36 +6,23 @@ const double PhisycalMedium::vnl_price = 25.00;
 const double PhisycalMedium::cst_price = 15.00;
 
 const string PhisycalMedium::support_names[] = { FOREACH_SUPPORTS(GENERATE_STRING) };
-const uint PhisycalMedium::MAX_PVALUES  = None_Support + 1;
+const uint PhisycalMedium::MAX_PM_VALUES  = None_Support + 1;
 
 PhisycalMedium::PhisycalMedium(const string& _genre, const string& _album_name, const string& _album_artist, const Date& _rd, Support _support, uint _ns) :
     Release(_genre, _album_name, _album_artist, _rd),
     support(_support),
-    num_sales(_ns) { PhisycalMedium::setProfit(); }
+    num_sales(_ns) { PhisycalMedium::calcProfit(); }
 
-void PhisycalMedium::setProfit() {
-    /*
-     * // da fare anche su DM
-    switch (support) {
-    case CD:
-        profit = cd_price * num_sales * getElapsedYears();
-        break;
-    case Vinile:
-        profit = vnl_price * num_sales * getElapsedYears();
-        break;
-    case Cassetta:
-        profit = cst_price * num_sales * getElapsedYears();
-        break;
-    default:
-        break;
-    }*/
-
+void PhisycalMedium::calcProfit() {
     if (support == CD)
-        profit = cd_price * num_sales * getElapsedYears();      // profitto = costo CD * #vendite medie annuo * anni trascorsi
+        setProfit(cd_price * num_sales * getElapsedYears());    // profitto = costo CD * #vendite medie annuo * anni trascorsi
+        //profit = cd_price * num_sales * getElapsedYears();
     else if (support == Vinile)
-        profit = vnl_price * num_sales * getElapsedYears();     // profitto = costo Vinile * #vendite medie annuo * anni trascorsi
+        setProfit(vnl_price * num_sales * getElapsedYears());   // profitto = costo Vinile * #vendite medie annuo * anni trascorsi
+        //profit = vnl_price * num_sales * getElapsedYears();
     else
-        profit = cst_price * num_sales * getElapsedYears();     // profitto = costo Cassetta * #vendite medie annuo * anni trascorsi
+        setProfit(cst_price * num_sales * getElapsedYears());   // profitto = costo Cassetta * #vendite medie annuo * anni trascorsi
+        //profit = cst_price * num_sales * getElapsedYears();
 }
 
 uint PhisycalMedium::getNumbers() const{ return num_sales; }
@@ -46,5 +33,5 @@ string PhisycalMedium::getInfo() const {
     return Release::getInfo() + "\n" +
            "Supporto Fisico: " + support_names[support] + "\n" +
            "Vendite Annue: " + std::to_string(num_sales) + "\n" +
-           "Profitto: " + double_to_string(getProfit()) + " €";
+           "Profitto: " + customProfitFormatting(getProfit()) + " €";
 }

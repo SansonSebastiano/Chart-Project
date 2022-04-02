@@ -1,14 +1,15 @@
 #include "io_handler.h"
 #include "helper.h"
 
+// xml's tag
 const QString xml_IO::catalog("catalog");
 const QString xml_IO::release("release");
 const QString xml_IO::_album("album");
 const QString xml_IO::_pm("PM");
 const QString xml_IO::_dm("DM");
 
-const QString xml_IO::album_name("name");
-const QString xml_IO::album_artist("artist");
+const QString xml_IO::music_name("name");
+const QString xml_IO::music_artist("artist");
 const QString xml_IO::genre("genre");
 
 const QString xml_IO::day("day");
@@ -25,18 +26,17 @@ const QString xml_IO::platform("platform");
 // Lettura
 const Album* xml_IO::readAlbum(QDomElement node){
     return new Album(node.attribute(genre, genre).toStdString(),                    // genere musicale
-                     node.attribute(album_name, album_name).toStdString(),          // nome album
-                     node.attribute(album_artist, album_artist).toStdString());     // artista
+                     node.attribute(music_name, music_name).toStdString(),          // nome
+                     node.attribute(music_artist, music_artist).toStdString());     // artista
 }
 
 const Date xml_IO::readDate(QDomElement childNode){
-    //qDebug() << childNode.tagName();
     if(childNode.tagName() == release)
         return Date (helper::str_to_uint(childNode.attribute(day, day).toStdString()),       // giorno
                      helper::str_to_uint(childNode.attribute(month, month).toStdString()),   // mese
                      helper::str_to_uint(childNode.attribute(year, year).toStdString())      // anno
                     );
-    else{//ECCEZIONI??
+    else{   // ECCEZIONI??
         qDebug() << "Read date failed" << endl;
         return {};
     }
@@ -44,12 +44,11 @@ const Date xml_IO::readDate(QDomElement childNode){
 
 const PM* xml_IO::readPM(QDomElement node){
     return new PM(node.attribute(genre, genre).toStdString(),                    // genere musicale
-                  node.attribute(album_name, album_name).toStdString(),          // nome album
-                  node.attribute(album_artist, album_artist).toStdString(),      // artista
+                  node.attribute(music_name, music_name).toStdString(),          // nome
+                  node.attribute(music_artist, music_artist).toStdString(),      // artista
                   readDate(node.firstChildElement().toElement()),                // data pubblicazione
                   // supporto fisico
                   helper::uint_to_enum<Support>(helper::str_to_uint(node.attribute(support, support).toStdString())),
-                  //converter::string_to_enum<Support>(node.attribute(support, support).toStdString(), PhisycalMedium::support_names, PhisycalMedium:: MAX_PVALUES),
                   // vendite
                   helper::str_to_uint(node.attribute(sales, sales).toStdString())
                  );
@@ -57,12 +56,11 @@ const PM* xml_IO::readPM(QDomElement node){
 
 const DM* xml_IO::readDM(QDomElement node){
     return new DM(node.attribute(genre, genre).toStdString(),                    // genere musicale
-                  node.attribute(album_name, album_name).toStdString(),          // nome album
-                  node.attribute(album_artist, album_artist).toStdString(),      // artista
+                  node.attribute(music_name, music_name).toStdString(),          // nome album
+                  node.attribute(music_artist, music_artist).toStdString(),      // artista
                   readDate(node.firstChildElement().toElement()),                // data pubblicazione
                   // piattaforma digitale
                   helper::uint_to_enum<Platform>(helper::str_to_uint(node.attribute(platform, platform).toStdString())),
-                  //converter::string_to_enum<Platform>(node.attribute(platform, platform).toStdString(), DigitalMedium::platform_names, DigitalMedium::MAX_SVALUES),
                   // ascolti
                   helper::str_to_uint(node.attribute(listeners, listeners).toStdString())
                  );
@@ -71,69 +69,60 @@ const DM* xml_IO::readDM(QDomElement node){
 // Scrittura
 
 QDomElement xml_IO::writeAlbum(QDomElement node, const Album* album) {
-    node.setAttribute(album_name, QString::fromStdString(album->getName()));
-    node.setAttribute(album_artist, QString::fromStdString(album->getArtist()));
-    node.setAttribute(genre, QString::fromStdString(album->getGenre()));
+    node.setAttribute(music_name, QString::fromStdString(album->getName()));        // nome
+    node.setAttribute(music_artist, QString::fromStdString(album->getArtist()));    // artista
+    node.setAttribute(genre, QString::fromStdString(album->getGenre()));            // genere
 
     return node;
 }
 
 QDomElement xml_IO::writeDate(QDomDocument &document, const Date& date) {
     QDomElement date_node = document.createElement(release);
-    date_node.setAttribute(day, QString::fromStdString(std::to_string(date.getDay())));
-    date_node.setAttribute(month, QString::fromStdString(std::to_string(date.getMonth())));
-    date_node.setAttribute(year, QString::fromStdString(std::to_string(date.getYear())));
+    date_node.setAttribute(day, QString::fromStdString(std::to_string(date.getDay())));         // giorno
+    date_node.setAttribute(month, QString::fromStdString(std::to_string(date.getMonth())));     // mese
+    date_node.setAttribute(year, QString::fromStdString(std::to_string(date.getYear())));       // anno
 
     return date_node;
 }
 
 QDomElement xml_IO::writePM(QDomDocument &document, const PM *album){
-    QDomElement pm_node = document.createElement(_pm);
-    writeAlbum(pm_node, album);
-    /*
-    pm_node.setAttribute(album_name, QString::fromStdString(album->getName()));
-    pm_node.setAttribute(album_artist, QString::fromStdString(album->getArtist()));
-    pm_node.setAttribute(genre, QString::fromStdString(album->getGenre()));
-    */
-    pm_node.setAttribute(sales, QString::fromStdString(std::to_string(album->getNumbers())));
-    pm_node.setAttribute(support, album->getSupport());
-   // pm_node.setAttribute(support, QString::fromStdString(converter::enum_to_string(PM::support_names, album->getSupport())));
+    QDomElement pm_node = document.createElement(_pm);  // crea nodo 'PM'
+    writeAlbum(pm_node, album); // scrive i dati dell'album
 
-    pm_node.appendChild(writeDate(document, album->getReleaseDate()));
+    pm_node.setAttribute(sales, QString::fromStdString(std::to_string(album->getNumbers())));   // scrive il numero di vendite
+    pm_node.setAttribute(support, album->getSupport());                                         // scrive il supporto fisico
+
+    pm_node.appendChild(writeDate(document, album->getReleaseDate()));                          // scrive la data e diventa sottonodo di 'PM'
     return pm_node;
 }
 
 QDomElement xml_IO::writeDM(QDomDocument &document, const DM *album) {
-    QDomElement dm_node = document.createElement(_dm);
-    writeAlbum(dm_node, album);
-    /*
-    dm_node.setAttribute(album_name, QString::fromStdString(album->getName()));
-    dm_node.setAttribute(album_artist, QString::fromStdString(album->getArtist()));
-    dm_node.setAttribute(genre, QString::fromStdString(album->getGenre()));
-    */
-    dm_node.setAttribute(listeners, QString::fromStdString(std::to_string(album->getNumbers())));
-    dm_node.setAttribute(platform, album->getPlatform());
-    //dm_node.setAttribute(platform, QString::fromStdString(converter::enum_to_string(DM::platform_names, album->getPlatform())));
+    QDomElement dm_node = document.createElement(_dm);                                              // crea nodo 'DM'
+    writeAlbum(dm_node, album);                                                                     // scrive i dati dell'album
 
-    dm_node.appendChild(writeDate(document, album->getReleaseDate()));
+    dm_node.setAttribute(listeners, QString::fromStdString(std::to_string(album->getNumbers())));   // scrive il numero di ascolti
+    dm_node.setAttribute(platform, album->getPlatform());                                           // scrive la piattaforma digitale
+
+    dm_node.appendChild(writeDate(document, album->getReleaseDate()));                              // scrive la data e diventa sottonodo di 'DM'
     return dm_node;
 }
 
-QDomElement xml_IO::searchByName(QDomNodeList list, const string &name) const {
-    qDebug() << "elements: " << list.count() << endl;
-    qDebug() << "to find: " << QString::fromStdString(name) << endl;
+QDomElement xml_IO::searchByName(QDomNodeList list, const Music* music) const {
+    qDebug() << "# elements: " << list.count() << endl;                                         // conta i prodotti musicali
+    qDebug() << "to find: " << QString::fromStdString(music->getInfo()) << endl;
 
     QDomNode node;
     QDomElement element;
 
-    if(!list.isEmpty()){
-        for(int i = 0; i < list.count(); i++){
-            node = list.at(i);
+    if(!list.isEmpty()){                                                                        // se il file non e' vuoto
+        for(int i = 0; i < list.count(); i++){                                                  // scorre i nodi nel file
+            node = list.at(i);                                                                  // preleva nodo i-esimo nel file
             element = node.toElement();
-            //qDebug() << "Tag Name: " << element.tagName() << endl;
 
-            if(element.attribute(album_name, album_name).toStdString() == name){
-                qDebug() << "found: " << element.attribute(album_name, album_name) << endl;
+            if(element.attribute(music_name, music_name).toStdString() == music->getName() &&
+               element.attribute(music_artist, music_artist).toStdString() == music->getArtist() &&
+               element.attribute(genre, genre).toStdString() == music->getGenre()){                // ritorna se il nome del nodo  e' uguale al nome dato in input
+                qDebug() << "found: " << element.attribute(music_name, music_name) << endl;
                 return element;
             }
         }
@@ -143,9 +132,9 @@ QDomElement xml_IO::searchByName(QDomNodeList list, const string &name) const {
     return QDomElement();
 }
 
-void xml_IO::removeByName(QDomNodeList list, const string &name) {
-    qDebug() << "elements: " << list.count() << endl;
-    qDebug() << "to find: " << QString::fromStdString(name) << endl;
+void xml_IO::removeByName(QDomNodeList list, const Music* music) {
+    qDebug() << "# elements: " << list.count() << endl;
+    qDebug() << "to find: " << QString::fromStdString(music->getInfo()) << endl;
 
     QDomNode node;
     QDomElement element;
@@ -155,13 +144,15 @@ void xml_IO::removeByName(QDomNodeList list, const string &name) {
             node = list.at(i);
             element = node.toElement();
 
-            if(element.attribute(album_name, album_name).toStdString() == name){
-                element.parentNode().removeChild(element);
-                qDebug() << QString::fromStdString("Album/Song named: " + name + " DELETED FROM FILE SUCCESSED") << endl << endl;
+            if( element.attribute(music_name, music_name).toStdString() == music->getName() &&
+                element.attribute(music_artist, music_artist).toStdString() == music->getArtist() &&
+                element.attribute(genre, genre).toStdString() == music->getGenre()){
+                element.parentNode().removeChild(element);  // esegue lo stesso algoritmo della funzione precedente, il nodo pero' viene rimosso dal file
+                qDebug() << QString::fromStdString(music->getInfo() + " DELETED FROM FILE SUCCESSED") << endl << endl;
             }
         }
     }else
-        qDebug() << QString::fromStdString("Album/Song named: " + name + " NOT PRESENT TO DELETE FROM FILE") << endl << endl;
+        qDebug() << QString::fromStdString(music->getInfo() + " NOT PRESENT TO DELETE FROM FILE") << endl << endl;
 }
 
 

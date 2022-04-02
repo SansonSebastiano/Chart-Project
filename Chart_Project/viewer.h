@@ -43,16 +43,26 @@ private:
     Controller *controller;
 
     // Components' layout
-    QVBoxLayout *mainLayout;
-    QHBoxLayout *screenLayout, *table_layout;
-    QFrame *frame;
+    QVBoxLayout *mainLayout;                    // ??
+    QHBoxLayout *screenLayout,                  // ??
+                *table_layout;                  // contiene la tabella
+    QFrame *frame;                              // ??
     // Menu
-    QMenu *file, *edit, *chart;
+    QMenu *file,
+          *edit,
+          *chart;
     // menu's actions
-    QAction *AC_upload, *AC_save, /**AC_close,*/ *AC_add, *AC_release, *AC_lineChart, *AC_pieChart, *AC_barChart;
+    QAction *AC_upload,
+            *AC_save, /**AC_close,*/
+            *AC_add,
+            *AC_release,
+            *AC_lineChart,
+            *AC_pieChart,
+            *AC_barChart;
 
     // Buttons controlls_1
-    QPushButton *btn_saveData, *btn_uploadData;
+    QPushButton *btn_saveData,
+                *btn_uploadData;
 
     QPushButton *btn_lineChart, *btn_pieChart, *btn_barChart;
     // Buttons controlls_2

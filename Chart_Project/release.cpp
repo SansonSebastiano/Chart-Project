@@ -16,12 +16,16 @@ string Release::getInfo() const {
            "Pubblicato il : " + release_date.getDate();
 }
 
-std::string Release::double_to_string(double value) const{
+std::string Release::customProfitFormatting(double value) const{
     std::stringstream ss;
-    ss << std::fixed << std::setprecision(2) << value;
+    ss << std::fixed                // notazione fixed point
+       << std::setprecision(2)      // imposta il numero di cifre dopo la virgola
+       << value;                    // valore su cui applicare la formattazione
 
     return ss.str();
 }
+
+void Release::setProfit(double _profit) { profit = _profit; }
 
 /*
 bool Release::operator==(const Music &other) const {

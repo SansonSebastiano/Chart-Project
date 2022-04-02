@@ -17,12 +17,12 @@ public:
      */
     string getGenre() const;
     /*
-     * @brief   restituisce il nome della musica
+     * @brief   restituisce il nome prodotto musicale
      * @return  string
      */
     virtual string getName() const = 0;
     /*
-     * @brief   restituisce l'artista della musica
+     * @brief   restituisce l'artista del prodotto musicale
      * @return  string
      */
     virtual string getArtist() const = 0;

@@ -11,9 +11,11 @@ typedef unsigned int uint;
 
 class Date{
 private:
-    uint day, month, year;
+    uint day, month, year;  // giorno, mese, anno
     /*
-     * @brief   restituisce il giorno specifico in base al mese
+     * @brief   restituisce il numero di giorni, di un mese specifico, in base al mese e all'anno dati in input
+     * @param   uint _year
+     * @param   uint _month
      * @return  uint
      */
     uint getMonthDay(uint _year, uint _month) const;

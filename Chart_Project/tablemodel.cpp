@@ -72,7 +72,7 @@ QVariant TableModel::data(const QModelIndex &index, int role) const {
         if (index.column() == 3 && release)
             return QString::fromStdString(release->getReleaseDate().getDate());
         if (index.column() == 4 && release)
-            return QString::fromStdString(release->double_to_string(release->getProfit()) + " €");
+            return QString::fromStdString(release->customProfitFormatting(release->getProfit()) + " €");
 
         const auto pm = dynamic_cast<const PhisycalMedium*>(music);
         const auto dm = dynamic_cast<const DigitalMedium*>(music);

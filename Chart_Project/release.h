@@ -9,14 +9,13 @@
 
 class Release : public Album{
 private:
-    Date release_date;
+    Date release_date;  // data di pubblicazione del prodotto musicale
+    double profit;      // profitto annuale in €
 protected:
-    double profit;  // in €
     /*
-     * @brief   imposta il guadagno di un prodotto musicale, in base agli ascoltatori/vendite in media in un anno (365 giorni)
-     * @return  void
+     * @brief   calcola il profitto di un prodotto musicale in base al numero di ascoltatori/vendite medi in un anno (365 giorni)
      */
-    virtual void setProfit() = 0;
+    virtual void calcProfit() = 0;
 public:
     Release(const string& _genre = "", const string& _album_name = "", const string& _artist_name = "", const Date& _rd = Date ());
     virtual ~Release() = default;
@@ -25,6 +24,12 @@ public:
      * @return  double
      */
     double getProfit() const;
+    /*
+     * @brief   imposta il profitto di un prodotto musicale
+     * @param   double
+     * @return  void
+     */
+    virtual void setProfit(double _profit);
     /*
      * @brief   restituisce la data di uscita di un prodotto musicale
      * @return  Date
@@ -46,11 +51,11 @@ public:
      */
     virtual uint getNumbers() const = 0;
     /*
-     * @brief   converte un double in un stringa
-     * @param   double profit
+     * @brief   converte un double in un stringa, applicando una formattazione custom
+     * @param   double
      * @return  string
      */
-    string double_to_string(double profit) const;
+    string customProfitFormatting(double profit) const;
     /*
      * DA TESTARE
      * @brief   ridefinizione operatore di uguaglianza
