@@ -359,15 +359,19 @@ void Controller::showLineChartWindow() {
             // NON MI CONVINCE : DA SISTEMARE, creare una funzione che imposti i dati da fornire ai charts
             //----------------------------------------------------------------------------------------------------
             vector<const Music*> result;
+            /*
             vector<uint> profits = model->lineChartOp1(genre, from, to, result);
             vector<uint> years;
 
             for (uint year = from; year <= to; ++year)
                 years.push_back(year);
+                */
 
             QString title("Profitto per anno in base al genere musicale: " + QString::fromStdString(genre));
 
-            chart = new LineChart(title, profits, years);
+            chart = new LineChart(title);
+            chart->setChartData(model->lineChartOp1(genre, from, to, result), from, to);
+            //chart = new LineChart(title, profits, years);
             chart->setChart();
 
             chartWindow = new ChartScreen();
@@ -487,6 +491,9 @@ void Controller::showBarChartDialog() {
 // BAR CHART
 
 void Controller::setBarOp1(uint year){
+    //----------------------------------------------------------------------------------------------------
+    // NON MI CONVINCE : DA SISTEMARE, creare una funzione che imposti i dati da fornire ai charts
+    //----------------------------------------------------------------------------------------------------
     auto data(model->barChartOp1(year));
 
     QStringList xData;
@@ -506,6 +513,9 @@ void Controller::setBarOp1(uint year){
 }
 
 void Controller::setBarOp2(uint year){
+    //----------------------------------------------------------------------------------------------------
+    // NON MI CONVINCE : DA SISTEMARE, creare una funzione che imposti i dati da fornire ai charts
+    //----------------------------------------------------------------------------------------------------
     auto data(model->barChartOp2(year));
 
     QStringList xData;

@@ -15,9 +15,11 @@ private:
     void setPoints();
     void setSeries() override;
 public:
-    LineChart(const QString &_title, const std::vector<uint> &_xData, const std::vector<uint> &_yData );
+    LineChart(const QString &_title);
+    //LineChart(const QString &_title, const std::vector<uint> &_xData, const std::vector<uint> &_yData);
     virtual ~LineChart() = default;     // DA IMPLEMENTARE
 
+    void setChartData(const std::vector<uint> &profit, const uint from, const uint to);
     void setChart() override;
 };
 

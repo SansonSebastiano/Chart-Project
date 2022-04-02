@@ -1,7 +1,17 @@
 #include "linechart.h"
 
+LineChart::LineChart(const QString &_title) : AbstractChart(_title) { }
+/*
 LineChart::LineChart(const QString &_title, const std::vector<uint> &_xData, const std::vector<uint> &_yData) : AbstractChart(_title), x_data(_xData), y_data(_yData) {
     mySeries = new QLineSeries();
+}
+*/
+
+void LineChart::setChartData(const std::vector<uint> &profit, const uint from, const uint to) {
+    x_data = profit;
+
+    for (uint year = from; year <= to; ++year)
+        y_data.push_back(year);
 }
 
 void LineChart::setPoints() {    

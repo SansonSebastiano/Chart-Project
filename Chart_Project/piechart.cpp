@@ -1,5 +1,7 @@
 #include "piechart.h"
 
+PieChart::PieChart(const QString &_title) : AbstractChart(_title) { }
+
 PieChart::PieChart(const QString& _title, const QStringList &_xData, const QList<qreal*> &_yData) : AbstractChart(_title), x_data(_xData), y_data(_yData) {
     mySeries = new QPieSeries();
 }
