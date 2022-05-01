@@ -19,6 +19,7 @@ public:
 
     QString getTitle() const;
 
+    //virtual void setChartData() = 0;
     virtual void setChart() = 0;
 };
 

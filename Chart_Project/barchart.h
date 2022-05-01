@@ -20,8 +20,8 @@ private:
     void setBars();
     void setSeries() override;
 public:
-    BarChart(const QString &_title);
-    BarChart(const QString &_title, const QStringList &_xData, const QList<qreal*> &_yData, const QString &_year);
+    BarChart(const QString &_title, const std::vector<std::pair<std::string, double>>& data, const QString &_year);
+    //BarChart(const QString &_title, const QStringList &_xData, const QList<qreal*> &_yData, const QString &_year);
     virtual ~BarChart() = default;  // DA IMPLEMENTARE
 
     void setChartData(const std::vector<std::pair<std::string, double>> &data);

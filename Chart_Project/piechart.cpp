@@ -1,11 +1,21 @@
 #include "piechart.h"
 
-PieChart::PieChart(const QString &_title) : AbstractChart(_title) { }
+PieChart::PieChart(const QString &_title, const std::vector<std::pair<double, std::string>> &data) : AbstractChart(_title) {
+    setChartData(data);
+    mySeries = new QPieSeries();
+}
 
 PieChart::PieChart(const QString& _title, const QStringList &_xData, const QList<qreal*> &_yData) : AbstractChart(_title), x_data(_xData), y_data(_yData) {
     mySeries = new QPieSeries();
 }
 
+void PieChart::setChartData(const std::vector<std::pair<double, std::string>> &data) {
+    for(auto it = data.begin(); it != data.end(); ++it){
+        x_data.push_back(QString::fromStdString((*it).second));  // artist's name
+        auto x = (*it).first;
+        y_data.push_back(&x);  // artist's tot profit
+    }
+}
 
 void PieChart::setSlices() {
     auto xit = x_data.begin();

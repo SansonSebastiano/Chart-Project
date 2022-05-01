@@ -1,7 +1,16 @@
 #include "barchart.h"
 
-BarChart::BarChart(const QString& _title, const QStringList &_xData, const QList<qreal*> &_yData, const QString &_year) : AbstractChart(_title), x_data(_xData), y_data(_yData), year(_year) {
+BarChart::BarChart(const QString& _title, const std::vector<std::pair<std::string, double>>& data, const QString &_year) : AbstractChart(_title), year(_year) {
     mySeries = new QBarSeries();
+    setChartData(data);
+}
+
+void BarChart::setChartData(const std::vector<std::pair<std::string, double>> &data) {
+    for (auto it = data.begin(); it != data.end(); ++it){
+        x_data.push_back(QString::fromStdString((*it).first));
+        auto x = (*it).second;
+        y_data.push_back(&x);
+    }
 }
 
 void BarChart::setBars() {
