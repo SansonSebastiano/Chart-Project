@@ -355,17 +355,8 @@ void Controller::showLineChartWindow() {
         else {
             // get data & set window
             string genre(dialog->getGenreSelected());
-            //----------------------------------------------------------------------------------------------------
-            // NON MI CONVINCE : DA SISTEMARE, creare una funzione che imposti i dati da fornire ai charts
-            //----------------------------------------------------------------------------------------------------
-            vector<const Music*> result;
-            /*
-            vector<uint> profits = model->lineChartOp1(genre, from, to, result);
-            vector<uint> years;
 
-            for (uint year = from; year <= to; ++year)
-                years.push_back(year);
-                */
+            vector<const Music*> result;
 
             QString title("Profitto per anno in base al genere musicale: " + QString::fromStdString(genre));
 
@@ -420,20 +411,6 @@ void Controller::showPieChartWindow() {
 }
 
 void Controller::setPieOp1(){
-    //----------------------------------------------------------------------------------------------------
-    // NON MI CONVINCE : DA SISTEMARE, creare una funzione che imposti i dati da fornire ai charts
-    //----------------------------------------------------------------------------------------------------
-    /*
-    auto data(model->pieChartOp1());
-
-    QStringList xdata;
-    QList<qreal*> ydata;
-
-    for(auto it = data.begin(); it != data.end(); ++it){
-        xdata.push_back(QString::fromStdString((*it).second));  // artist's name
-        ydata.push_back(&(*it).first);  // artist's tot profit
-    }
-    */
     chart = new PieChart("Top 5", model->pieChartOp1());
     chart->setChart();
 
@@ -448,9 +425,9 @@ void Controller::setPieOp2() {
     //----------------------------------------------------------------------------------------------------
     auto data(model->pieChartOp2());
 
-    QList<qreal*> ydata;
-    ydata.push_back(&data.first);   // released music
-    ydata.push_back(&data.second);  // not released music
+    QList<qreal> ydata;
+    ydata.push_back(data.first);   // released music
+    ydata.push_back(data.second);  // not released music
 
     chart = new PieChart("Musica:", {"Rilasciata", "Non rilasciata"}, ydata);
     chart->setChart();
@@ -466,9 +443,9 @@ void Controller::setPieOp3() {
     //----------------------------------------------------------------------------------------------------
     auto data(model->pieChartOp3());
 
-    QList<qreal*> ydata;
-    ydata.push_back(&data.first);   //  support's profit
-    ydata.push_back(&data.second);  // platform's profit
+    QList<qreal> ydata;
+    ydata.push_back(data.first);   //  support's profit
+    ydata.push_back(data.second);  // platform's profit
 
     chart = new PieChart("Musica pubblicata:", {"Supporti Fisici", "Piattaforme Digitali"}, ydata);
     chart->setChart();
@@ -493,20 +470,6 @@ void Controller::showBarChartDialog() {
 // BAR CHART
 
 void Controller::setBarOp1(uint year){
-    //----------------------------------------------------------------------------------------------------
-    // NON MI CONVINCE : DA SISTEMARE, creare una funzione che imposti i dati da fornire ai charts
-    //----------------------------------------------------------------------------------------------------
-    /*
-    auto data(model->barChartOp1(year));
-
-    QStringList xData;
-    QList<qreal*> yData;
-
-    for (auto it = data.begin(); it != data.end(); ++it){
-        xData.push_back(QString::fromStdString((*it).first));
-        yData.push_back(&(*it).second);
-    }
-    */
     // CAMBIARE TITOLO CHART
     //chart = new BarChart("TEST", xData, yData, QString::number(year));
     chart = new BarChart("TEST", model->barChartOp1(year), QString::number(year));
@@ -518,20 +481,6 @@ void Controller::setBarOp1(uint year){
 }
 
 void Controller::setBarOp2(uint year){
-    //----------------------------------------------------------------------------------------------------
-    // NON MI CONVINCE : DA SISTEMARE, creare una funzione che imposti i dati da fornire ai charts
-    //----------------------------------------------------------------------------------------------------
-    /*
-    auto data(model->barChartOp2(year));
-
-    QStringList xData;
-    QList<qreal*> yData;
-
-    for (auto it = data.begin(); it != data.end(); ++it){
-        xData.push_back(QString::fromStdString((*it).first));
-        yData.push_back(&(*it).second);
-    }
-    */
     // CAMBIARE TITOLO CHART
     chart = new BarChart("TEST", model->barChartOp2(year), QString::number(year));
     chart->setChart();

@@ -13,7 +13,7 @@ using QtCharts::QBarSet;
 class BarChart : public AbstractChart {
 private:
     QStringList x_data;
-    QList<qreal*> y_data;
+    QList<qreal> y_data;
     QList<QBarSet*> bars;
     QString year;
 

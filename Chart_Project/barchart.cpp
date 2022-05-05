@@ -9,7 +9,7 @@ void BarChart::setChartData(const std::vector<std::pair<std::string, double>> &d
     for (auto it = data.begin(); it != data.end(); ++it){
         x_data.push_back(QString::fromStdString((*it).first));
         auto x = (*it).second;
-        y_data.push_back(&x);
+        y_data.push_back(x);
     }
 }
 
@@ -22,7 +22,7 @@ void BarChart::setBars() {
     auto yit = y_data.begin();
 
     while (bit != bars.end() && yit != y_data.end()) {
-        (*bit)->append(**yit);   // DA TESTARE, NON SO COSA COMBINA
+        (*bit)->append(*yit);   // DA TESTARE, NON SO COSA COMBINA
 
         ++bit;
         ++yit;

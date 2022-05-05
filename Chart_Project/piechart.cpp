@@ -5,15 +5,15 @@ PieChart::PieChart(const QString &_title, const std::vector<std::pair<double, st
     mySeries = new QPieSeries();
 }
 
-PieChart::PieChart(const QString& _title, const QStringList &_xData, const QList<qreal*> &_yData) : AbstractChart(_title), x_data(_xData), y_data(_yData) {
+PieChart::PieChart(const QString& _title, const QStringList &_xData, const QList<qreal> &_yData) : AbstractChart(_title), x_data(_xData), y_data(_yData) {
     mySeries = new QPieSeries();
 }
 
 void PieChart::setChartData(const std::vector<std::pair<double, std::string>> &data) {
     for(auto it = data.begin(); it != data.end(); ++it){
         x_data.push_back(QString::fromStdString((*it).second));  // artist's name
-        auto x = (*it).first;
-        y_data.push_back(&x);  // artist's tot profit
+        auto tot_profit = (*it).first;                          // artist's tot profit
+        y_data.push_back(tot_profit);
     }
 }
 
@@ -22,7 +22,7 @@ void PieChart::setSlices() {
     auto yit = y_data.begin();
 
     while (xit != x_data.end() && yit != y_data.end()) {
-        slices.push_back(new QPieSlice(*xit,**yit));
+        slices.push_back(new QPieSlice(*xit, *yit));
 
         ++xit;
         ++yit;
