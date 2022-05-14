@@ -38,7 +38,6 @@ SOURCES += \
     release.cpp \
     releasedialog.cpp \
     tablemodel.cpp \
-    test.cpp \
     viewer.cpp
 
 HEADERS += \

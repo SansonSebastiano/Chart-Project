@@ -12,7 +12,6 @@ DigitalMedium::DigitalMedium(const string& _genre, const string& _album_name, co
 
 void DigitalMedium::calcProfit(){
     setProfit(price * listeners * getElapsedYears());   // profitto = costo per ascolto * #ascolti medi annuo * anni trascorsi
-    //profit = price * listeners * getElapsedYears();
 }
 
 Platform DigitalMedium::getPlatform() const{ return platform; }

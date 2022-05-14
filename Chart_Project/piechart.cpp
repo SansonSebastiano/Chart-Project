@@ -17,6 +17,8 @@ void PieChart::setChartData(const std::vector<std::pair<double, std::string>> &d
     }
 }
 
+
+
 void PieChart::setSlices() {
     auto xit = x_data.begin();
     auto yit = y_data.begin();

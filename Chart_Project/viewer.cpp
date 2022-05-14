@@ -4,7 +4,6 @@
 // ATTENZIONE AI MEMORY LEAK
 // MEGLIO CREARE DIFFERENTI WIDGET CUSTOM CLASS ?
 // WARNING : impostare le parentelle tra i widget/layout
-// OCCHIO AI PARENT
 
 void Viewer::closeEvent(QCloseEvent *event) {
     // DA SISTEMARE
@@ -158,8 +157,6 @@ Viewer::Viewer(QWidget *parent) : QDialog(parent), controller(new Controller) {
 
     // add main screen
     addScreen(mainLayout);
-
-    // Aggiungere ...
 
     //mainLayout->setSpacing(0);
     setLayout(mainLayout);

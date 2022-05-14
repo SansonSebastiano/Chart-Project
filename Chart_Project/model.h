@@ -9,13 +9,7 @@ private:
     RecordLabel *rl;
 public:
     Model();
-    //Model(const string& label = "");
     ~Model() = default;   // DA IMPLEMENTARE : *rl nello heap !!
-
-    // DA DEFINIRE SE CONST
-
-    //void newRL(string rl_name);
-
     /*
      * @brief   inserisce nuova musica nel catalogo dell'etichetta discografica
      * @param   const Music*

@@ -353,15 +353,12 @@ void Controller::showLineChartWindow() {
         if (from == to || from > to)
             view->showWarning("Date errate!");
         else {
-            // get data & set window
             string genre(dialog->getGenreSelected());
 
             vector<const Music*> result;
 
             QString title("Profitto per anno in base al genere musicale: " + QString::fromStdString(genre));
 
-            //chart = new LineChart(title);
-            //chart->setChartData(model->lineChartOp1(genre, from, to, result), from, to);
             chart = new LineChart(title, model->lineChartOp1(genre, from, to, result), from, to);
             chart->setChart();
 
@@ -429,7 +426,7 @@ void Controller::setPieOp2() {
     ydata.push_back(data.first);   // released music
     ydata.push_back(data.second);  // not released music
 
-    chart = new PieChart("Musica:", {"Rilasciata", "Non rilasciata"}, ydata);
+    chart = new PieChart("Catalogo musica:", {"Rilasciata", "Non rilasciata"}, ydata);
     chart->setChart();
 
     chartWindow = new ChartScreen();
@@ -470,9 +467,7 @@ void Controller::showBarChartDialog() {
 // BAR CHART
 
 void Controller::setBarOp1(uint year){
-    // CAMBIARE TITOLO CHART
-    //chart = new BarChart("TEST", xData, yData, QString::number(year));
-    chart = new BarChart("TEST", model->barChartOp1(year), QString::number(year));
+    chart = new BarChart("Profitto per supporto", model->barChartOp1(year), QString::number(year));
     chart->setChart();
 
     chartWindow = new ChartScreen();
@@ -481,8 +476,7 @@ void Controller::setBarOp1(uint year){
 }
 
 void Controller::setBarOp2(uint year){
-    // CAMBIARE TITOLO CHART
-    chart = new BarChart("TEST", model->barChartOp2(year), QString::number(year));
+    chart = new BarChart("Profitto per piattaforma", model->barChartOp2(year), QString::number(year));
     chart->setChart();
 
     chartWindow = new ChartScreen();

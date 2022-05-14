@@ -14,25 +14,13 @@ using std::vector;
 
 class RecordLabel{
 private:
-    //string RL_name;     // nome dell'etichetta discografica
-
     // raccolta di tutta la musica prodotta, appartenente all'etichetta discografica:
     //  - pubblicata
     //  - non pubblicata
     vector<const Music*> catalog;
 public:
     RecordLabel() = default;
-
-    //RecordLabel(const string& _name = "");
-
     ~RecordLabel();
-
-    /*
-     * @brief   ritorna il nome dell'etichetta discografica
-     * @return  string
-     */
-    //string getRLName() const;
-
     /*
      * @brief   inserisce un prodotto musicale nel catalogo dell'etichetta discografica
      * @param   const Music*

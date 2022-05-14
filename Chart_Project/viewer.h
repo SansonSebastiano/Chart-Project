@@ -53,7 +53,7 @@ private:
           *chart;
     // menu's actions
     QAction *AC_upload,
-            *AC_save, /**AC_close,*/
+            *AC_save,
             *AC_add,
             *AC_release,
             *AC_lineChart,

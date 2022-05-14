@@ -33,7 +33,8 @@ public:
     virtual string getInfo() const;
 };
 
-// permette la conversione con QVariant
+// permette il casting attraverso QVariant
 // necessario in tableModel.h /.cpp
 Q_DECLARE_METATYPE(const Music*)
+
 #endif // MUSIC_H

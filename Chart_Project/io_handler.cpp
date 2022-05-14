@@ -107,6 +107,8 @@ QDomElement xml_IO::writeDM(QDomDocument &document, const DM *album) {
     return dm_node;
 }
 
+// Ricerca
+
 QDomElement xml_IO::searchByName(QDomNodeList list, const Music* music) const {
     qDebug() << "# elements: " << list.count() << endl;                                         // conta i prodotti musicali
     qDebug() << "to find: " << QString::fromStdString(music->getInfo()) << endl;
@@ -121,7 +123,7 @@ QDomElement xml_IO::searchByName(QDomNodeList list, const Music* music) const {
 
             if(element.attribute(music_name, music_name).toStdString() == music->getName() &&
                element.attribute(music_artist, music_artist).toStdString() == music->getArtist() &&
-               element.attribute(genre, genre).toStdString() == music->getGenre()){                // ritorna se il nome del nodo  e' uguale al nome dato in input
+               element.attribute(genre, genre).toStdString() == music->getGenre()){                // ritorna il nodo se il suo nome e' uguale al nome dato in input
                 qDebug() << "found: " << element.attribute(music_name, music_name) << endl;
                 return element;
             }
@@ -131,6 +133,8 @@ QDomElement xml_IO::searchByName(QDomNodeList list, const Music* music) const {
     // ATTENZIONE: gestire con le eccezioni?
     return QDomElement();
 }
+
+// Rimozione
 
 void xml_IO::removeByName(QDomNodeList list, const Music* music) {
     qDebug() << "# elements: " << list.count() << endl;

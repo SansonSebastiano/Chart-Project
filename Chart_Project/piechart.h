@@ -22,6 +22,9 @@ public:
     virtual ~PieChart() = default;      // DA IMPLEMENTARE
 
     void setChartData(const std::vector<std::pair<double, std::string>> &data);
+
+    void setChartData(const std::vector<std::pair<double, double>> &data);
+
     void setChart() override;
 };
 
