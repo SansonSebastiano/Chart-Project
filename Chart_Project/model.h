@@ -9,7 +9,7 @@ private:
     RecordLabel *rl;
 public:
     Model();
-    ~Model() = default;   // DA IMPLEMENTARE : *rl nello heap !!
+    ~Model();
     /*
      * @brief   inserisce nuova musica nel catalogo dell'etichetta discografica
      * @param   const Music*

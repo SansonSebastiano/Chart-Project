@@ -7,6 +7,22 @@ const QString Controller::dataSetDir("/RecordLabel/");
 
 Controller::Controller(QObject *parent) : QObject(parent), model(new Model()), xmlio(new xml_IO()) { }
 
+Controller::~Controller() {
+    delete view;
+    delete model;
+
+    delete xmlio;
+
+    delete chart;
+    delete chartWindow;
+
+    catalog.clear();
+    catalog.squeeze();
+
+    toSave.clear();
+    toSave.squeeze();
+}
+
 void Controller::setModel(Model *m) { model = m; }
 
 void Controller::setViewer(Viewer *v) { view = v ; }

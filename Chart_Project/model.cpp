@@ -2,6 +2,8 @@
 
 Model::Model() : rl(new RecordLabel()) { }
 
+Model::~Model() { delete rl; }
+
 // inserisce musica nel catalogo dell'etichetta discografica
 void Model::insertMusic(const Music *music){ rl->insert(music); }
 

@@ -85,7 +85,7 @@ private:
     void setBarOp2(uint year);
 public:
     explicit Controller(QObject *parent = nullptr);
-    ~Controller() = default; // da implementare
+    ~Controller(); // da implementare
 
     void setModel(Model* m);
     void setViewer(Viewer *v);
