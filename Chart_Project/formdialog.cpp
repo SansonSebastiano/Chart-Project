@@ -7,6 +7,10 @@ FormDialog::FormDialog(QWidget* parent) :  QDialog(parent),
     setModal(true);
 }
 
+FormDialog::~FormDialog() {
+    delete btn_add;
+}
+
 void FormDialog::setAddBtn(const QString &buttonLabel) { btn_add->setText(buttonLabel); }
 
 QPushButton *FormDialog::getAddBtn() const { return btn_add; }

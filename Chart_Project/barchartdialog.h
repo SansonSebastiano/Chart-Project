@@ -15,7 +15,7 @@ private:
                          desc_option1, desc_option2;
 public:
     BarChartDialog(QWidget* parent = Q_NULLPTR);
-    ~BarChartDialog() = default;  // nb: memory leak
+    ~BarChartDialog();
 
     uint getSelectedYear() const;
 

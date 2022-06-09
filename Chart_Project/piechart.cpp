@@ -9,6 +9,10 @@ PieChart::PieChart(const QString& _title, const QStringList &_xData, const QList
     mySeries = new QPieSeries();
 }
 
+PieChart::~PieChart(){
+    slices.clear();
+}
+
 void PieChart::setChartData(const std::vector<std::pair<double, std::string>> &data) {
     for(auto it = data.begin(); it != data.end(); ++it){
         x_data.push_back(QString::fromStdString((*it).second));  // artist's name

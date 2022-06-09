@@ -8,6 +8,14 @@ ChartScreen::ChartScreen(QWidget* parent) : QDialog(parent) {
     setLayout(mainLayout);
 }
 
+ChartScreen::~ChartScreen() {
+    delete myTableModel;
+    delete tableView;
+    delete myChartModel;
+    delete chartView;
+    delete mainLayout;
+}
+
 void ChartScreen::setTableView(const QVector<const Music *> &v) {
     tableView = new QTableView();
     myTableModel = new TableModel(v);

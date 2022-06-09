@@ -19,7 +19,7 @@ private:
 public:
     PieChart(const QString &_title, const std::vector<std::pair<double, std::string>> &data);
     PieChart(const QString &_title, const QStringList &_xData, const QList<qreal> &_yData);
-    virtual ~PieChart() = default;      // DA IMPLEMENTARE
+    virtual ~PieChart();
 
     void setChartData(const std::vector<std::pair<double, std::string>> &data);
 

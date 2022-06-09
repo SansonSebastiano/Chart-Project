@@ -15,7 +15,7 @@ protected:
     virtual void setSeries() = 0;
 public:
     AbstractChart(const QString &_title);
-    virtual ~AbstractChart() = default; // DA IMPLEMENTARE
+    virtual ~AbstractChart();
 
     QString getTitle() const;
 

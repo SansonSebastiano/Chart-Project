@@ -18,6 +18,13 @@ LineChartDialog::LineChartDialog(QWidget *parent)
     to->setDisplayFormat("yyyy");
 }
 
+LineChartDialog::~LineChartDialog() {
+    delete genreCB;
+    delete genreRB;
+    delete from;
+    delete to;
+}
+
 void LineChartDialog::setOptions() { }
 
 void LineChartDialog::setGenreCB(const std::vector<string> &genres) {

@@ -5,6 +5,10 @@ BarChart::BarChart(const QString& _title, const std::vector<std::pair<std::strin
     setChartData(data);
 }
 
+BarChart::~BarChart() {
+    bars.clear();
+}
+
 void BarChart::setChartData(const std::vector<std::pair<std::string, double>> &data) {
     for (auto it = data.begin(); it != data.end(); ++it){
         x_data.push_back(QString::fromStdString((*it).first));

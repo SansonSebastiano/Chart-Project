@@ -15,6 +15,11 @@ BarChartDialog::BarChartDialog(QWidget* parent)
     dateQE->setMaximumDate(QDate::currentDate());
 }
 
+BarChartDialog::~BarChartDialog() {
+    delete  artistsCB;
+    delete dateQE;
+}
+
 void BarChartDialog::setOptions() { optionsCB->addItems({option1, option2}); }
 
 uint BarChartDialog::getSelectedYear() const {

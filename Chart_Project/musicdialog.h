@@ -11,7 +11,7 @@ private:
     void createMusicBox(QVBoxLayout *vbl, QWidget* parent = Q_NULLPTR);
 public:
     MusicDialog(QWidget* parent = Q_NULLPTR);
-    virtual ~MusicDialog() = default;
+    virtual ~MusicDialog();
 
     std::string getInputName() const;
     std::string getInputArtist() const;

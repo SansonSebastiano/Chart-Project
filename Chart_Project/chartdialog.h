@@ -11,7 +11,7 @@ protected:      // CORRETTO????
     QPlainTextEdit *description;
 public:
     ChartDialog(QWidget* parent = Q_NULLPTR);
-    virtual ~ChartDialog() = default;
+    virtual ~ChartDialog();
 
     uint getOptionsIndex() const;
     QComboBox* getOptionsCB() const;

@@ -1,7 +1,6 @@
 #include "viewer.h"
 #include "controller.h"
 
-// ATTENZIONE AI MEMORY LEAK
 // MEGLIO CREARE DIFFERENTI WIDGET CUSTOM CLASS ?
 // WARNING : impostare le parentelle tra i widget/layout
 
@@ -104,7 +103,6 @@ void Viewer::addControll_2(QHBoxLayout *screenLayout){
 
     buttonLayout_2->addWidget(btn_addItem);
     buttonLayout_2->addWidget(btn_release);
-    //buttonLayout_2->addWidget(btn_filter);
 
     buttonLayout_2->setSpacing(5);
     buttonLayout_2->setContentsMargins(0, 25, 10, 300);
@@ -161,6 +159,39 @@ Viewer::Viewer(QWidget *parent) : QDialog(parent), controller(new Controller) {
     //mainLayout->setSpacing(0);
     setLayout(mainLayout);
     resize(QSize(500, 720));
+}
+
+Viewer::~Viewer() {
+    delete controller;
+    delete mainLayout;
+    delete screenLayout;
+    delete table_layout;
+    delete frame;
+    delete file;
+    delete edit;
+    delete chart;
+    delete AC_upload;
+    delete AC_save;
+    delete AC_add;
+    delete AC_release;
+    delete AC_lineChart;
+    delete AC_pieChart;
+    delete AC_pieChart;
+
+    delete btn_saveData;
+    delete btn_uploadData;
+    delete btn_lineChart;
+    delete btn_pieChart;
+    delete btn_release;
+    delete btn_add;
+    delete btn_cancel;
+    delete tableView;
+    delete myTableModel;
+    delete md;
+    delete rd;
+    delete ld;
+    delete pd;
+    delete bd;
 }
 
 void Viewer::setController(Controller *c) {

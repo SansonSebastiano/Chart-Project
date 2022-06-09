@@ -13,7 +13,7 @@ private:
     static const QString desc_option1;
 public:
     LineChartDialog(QWidget* parent = Q_NULLPTR);
-    ~LineChartDialog() = default;   // nb memory leak
+    ~LineChartDialog();
 
     void createFormDialogLayout(QWidget* parent = Q_NULLPTR) override;
     void resetComponents() override;

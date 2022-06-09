@@ -8,6 +8,12 @@ MusicDialog::MusicDialog(QWidget* parent) :     FormDialog(parent),
     setAddBtn("Aggiungi");
 }
 
+MusicDialog::~MusicDialog(){
+    delete nameEdit;
+    delete artistEdit;
+    delete genreEdit;
+}
+
 std::string MusicDialog::getInputName() const { return nameEdit->text().toStdString(); }
 std::string MusicDialog::getInputArtist() const { return  artistEdit->text().toStdString(); }
 std::string MusicDialog::getInputGenre() const { return genreEdit->text().toStdString(); }

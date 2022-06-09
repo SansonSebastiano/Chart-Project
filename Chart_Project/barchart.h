@@ -22,7 +22,7 @@ private:
 public:
     BarChart(const QString &_title, const std::vector<std::pair<std::string, double>>& data, const QString &_year);
     //BarChart(const QString &_title, const QStringList &_xData, const QList<qreal*> &_yData, const QString &_year);
-    virtual ~BarChart() = default;  // DA IMPLEMENTARE
+    virtual ~BarChart();
 
     void setChartData(const std::vector<std::pair<std::string, double>> &data);
     void setCategories();   // FORSE NON SERVE

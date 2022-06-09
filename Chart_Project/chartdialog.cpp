@@ -4,6 +4,11 @@ ChartDialog::ChartDialog (QWidget* parent) : FormDialog(parent), optionsCB(new Q
     setAddBtn("Visualizza");
 }
 
+ChartDialog::~ChartDialog() {
+    delete optionsCB;
+    delete description;
+}
+
 uint ChartDialog::getOptionsIndex() const { return optionsCB->currentIndex(); }
 
 QComboBox *ChartDialog::getOptionsCB() const { return optionsCB; }

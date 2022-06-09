@@ -66,7 +66,7 @@ private:
 
     QPushButton *btn_lineChart, *btn_pieChart, *btn_barChart;
     // Buttons controlls_2
-    QPushButton *btn_addItem, *btn_release,*btn_filter;
+    QPushButton *btn_addItem, *btn_release;
     // Buttons dialog
     QPushButton *btn_add, *btn_cancel;
 
@@ -94,7 +94,7 @@ private:
 
 public:
     explicit Viewer(QWidget *parent = nullptr);
-    ~Viewer() = default;
+    ~Viewer();
 
     void setController(Controller *c);
     void setTable(const QVector<const Music*> &catalog);
