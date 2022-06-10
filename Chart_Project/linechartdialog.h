@@ -3,6 +3,8 @@
 
 #include "chartdialog.h"
 
+// DA COMMENTARE
+
 class LineChartDialog : public ChartDialog {
 private:
     QRadioButton *genreRB;

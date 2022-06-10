@@ -22,7 +22,7 @@ class PhisycalMedium : public Release{
 private:
     Support support;    // tipo di supporto fisico utilizzato per la vendita di un prodotto musicale
     uint num_sales;     // numero di copie vendute in media ogni anno
-    // DA RIVEDERE QUESTE 3 VARIABILI E METTERLE PUBBLICHE ??
+
     static const double cd_price;   // costo per copia CD in € di default
     static const double vnl_price;  // costo per copia Vinile in € di default
     static const double cst_price;  // costo per copia Cassetta in € di default

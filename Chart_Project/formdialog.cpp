@@ -2,7 +2,6 @@
 
 FormDialog::FormDialog(QWidget* parent) :  QDialog(parent),
                                            btn_add(new QPushButton(parent))
-                                           //btn_cancel(new QPushButton("Cancella", parent))
 {
     setModal(true);
 }
@@ -15,7 +14,6 @@ void FormDialog::setAddBtn(const QString &buttonLabel) { btn_add->setText(button
 
 QPushButton *FormDialog::getAddBtn() const { return btn_add; }
 
-//QPushButton *FormDialog::getCancBtn() const { return btn_cancel; }
 
 void FormDialog::createFormLayout(const QString &label, QWidget *w, QVBoxLayout *vbl, QWidget* parent) {
     QFormLayout *formLayout = new QFormLayout(parent);

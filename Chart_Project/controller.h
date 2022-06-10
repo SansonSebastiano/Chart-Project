@@ -50,51 +50,6 @@ private:
      * @return  void
      */
     void readFromFile(const QString& label, QDomDocument& document);
-
-    // pie chart options
-    // vengono impostati i dati per la visualizzazione delle varie opzioni di pie chart
-    /*
-     * @brief   artista X profitto
-     * @return  void
-     */
-    void setPieOp1();
-    /*
-     * @brief   musica pubblicata X musica non pubblicata
-     * @return  void
-     */
-    void setPieOp2();
-    /*
-     * @brief   profitto piattaforma X profitto supporti
-     * @return  void
-     */
-    void setPieOp3();
-
-    // bar chart options
-    // vengono impostati i dati per la visualizzazione delle varie opzioni di bar chart
-    /*
-     * @brief   vendite (supporti) per anno dato in input
-     * @param   uint
-     * @return  void
-     */
-    void setBarOp1(uint year);
-    /*
-     * @brief   ascolti (piattaforme) per anno dato in input
-     * @param   uint
-     * @return  void
-     */
-    void setBarOp2(uint year);
-public:
-    explicit Controller(QObject *parent = nullptr);
-    ~Controller(); // da implementare
-
-    void setModel(Model* m);
-    void setViewer(Viewer *v);
-
-    // pensare alle funzioni di parsing: dati in input e convertirli (in Date, uint, Support e Platform)
-        // GENERE, ARTISTA, NOME ALBUM: scegliere convenzione
-
-    // da mettere private?
-
     /*
      * @brief   legge i dati da file 'project_path/dataSetDir/"label".xml' e li carica sul catalogo di RecordLabel
      * @param   const QString&
@@ -149,6 +104,46 @@ public:
      * @const   Music*
      */
     void removeFromFile(const QString& label, const Music* music, const QString& music_type);
+
+    // pie chart options
+    // vengono impostati i dati per la visualizzazione delle varie opzioni di pie chart
+    /*
+     * @brief   artista X profitto
+     * @return  void
+     */
+    void setPieOp1();
+    /*
+     * @brief   musica pubblicata X musica non pubblicata
+     * @return  void
+     */
+    void setPieOp2();
+    /*
+     * @brief   profitto piattaforma X profitto supporti
+     * @return  void
+     */
+    void setPieOp3();
+
+    // bar chart options
+    // vengono impostati i dati per la visualizzazione delle varie opzioni di bar chart
+    /*
+     * @brief   vendite (supporti) per anno dato in input
+     * @param   uint
+     * @return  void
+     */
+    void setBarOp1(uint year);
+    /*
+     * @brief   ascolti (piattaforme) per anno dato in input
+     * @param   uint
+     * @return  void
+     */
+    void setBarOp2(uint year);
+public:
+    explicit Controller(QObject *parent = nullptr);
+    ~Controller();
+
+    void setModel(Model* m);
+    void setViewer(Viewer *v);
+
     /*
      * @brief   legge e carica i dati da file
      * return   QVector<const Music*>
@@ -183,10 +178,6 @@ public slots:
      * return   void
      */
     void saveToFile();
-
-    //---------------------------------------------------------
-    //  IMPLEMENTRE POLIMORFISMO
-    //---------------------------------------------------------
 
     // music dialog
 

@@ -43,10 +43,10 @@ private:
     Controller *controller;
 
     // Components' layout
-    QVBoxLayout *mainLayout;                    // ??
-    QHBoxLayout *screenLayout,                  // ??
+    QVBoxLayout *mainLayout;
+    QHBoxLayout *screenLayout,
                 *table_layout;                  // contiene la tabella
-    QFrame *frame;                              // ??
+    QFrame *frame;
     // Menu
     QMenu *file,
           *edit,
@@ -106,9 +106,7 @@ public:
     LineChartDialog *getLineChartDialog() const;
     PieChartDialog *getPieChartDialog() const;
     BarChartDialog *getBarChartDialog() const;
-    //----------------------------------------------------------
-    // E' CORRETTO CHE ALCUNE FUNZIONI SIANO ESEGUITE DA VIEWER ? IN REALTA' FORSE SAREBBE MEGLIO DAL CONTROLLER?
-    //----------------------------------------------------------
+
     // manage custom form dialog
     void showDialog(FormDialog *dialog);
     void resetComponents(FormDialog *dialog);

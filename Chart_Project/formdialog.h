@@ -21,7 +21,7 @@
 class FormDialog : public QDialog {
 private:
     // dialog's buttons
-    QPushButton *btn_add /**btn_cancel*/;
+    QPushButton *btn_add ;
 public:
     FormDialog(QWidget* parent = Q_NULLPTR);
     virtual ~FormDialog();
@@ -31,7 +31,6 @@ public:
 
     void setAddBtn(const QString &buttonLabel);
     QPushButton* getAddBtn() const;
-    //QPushButton* getCancBtn() const;
 
     virtual void createFormDialogLayout(QWidget* parent = Q_NULLPTR) = 0;
     virtual void resetComponents() = 0;

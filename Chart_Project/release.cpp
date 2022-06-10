@@ -26,10 +26,3 @@ std::string Release::customProfitFormatting(double value) const{
 }
 
 void Release::setProfit(double _profit) { profit = _profit; }
-
-/*
-bool Release::operator==(const Music &other) const {
-    return  Album::operator==(other) &&
-            release_date == dynamic_cast<const Release&>(other).getReleaseDate();
-}
-*/

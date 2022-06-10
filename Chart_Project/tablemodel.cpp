@@ -81,13 +81,10 @@ QVariant TableModel::data(const QModelIndex &index, int role) const {
             return QString::fromStdString(pm->support_names[pm->getSupport()]);
         if (index.column() == 6 && pm)
             return QVariant(pm->getNumbers()).toString();
-            //return QString::fromStdString(pm->double_to_string(pm->getNumbers()));
-
         if (index.column() == 7 && dm)
             return QString::fromStdString(dm->platform_names[dm->getPlatform()]);
         if (index.column() == 8 && dm)
             return QVariant(dm->getNumbers()).toString();
-            //return QString::fromStdString(dm->double_to_string(dm->getNumbers()));
     }
     return QVariant();
 }
@@ -97,7 +94,7 @@ bool TableModel::insertRows(int position, int rows, const QModelIndex &parent) {
     beginInsertRows(QModelIndex(), position, position + rows - 1);
 
     for (int row = 0; row < rows; ++row)
-        catalog.push_back(new Album());     // non mi convince molto
+        catalog.push_back(new Album());
 
     endInsertRows();
     return true;
@@ -130,7 +127,7 @@ bool TableModel::setData(const QModelIndex &index, const QVariant &value, int ro
 }
 
 Qt::ItemFlags TableModel::flags(const QModelIndex &index) const {
-    Q_UNUSED(index);        // sicuro ???
+    Q_UNUSED(index);
     return Qt::ItemIsEnabled;
 }
 

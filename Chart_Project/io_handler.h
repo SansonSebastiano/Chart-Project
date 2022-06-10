@@ -35,7 +35,6 @@ public:
     static const QString _pm;
     static const QString _dm;
 
-    // USARE I TEMPLATE?
     // Lettura
     /*
      * @brief   legge un album non pubblicato da file

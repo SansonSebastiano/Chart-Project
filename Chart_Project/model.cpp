@@ -10,23 +10,6 @@ void Model::insertMusic(const Music *music){ rl->insert(music); }
 // rimuove musica non pubblicata dal catalogo dell'etichetta discografica
 void Model::removeMusic(const Music *music) { rl->removeNotReleased(music); }
 
-// preleva le informazioni di tutta la musica dell'etichetta discografica
-// FORSE DA ELIMINARE
-void Model::getCatalogInfo() const{
-    auto r(rl->getReleased());
-    auto nr(rl->getNotReleased());
-
-    cout << "Musica non rilasciata: " << endl << endl;
-
-    for(auto it = nr.begin(); it != nr.end(); ++it)
-         cout << (*it)->getInfo() << endl << endl;
-
-    cout << "Musica rilasciata: " << endl << endl;
-
-    for(auto it = r.begin(); it != r.end(); ++it)
-        cout << (*it)->getInfo() << endl << endl;
-}
-
 // preleva tutta la musica dal catalogo dell'etichetta discografica
 vector<const Music*> Model::getCatalog() const { return rl->getAll(); }
 
@@ -47,8 +30,6 @@ bool Model::isPresent(const Music *m) const {
 bool Model::areEquals(const Music *m1, const Music *m2) const { return rl->areSame(m1, m2); }
 
 bool Model::isElapsed1Year(const Release *release) const { return rl->isElapsed1Year(release); }
-
-// TENTA DI IMPLEMENTARE I PUNTATORI !!!!!!!!!
 
 vector<string> Model::getArtists() const {
     vector<string> result;
@@ -106,7 +87,6 @@ vector<std::pair<double, string>> Model::pieChartOp1() {
     // fetch catalogo
     auto all(rl->getReleased());
 
-    // NON MI CONVINCE
     for(auto it = artists.begin(); it != artists.end(); ++it){
         byArtist = rl->getByArtist(all, *it);       // preleva tutta la musica per artista (*it)
         result.push_back(std::make_pair(rl->getTotProfit(byArtist), *it));  // inserisce l'artista e il relativo profitto

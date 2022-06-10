@@ -13,8 +13,6 @@ uint ChartDialog::getOptionsIndex() const { return optionsCB->currentIndex(); }
 
 QComboBox *ChartDialog::getOptionsCB() const { return optionsCB; }
 
-//void ChartDialog::setOptions(const QStringList &optionsList) { options->addItems(optionsList); }
-
 void ChartDialog::changeTextDescription(const QString &text) {
     description->clear();
     description->setPlainText(text);

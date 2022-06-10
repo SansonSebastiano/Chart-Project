@@ -5,8 +5,10 @@
 #include <QPlainTextEdit>
 #include "formdialog.h"
 
+// DA COMMENTARE
+
 class ChartDialog : public FormDialog {
-protected:      // CORRETTO????
+protected:
     QComboBox *optionsCB;
     QPlainTextEdit *description;
 public:

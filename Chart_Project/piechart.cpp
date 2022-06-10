@@ -33,7 +33,6 @@ void PieChart::setSlices() {
         ++xit;
         ++yit;
     }
-    // another slices' configurations ... MAYBE
 }
 
 void PieChart::setSeries() {

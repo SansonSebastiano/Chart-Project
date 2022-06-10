@@ -1,11 +1,9 @@
 #include "viewer.h"
 #include "controller.h"
 
-// MEGLIO CREARE DIFFERENTI WIDGET CUSTOM CLASS ?
 // WARNING : impostare le parentelle tra i widget/layout
 
 void Viewer::closeEvent(QCloseEvent *event) {
-    // DA SISTEMARE
     QMessageBox::StandardButton resBtn = QMessageBox::Yes;
     // controllo se toSave ha elementi
     if(!controller->getToSave().isEmpty())
@@ -20,7 +18,7 @@ void Viewer::closeEvent(QCloseEvent *event) {
 QPushButton *Viewer::createButton(const QString& title){
     QPushButton *button = new QPushButton(title);
 
-    // Aggiungere caratteristiche...
+    // Aggiungere proprieta se necessario...
 
     return button;
 }
@@ -47,14 +45,13 @@ void Viewer::addMenus(QVBoxLayout *mainLayout) {
 
     file->addAction(AC_upload);
     file->addAction(AC_save);
-    //file->addAction(AC_close);       // DA IMPLEMENTARE
 
     edit->addAction(AC_add);
     edit->addAction(AC_release);
 
     chart->addAction(AC_lineChart);
-    chart->addAction(AC_pieChart);          // DA IMPLEMENTARE
-    chart->addAction(AC_barChart);    // DA IMPLEMENTARE
+    chart->addAction(AC_pieChart);
+    chart->addAction(AC_barChart);
 
     mainLayout->addWidget(menuBar);
 }
@@ -99,7 +96,6 @@ void Viewer::addControll_2(QHBoxLayout *screenLayout){
 
     btn_addItem = createButton("Aggiungi musica");
     btn_release = createButton("Pubblica");
-    //btn_filter = createButton("Filtra");
 
     buttonLayout_2->addWidget(btn_addItem);
     buttonLayout_2->addWidget(btn_release);
@@ -131,7 +127,6 @@ Viewer::Viewer(QWidget *parent) : QDialog(parent), controller(new Controller) {
     mainLayout = new QVBoxLayout;
 
     // init Custom-Dialog-Form
-    // NON MI CONVINCE
     md = new MusicDialog(parent);
     md->createFormDialogLayout(parent);
 
@@ -229,6 +224,7 @@ void Viewer::setController(Controller *c) {
     connect(ld->getGenreRB(), &QRadioButton::clicked, controller, &Controller::enableLDComponents);
     connect(ld->getAddBtn(), &QPushButton::clicked, controller, &Controller::showLineChartWindow);
     // to handle pie chart
+    connect(AC_pieChart, &QAction::triggered, controller, &Controller::showPieChartDialog);
     connect(btn_pieChart, &QPushButton::clicked, controller, &Controller::showPieChartDialog);
     connect(pd->getOptionsCB(), static_cast<void(QComboBox::*)(int)>(&QComboBox::activated),
             [=](int index){
@@ -255,9 +251,6 @@ void Viewer::setTable(const QVector<const Music*> &catalog) {
 }
 
 void Viewer::addMusicToTable(const Music* newMusic) {
-    // FORSE SAREBBE MEGLIO FARLO FARE AL CONTROLLER??
-    //toSave.push_back(newMusic);
-
     myTableModel->addEntry(newMusic);
     qDebug() << QString::fromStdString(newMusic->getInfo()) << " \n ADDED TO TABLE" << endl;
 }

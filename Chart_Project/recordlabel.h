@@ -138,8 +138,6 @@ public:
      * @return  bool
      */
     bool areSame(const Music*, const Music*) const;
-
-    // POSSIBILITA DI TOGLIERE UN ALBUM DA 'released' ?
 };
 
 #endif // RECORDLABEL_H

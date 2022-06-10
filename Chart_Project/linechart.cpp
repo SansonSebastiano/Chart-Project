@@ -5,12 +5,6 @@ LineChart::LineChart(const QString &_title, const std::vector<uint> &profits, co
     setChartData(profits, from, to);
 }
 
-/*
-LineChart::LineChart(const QString &_title, const std::vector<uint> &_xData, const std::vector<uint> &_yData) : AbstractChart(_title), x_data(_xData), y_data(_yData) {
-    mySeries = new QLineSeries();
-}
-*/
-
 void LineChart::setChartData(const std::vector<uint> &profit, const uint from, const uint to) {
     x_data = profit;
 
@@ -39,24 +33,17 @@ void LineChart::setChart() {
     setSeries();
     addSeries(mySeries);
 
-    // TODO : da sistemare
-
     QValueAxis *axisX = new QValueAxis;
     axisX->setLabelFormat("%i");
     axisX->setTickCount(x_data.size());
     axisX->setTitleText("Intervallo anni");
-   // addAxis(axisX, Qt::AlignBottom);
     setAxisX(axisX, mySeries);
-    //mySeries->attachAxis(axisX);
 
     QValueAxis *axisY = new QValueAxis;
-    //axisY->setMin(0);
     axisY->setLabelFormat("%.2f");
     axisY->setTickCount(y_data.size());
     axisY->setTitleText("Profitto (in €)");
-    //addAxis(axisY, Qt::AlignLeft);
     setAxisY(axisY, mySeries);
-    //mySeries->attachAxis(axisY);
 
     legend()->hide();
     setTitle(getTitle());

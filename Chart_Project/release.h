@@ -56,12 +56,6 @@ public:
      * @return  string
      */
     string customProfitFormatting(double profit) const;
-    /*
-     * DA TESTARE
-     * @brief   ridefinizione operatore di uguaglianza
-     * @return  bool
-     */
-    //virtual bool operator == (const Music& other) const override;
 };
 
 #endif // RELEASE_H

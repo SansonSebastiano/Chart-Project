@@ -16,13 +16,10 @@ PhisycalMedium::PhisycalMedium(const string& _genre, const string& _album_name, 
 void PhisycalMedium::calcProfit() {
     if (support == CD)
         setProfit(cd_price * num_sales * getElapsedYears());    // profitto = costo CD * #vendite medie annuo * anni trascorsi
-        //profit = cd_price * num_sales * getElapsedYears();
     else if (support == Vinile)
         setProfit(vnl_price * num_sales * getElapsedYears());   // profitto = costo Vinile * #vendite medie annuo * anni trascorsi
-        //profit = vnl_price * num_sales * getElapsedYears();
     else
         setProfit(cst_price * num_sales * getElapsedYears());   // profitto = costo Cassetta * #vendite medie annuo * anni trascorsi
-        //profit = cst_price * num_sales * getElapsedYears();
 }
 
 uint PhisycalMedium::getNumbers() const{ return num_sales; }

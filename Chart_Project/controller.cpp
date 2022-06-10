@@ -3,8 +3,6 @@
 const QDir Controller::project_path(PROJECT_PATH);
 const QString Controller::dataSetDir("/RecordLabel/");
 
-// WARNING : al nome della record label
-
 Controller::Controller(QObject *parent) : QObject(parent), model(new Model()), xmlio(new xml_IO()) { }
 
 Controller::~Controller() {
@@ -183,8 +181,6 @@ void Controller::removeFromFile(const QString& label, const Music* music, const 
     writeOnFile(label, document);
 }
 
-// FARE DELLE GETTER?? <------------
-
 QVector<const Music*> Controller::initData() {
     loadDataFrom("sample_1");       // ATTENZIONE : QUANDO NECESSARIO CAMBIARE NOME DEL FILE => variabile statica costante
 
@@ -343,8 +339,6 @@ void Controller::releaseMusic() {
     }
 }
 
-// RIVEDERE LA PARTE SOTTOSTANTE
-
 void Controller::showLineChartDialog() {
     auto dialog = view->getLineChartDialog();
 
@@ -433,9 +427,6 @@ void Controller::setPieOp1(){
 }
 
 void Controller::setPieOp2() {
-    //----------------------------------------------------------------------------------------------------
-    // NON MI CONVINCE : DA SISTEMARE, creare una funzione che imposti i dati da fornire ai charts
-    //----------------------------------------------------------------------------------------------------
     auto data(model->pieChartOp2());
 
     QList<qreal> ydata;
@@ -451,9 +442,6 @@ void Controller::setPieOp2() {
 }
 
 void Controller::setPieOp3() {
-    //----------------------------------------------------------------------------------------------------
-    // NON MI CONVINCE : DA SISTEMARE, creare una funzione che imposti i dati da fornire ai charts
-    //----------------------------------------------------------------------------------------------------
     auto data(model->pieChartOp3());
 
     QList<qreal> ydata;

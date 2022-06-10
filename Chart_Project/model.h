@@ -22,8 +22,6 @@ public:
      * @return  void
      */
     void removeMusic(const Music* music);
-    // DA ELIMINARE ?
-    void getCatalogInfo() const;
     /*
      * @brief   ritorna l'intero catalogo dell'etichetta discografica
      *          (NB: della musica pubblicata, viene prevelata soltanto se dalla data della sua pubblicazione e' passato almeno un anno)
