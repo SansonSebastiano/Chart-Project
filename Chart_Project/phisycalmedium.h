@@ -37,6 +37,15 @@ public:
 
     PhisycalMedium(const string& _genre = "", const string& _album_name = "", const string& _album_artist = "", const Date& _rd = Date(), Support _support = None_Support, uint _ns = 0);
     virtual ~PhisycalMedium() = default;
+
+    /*
+    double getCDPrice() const;
+
+    double getVNLPrice() const;
+
+    double getCSTPrice() const;
+    */
+
     /*
      * @brief   restituisce il numero di copie vendute
      * @return  unsigned int

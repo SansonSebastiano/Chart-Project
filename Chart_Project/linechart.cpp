@@ -42,7 +42,7 @@ void LineChart::setChart() {
     // TODO : da sistemare
 
     QValueAxis *axisX = new QValueAxis;
-    axisX->setLabelFormat("%.0f");
+    axisX->setLabelFormat("%i");
     axisX->setTickCount(x_data.size());
     axisX->setTitleText("Intervallo anni");
    // addAxis(axisX, Qt::AlignBottom);
