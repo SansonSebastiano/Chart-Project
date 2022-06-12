@@ -36,10 +36,13 @@ const Date xml_IO::readDate(QDomElement childNode){
                      helper::str_to_uint(childNode.attribute(month, month).toStdString()),   // mese
                      helper::str_to_uint(childNode.attribute(year, year).toStdString())      // anno
                     );
+    else throw err_readDate();
+    /*
     else{   // ECCEZIONI??
         qDebug() << "Read date failed" << endl;
         return {};
     }
+    */
 }
 
 const PM* xml_IO::readPM(QDomElement node){
@@ -129,9 +132,9 @@ QDomElement xml_IO::searchByName(QDomNodeList list, const Music* music) const {
             }
         }
     }
-
+    throw err_emptyCollection();
     // ATTENZIONE: gestire con le eccezioni?
-    return QDomElement();
+    //return QDomElement();
 }
 
 // Rimozione
@@ -152,11 +155,11 @@ void xml_IO::removeByName(QDomNodeList list, const Music* music) {
                 element.attribute(music_artist, music_artist).toStdString() == music->getArtist() &&
                 element.attribute(genre, genre).toStdString() == music->getGenre()){
                 element.parentNode().removeChild(element);  // esegue lo stesso algoritmo della funzione precedente, il nodo pero' viene rimosso dal file
-                qDebug() << QString::fromStdString(music->getInfo() + " DELETED FROM FILE SUCCESSED") << endl << endl;
+                qDebug() << QString::fromStdString(music->getInfo() + " DELETE FROM FILE WITH SUCCESSED") << endl << endl;
             }
         }
-    }else
-        qDebug() << QString::fromStdString(music->getInfo() + " NOT PRESENT TO DELETE FROM FILE") << endl << endl;
+    }else throw err_notInFile(music->getInfo());
+        //qDebug() << QString::fromStdString(music->getInfo() + " NOT PRESENT TO DELETE FROM FILE") << endl << endl;
 }
 
 

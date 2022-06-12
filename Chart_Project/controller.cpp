@@ -1,5 +1,9 @@
 #include "controller.h"
 
+
+// INSERIRE BLOCCHI TRY/CATCH
+
+
 const QDir Controller::project_path(PROJECT_PATH);
 const QString Controller::dataSetDir("/RecordLabel/");
 
@@ -40,6 +44,7 @@ void Controller::readFromFile(const QString& label, QDomDocument& document){
         qDebug() << "Loaded input file failed" << endl;
     else
         qDebug() << "Loaded input file successed" << endl;
+
     file.close();
 }
 
@@ -67,7 +72,6 @@ void Controller::loadDataFrom(const QString& label){
                                                                     //                         <PM> ... </PM> : album pubblicati su supporto fisico
                                                                     //                         <DM> ... </DM> : album pubblicati su supporto digitale
     while (!node.isNull()) {
-        //qDebug() << node.tagName();
         // se e' un album non pubblicato
         if(node.tagName() == xml_IO::_album)
                 model->insertMusic(xmlio->readAlbum(node));
@@ -82,8 +86,8 @@ void Controller::loadDataFrom(const QString& label){
 
         node = node.nextSiblingElement().toElement();
     }
-    //model->getAllInfo();   // just TESTING
-    // ALTRIMENTI IL FILE E' VUOTO?
+
+    // ALTRIMENTI IL FILE E' VUOTO? => ECCEZIONE
 }
 
 void Controller::isExists(const QString& label, const Music* music){

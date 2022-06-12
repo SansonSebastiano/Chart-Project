@@ -3,7 +3,7 @@
 RecordLabel::~RecordLabel() { for(auto c : catalog) delete c; }
 
 void RecordLabel::insert(const Music* music) {
-    //if(!music) throw string("NoInsert");        // DEFINIRE UNA CLASSE DI ECCEZIONI
+    if(!music) throw err_emptyMusic();
 
     catalog.push_back(music);
     cout << music->getInfo() << " \nINSERTED TO RECORD LABEL" << endl << endl;
@@ -12,51 +12,44 @@ void RecordLabel::insert(const Music* music) {
 // DA TESTARE
 
 vector<const Music*> RecordLabel::getByName(const vector<const Music *> &v, const string &name) const {
-    //controllo se
-        // - 'v' e' vuoto?
-        // - name nullo
+    if(v.empty()) throw err_emptyCollection();
 
     vector<const Music*> result;
     for(auto it = v.begin(); it != v.end(); ++it)
         if((*it)->getName() == name)
             result.push_back(*it);
 
-    //if(result.empty()) throw string("NameNotFound");  // DEFINIRE UNA CLASSE DI ECCEZIONI
+    if(result.empty()) throw err_nameNotFound();
     return result;
 }
 
 vector<const Music*> RecordLabel::getByGenre(const vector<const Music *> &v, const string &genre) const {
-    //controllo se
-        // - 'v' e' vuoto?
-        // - genre nullo
+    if(v.empty()) throw err_emptyCollection();
 
     vector<const Music*> result;
     for(auto it = v.begin(); it != v.end(); ++it)
         if((*it)->getGenre() == genre)
             result.push_back((*it));
 
-    //if(result.empty()) throw string("GenreNotFound"); // DEFINIRE UNA CLASSE DI ECCEZIONI
-                                                        // VEDERE UN ESERCIZIO DEGLI APPELLI CHE LO FA
+    if(result.empty()) throw err_genreNotFound();
+
     return result;
 }
 
 vector<const Music*> RecordLabel::getByArtist(const vector<const Music *> &v, const string &artist) const {
-    //controllo se
-        // - 'v' e' vuoto?
-        // - artist nullo
+    if(v.empty()) throw err_emptyCollection();
 
     vector<const Music*> result;
     for(auto it = v.begin(); it != v.end(); ++it)
         if((*it)->getArtist() == artist)
             result.push_back((*it));
 
-    //if(result.empty()) throw string("ArtistNotFound");    // DEFINIRE UNA CLASSE DI ECCEZIONI
+    if(result.empty()) throw err_artistNotFound();
     return result;
 }
 
 vector<const Music*> RecordLabel::getByYear(const vector<const Music *> &v, uint year) const {
-    //controllo se
-        // - 'v' e' vuoto?
+    if(v.empty()) throw err_emptyCollection();
 
     vector<const Music*> result;
 
@@ -66,14 +59,12 @@ vector<const Music*> RecordLabel::getByYear(const vector<const Music *> &v, uint
             result.push_back(static_cast<const Release*>(*it));
     }
 
-    //if(result.empty()) throw string("YearNotFound");  // DEFINIRE UNA CLASSE DI ECCEZIONI
+    if(result.empty()) throw err_yearNotFound();
     return result;
 }
 
 vector<const Music*> RecordLabel::getByPlatform(const vector<const Music*> &v, Platform platform) const{
-    //controllo se
-        // - 'v' e' vuoto?
-        // - platform == None_Platform
+    if(v.empty()) throw err_emptyCollection();
 
     vector<const Music*> result;
 
@@ -82,14 +73,13 @@ vector<const Music*> RecordLabel::getByPlatform(const vector<const Music*> &v, P
         if(pdm && pdm->getPlatform() == platform)
             result.push_back(static_cast<const DM*>(*it));
     }
-    //if(result.empty()) throw string("PlatformNotFound");  // DEFINIRE UNA CLASSE DI ECCEZIONI
+    if(result.empty()) throw err_platformNotFound();
     return result;
 }
 
 vector<const Music*> RecordLabel::getBySupport(const vector<const Music*> &v, Support support) const{
-    //controllo se
-        // - 'v' e' vuoto?
-        // - support = None_Support
+    if(v.empty()) throw err_emptyCollection();
+
     vector<const Music*> result;
 
     for(auto it = v.begin(); it != v.end(); ++it){
@@ -97,12 +87,12 @@ vector<const Music*> RecordLabel::getBySupport(const vector<const Music*> &v, Su
         if(ppm && ppm->getSupport() == support)
             result.push_back(static_cast<const PM*>(*it));
     }
-    //if(result.empty()) throw string("SupportNotFound");  // DEFINIRE UNA CLASSE DI ECCEZIONI
+    if(result.empty()) throw err_supportNotFound();
     return result;
 }
 
 double RecordLabel::getTotProfit(const vector<const Music*> &r) const {
-    // controllo se r è vuoto ??
+    if(r.empty()) throw err_emptyCollection();
 
     double tot_profit = 0.0;
     for(auto it = r.begin(); it != r.end(); ++it) {
@@ -115,7 +105,7 @@ double RecordLabel::getTotProfit(const vector<const Music*> &r) const {
 }
 
 uint RecordLabel::getTotNumbers(const vector<const Music *> &r) const {
-    // controllo se r è vuoto ??
+    if(r.empty()) throw err_emptyCollection();
 
     uint tot_numbers = 0;
     for(auto it = r.begin(); it != r.end(); ++it) {
@@ -128,7 +118,7 @@ uint RecordLabel::getTotNumbers(const vector<const Music *> &r) const {
 }
 
 bool RecordLabel::isElapsed1Year(const Release *release) const{
-    // controllo se album vuoto
+    if(!release) throw err_emptyMusic();
 
     return release->getElapsedYears() >= 1;
 }
@@ -192,7 +182,7 @@ vector<const Music*> RecordLabel::getReleaseOnPlatform() const {
 }
 
 void RecordLabel::removeNotReleased(const Music *music) {
-    // controllo se music vuoto
+    if(!music) throw err_emptyMusic();
 
     bool found(false);
 
@@ -205,8 +195,8 @@ void RecordLabel::removeNotReleased(const Music *music) {
             found = true;
             cout << "\tDELETED FROM RECORD LABEL" << endl << endl;
         }
-    // DA TESTARE
-    //if(!found) throw string("NameNotFound");  // DEFINIRE UNA CLASSE DI ECCEZIONI
+
+    if(!found) throw err_nameNotFound();
 }
 
 bool RecordLabel::areSame(const Music *m1, const Music *m2) const {
