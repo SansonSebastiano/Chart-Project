@@ -17,8 +17,7 @@ Date::Date(uint _day, uint _month, uint _year) {
         month = _month;
         year = _year;
     }
-    //else cout << "Illegal date!" << endl;   // da gestire con le eccezioni?
-    else throw err_illegalDate();
+    else cout << "Illegal date!" << endl;   // da gestire con le eccezioni?
 }
 
 Date Date::getNow() {

@@ -36,13 +36,10 @@ const Date xml_IO::readDate(QDomElement childNode){
                      helper::str_to_uint(childNode.attribute(month, month).toStdString()),   // mese
                      helper::str_to_uint(childNode.attribute(year, year).toStdString())      // anno
                     );
-    else throw err_readDate();
-    /*
-    else{   // ECCEZIONI??
+    else{
         qDebug() << "Read date failed" << endl;
         return {};
     }
-    */
 }
 
 const PM* xml_IO::readPM(QDomElement node){
@@ -132,9 +129,7 @@ QDomElement xml_IO::searchByName(QDomNodeList list, const Music* music) const {
             }
         }
     }
-    throw err_emptyCollection();
-    // ATTENZIONE: gestire con le eccezioni?
-    //return QDomElement();
+    return QDomElement();
 }
 
 // Rimozione
@@ -158,8 +153,7 @@ void xml_IO::removeByName(QDomNodeList list, const Music* music) {
                 qDebug() << QString::fromStdString(music->getInfo() + " DELETE FROM FILE WITH SUCCESSED") << endl << endl;
             }
         }
-    }else throw err_notInFile(music->getInfo());
-        //qDebug() << QString::fromStdString(music->getInfo() + " NOT PRESENT TO DELETE FROM FILE") << endl << endl;
+    }else qDebug() << QString::fromStdString(music->getInfo() + " NOT PRESENT TO DELETE FROM FILE") << endl << endl;
 }
 
 

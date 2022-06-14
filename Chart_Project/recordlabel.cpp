@@ -3,54 +3,38 @@
 RecordLabel::~RecordLabel() { for(auto c : catalog) delete c; }
 
 void RecordLabel::insert(const Music* music) {
-    if(!music) throw err_emptyMusic();
-
     catalog.push_back(music);
     cout << music->getInfo() << " \nINSERTED TO RECORD LABEL" << endl << endl;
 }
 
-// DA TESTARE
-
 vector<const Music*> RecordLabel::getByName(const vector<const Music *> &v, const string &name) const {
-    if(v.empty()) throw err_emptyCollection();
-
     vector<const Music*> result;
     for(auto it = v.begin(); it != v.end(); ++it)
         if((*it)->getName() == name)
             result.push_back(*it);
 
-    if(result.empty()) throw err_nameNotFound();
     return result;
 }
 
 vector<const Music*> RecordLabel::getByGenre(const vector<const Music *> &v, const string &genre) const {
-    if(v.empty()) throw err_emptyCollection();
-
     vector<const Music*> result;
     for(auto it = v.begin(); it != v.end(); ++it)
         if((*it)->getGenre() == genre)
             result.push_back((*it));
 
-    if(result.empty()) throw err_genreNotFound();
-
     return result;
 }
 
 vector<const Music*> RecordLabel::getByArtist(const vector<const Music *> &v, const string &artist) const {
-    if(v.empty()) throw err_emptyCollection();
-
     vector<const Music*> result;
     for(auto it = v.begin(); it != v.end(); ++it)
         if((*it)->getArtist() == artist)
             result.push_back((*it));
 
-    if(result.empty()) throw err_artistNotFound();
     return result;
 }
 
 vector<const Music*> RecordLabel::getByYear(const vector<const Music *> &v, uint year) const {
-    if(v.empty()) throw err_emptyCollection();
-
     vector<const Music*> result;
 
     for(auto it = v.begin(); it != v.end(); ++it) {
@@ -59,13 +43,10 @@ vector<const Music*> RecordLabel::getByYear(const vector<const Music *> &v, uint
             result.push_back(static_cast<const Release*>(*it));
     }
 
-    if(result.empty()) throw err_yearNotFound();
     return result;
 }
 
 vector<const Music*> RecordLabel::getByPlatform(const vector<const Music*> &v, Platform platform) const{
-    if(v.empty()) throw err_emptyCollection();
-
     vector<const Music*> result;
 
     for(auto it = v.begin(); it != v.end(); ++it){
@@ -73,13 +54,11 @@ vector<const Music*> RecordLabel::getByPlatform(const vector<const Music*> &v, P
         if(pdm && pdm->getPlatform() == platform)
             result.push_back(static_cast<const DM*>(*it));
     }
-    if(result.empty()) throw err_platformNotFound();
+
     return result;
 }
 
 vector<const Music*> RecordLabel::getBySupport(const vector<const Music*> &v, Support support) const{
-    if(v.empty()) throw err_emptyCollection();
-
     vector<const Music*> result;
 
     for(auto it = v.begin(); it != v.end(); ++it){
@@ -87,13 +66,11 @@ vector<const Music*> RecordLabel::getBySupport(const vector<const Music*> &v, Su
         if(ppm && ppm->getSupport() == support)
             result.push_back(static_cast<const PM*>(*it));
     }
-    if(result.empty()) throw err_supportNotFound();
+
     return result;
 }
 
 double RecordLabel::getTotProfit(const vector<const Music*> &r) const {
-    if(r.empty()) throw err_emptyCollection();
-
     double tot_profit = 0.0;
     for(auto it = r.begin(); it != r.end(); ++it) {
         auto pr = dynamic_cast<const Release*>(*it);
@@ -105,8 +82,6 @@ double RecordLabel::getTotProfit(const vector<const Music*> &r) const {
 }
 
 uint RecordLabel::getTotNumbers(const vector<const Music *> &r) const {
-    if(r.empty()) throw err_emptyCollection();
-
     uint tot_numbers = 0;
     for(auto it = r.begin(); it != r.end(); ++it) {
         auto pr = dynamic_cast<const Release*>(*it);
@@ -118,8 +93,6 @@ uint RecordLabel::getTotNumbers(const vector<const Music *> &r) const {
 }
 
 bool RecordLabel::isElapsed1Year(const Release *release) const{
-    if(!release) throw err_emptyMusic();
-
     return release->getElapsedYears() >= 1;
 }
 
@@ -182,8 +155,6 @@ vector<const Music*> RecordLabel::getReleaseOnPlatform() const {
 }
 
 void RecordLabel::removeNotReleased(const Music *music) {
-    if(!music) throw err_emptyMusic();
-
     bool found(false);
 
     for(auto it = catalog.begin(); it != catalog.end() && !found; ++it)
@@ -195,8 +166,6 @@ void RecordLabel::removeNotReleased(const Music *music) {
             found = true;
             cout << "\tDELETED FROM RECORD LABEL" << endl << endl;
         }
-
-    if(!found) throw err_nameNotFound();
 }
 
 bool RecordLabel::areSame(const Music *m1, const Music *m2) const {

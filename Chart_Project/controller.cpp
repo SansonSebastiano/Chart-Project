@@ -30,7 +30,7 @@ void Controller::setModel(Model *m) { model = m; }
 void Controller::setViewer(Viewer *v) { view = v ; }
 
 // I/O operations
-// CONTROLLARE SE I SEGUENTI METODI NECESSITANO DI ECCEZIONI
+
 void Controller::readFromFile(const QString& label, QDomDocument& document){
     QFile file(project_path.absolutePath() + dataSetDir + label + ".xml");
     qDebug() << project_path.absolutePath() + dataSetDir + label + ".xml" << endl;
@@ -87,7 +87,6 @@ void Controller::loadDataFrom(const QString& label){
         node = node.nextSiblingElement().toElement();
     }
 
-    // ALTRIMENTI IL FILE E' VUOTO? => ECCEZIONE
 }
 
 void Controller::isExists(const QString& label, const Music* music){
@@ -117,7 +116,7 @@ void Controller::newSave(const QString& label, const Music *music){
         if (dynamic_cast<const DM*>(music))
             root.appendChild(xmlio->writeDM(document, static_cast<const DM*>(music)));
     }
-    // altrimenti pointer nullo
+
     writeOnFile(label, document);
 }
 
@@ -138,7 +137,6 @@ void Controller::appendTo(const QString& label, const Music *music){
         if(dynamic_cast<const DM*>(music))
             document.firstChild().toElement().appendChild(xmlio->writeDM(document, static_cast<const DM*>(music)));
     }
-    // altrimenti pointer nullo
 
     writeOnFile(label, document);
 }
@@ -153,9 +151,8 @@ void Controller::releasePMToFile(const QString& label, const Album *album, const
             QDomElement result = xmlio->searchByName(list, album);
 
             appendTo(label, new PM(album->getGenre(), album->getName(), album->getArtist(), date, support, num));
-        }// else => ECCEZIONE medium nullo
-        // inserire questa eccezione dovunque serva e dove manca
-    }// else => album nullo
+        }
+    }
 }
 
 void Controller::releaseDMToFile(const QString& label, const Album *album, const Date &date, uint num, Platform platform){
@@ -168,10 +165,8 @@ void Controller::releaseDMToFile(const QString& label, const Album *album, const
             QDomElement result = xmlio->searchByName(list, album);
 
             appendTo(label, new DM(album->getGenre(), album->getName(), album->getArtist(), date, platform, num));
-        }// else => ECCEZIONE medium nullo
-        // inserire questa eccezione dovunque serva e dove manca
-
-    } // else => music nullo
+        }
+    }
 }
 
 void Controller::removeFromFile(const QString& label, const Music* music, const QString& music_type) {
@@ -235,8 +230,7 @@ void Controller::saveToFile() {
             if(dynamic_cast<const Release*>(*it))
                 removeFromFile("sample_1", *it, xml_IO::_album);
         }
-    else
-        view->showWarning("Nuova musica non inserita");
+    else view->showWarning("Nuova musica non inserita");
 }
 
 void Controller::showMusicDialog() {

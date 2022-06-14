@@ -5,7 +5,6 @@
 
 class BarChartDialog : public ChartDialog {
 private:
-    //QVBoxLayout *dialogLayout;
     QComboBox *artistsCB;
     QDateEdit *dateQE;
 

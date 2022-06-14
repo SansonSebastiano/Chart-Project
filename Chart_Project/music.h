@@ -5,8 +5,6 @@
 #include<string>
 using std::string;
 
-#include "exceptions.h"
-
 class Music{
 private:
     string genre;   // genere musicale
