@@ -123,6 +123,7 @@ bool TableModel::setData(const QModelIndex &index, const QVariant &value, int ro
         emit dataChanged(index, index, {Qt::DisplayRole});
         return true;
     }
+
     return false;
 }
 

@@ -1,52 +1,62 @@
 <catalog>
- <album genre="Rap" name="Nome1" artist="Artista1"/>
- <album genre="Rock" name="Nome@" artist="Artista2"/>
- <PM num_sales="1000" genre="Rap" name="Nome3" artist="Artista1" support="0">
-  <release month="9" year="2013" day="10"/>
- </PM>
- <PM num_sales="456" genre="Rap" name="Nome4" artist="Artista3" support="0">
-  <release month="9" year="2012" day="10"/>
- </PM>
- <PM num_sales="1230" genre="Rap" name="Nome5" artist="Artista5" support="0">
-  <release month="9" year="2011" day="10"/>
- </PM>
- <PM num_sales="2000" genre="Rap" name="Nome5" artist="Artista4" support="0">
-  <release month="9" year="2010" day="10"/>
- </PM>
- <PM num_sales="349" genre="Rap" name="Nome6" artist="Artista5" support="0">
-  <release month="9" year="2009" day="10"/>
- </PM>
- <PM num_sales="650" genre="Rap" name="Nome7" artist="Artista6" support="0">
-  <release month="9" year="2008" day="10"/>
- </PM>
- <PM num_sales="500" genre="Rap" name="Nome8" artist="Artista7" support="0">
-  <release month="9" year="2007" day="10"/>
- </PM>
- <PM num_sales="987" genre="Rap" name="Nome11" artist="Artista8" support="0">
-  <release month="9" year="2004" day="10"/>
- </PM>
- <PM num_sales="100" genre="Rap" name="Nome12" artist="Artista3" support="0">
-  <release month="9" year="2006" day="10"/>
- </PM>
- <PM num_sales="5000" genre="Rap" name="Nome13" artist="Artista10" support="0">
-  <release month="9" year="2005" day="10"/>
- </PM>
- <PM num_sales="4000" genre="Rap" name="Nome9" artist="Artista7" support="0">
-  <release month="9" year="2002" day="10"/>
- </PM>
- <PM num_sales="302" genre="Rap" name="Nome10" artist="Artista3" support="0">
-  <release month="9" year="2003" day="10"/>
- </PM>
- <PM num_sales="1000" genre="Rap" name="2001" artist="Dr. Dre" support="0">
-  <release month="9" year="2000" day="12"/>
- </PM>
- <DM listeners="1000" genre="Jazz" name="Standard &amp; Ballads" artist="Wynton Marsalis" platform="0">
-  <release month="9" year="2000" day="12"/>
- </DM>
- <PM num_sales="1000" genre="Rap" name="60 Hz" artist="DJ Shocca" support="1">
-  <release month="9" year="2001" day="12"/>
- </PM>
- <PM num_sales="1000" genre="Rock" name="Meteora" artist="Linkin Park" support="2">
-  <release month="9" year="2000" day="12"/>
- </PM>
+    <DM listeners="1500" genre="Rap" name="I Messaggeri della Dopa" artist="Neffa" platform="0">
+        <release month="9" year="1997" day="10"/>
+    </DM>
+    <DM listeners="500" genre="Rap" name="I Messaggeri della Dopa" artist="Neffa" platform="1">
+        <release month="9" year="1997" day="10"/>
+    </DM>
+    <DM listeners="1000" genre="Rap" name="I Messaggeri della Dopa" artist="Neffa" platform="2">
+        <release month="9" year="1997" day="10"/>
+    </DM>
+    <PM num_sales="500" genre="Rap" name="2001" artist="Dr. Dre" support="0">
+        <release month="11" year="1999" day="16"/>
+    </PM>
+    <PM num_sales="300" genre="Rap" name="2001" artist="Dr. Dre" support="1">
+        <release month="11" year="1999" day="16"/>
+    </PM>
+    <PM num_sales="100" genre="Rap" name="Così Com'è" artist="Articolo 31" support="0">
+        <release month="5" year="1996" day="14"/>
+    </PM>
+    <album genre="Rap" name="Chiodi" artist="Kaos One"/>
+    <DM listeners="2000" genre="Raggae" name="Exodus" artist="Bob Marley" platform="0">
+        <release month="9" year="1977" day="10"/>
+    </DM>
+    <DM listeners="1000" genre="Raggae" name="Exodus" artist="Bob Marley" platform="1">
+        <release month="9" year="1977" day="10"/>
+    </DM>
+    <DM listeners="700" genre="Rock" name="Hybrid Theory" artist="Linkin Park" platform="2">
+        <release month="9" year="2000" day="10"/>
+    </DM>
+    <PM num_sales="600" genre="Rock" name="Nevermind" artist="Nirvana" support="0">
+        <release month="3" year="1991" day="24"/>
+    </PM>
+    <DM listeners="1200" genre="Rock" name="Nevermind" artist="Nirvana" platform="1">
+        <release month="3" year="1991" day="24"/>
+    </DM>
+    <DM listeners="5000" genre="Rap" name="The Eminem Show" artist="Eminem" platform="0">
+        <release month="3" year="2000" day="13"/>
+    </DM>
+    <DM listeners="10000" genre="Rap" name="The Eminem Show" artist="Eminem" platform="1">
+        <release month="3" year="2000" day="13"/>
+    </DM>
+    <album genre="Jazz" name="Anatomy of a Murder" artist="Duke Ellington"/>
+    <album genre="Raggae" name="Halfway Tree" artist="Damian Marley"/>
+    <PM num_sales="600" genre="Funk" name="It's a New Day - Let a Man Come In" artist="James Brown" support="0">
+        <release month="6" year="1970" day="24"/>
+    </PM>
+    <PM num_sales="300" genre="Funk" name="It's a New Day - Let a Man Come In" artist="James Brown" support="1">
+        <release month="6" year="1970" day="24"/>
+    </PM>
+    <PM num_sales="150" genre="Funk" name="It's a New Day - Let a Man Come In" artist="James Brown" support="2">
+        <release month="6" year="1970" day="24"/>
+    </PM>
+    <DM listeners="400" genre="Rap" name="SxM" artist="Sangue Misto" platform="0">
+        <release month="9" year="1996" day="10"/>
+    </DM>
+    <DM listeners="1000" genre="Rap" name="SxM" artist="Sangue Misto" platform="1">
+        <release month="9" year="1996" day="10"/>
+    </DM>
+    <DM listeners="700" genre="Rap" name="SxM" artist="Sangue Misto" platform="2">
+        <release month="9" year="1996" day="10"/>
+    </DM>
 </catalog>

@@ -23,7 +23,6 @@ public:
 
     // se necessario renderla astratta nella classe base 'ChartDialog'
     void switchDescriptions();
-    void enableComponents();    // forse non serve
 
     void setArtistCB(const std::vector<string> &artists);
 };

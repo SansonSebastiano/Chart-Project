@@ -9,7 +9,6 @@
 
 const int COLS = 9;
 
-// DA COMMENTARE
 class TableModel : public QAbstractTableModel{
     Q_OBJECT
 public:

@@ -42,7 +42,7 @@ void PieChart::setSeries() {
 
     pieSeries->append(slices);
 
-    pieSeries->setLabelsVisible();
+    //pieSeries->setLabelsVisible();
     pieSeries->setLabelsPosition(QPieSlice::LabelInsideHorizontal);
 
     //VISUALIZZARE LA PERCENTUALE

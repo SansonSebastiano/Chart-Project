@@ -63,15 +63,14 @@ void Viewer::addControll_1(QVBoxLayout *mainLayout)
     QHBoxLayout *dataBtnLayout = new QHBoxLayout;
     QHBoxLayout *chartBtnLayout = new QHBoxLayout;
 
-    //QPushButton *newLabel = new QPushButton("Nuova Label");
     btn_saveData = createButton("Salva dati");
-    btn_uploadData = createButton("Carica dati");   // DA IMPLEMENTARE
+    btn_uploadData = createButton("Carica dati");
 
     dataBtnLayout->addWidget(btn_saveData);
     dataBtnLayout->addWidget(btn_uploadData);
 
     dataBtnLayout->setSpacing(10);
-    dataBtnLayout->setContentsMargins(160, 0, 500 ,0);
+    dataBtnLayout->setContentsMargins(160, 0, 400 ,0);
 
     btn_lineChart = createButton("Line Chart");
     btn_pieChart = createButton("Pie Chart");
@@ -82,7 +81,6 @@ void Viewer::addControll_1(QVBoxLayout *mainLayout)
     chartBtnLayout->addWidget(btn_barChart);
 
     chartBtnLayout->setSpacing(50);
-    chartBtnLayout->setContentsMargins(250, 0, 100 ,0);
 
     buttonLayout_1->addLayout(dataBtnLayout);
     buttonLayout_1->addLayout(chartBtnLayout);
@@ -118,7 +116,6 @@ void Viewer::addScreen(QVBoxLayout *mainLayout) {
     frame->setStyleSheet(".QFrame{background-color: rgb(211, 211, 211); border-radius: 10px}");
     frame->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    //table_layout->addWidget(frame);
     screenLayout->addWidget(frame);
     mainLayout->addLayout(screenLayout);
 }
@@ -153,7 +150,7 @@ Viewer::Viewer(QWidget *parent) : QDialog(parent), controller(new Controller) {
 
     //mainLayout->setSpacing(0);
     setLayout(mainLayout);
-    resize(QSize(500, 720));
+    resize(QSize(600, 600));
 }
 
 Viewer::~Viewer() {
@@ -170,7 +167,6 @@ Viewer::~Viewer() {
     delete AC_add;
     delete AC_release;
     delete AC_lineChart;
-    delete AC_pieChart;
     delete AC_pieChart;
 
     delete btn_saveData;

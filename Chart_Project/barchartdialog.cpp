@@ -11,8 +11,8 @@ BarChartDialog::BarChartDialog(QWidget* parent)
       artistsCB(new QComboBox(parent)),
       dateQE(new QDateEdit(parent))
 {
-    dateQE->setDisplayFormat("yyyy");
-    dateQE->setMaximumDate(QDate::currentDate());
+    dateQE->setDisplayFormat("yyyy");                   // imposta il formato della data: visualizzazione solamente dell'anno
+    dateQE->setMaximumDate(QDate::currentDate());       //
 }
 
 BarChartDialog::~BarChartDialog() {
@@ -46,7 +46,6 @@ void BarChartDialog::createFormDialogLayout(QWidget *parent) {
     setLayout(dialogLayout);
 }
 
-// NB. c'e' anche su piechartdialog => polimorfismo??
 void BarChartDialog::switchDescriptions() {
     switch (getOptionsIndex()) {
     case 0:
@@ -58,10 +57,6 @@ void BarChartDialog::switchDescriptions() {
     default:
         break;
     }
-}
-
-void BarChartDialog::enableComponents() {
-    // todo
 }
 
 void BarChartDialog::resetComponents(){
