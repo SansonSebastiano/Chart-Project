@@ -50,7 +50,6 @@ HEADERS += \
     controller.h \
     date.h \
     digitalmedium.h \
-    exceptions.h \
     formdialog.h \
     helper.h \
     io_handler.h \

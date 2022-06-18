@@ -7,8 +7,6 @@ typedef PhisycalMedium PM;
 #include "digitalmedium.h"
 typedef DigitalMedium DM;
 
-#include "exceptions.h"         // FARE ECCEZIONI
-
 #include <vector>
 using std::vector;
 
