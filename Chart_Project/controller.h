@@ -35,7 +35,8 @@ private:
     QVector<const Music*> toSave;   // memorizza i dati da salvare su file
 
     static const QDir project_path;     // percorso della directory del progetto
-    static const QString dataSetDir;    // percorso del file .xml dove sono memorizzari i file
+    static const QString fileName;      // nome del file + .xml dove verrano salvati/caricati i dati
+    static const QString completePath;  // percorso completo di filename.xml
     /*
      * @brief   scrive su file nominato 'label' il contenuto 'document'
      * @param   const QString&

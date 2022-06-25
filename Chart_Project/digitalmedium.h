@@ -27,7 +27,7 @@ private:
    uint listeners;              // ascoltatori annui in media
    static const double price;   // costo per ascolto in €
    /*
-    * @brief   calcola il guadagno di un prodotto musicale: prodotto tra #ascolti e il prezzo per ascolto
+    * @brief   calcola il guadagno di un prodotto musicale: prodotto tra #ascolti (in media all'anno) e il prezzo per ascolto
     * @return  void
     */
     void calcProfit() override;

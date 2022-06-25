@@ -1,11 +1,8 @@
 #include "controller.h"
 
-
-// INSERIRE BLOCCHI TRY/CATCH
-
-
 const QDir Controller::project_path(PROJECT_PATH);
-const QString Controller::dataSetDir("/RecordLabel/");
+const QString Controller::fileName("catalog");
+const QString Controller::completePath(project_path.absolutePath() + "/");
 
 Controller::Controller(QObject *parent) : QObject(parent), model(new Model()), xmlio(new xml_IO()) { }
 
@@ -32,8 +29,8 @@ void Controller::setViewer(Viewer *v) { view = v ; }
 // I/O operations
 
 void Controller::readFromFile(const QString& label, QDomDocument& document){
-    QFile file(project_path.absolutePath() + dataSetDir + label + ".xml");
-    qDebug() << project_path.absolutePath() + dataSetDir + label + ".xml" << endl;
+    QFile file(completePath + label + ".xml");
+    qDebug() << completePath + label + ".xml" << endl;
 
     if(!file.open(QFile::ReadOnly | QIODevice::Text))
         qDebug() << label + ".xml " << "opening failed" << endl;
@@ -49,8 +46,8 @@ void Controller::readFromFile(const QString& label, QDomDocument& document){
 }
 
 void Controller::writeOnFile(const QString& label, const QDomDocument& document){
-    QFile file(project_path.absolutePath() + dataSetDir + label + ".xml");
-    qDebug() << project_path.absolutePath() + dataSetDir + label + ".xml" << endl;
+    QFile file(completePath + label + ".xml");
+    qDebug() << completePath + label + ".xml" << endl;
 
     if(!file.open(QFile::WriteOnly | QFile::Text)){
         qDebug() << "Already opened or there is another issue" << endl;
@@ -90,8 +87,8 @@ void Controller::loadDataFrom(const QString& label){
 }
 
 void Controller::isExists(const QString& label, const Music* music){
-    QFile file(project_path.absolutePath() + dataSetDir + label + ".xml");
-    qDebug() << project_path.absolutePath() + dataSetDir + label + ".xml" << endl;
+    QFile file(completePath + label + ".xml");
+    qDebug() << completePath + label + ".xml" << endl;
 
     if(file.exists())
         appendTo(label, music);
@@ -181,7 +178,7 @@ void Controller::removeFromFile(const QString& label, const Music* music, const 
 }
 
 QVector<const Music*> Controller::initData() {
-    loadDataFrom("sample_1");       // ATTENZIONE : QUANDO NECESSARIO CAMBIARE NOME DEL FILE => variabile statica costante
+    loadDataFrom(fileName);
 
     auto data = model->getCatalog();
     QVector<const Music*> myVector = QVector<const Music*>::fromStdVector(data);
@@ -225,10 +222,10 @@ void Controller::saveToFile() {
     // controllo se 'v' e' vuoto
     if (!v.isEmpty())
         for (auto it = v.begin(); it != v.end(); ++it){
-            appendTo("sample_1", *it);
+            appendTo(fileName, *it);
 
             if(dynamic_cast<const Release*>(*it))
-                removeFromFile("sample_1", *it, xml_IO::_album);
+                removeFromFile(fileName, *it, xml_IO::_album);
         }
     else view->showWarning("Nuova musica non inserita");
 }

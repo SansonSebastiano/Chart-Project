@@ -27,7 +27,7 @@ private:
     static const double vnl_price;  // costo per copia Vinile in € di default
     static const double cst_price;  // costo per copia Cassetta in € di default
     /*
-     * @brief   calcola il guadagno di un prodotto musicale: prodotto tra #copie vendute (in media in un anno) e il prezzo per copia
+     * @brief   calcola il guadagno di un prodotto musicale: prodotto tra #copie vendute (in media annualmente) e il prezzo per copia
      * @return  void
      */
     void calcProfit() override;
