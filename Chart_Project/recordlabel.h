@@ -22,7 +22,6 @@ public:
     /*
      * @brief   inserisce un prodotto musicale nel catalogo dell'etichetta discografica
      * @param   const Music*
-     * @ECCEZIONI  da fare
      * @return  void
      */
     void insert(const Music* music);
@@ -30,7 +29,6 @@ public:
      * @brief   scansiona il vettore in input e restituisce tutta la musica il cui nome e' dato in input
      * @param   const string &name
      * @param   const vector<const Release*> &v
-     * @ ECCEZIONI  nel caso il nome sia errato ??
      * @return  vector<const Music*>
      */
     vector<const Music*> getByName(const vector<const Music*> &v, const string& name) const;
@@ -38,7 +36,6 @@ public:
      * @brief   scansiona il vettore in input e restituisce tutta la musica il cui genere e' dato in input
      * @param   const string &genre
      * @param   const vector<const Release*> &v
-     * @ ECCEZIONI  nel caso il genere sia errato ??
      * @return  vector<const Music*>
      */
     vector<const Music*> getByGenre(const vector<const Music*> &v, const string& genre) const;
@@ -46,7 +43,6 @@ public:
      * @brief   scansiona il vettore in input e restituisce tutta la musica il cui artista e' dato in input
      * @param   const string &artist
      * @param   const vector<const Release*> &v
-     * @ ECCEZIONI  nel caso l'artista sia errato ??
      * @return  vector<const Music*>
      */
     vector<const Music*> getByArtist(const vector<const Music*> &v, const string& artist) const;
@@ -54,7 +50,6 @@ public:
      * @brief   scansiona il vettore in input e restituisce tutta la musica il cui anno e' dato in input
      * @param   const Date& year
      * @param   const vector<const Release*> &v
-     * @ ECCEZIONI  nel caso l'anno sia errato ??
      * @return  vector<const Release*>
      */
     vector<const Music*> getByYear(const vector<const Music*> &v, uint year) const;
@@ -62,7 +57,6 @@ public:
      * @brief   scansiona il vettore in input e restituisce tutta la musica pubblicata in una piattaforma data in input
      * @param   Platform platform
      * @param   const vector<const Release*> &v
-     * @ ECCEZIONI  ??
      * @return  vector<const Release*>
      */
     vector<const Music*> getByPlatform(const vector<const Music*> &v, Platform platform) const;
@@ -70,7 +64,6 @@ public:
      * @brief   scansiona il vettore in input e restituisce tutta la musica pubblicata in un supporto fisico dato in input
      * @param   Support support
      * @param   const vector<const Release*> &v
-     * @ ECCEZIONI  ??
      * @return  vector<const Release*>
      */
     vector<const Music*> getBySupport(const vector<const Music*> &v, Support support) const;
@@ -123,7 +116,6 @@ public:
     /*
      * @brief   rimuove prodotto musicale non pubblicato dal catalogo
      * @param   const Music*
-     * @ ECCEZIONI  ??
      * @return  void
      */
     void removeNotReleased(const Music* music);
@@ -132,7 +124,6 @@ public:
      * @brief   cerca se un prodotto musicale, passato in input, e' presente nel vettore
      * @param   const Music*
      * @param   const vector<const Music*>
-     * @ ECCEZIONI  ??
      * @return  bool
      */
     bool areSame(const Music*, const Music*) const;

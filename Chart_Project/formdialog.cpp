@@ -17,7 +17,8 @@ QPushButton *FormDialog::getAddBtn() const { return btn_add; }
 
 void FormDialog::createFormLayout(const QString &label, QWidget *w, QVBoxLayout *vbl, QWidget* parent) {
     QFormLayout *formLayout = new QFormLayout(parent);
-    formLayout->setFormAlignment(Qt::AlignAbsolute);
+
+    formLayout->setFormAlignment(Qt::AlignLeading);
     formLayout->setLabelAlignment(Qt::AlignLeft);
     formLayout->setAlignment(w, Qt::AlignRight);
 
@@ -27,9 +28,10 @@ void FormDialog::createFormLayout(const QString &label, QWidget *w, QVBoxLayout 
 
 void FormDialog::createFormLayout(QWidget *w1, QWidget *w2, QVBoxLayout *vbl, QWidget *parent) {
     QFormLayout *formLayout = new QFormLayout(parent);
-    formLayout->setFormAlignment(Qt::AlignAbsolute);
-    formLayout->setLabelAlignment(Qt::AlignLeft);
-    //formLayout->setAlignment(w, Qt::AlignRight);
+
+    formLayout->setFormAlignment(Qt::AlignLeading);
+    formLayout->setAlignment(w1, Qt::AlignLeft);
+    formLayout->setAlignment(w2, Qt::AlignRight);
 
     formLayout->addRow(w1, w2);
     vbl->addLayout(formLayout);

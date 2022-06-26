@@ -29,15 +29,15 @@ void Controller::setViewer(Viewer *v) { view = v ; }
 // I/O operations
 
 void Controller::readFromFile(const QString& label, QDomDocument& document){
-    QFile file(completePath + label + ".xml");
+    QFile file(completePath + label + ".xml");  // preleva file nel percorso specificato
     qDebug() << completePath + label + ".xml" << endl;
 
-    if(!file.open(QFile::ReadOnly | QIODevice::Text))
+    if(!file.open(QFile::ReadOnly | QIODevice::Text))       // controlla se e' possibile aprirlo in letture
         qDebug() << label + ".xml " << "opening failed" << endl;
     else
         qDebug() << label + ".xml " << "opening successed" << endl;
 
-    if(!document.setContent(&file))
+    if(!document.setContent(&file))     // controlla se la lettura ha successo
         qDebug() << "Loaded input file failed" << endl;
     else
         qDebug() << "Loaded input file successed" << endl;
@@ -46,16 +46,16 @@ void Controller::readFromFile(const QString& label, QDomDocument& document){
 }
 
 void Controller::writeOnFile(const QString& label, const QDomDocument& document){
-    QFile file(completePath + label + ".xml");
+    QFile file(completePath + label + ".xml");  // preleva file nel percorso specificato
     qDebug() << completePath + label + ".xml" << endl;
 
-    if(!file.open(QFile::WriteOnly | QFile::Text)){
+    if(!file.open(QFile::WriteOnly | QFile::Text)){ // controlla se e' possibile aprirlo in scrittura
         qDebug() << "Already opened or there is another issue" << endl;
         file.close();
     }
 
     QTextStream content(&file);
-    content << document.toString();
+    content << document.toString(); // scrittura su file
     file.close();
     qDebug() << "Written with successful" << endl;
 }
@@ -90,10 +90,10 @@ void Controller::isExists(const QString& label, const Music* music){
     QFile file(completePath + label + ".xml");
     qDebug() << completePath + label + ".xml" << endl;
 
-    if(file.exists())
-        appendTo(label, music);
+    if(file.exists())   // controlla l'esistenza del file
+        appendTo(label, music);     // scrive in coda
     else
-        newSave(label, music);
+        newSave(label, music);      // crea un nuovo file
 }
 
 void Controller::newSave(const QString& label, const Music *music){
@@ -196,7 +196,7 @@ void Controller::showTable() {
         catalog = initData();
         qDebug() << "Is catalog loaded? " << !catalog.isEmpty() << endl;
 
-        view->setTable(catalog);
+        view->setTable(catalog);        // imposta i dati nella tabella
     }else
         view->showWarning("Dati già caricati");
 }
@@ -241,7 +241,7 @@ void Controller::showMusicDialog() {
 
 void Controller::addNewMusic() {
     auto dialog = view->getMusicDialog();
-    auto newMusic = dialog->getInput();
+    auto newMusic = dialog->getInput(); // preleva i dati in input
 
     if (newMusic){
         if (!model->isPresent(newMusic)){
@@ -269,13 +269,10 @@ void Controller::addNewMusic() {
 
 void Controller::showReleaseDialog() {
     auto dialog = view->getReleaseDialog();
-
-    // set music to release into release dialog combobox
     auto data = model->getNotReleasedMusic();
 
-
     if (!data.empty()) {
-        dialog->setMusicToPublic(data);
+        dialog->setMusicToPublic(data); // set music to release into release dialog combobox
         view->showDialog(dialog);
     }
     else
@@ -314,19 +311,21 @@ void Controller::releaseMusic() {
                 auto toRelease = dialog->getInput(not_released);
                 auto toRemove = toRelease.at(0);
 
-                // rimuovere la versione non pubblica del prodotto musicale appena pubblicato
+                // rimuovere la versione non pubblica del prodotto musicale appena pubblicato:
+                    // dalla lista di salvataggio
                 removeFromToSave(toRemove);
+                    // dalla tabella
                 view->removeMusicFromTable(getIndex(toRemove));
 
                 for (auto it = toRelease.begin(); it != toRelease.end(); ++it){
-                    model->insertMusic((*it));
-                    // se trascorso almeno un anno => forse logicamente/concettualmente debole
+                    model->insertMusic((*it)); // inserisce la pubblicazione dell'album nel catalogo
+                    // se trascorso almeno un anno
                     if (model->isElapsed1Year(*it))
-                        view->addMusicToTable((*it));
+                        view->addMusicToTable((*it));   // inserisce la pubblicazione dell'album nella tabella
 
-                    toSave.push_back(*it);
+                    toSave.push_back(*it);  // inserisce la pubblicazione dell'album nella lista di salvataggio
                 }
-                model->removeMusic(toRemove);
+                model->removeMusic(toRemove); // rimuove l'album dal catalogo
 
                 view->closeDialog(dialog);
             }
@@ -336,11 +335,10 @@ void Controller::releaseMusic() {
 
 void Controller::showLineChartDialog() {
     auto dialog = view->getLineChartDialog();
-
-    auto genres = model->getGenres();
+    auto genres = model->getGenres();   // preleva i generi musicali
 
     if (!genres.empty()){
-        dialog->setGenreCB(genres);
+        dialog->setGenreCB(genres);     // imposta i generi nella combobox
         view->showDialog(dialog);
     }else
         view->showWarning("Non e' stato caricato nessun dato");
@@ -352,10 +350,11 @@ void Controller::showLineChartWindow() {
     auto dialog = view->getLineChartDialog();
 
     if (dialog->getGenreRB()->isChecked()) {
+        // preleva l'intervallo di anni
         uint from = dialog->getYearFrom(),
              to = dialog->getYearTo();
 
-        if (from == to || from > to)
+        if (from == to || from > to)    // controlla la validita' dell'intervallo
             view->showWarning("Date errate!");
         else {
             string genre(dialog->getGenreSelected());
@@ -364,9 +363,10 @@ void Controller::showLineChartWindow() {
 
             QString title("Profitto per anno in base al genere musicale: " + QString::fromStdString(genre));
 
+            // imposta il grafico
             chart = new LineChart(title, model->lineChartOp1(genre, from, to, result), from, to);
             chart->setChart();
-
+            // imposta la schermata per visualizzare il grafico
             chartWindow = new ChartScreen();
             chartWindow->setTableView(QVector<const Music*>::fromStdVector(result));
             chartWindow->setChartView(chart);
@@ -405,7 +405,6 @@ void Controller::showPieChartWindow() {
         setPieOp3();
         break;
     default:
-        view->showWarning("Opzione errata");
         break;
     }
     dialog->resetComponents();
@@ -453,13 +452,11 @@ void Controller::setPieOp3() {
 
 void Controller::showBarChartDialog() {
     auto dialog(view->getBarChartDialog());
+    auto data(model->getCatalog());
 
-    auto artists(model->getArtists());
-
-    if(!artists.empty()){
-        dialog->setArtistCB(artists);
+    if (!data.empty())
         view->showDialog(dialog);
-    }else
+    else
         view->showWarning("Non e' stato caricato nessun dato");
 }
 

@@ -64,13 +64,3 @@ void BarChartDialog::resetComponents(){
 
     artistsCB->setCurrentIndex(0);
 }
-
-void BarChartDialog::setArtistCB(const std::vector<string> &artists) {
-    QStringList list;
-    artistsCB->clear();
-
-    for (auto it = artists.begin(); it != artists.end(); ++it)
-        list.push_back(QString::fromStdString(*it));
-
-    artistsCB->addItems(list);
-}

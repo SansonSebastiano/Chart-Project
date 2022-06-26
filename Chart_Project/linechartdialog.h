@@ -19,19 +19,21 @@ public:
 
     void createFormDialogLayout(QWidget* parent = Q_NULLPTR) override;
     void resetComponents() override;
-
+    // imposta una combobox con la lista di generi musicali presenti nell'etichetta discografica
     void setGenreCB(const std::vector<string> &genres);
 
     // groupboxes
     void createGenreQCBBox(QVBoxLayout *vbl, QWidget* parent = Q_NULLPTR);
     void createYearBox(QVBoxLayout *vbl, QWidget *parent = Q_NULLPTR);
-
+    //
     QRadioButton *getGenreRB() const;
 
     void enableComponents();
-
+    // ritorna l'anno in cui inizia l'intervallo
     uint getYearFrom() const;
+    // ritorna l'anno in cui termina l'intervallo
     uint getYearTo() const;
+    // ritorna il genere selezionato
     std::string getGenreSelected() const;
 };
 

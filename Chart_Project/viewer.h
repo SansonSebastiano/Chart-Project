@@ -77,19 +77,19 @@ private:
     MusicDialog *md;
     ReleaseDialog *rd;
 
-    // custom dialog for visualize charts
+    // custom dialog per visualizzare i grafici
     LineChartDialog *ld;
     PieChartDialog *pd;
     BarChartDialog *bd;
 
     // overloading
     void closeEvent(QCloseEvent *event);
-
+    // aggiunge i componenti nella GUI
     void addMenus(QVBoxLayout *mainLayout);
     void addControll_1(QVBoxLayout *mainLayout);
     void addScreen(QVBoxLayout *mainLayout);
     void addControll_2(QHBoxLayout *screenLayout);
-
+    // crea un bottone, specificandone il nome rappresentativo
     QPushButton *createButton(const QString& title);
 
 public:
@@ -98,9 +98,11 @@ public:
 
     void setController(Controller *c);
     void setTable(const QVector<const Music*> &catalog);
+    // aggiunge un nuovo album nella tabella
     void addMusicToTable(const Music *newMusic);
+    // rimuove un album dalla tabella
     void removeMusicFromTable(uint index);
-
+    // returns
     MusicDialog *getMusicDialog() const;
     ReleaseDialog *getReleaseDialog() const;
     LineChartDialog *getLineChartDialog() const;

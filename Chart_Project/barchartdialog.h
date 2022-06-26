@@ -15,16 +15,13 @@ private:
 public:
     BarChartDialog(QWidget* parent = Q_NULLPTR);
     ~BarChartDialog();
-
+    // ritorna l'anno selezionato nel form
     uint getSelectedYear() const;
 
     void createFormDialogLayout(QWidget* parent = Q_NULLPTR) override;
     void resetComponents() override;
-
-    // se necessario renderla astratta nella classe base 'ChartDialog'
+    // imposta una descrizione a seconda dell'opzione scelta
     void switchDescriptions();
-
-    void setArtistCB(const std::vector<string> &artists);
 };
 
 #endif // BARCHARTDIALOG_H

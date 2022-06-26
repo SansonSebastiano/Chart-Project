@@ -25,7 +25,7 @@ void ChartScreen::setTableView(const QVector<const Music *> &v) {
 }
 
 void ChartScreen::setChartView(AbstractChart* ac) {
-    myChartModel = ac; // metodo clone ??
+    myChartModel = ac;
     chartView = new QChartView(myChartModel);
     chartView->chart()->setTheme(QChart::ChartThemeDark);
     chartView->setRenderHint(QPainter::Antialiasing);

@@ -1,65 +1,65 @@
 <catalog>
- <DM genre="Rap" artist="Neffa" listeners="1500" platform="0" name="I Messaggeri della Dopa">
-  <release day="10" month="9" year="1997"/>
+ <DM listeners="1500" platform="0" artist="Neffa" name="I Messaggeri della Dopa" genre="Rap">
+  <release month="9" year="1997" day="10"/>
  </DM>
- <DM genre="Rap" artist="Neffa" listeners="500" platform="1" name="I Messaggeri della Dopa">
-  <release day="10" month="9" year="1997"/>
+ <DM listeners="500" platform="1" artist="Neffa" name="I Messaggeri della Dopa" genre="Rap">
+  <release month="9" year="1997" day="10"/>
  </DM>
- <DM genre="Rap" artist="Neffa" listeners="1000" platform="2" name="I Messaggeri della Dopa">
-  <release day="10" month="9" year="1997"/>
+ <DM listeners="1000" platform="2" artist="Neffa" name="I Messaggeri della Dopa" genre="Rap">
+  <release month="9" year="1997" day="10"/>
  </DM>
- <PM genre="Rap" artist="Dr. Dre" num_sales="500" support="0" name="2001">
-  <release day="16" month="11" year="1999"/>
+ <PM artist="Dr. Dre" num_sales="500" name="2001" genre="Rap" support="0">
+  <release month="11" year="1999" day="16"/>
  </PM>
- <PM genre="Rap" artist="Dr. Dre" num_sales="300" support="1" name="2001">
-  <release day="16" month="11" year="1999"/>
+ <PM artist="Dr. Dre" num_sales="300" name="2001" genre="Rap" support="1">
+  <release month="11" year="1999" day="16"/>
  </PM>
- <PM genre="Rap" artist="Articolo 31" num_sales="100" support="0" name="Così Com'è">
-  <release day="14" month="5" year="1996"/>
+ <PM artist="Articolo 31" num_sales="100" name="Così Com'è" genre="Rap" support="0">
+  <release month="5" year="1996" day="14"/>
  </PM>
- <album genre="Rap" artist="Kaos One" name="Chiodi"/>
- <DM genre="Raggae" artist="Bob Marley" listeners="2000" platform="0" name="Exodus">
-  <release day="10" month="9" year="1977"/>
+ <album artist="Kaos One" name="Chiodi" genre="Rap"/>
+ <DM listeners="2000" platform="0" artist="Bob Marley" name="Exodus" genre="Raggae">
+  <release month="9" year="1977" day="10"/>
  </DM>
- <DM genre="Raggae" artist="Bob Marley" listeners="1000" platform="1" name="Exodus">
-  <release day="10" month="9" year="1977"/>
+ <DM listeners="1000" platform="1" artist="Bob Marley" name="Exodus" genre="Raggae">
+  <release month="9" year="1977" day="10"/>
  </DM>
- <DM genre="Rock" artist="Linkin Park" listeners="700" platform="2" name="Hybrid Theory">
-  <release day="10" month="9" year="2000"/>
+ <DM listeners="700" platform="2" artist="Linkin Park" name="Hybrid Theory" genre="Rock">
+  <release month="9" year="2000" day="10"/>
  </DM>
- <PM genre="Rock" artist="Nirvana" num_sales="600" support="0" name="Nevermind">
-  <release day="24" month="3" year="1991"/>
+ <PM artist="Nirvana" num_sales="600" name="Nevermind" genre="Rock" support="0">
+  <release month="3" year="1991" day="24"/>
  </PM>
- <DM genre="Rock" artist="Nirvana" listeners="1200" platform="1" name="Nevermind">
-  <release day="24" month="3" year="1991"/>
+ <DM listeners="1200" platform="1" artist="Nirvana" name="Nevermind" genre="Rock">
+  <release month="3" year="1991" day="24"/>
  </DM>
- <DM genre="Rap" artist="Eminem" listeners="5000" platform="0" name="The Eminem Show">
-  <release day="13" month="3" year="2000"/>
+ <DM listeners="5000" platform="0" artist="Eminem" name="The Eminem Show" genre="Rap">
+  <release month="3" year="2000" day="13"/>
  </DM>
- <DM genre="Rap" artist="Eminem" listeners="10000" platform="1" name="The Eminem Show">
-  <release day="13" month="3" year="2000"/>
+ <DM listeners="10000" platform="1" artist="Eminem" name="The Eminem Show" genre="Rap">
+  <release month="3" year="2000" day="13"/>
  </DM>
- <album genre="Jazz" artist="Duke Ellington" name="Anatomy of a Murder"/>
- <album genre="Raggae" artist="Damian Marley" name="Halfway Tree"/>
- <PM genre="Funk" artist="James Brown" num_sales="600" support="0" name="It's a New Day - Let a Man Come In">
-  <release day="24" month="6" year="1970"/>
+ <album artist="Duke Ellington" name="Anatomy of a Murder" genre="Jazz"/>
+ <album artist="Damian Marley" name="Halfway Tree" genre="Raggae"/>
+ <PM artist="James Brown" num_sales="600" name="It's a New Day - Let a Man Come In" genre="Funk" support="0">
+  <release month="6" year="1970" day="24"/>
  </PM>
- <PM genre="Funk" artist="James Brown" num_sales="300" support="1" name="It's a New Day - Let a Man Come In">
-  <release day="24" month="6" year="1970"/>
+ <PM artist="James Brown" num_sales="300" name="It's a New Day - Let a Man Come In" genre="Funk" support="1">
+  <release month="6" year="1970" day="24"/>
  </PM>
- <PM genre="Funk" artist="James Brown" num_sales="150" support="2" name="It's a New Day - Let a Man Come In">
-  <release day="24" month="6" year="1970"/>
+ <PM artist="James Brown" num_sales="150" name="It's a New Day - Let a Man Come In" genre="Funk" support="2">
+  <release month="6" year="1970" day="24"/>
  </PM>
- <DM genre="Rap" artist="Sangue Misto" listeners="400" platform="0" name="SxM">
-  <release day="10" month="9" year="1996"/>
+ <DM listeners="400" platform="0" artist="Sangue Misto" name="SxM" genre="Rap">
+  <release month="9" year="1996" day="10"/>
  </DM>
- <DM genre="Rap" artist="Sangue Misto" listeners="1000" platform="1" name="SxM">
-  <release day="10" month="9" year="1996"/>
+ <DM listeners="1000" platform="1" artist="Sangue Misto" name="SxM" genre="Rap">
+  <release month="9" year="1996" day="10"/>
  </DM>
- <DM genre="Rap" artist="Sangue Misto" listeners="700" platform="2" name="SxM">
-  <release day="10" month="9" year="1996"/>
+ <DM listeners="700" platform="2" artist="Sangue Misto" name="SxM" genre="Rap">
+  <release month="9" year="1996" day="10"/>
  </DM>
- <DM genre="RnB" artist="Silk Sonic" listeners="700" platform="1" name="Smokin Out The Window">
-  <release day="10" month="10" year="2022"/>
+ <DM listeners="700" platform="1" artist="Silk Sonic" name="Smokin Out The Window" genre="RnB">
+  <release month="10" year="2022" day="10"/>
  </DM>
 </catalog>

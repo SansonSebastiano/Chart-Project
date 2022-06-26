@@ -27,8 +27,9 @@ private:
 public:
     ChartScreen(QWidget* parent = Q_NULLPTR);
     ~ChartScreen();
-
+    // imposta la tabella con i dati necessari per il grafico che lo necessita
     void setTableView(const QVector<const Music*> &v);
+    // imposta la schermata per visualizzare un grafico
     void setChartView(AbstractChart* ac);
 };
 

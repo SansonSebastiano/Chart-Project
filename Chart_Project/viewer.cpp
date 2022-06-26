@@ -1,8 +1,6 @@
 #include "viewer.h"
 #include "controller.h"
 
-// WARNING : impostare le parentelle tra i widget/layout
-
 void Viewer::closeEvent(QCloseEvent *event) {
     QMessageBox::StandardButton resBtn = QMessageBox::Yes;
     // controllo se toSave ha elementi
@@ -240,7 +238,6 @@ void Viewer::setTable(const QVector<const Music*> &catalog) {
     myTableModel = new TableModel(catalog);
 
     tableView->setModel(myTableModel);
-    //table->setWindowTitle();
 
     table_layout->addWidget(tableView);
     frame->setLayout(table_layout);

@@ -25,8 +25,13 @@ void MusicDialog::createMusicBox(QVBoxLayout *vbl, QWidget* parent) {
     createFormLayout("Artista: ", artistEdit, boxLayout);
     createFormLayout("Genere: ", genreEdit, boxLayout);
 
+    boxLayout->setAlignment(nameEdit, Qt::AlignRight);
+    boxLayout->setAlignment(artistEdit, Qt::AlignRight);
+    boxLayout->setAlignment(genreEdit, Qt::AlignRight);
+
     QGroupBox *groupBox = new QGroupBox("Info Musica", parent);
     groupBox->setLayout(boxLayout);
+    groupBox->setMinimumSize(200, 150);
 
     vbl->addWidget(groupBox);
 }
@@ -40,7 +45,6 @@ void MusicDialog::createFormDialogLayout(QWidget* parent) {
     // button layout
     QHBoxLayout *buttonLayout = new QHBoxLayout(parent);
     buttonLayout->addWidget(getAddBtn());
-    //buttonLayout->addWidget(getCancBtn());
     buttonLayout->setAlignment(Qt::AlignRight);
 
     dialogLayout->addLayout(buttonLayout);

@@ -76,8 +76,6 @@ void ReleaseDialog::createLine(QWidget *ckb, QWidget *lineEdit, QFormLayout *fl,
     line->addWidget(ckb);
     line->addWidget(lineEdit);
     line->setSpacing(50);
-    //line->setAlignment(ckb, Qt::AlignLeft);
-    //line->setAlignment(lineEdit, Qt::AlignRight);
 
     fl->addItem(line);
 }
@@ -134,7 +132,6 @@ void ReleaseDialog::createDMBox(QVBoxLayout *vbl, QWidget* parent) {
 
     QGroupBox *groupBox = new QGroupBox("Piattaforme Digitali", parent);
     groupBox->setLayout(boxLayout);
-    //groupBox->setDisabled(true);
 
     vbl->addWidget(groupBox);
 }
