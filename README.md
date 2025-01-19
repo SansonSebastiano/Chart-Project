@@ -1,4 +1,4 @@
-# Chart Project for OOP course (Bachelor's degree in CSS)
+# Chart Project for OOP course (Bachelor's degree in CSS) - A.Y. 2021/2022
 
 DISCLAIMER: the language of the software is in Italian
 
