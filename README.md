@@ -6,4 +6,4 @@ This repository contains the **Chart Project**, which provides a set of tools an
 
 ## Features
 - Generate different types of charts (e.g., bar, line, pie, etc.)
-- Importm, process, modify and visualize datasets in tabular formats
+- Import, process, modify and visualize datasets in tabular formats
